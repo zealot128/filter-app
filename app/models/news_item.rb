@@ -11,8 +11,9 @@ class NewsItem < ActiveRecord::Base
 
   def self.process(entry)
     return NewsItem.new if entry[:published] < 10.days.ago
-    old = entry[:source].news_items.where(guid: entry[:guid]).first
-    item = old || NewsItem.new( guid: entry[:guid])
+    guid = entry[:guid][0..240]
+    old = entry[:source].news_items.where(guid: guid).first
+    item = old || NewsItem.new( guid: guid)
     if item.new_record?
       item.url = Fetcher.real_url(entry[:url])
       item.source = entry[:source]
