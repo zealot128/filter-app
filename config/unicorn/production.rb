@@ -5,7 +5,7 @@ app_path = "/apps/hrcollect/prod/current"
 worker_processes 1
 preload_app true
 timeout 180
-listen "127.0.0.1"
+listen 6000 #"127.0.0.1"
 
 # Spawn unicorn master worker for user apps (group: apps)
 user 'stefan', 'stefan'
