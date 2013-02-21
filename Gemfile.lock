@@ -107,6 +107,8 @@ GEM
       unf (~> 0.0.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
+    exception_notification (3.0.1)
+      actionmailer (>= 3.0.4)
     execjs (1.4.0)
       multi_json (~> 1.0)
     faye-websocket (0.4.6)
@@ -316,6 +318,7 @@ DEPENDENCIES
   chosen-rails
   coffee-rails (~> 3.2.1)
   compass-rails
+  exception_notification
   feedzirra!
   font-awesome-rails
   fontsquirrel-download
