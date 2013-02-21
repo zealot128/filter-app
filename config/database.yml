@@ -1,0 +1,14 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: hrcollect_dev
+  template: template0
+  pool: 5
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: hrcollect_test
+  template: template0
+  pool: 5
+

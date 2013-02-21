@@ -1,0 +1,9 @@
+- content_for :title, "HRfilter.de"
+.hero-unit
+  %h1 HR-filter
+  %p
+    Die wichtigsten aktuellen Nachrichten aus <a href='#{sources_path}'>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> - Gebündelt und sortiert nach Relevanz
+
+
+= render @news_items
+

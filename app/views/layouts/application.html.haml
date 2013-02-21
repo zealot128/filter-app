@@ -1,0 +1,43 @@
+!!!
+%html{:lang => locale, class: browser.to_s}
+
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+
+    %title= content_for?(:title) ? yield(:title) : "Baseapp"
+
+    = csrf_meta_tags
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    /[if lt IE 8]
+      = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
+
+    -#= javascript_include_tag "web"
+    = stylesheet_link_tag "web"
+
+    = yield :head
+
+  %body
+
+    .page-container
+      .container
+        %section.content
+          = content_tag(:p, flash[:error], :id => "error", :class => "alert alert-error fade in alert-auto-dismiss") if flash[:error]
+          = content_tag(:p, flash[:notice], :id => "notice", :class => "alert fade alert-info in alert-auto-dismiss") if flash[:notice]
+          = content_tag(:p, flash[:alert], :id => "alert", :class => "alert fade in alert-auto-dismiss") if flash[:alert]
+          = content_tag(:p, flash[:success], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:success]#
+          = yield
+
+    %footer.footer
+      .container
+        .ac
+          %ul.footer-links
+            %li
+              \&copy; #{Date.today.year}
+            %li= link_to "About", about_path
+            %li= link_to "Quellen", sources_path
+
+    #loader
+      %i.icon-spinner.icon-spin.icon-2x.pull-left
+

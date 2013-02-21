@@ -1,0 +1,9 @@
+%h2 Quellen
+- Source.order("LOWER(name)").each do |source|
+  .source
+    = source.name
+  %pre
+    = source.url
+
+= link_to "mailto:stwienert@gmail.com?subject:HRfilter.de Fehlende Quelle", class: "btn btn-primary btn-large" do
+  Fehlt eine Quelle? Schreib mir eine Mail!
