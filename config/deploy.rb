@@ -65,3 +65,7 @@ task :tail, :roles => :app do
   end
 end
 
+task :console, :roles => :app do
+  hostname = find_servers_for_task(current_task).first
+  exec "ssh -l #{user} #{hostname} -t 'source ~/.profile && #{current_path}/script/rails c #{rails_env}'"
+end
