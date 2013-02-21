@@ -22,10 +22,12 @@ gem "thin"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "vcr"
 gem 'strong_parameters'
+
 group :capistrano do
-  gem "rvm-capistrano"
+  gem "rvm-capistrano", github: "wayneeseguin/rvm-capistrano"
   gem "capistrano"
   gem "capistrano-unicorn"
+  gem "whenever"
 end
 gem "unicorn", group: "production"
 

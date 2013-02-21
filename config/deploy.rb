@@ -24,6 +24,9 @@ before 'deploy:setup', 'rvm:install_pkgs'  # install RVM packages before Ruby
 before 'deploy:setup', 'rvm:install_ruby'  # install Ruby and create gemset, or:
 require "rvm/capistrano"
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 
 
 namespace :deploy do
