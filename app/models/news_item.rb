@@ -15,7 +15,11 @@ class NewsItem < ActiveRecord::Base
     old = entry[:source].news_items.where(guid: guid).first
     item = old || NewsItem.new( guid: guid)
     if item.new_record?
-      item.url = Fetcher.real_url(entry[:url])
+      if entry[:source].name["Personalmagazin"]
+        item.url = entry[:url]
+      else
+        item.url = Fetcher.real_url(entry[:url])
+      end
       item.source = entry[:source]
       item.published_at = entry[:published]
     end
