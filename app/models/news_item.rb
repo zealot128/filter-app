@@ -44,6 +44,7 @@ class NewsItem < ActiveRecord::Base
     fetch_twitter
     fetch_facebook
     fetch_xing
+    fetch_gplus
     self.value = score
     save
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221124807) do
+ActiveRecord::Schema.define(:version => 20130221135912) do
 
   create_table "news_items", :force => true do |t|
     t.string   "title"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20130221124807) do
     t.integer  "xing"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "gplus"
   end
 
   add_index "news_items", ["guid"], :name => "index_news_items_on_guid"

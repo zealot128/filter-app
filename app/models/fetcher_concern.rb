@@ -6,9 +6,13 @@ module FetcherConcern
   end
 
   def score
-    base = [ source.value, xing * 3, linkedin * 2, retweets, fb_likes / 2].reject(&:blank?).reduce(:+)
+    base = [ source.value, xing * 3, linkedin * 2, retweets, fb_likes / 2, gplus].reject(&:blank?).reduce(:+)
     time_factor = (published_at.to_i - MAX_AGE.ago.to_i) / (Time.now.to_i - MAX_AGE.ago.to_i).to_f
     base * time_factor
+  end
+
+  def eurl
+    CGI.escape(url)
   end
 
   def fetch_twitter
@@ -32,5 +36,10 @@ module FetcherConcern
     response = Fetcher.fetch_url("https://www.xing-share.com/app/share?op=get_share_button;url=#{CGI.escape(url)};counter=right;lang=de;type=iframe;hovercard_position=1;shape=rectangle")
     doc = Nokogiri.parse(response.body)
     self.xing = doc.at(".xing-count").text.to_i
+  end
+
+  def fetch_gplus
+    self.gplus = Nokogiri.parse(Fetcher.fetch_url("https://plusone.google.com/u/0/_/+1/fastbutton?url=#{eurl}").body).at("#aggregateCount").text.to_i
+
   end
 end
