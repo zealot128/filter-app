@@ -2,8 +2,8 @@
 app_path = "/apps/hrcollect/prod/current"
 
 # Set unicorn options
-worker_processes 1
-preload_app true
+worker_processes 2
+preload_app false
 timeout 180
 listen 6000 #"127.0.0.1"
 
