@@ -23,6 +23,9 @@ gem "thin"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "vcr"
 gem 'strong_parameters'
+group :capistrano do
+  gem "capistrano"
+end
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
