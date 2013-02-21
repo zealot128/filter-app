@@ -59,6 +59,8 @@ GEM
       will_paginate
     browser (0.1.5)
     builder (3.0.4)
+    cache_digests (0.2.0)
+      actionpack (>= 3.2)
     capistrano (2.14.2)
       highline
       net-scp (>= 1.0.0)
@@ -311,6 +313,7 @@ DEPENDENCIES
   bootstrap-sass-rails
   bootstrap-will_paginate
   browser
+  cache_digests
   capistrano
   capistrano-unicorn
   capybara

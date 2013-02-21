@@ -9,7 +9,6 @@
 #
 every 15.minutes do
   runner "Source.cronjob"
-  runner "NewsItem.cronjob"
 end
 #
 # every 4.days do
