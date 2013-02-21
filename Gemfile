@@ -12,7 +12,6 @@ gem 'rails', '~> 3.2.11'
 gem "pg"
 gem "simple_form"
 gem 'bootstrap-will_paginate'  # pagination
-gem "thin"
 
 gem "browser"
 gem "bcrypt-ruby"
@@ -25,7 +24,9 @@ gem "vcr"
 gem 'strong_parameters'
 group :capistrano do
   gem "capistrano"
+  gem "capistrano-unicorn"
 end
+gem "unicorn", group: "production"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -37,6 +38,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'chosen-rails'
+  gem "thin"
 end
 
 gem 'jquery-rails'
