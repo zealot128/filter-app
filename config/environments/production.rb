@@ -64,4 +64,13 @@ Baseapp::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address  => "hrfilter.de",
+    :port  => 587,
+    :user_name  => "mail@hrfilter.de",
+    :password  => "b4ff3e859085dd6713d0f279",
+    :openssl_verify_mode => 'none',
+    :authentication  => :login
+  }
 end
