@@ -67,7 +67,7 @@ Baseapp::Application.configure do
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :address  => "hrfilter.de",
-    :port  => 587,
+    :port  => 25,
     :user_name  => "mail@hrfilter.de",
     :password  => "b4ff3e859085dd6713d0f279",
     :openssl_verify_mode => 'none',
