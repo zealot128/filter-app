@@ -23,6 +23,7 @@ gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "vcr"
 gem 'strong_parameters'
 group :capistrano do
+  gem "rvm-capistrano"
   gem "capistrano"
   gem "capistrano-unicorn"
 end

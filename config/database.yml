@@ -12,3 +12,10 @@ test:
   template: template0
   pool: 5
 
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: hrcollect
+  template: template0
+  pool: 5
+
