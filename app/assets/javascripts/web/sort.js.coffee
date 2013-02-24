@@ -55,14 +55,19 @@ resort = ->
 
 
 $ ->
-
-  $('input.slide').slider
-    max: 100
-    tooltip: "hide"
-  .hide().on "slideStop", (ev)->
-    resort()
   $('.slide').each ->
-    $(@).val($(@).data("slider-value"))
+    el = $(@)
+    el.val(el.attr("value"))
+  .on "change", (ev)->
+    resort()
   setTimeout ->
     resort()
   , 500
+  $('#settings .dropdown-toggle').click ->
+    $('#settings .dropdown-menu').toggle()
+  c =  $('.page-container')[0]
+  $('body').on "click", (a,b)->
+    if (a.target) == c
+      $('#settings .dropdown-menu').hide()
+
+

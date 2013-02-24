@@ -8,33 +8,33 @@
 
 
 .btn-group#settings
-  %a.btn.btn-large.dropdown-toggle(data-toggle="dropdown" href="#")
+  %a.btn.btn-large.dropdown-toggle(href="#")
     Sortieren
     %i.icon-cogs(title="Einstellungen")
     %span.caret
   %ul.dropdown-menu
     %li
-      %input.slide.span4(name="freshness" type="text" data-slider-value="100")
+      %input.slide.span4(name="freshness" type="range" value="100" max="100" min="0")
       %i.icon-time
       Freshness
     %li
-      %input.slide.span4(name="facebook" type="text" data-slider-value="10")
+      %input.slide.span4(name="facebook" type="range" value="10" max="100" min="0")
       %i.icon-facebook
       Facebook
     %li
-      %input.slide.span4(name="twitter" type="text" data-slider-value="30")
+      %input.slide.span4(name="twitter" type="range" value="30" max="100" min="0")
       %i.icon-twitter
       Twitter
     %li
-      %input.slide.span4(name="xing" type="text" data-slider-value="100")
+      %input.slide.span4(name="xing" type="range" value="100" max="100" min="0")
       %i.icon-xing
       XING
     %li
-      %input.slide.span4(name="linkedin" type="text" data-slider-value="50")
+      %input.slide.span4(name="linkedin" type="range" value="50" max="100" min="0")
       %i.icon-linkedin
       Linkedin
     %li
-      %input.slide.span4(name="gplus" type="text" data-slider-value="50")
+      %input.slide.span4(name="gplus" type="range" value="50" max="100" min="0")
       %i.icon-google-plus-sign
       Google+
 #items
