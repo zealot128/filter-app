@@ -3,15 +3,14 @@ class NewsItem < ActiveRecord::Base
   belongs_to :source
   validates_uniqueness_of :guid, scope: [:source_id]
 
-  scope :home_page, -> {
-    order("value desc").where("value is not null").where("published_at > ?", FetcherConcern::MAX_AGE.ago)
-  }
+  scope :current, -> { where("published_at > ?", FetcherConcern::MAX_AGE.ago) }
+  scope :home_page, -> { order("value desc").where("value is not null").current }
 
   include FetcherConcern
 
   def self.process(entry)
     return NewsItem.new if entry[:published] < FetcherConcern::MAX_AGE.days.ago
-    guid = entry[:guid][0..240]
+    guid = entry[:guid][0..230]
     old = entry[:source].news_items.where(guid: guid).first
     item = old || NewsItem.new( guid: guid)
     if item.new_record?
@@ -32,14 +31,14 @@ class NewsItem < ActiveRecord::Base
   end
 
   def self.cronjob
-    NewsItem.find_each do |item|
+    NewsItem.current do |item|
       item.refresh
     end
   end
 
   def self.teaser(text)
     ActionController::Base.helpers.truncate Nokogiri::HTML.fragment(text).text,
-      length: 255
+      length: 400
   end
 
   # freshness max 120
