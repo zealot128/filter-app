@@ -8,7 +8,7 @@ class FeedSource < Source
       item = NewsItem.process(
         title: entry.title,
         url: entry.url,
-        text: entry.content,
+        text: entry.content || entry.summary,
         published: entry.published,
         guid: entry.entry_id || entry.url,
         source: self

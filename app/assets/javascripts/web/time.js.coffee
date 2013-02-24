@@ -16,8 +16,13 @@ jQuery.timeago.settings.strings =
   years: "%d Jahren"
 
 $ ->
+  refresh_date = ->
+    $(".date").each ->
+      me = $(@)
+      date = new Date(1000 * me.data("time"))
+      me.html $.timeago(date)
 
-  $(".date").each ->
-    me = $(@)
-    date = new Date(1000 * me.data("time"))
-    me.html $.timeago(date)
+    setTimeout refresh_date, 5000
+
+  refresh_date()
+

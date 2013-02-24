@@ -50,7 +50,8 @@ class NewsItem < ActiveRecord::Base
       linkedin: linkedin,
       xing: xing,
       gplus: gplus,
-      freshness:  (published_at.to_i - FetcherConcern::MAX_AGE.ago.to_i) / 10000
+      freshness:  (published_at.to_i - FetcherConcern::MAX_AGE.ago.to_i) / 10000,
+      bias: source.value
     }
   end
 

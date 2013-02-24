@@ -14,7 +14,8 @@ resort = ->
     jquery_object.data("facebook") * facebook +
     jquery_object.data("linkedin") * linkedin +
     jquery_object.data("twitter") * twitter +
-    jquery_object.data("xing") * xing
+    jquery_object.data("xing") * xing +
+    jquery_object.data("bias") * 50
 
   $Ul = $('#items')
   $Ul.css({position:'relative',height:$Ul.height(),display:'block'})
