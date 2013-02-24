@@ -39,7 +39,7 @@ module Baseapp
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
-    config.assets.precompile += %w( font-awesome-ie7.min.css web.css web.js)
+    config.assets.precompile += %w( font-awesome-ie7.min.css web.css web.js IE9.js)
 
     config.active_record.whitelist_attributes = false
 

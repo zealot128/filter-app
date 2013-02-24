@@ -13,6 +13,8 @@
 
 
     = csrf_meta_tags
+    /[if lte IE9]
+      = javascript_include_tag "IE9.js"
     /[if lt IE 9]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     /[if lt IE 8]

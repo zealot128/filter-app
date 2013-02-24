@@ -3,7 +3,7 @@ app_path = "/apps/hrcollect/prod/current"
 
 # Set unicorn options
 worker_processes 3
-preload_app false
+preload_app true
 timeout 180
 listen 6000 #"127.0.0.1"
 
@@ -24,7 +24,10 @@ stdout_path "log/unicorn.log"
 pid "#{app_path}/tmp/pids/unicorn.pid"
 
 before_fork do |server, worker|
-  #ActiveRecord::Base.connection.disconnect!
+  if defined? ActiveRecord::Base
+    ActiveRecord::Base.connection.disconnect!
+  end
+  I18n.t("active_record")
 
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
@@ -34,8 +37,9 @@ before_fork do |server, worker|
       # someone else did our job for us
     end
   end
+  I18n.t('activerecord')
 end
 
 after_fork do |server, worker|
-  #ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection
 end
