@@ -32,6 +32,7 @@ end
 gem "unicorn", group: "production"
 gem 'exception_notification'
 gem "cache_digests"
+gem "paperclip"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
