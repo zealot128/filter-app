@@ -7,5 +7,36 @@
       Die wichtigsten aktuellen HR und Personalnachrichten aus <a href='#{sources_path}'>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> - Gebündelt und sortiert nach Relevanz
 
 
-= render @news_items
+.btn-group#settings
+  %a.btn.btn-large.dropdown-toggle(data-toggle="dropdown" href="#")
+    Sortieren
+    %i.icon-cogs(title="Einstellungen")
+    %span.caret
+  %ul.dropdown-menu
+    %li
+      %input.slide.span4(name="freshness" type="text" data-slider-value="100")
+      %i.icon-time
+      Freshness
+    %li
+      %input.slide.span4(name="facebook" type="text" data-slider-value="10")
+      %i.icon-facebook
+      Facebook
+    %li
+      %input.slide.span4(name="twitter" type="text" data-slider-value="30")
+      %i.icon-twitter
+      Twitter
+    %li
+      %input.slide.span4(name="xing" type="text" data-slider-value="100")
+      %i.icon-xing
+      XING
+    %li
+      %input.slide.span4(name="linkedin" type="text" data-slider-value="50")
+      %i.icon-linkedin
+      Linkedin
+    %li
+      %input.slide.span4(name="gplus" type="text" data-slider-value="50")
+      %i.icon-google-plus-sign
+      Google+
+#items
+  = render @news_items
 

@@ -4,13 +4,13 @@ class NewsItem < ActiveRecord::Base
   validates_uniqueness_of :guid, scope: [:source_id]
 
   scope :home_page, -> {
-    order("value desc").where("value is not null")
+    order("value desc").where("value is not null").where("published_at > ?", FetcherConcern::MAX_AGE.ago)
   }
 
   include FetcherConcern
 
   def self.process(entry)
-    return NewsItem.new if entry[:published] < 10.days.ago
+    return NewsItem.new if entry[:published] < FetcherConcern::MAX_AGE.days.ago
     guid = entry[:guid][0..240]
     old = entry[:source].news_items.where(guid: guid).first
     item = old || NewsItem.new( guid: guid)
@@ -32,7 +32,6 @@ class NewsItem < ActiveRecord::Base
   end
 
   def self.cronjob
-    NewsItem.old.destroy_all
     NewsItem.find_each do |item|
       item.refresh
     end
@@ -41,6 +40,18 @@ class NewsItem < ActiveRecord::Base
   def self.teaser(text)
     ActionController::Base.helpers.truncate Nokogiri::HTML.fragment(text).text,
       length: 255
+  end
+
+  # freshness max 120
+  def to_data
+    {
+      facebook: fb_likes,
+      twitter: retweets,
+      linkedin: linkedin,
+      xing: xing,
+      gplus: gplus,
+      freshness:  (published_at.to_i - FetcherConcern::MAX_AGE.ago.to_i) / 10000
+    }
   end
 
 

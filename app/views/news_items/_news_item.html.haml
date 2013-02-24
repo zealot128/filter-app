@@ -1,12 +1,14 @@
 - cache news_item do
-  .item
+  .item{data: news_item.to_data }
     %h3.title
       = link_to news_item.url do
         = news_item.title
     .sub
       = render "news_items/source", source: news_item.source
       &ndash;
-      = l news_item.published_at
+      %span.date(data-time="#{news_item.published_at.to_i}" title="#{l news_item.published_at}")
+        = l news_item.published_at, format: :short
+
 
 
     .body
@@ -22,7 +24,7 @@
         %i.icon-linkedin
         = news_item.linkedin
       %li
-        = image_tag "xing-16.png"
+        = image_tag "xing-16.png", style: "margin-top: -3px"
         = news_item.xing
       %li
         %i.icon-google-plus
