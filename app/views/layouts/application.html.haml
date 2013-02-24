@@ -6,6 +6,11 @@
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
 
     %title= content_for?(:title) ? yield(:title) : "Baseapp"
+    %link(rel="shortcut icon" href="#{image_path("hrfilter-thumb.png")}")
+    <link rel="apple-touch-icon" href="#{image_path("hrfilter-thumb.png")}">
+    <link rel="apple-touch-icon-precomposed" href="#{image_path("hrfilter-thumb.png")}">
+    <link rel="apple-touch-icon-precomposed apple-touch-icon" href="#{image_path("hrfilter-thumb.png")}">
+
 
     = csrf_meta_tags
     /[if lt IE 9]
@@ -13,7 +18,7 @@
     /[if lt IE 8]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
-    -#= javascript_include_tag "web"
+    = javascript_include_tag "web"
     = stylesheet_link_tag "web"
 
     = yield :head
@@ -41,5 +46,5 @@
 
     = render "layouts/piwik"
     #loader
-      %i.icon-spinner.icon-spin.icon-2x.pull-left
+      %i.icon-spinner.icon-spin.icon-4x
 
