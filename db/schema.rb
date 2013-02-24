@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223232825) do
+ActiveRecord::Schema.define(:version => 20130224004949) do
 
   create_table "news_items", :force => true do |t|
     t.string   "title"
@@ -31,7 +31,9 @@ ActiveRecord::Schema.define(:version => 20130223232825) do
   end
 
   add_index "news_items", ["guid"], :name => "index_news_items_on_guid"
+  add_index "news_items", ["published_at"], :name => "index_news_items_on_published_at"
   add_index "news_items", ["source_id"], :name => "index_news_items_on_source_id"
+  add_index "news_items", ["value"], :name => "index_news_items_on_value"
 
   create_table "sources", :force => true do |t|
     t.string   "type"
