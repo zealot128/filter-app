@@ -1,9 +1,25 @@
-%h2 Quellen
+.page-header
+  %h1 Quellen
 - Source.order("LOWER(name)").each do |source|
-  .source
-    = source.name
-  %pre
-    = source.url
+  .source.row
+    .span8
+      = render "news_items/source", source: source
+      %pre
+        = source.url
+    .span4
+      %table.table
+        %tbody
+          %tr
+            %th Aktuelle News:
+            %td=source.news_items.home_page.count
+          %tr
+            %th News seit #{l source.created_at.to_date}
+            %td=source.news_items.count
+          %tr
+            %th News pro Woche
+            %td
+              = source.news_items.count / source.age_in_weeks
 
-= link_to "mailto:stwienert@gmail.com?subject:HRfilter.de Fehlende Quelle", class: "btn btn-primary btn-large" do
+
+= link_to "mailto:stwienert@gmail.com?subject:HRfilter.de%20Fehlende%20Quelle", class: "btn btn-primary btn-large" do
   Fehlt eine Quelle? Schreib mir eine Mail!

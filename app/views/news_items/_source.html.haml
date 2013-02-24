@@ -1,2 +1,4 @@
 %span.source
+  - if source.logo.present?
+    = image_tag source.logo.url(:thumb)
   = source.name

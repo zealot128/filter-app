@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221135912) do
+ActiveRecord::Schema.define(:version => 20130223232825) do
 
   create_table "news_items", :force => true do |t|
     t.string   "title"
@@ -38,8 +38,12 @@ ActiveRecord::Schema.define(:version => 20130221135912) do
     t.string   "url"
     t.string   "name"
     t.integer  "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   add_index "sources", ["type"], :name => "index_sources_on_type"
