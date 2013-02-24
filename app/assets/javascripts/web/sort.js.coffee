@@ -48,7 +48,6 @@ resort = ->
     iTo = i*iLnH
     $El.css({position:'absolute',top:iFr}).animate({top:iTo},500)
     if i == $('.item').length - 1
-      console.log "LAST"
       setTimeout ->
         $('.item').css("position","static").css("top","auto")
       , 600
@@ -61,6 +60,8 @@ $ ->
     tooltip: "hide"
   .hide().on "slideStop", (ev)->
     resort()
+  $('.slide').each ->
+    $(@).val($(@).data("slider-value"))
   setTimeout ->
     resort()
   , 500

@@ -29,7 +29,7 @@ FeedSource.create url: "http://feeds.feedburner.com/KnowhrBlog", name: "Know HR"
 
 # Karriere Seiten
 #FeedSource.create url: "http://feeds.feedburner.com/karrierebibelblog", name: "karrierebibel.de", value: -5
-Source.where(logo_file_name: nil).each do |s|
+Source.where(logo_file_name: nil).reverse.each do |s|
   if s.url == "http://www.secretsites.de/joblog/feed/"
     puts "DEFINE"
     s.define_singleton_method :host, -> { "http://www.secretsites.de/joblog/" }
