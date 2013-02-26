@@ -31,7 +31,7 @@ class NewsItem < ActiveRecord::Base
   end
 
   def self.cronjob
-    NewsItem.current do |item|
+    NewsItem.current.each do |item|
       item.refresh
     end
   end
