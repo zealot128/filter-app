@@ -35,7 +35,7 @@ class Source < ActiveRecord::Base
       begin
         t.refresh
       rescue Exception
-        puts "Fehler bei #{c.url} (#{c.id})"
+        puts "Fehler bei #{t.url} (#{t.id})"
       end
     end
     NewsItem.cronjob
