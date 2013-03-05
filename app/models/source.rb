@@ -32,7 +32,11 @@ class Source < ActiveRecord::Base
 
   def self.cronjob
     Source.find_each do |t|
-      t.refresh
+      begin
+        t.refresh
+      rescue Exception
+        puts "Fehler bei #{c.url} (#{c.id})"
+      end
     end
     NewsItem.cronjob
   end
