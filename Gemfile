@@ -22,12 +22,17 @@ gem "thin"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
 gem "vcr"
 gem 'strong_parameters'
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'faraday-cookie_jar'
+gem 'mechanize'
 
 group :capistrano do
   gem "rvm-capistrano", github: "wayneeseguin/rvm-capistrano"
   gem "capistrano"
   gem "capistrano-unicorn"
   gem "whenever"
+  gem 'habtm_generator'
 end
 gem "unicorn", group: "production"
 gem 'exception_notification'
