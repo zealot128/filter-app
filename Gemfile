@@ -27,8 +27,8 @@ gem "paperclip"
 
 gem 'sass-rails'
 gem 'coffee-rails'
-gem 'bootstrap-sass-rails'
-gem "font-awesome-rails"
+gem 'bootstrap-sass-rails', '~> 2.3.2'
+gem "font-awesome-rails", '~> 3.2.1'
 # gem 'therubyracer', :platforms => :ruby
 
 gem 'uglifier', '>= 1.0.3'
@@ -59,6 +59,7 @@ end
 
 gem 'twitter', '~> 5.0.0.rc.1'
 gem 'ruby-stemmer'
+gem 'rinku', require: 'rails_rinku'
 
 
 

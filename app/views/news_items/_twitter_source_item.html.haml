@@ -1,7 +1,7 @@
 - cache twitter_source_item do
   .item{data: twitter_source_item.to_data}
     %blockquote
-      = twitter_source_item.title
+      = auto_link twitter_source_item.title, link: :all, html: {target:"_blank", rel:"nofollow"}
     .sub
       = render "news_items/source", source: twitter_source_item.source
       &ndash;
@@ -15,3 +15,7 @@
       %li
         %i.icon-twitter
         = twitter_source_item.retweets
+      %li
+        %i.icon-file-text-alt(title='Anzahl Worte (ca.)')
+        = twitter_source_item.word_length
+
