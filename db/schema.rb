@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102161715) do
+ActiveRecord::Schema.define(version: 20131102173651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20131102161715) do
     t.datetime "updated_at",   null: false
     t.integer  "gplus"
     t.text     "full_text"
+    t.integer  "word_length"
   end
 
   add_index "news_items", ["guid"], name: "index_news_items_on_guid", using: :btree

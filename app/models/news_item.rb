@@ -24,28 +24,41 @@ class NewsItem < ActiveRecord::Base
       xing: xing,
       gplus: gplus,
       freshness:  (published_at.to_i - FetcherConcern::MAX_AGE.ago.to_i) / 10000,
-      bias: source.value
+      bias: source.value,
+      words: word_length,
     }
   end
 
+  before_save :categorize
   def categorize
-    self.categories = Category.all.select{|i|
-      i.matches?(plaintext)
-    }
+    if plaintext
+      self.categories = Category.all.select{|i|
+        i.matches?(plaintext)
+      }
+    end
+  end
+  before_save do
+    self.word_length = words.length
   end
 
   def plaintext
-    ActionController::Base.helpers.strip_tags full_text
+    ActionController::Base.helpers.strip_tags(full_text || teaser || title)
+  end
+
+  def words
+    plaintext.split(/[^\p{Word}]+/)
   end
 
   def refresh
-    fetch_linkedin
-    fetch_twitter
-    fetch_facebook
-    fetch_xing
-    fetch_gplus
-    self.value = score
-    save
+    if source.is_a? FeedSource
+      fetch_linkedin
+      fetch_twitter
+      fetch_facebook
+      fetch_xing
+      fetch_gplus
+      self.value = score
+      save
+    end
   end
 
 end

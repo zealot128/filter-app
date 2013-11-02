@@ -6,6 +6,7 @@ resort = ->
   xing      = $('.slide[name=xing]').val()
   linkedin  = $('.slide[name=linkedin]').val()
   gplus     = $('.slide[name=gplus]').val()
+  wlength   = $('.slide[name=wlength]').val()
 
 
   value = (jquery_object)->
@@ -15,6 +16,7 @@ resort = ->
     jquery_object.data("linkedin") * linkedin +
     jquery_object.data("twitter") * twitter +
     jquery_object.data("xing") * xing +
+    jquery_object.data("words") * wlength / 2 +
     jquery_object.data("bias") * 50
 
   $Ul = $('#items')

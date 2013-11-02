@@ -40,8 +40,8 @@ group :test do
   gem 'timecop'
   gem "rspec-rails", '~> 2.14.0'
   gem "guard-rspec"
-gem "vcr"
-gem 'webmock'
+  gem "vcr"
+  gem 'webmock'
 end
 
 group :development do
@@ -57,6 +57,7 @@ group :development, :test do
   gem "thin"
 end
 
+gem 'twitter', '~> 5.0.0.rc.1'
 gem 'ruby-stemmer'
 
 

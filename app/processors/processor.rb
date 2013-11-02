@@ -23,6 +23,16 @@ class Processor
   def sanitize(*args)
     ActionController::Base.helpers.sanitize *args
   end
+
+  def clear(text)
+    sanitize text, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
+  end
+
+  def get(url)
+    @m ||= Mechanize.new
+    @m.user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+    @m.get(url)
+  end
 end
 
 class DefaultProcessor < Processor
@@ -68,20 +78,14 @@ class DefaultProcessor < Processor
     @item.save
   end
 
-  def get(url)
-    @m ||= Mechanize.new
-    @m.user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    @m.get(url)
-  end
-
   def follow_url(item)
-    if @source.full_text_selector
+    if @source.full_text_selector?
       if item.full_text.blank?
         page = get(item.url)
         item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
         content = page.at(@source.full_text_selector)
         content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
-        item.full_text = sanitize content.inner_html, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
+        item.full_text = clear content.inner_html
       end
     else
       @item.full_text = @entry.content || @entry.summary

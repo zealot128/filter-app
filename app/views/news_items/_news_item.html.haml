@@ -9,6 +9,9 @@
       %span.date(data-time="#{news_item.published_at.to_i}" title="#{l news_item.published_at}")
         = l news_item.published_at, format: :short
 
+      &ndash;
+      %span.categories
+        = news_item.categories.pluck(:name).to_sentence
 
 
     .body
