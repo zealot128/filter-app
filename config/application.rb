@@ -41,8 +41,6 @@ module Baseapp
 
     config.assets.precompile += %w( font-awesome-ie7.min.css web.css web.js IE9.js)
 
-    config.active_record.whitelist_attributes = false
-
     config.assets.enabled = true
     config.assets.version = '1.0'
 

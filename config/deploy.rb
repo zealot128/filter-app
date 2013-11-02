@@ -31,19 +31,6 @@ require "whenever/capistrano"
 
 
 
-namespace :deploy do
-  task :start, :roles => :app do
-    unicorn.start
-  end
-  task :stop, :roles => :app do
-    unicorn.stop
-  end
-  desc "Restart Application"
-  task :restart, :roles => :app do
-    unicorn.reload
-  end
-end
-
 task :symlink_assets do
   run "ln -nfs #{shared_path}/system #{release_path}/public/system"
 end
@@ -55,7 +42,6 @@ task :setup, :roles => [:app, :db, :web] do
   run "mkdir -p -m 775 #{release_path} #{shared_path}/system && mkdir -p -m 777 #{shared_path}/log"
 end
 
-require 'capistrano-unicorn'
 
 desc "tail log files"
 task :tail, :roles => :app do
