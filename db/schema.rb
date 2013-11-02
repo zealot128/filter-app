@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224004949) do
+ActiveRecord::Schema.define(:version => 20131102124426) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.text     "keywords"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "categories_news_items", :id => false, :force => true do |t|
+    t.integer "category_id"
+    t.integer "news_item_id"
+  end
+
+  add_index "categories_news_items", ["category_id", "news_item_id"], :name => "categories_news_items_index", :unique => true
 
   create_table "news_items", :force => true do |t|
     t.string   "title"
@@ -28,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130224004949) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "gplus"
+    t.text     "full_text"
   end
 
   add_index "news_items", ["guid"], :name => "index_news_items_on_guid"
@@ -40,12 +55,13 @@ ActiveRecord::Schema.define(:version => 20130224004949) do
     t.string   "url"
     t.string   "name"
     t.integer  "value"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "full_text_selector"
   end
 
   add_index "sources", ["type"], :name => "index_sources_on_type"

@@ -1,5 +1,6 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
+  has_and_belongs_to_many :categories
   belongs_to :source
   validates_uniqueness_of :guid, scope: [:source_id]
 
@@ -8,37 +9,10 @@ class NewsItem < ActiveRecord::Base
 
   include FetcherConcern
 
-  def self.process(entry)
-    return NewsItem.new if entry[:published] < FetcherConcern::MAX_AGE.days.ago
-    guid = entry[:guid][0..230]
-    old = entry[:source].news_items.where(guid: guid).first
-    item = old || NewsItem.new( guid: guid)
-    if item.new_record?
-      if entry[:source].name["Personalmagazin"]
-        item.url = entry[:url]
-      else
-        item.url = Fetcher.real_url(entry[:url])
-      end
-      item.source = entry[:source]
-      item.published_at = entry[:published]
-    end
-    item.assign_attributes(
-      teaser: teaser(entry[:text]),
-      title: entry[:title],
-    )
-    item.save
-    item
-  end
-
   def self.cronjob
     NewsItem.current.each do |item|
       item.refresh
     end
-  end
-
-  def self.teaser(text)
-    ActionController::Base.helpers.truncate Nokogiri::HTML.fragment(text).text,
-      length: 400
   end
 
   # freshness max 120

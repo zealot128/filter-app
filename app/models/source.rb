@@ -7,6 +7,10 @@ class Source < ActiveRecord::Base
     thumb: ["16x16", :png]
   }
 
+  def self.[](search)
+    where('url ilike ?', '%' + search + '%').first
+  end
+
   def host
     uri = URI.parse(url)
     uri.path = "/"
@@ -20,7 +24,6 @@ class Source < ActiveRecord::Base
   end
 
   def download_thumb
-    puts host
     doc = Nokogiri.parse(open(host))
     if rel = doc.at("link[rel=icon]") || rel = doc.at("link[rel='shortcut icon']") || rel = doc.at("link[rel='Shortcut icon']")
       path = URI.join(url, rel["href"]).to_s
