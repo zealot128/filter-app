@@ -32,6 +32,12 @@ class TweetProcessor < Processor
         item.full_text = clear html.to_s
       end
     end
+    item.xing = 0
+    item.linkedin = 0
+    item.fb_likes = 0
+    item.gplus = 0
+
+    item.value = item.score
     item.save
   end
 end

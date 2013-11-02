@@ -1,0 +1,36 @@
+- cache feed_source_item do
+  .item{data: feed_source_item.to_data }
+    %h3.title
+      = link_to feed_source_item.url do
+        = feed_source_item.title
+    .sub
+      = render "news_items/source", source: feed_source_item.source
+      &ndash;
+      %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
+        = l feed_source_item.published_at, format: :short
+
+      &ndash;
+      %span.categories
+        = feed_source_item.categories.pluck(:name).to_sentence
+
+
+    .body
+      = feed_source_item.teaser
+    %ul.share.inline
+      %li
+        %i.icon-facebook
+        = feed_source_item.fb_likes
+      %li
+        %i.icon-twitter
+        = feed_source_item.retweets
+      %li
+        %i.icon-linkedin
+        = feed_source_item.linkedin
+      %li
+        = image_tag "xing-16.png", style: "margin-top: -3px"
+        = feed_source_item.xing
+      %li
+        %i.icon-google-plus
+        = feed_source_item.gplus
+
+

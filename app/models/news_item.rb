@@ -61,4 +61,8 @@ class NewsItem < ActiveRecord::Base
     end
   end
 
+  def to_partial_path
+    "news_items/#{source.class.model_name.element}_item"
+  end
+
 end
