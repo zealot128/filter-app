@@ -28,4 +28,13 @@ describe Processor, type: :model do
     end
   end
 
+  specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
+    VCR.use_cassette 'feed-crosswater' do
+      feed_source.url = 'http://crosswater-job-guide.com/feed'
+      feed_source.full_text_selector = '.art-PostContent:nth-child(3)'
+      Processor.process(feed_source)
+      NewsItem.first.full_text.length.should > 200
+    end
+  end
+
 end

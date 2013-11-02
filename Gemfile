@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.0.0'
 gem "pg"
 gem "simple_form"
-gem 'bootstrap-will_paginate'  # pagination
 
 gem "browser"
 gem "bcrypt-ruby"
@@ -13,8 +12,6 @@ gem "httparty"
 
 gem "thin"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
-gem "vcr"
-gem 'webmock'
 gem 'compass-rails', "~> 2.0.alpha.0"
 gem 'mechanize'
 gem 'rails_admin', '~> 0.5'
@@ -43,6 +40,8 @@ group :test do
   gem 'timecop'
   gem "rspec-rails", '~> 2.14.0'
   gem "guard-rspec"
+gem "vcr"
+gem 'webmock'
 end
 
 group :development do
@@ -54,9 +53,14 @@ end
 
 group :development, :test do
   gem "pry-rails"
-  gem 'rb-inotify', '~> 0.8.8'
+  gem 'rb-inotify', '~> 0.9'
   gem "thin"
 end
 
+gem 'ruby-stemmer'
 
 
+
+
+
+gem "devise"

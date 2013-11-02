@@ -28,6 +28,15 @@ class NewsItem < ActiveRecord::Base
     }
   end
 
+  def categorize
+    self.categories = Category.all.select{|i|
+      i.matches?(plaintext)
+    }
+  end
+
+  def plaintext
+    ActionController::Base.helpers.strip_tags full_text
+  end
 
   def refresh
     fetch_linkedin

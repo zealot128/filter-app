@@ -54,7 +54,7 @@ class DefaultProcessor < Processor
     guid = (entry.entry_id || entry.url)
     return if published < FetcherConcern::MAX_AGE.days.ago
     @item = news_item_by_guid(guid)
-    @item.url = url
+    @item.url ||= url
     if @item.new_record?
       @item.source = @source
       @item.published_at = published
@@ -78,7 +78,7 @@ class DefaultProcessor < Processor
     if @source.full_text_selector
       if item.full_text.blank?
         page = get(item.url)
-        item.url = page.uri.to_s
+        item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
         content = page.at(@source.full_text_selector)
         content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
         item.full_text = sanitize content.inner_html, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
