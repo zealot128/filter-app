@@ -45,3 +45,6 @@ Category.create! name: 'Bewerbung', keywords: 'Lebenslauf,Anschreiben,Bewerbungs
 Category.create! name: 'Personen', keywords: 'Interview,personaler,manager'
 Category.create! name: 'Bildung', keywords: 'weiterbildung,hochschule,Universität,ausbildung,mobile learning,online education'
 Category.create! name: 'Social-Media', keywords: 'facebook,xing,twitter,linkedin,fanpage'
+Category.create! name: 'Karriereplanung', keywords: 'karriereplanung,Karriereleiter,beförderung,chef,degradierung,entlassung,gehaltserhöhung'
+Category.create! name: 'Rechtliches', keywords: 'Gerichtsurteil,abmahnung,§,,Paragraph,Anwalt'
+

@@ -10,6 +10,9 @@
 every 15.minutes do
   runner "Source.cronjob"
 end
+every 1.hour do
+  runner ' NewsItem.cronjob'
+end
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
