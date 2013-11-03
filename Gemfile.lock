@@ -61,7 +61,7 @@ GEM
     builder (3.1.4)
     cache_digests (0.2.0)
       actionpack (>= 3.2)
-    capistrano (2.14.2)
+    capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -134,7 +134,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    highline (1.6.15)
+    highline (1.6.20)
     hike (1.2.3)
     http (0.5.0)
       http_parser.rb
@@ -176,11 +176,11 @@ GEM
     nested_form (0.3.2)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.8)
-    net-scp (1.1.0)
+    net-scp (1.1.2)
       net-ssh (>= 2.6.5)
-    net-sftp (2.1.1)
+    net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (2.6.5)
+    net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.5.10)
@@ -327,7 +327,7 @@ DEPENDENCIES
   bootstrap-sass-rails (~> 2.3.2)
   browser
   cache_digests
-  capistrano
+  capistrano (~> 2.14)
   coffee-rails
   compass-rails (~> 2.0.alpha.0)
   devise

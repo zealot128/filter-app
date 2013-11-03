@@ -18,7 +18,7 @@ gem 'rails_admin', '~> 0.5'
 
 group :capistrano do
   gem "rvm-capistrano", github: "wayneeseguin/rvm-capistrano"
-  gem "capistrano"
+  gem "capistrano", '~> 2.14'
   gem "whenever"
 end
 gem 'exception_notification'
