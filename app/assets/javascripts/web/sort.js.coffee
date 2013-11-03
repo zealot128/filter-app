@@ -1,5 +1,5 @@
 load_from_storage =->
-  if window.localStorage
+  if window.localStorage and window.localStorage.getItem('categories')
     $('input.slide').each ->
       name = $(this).attr('name')
       if value = window.localStorage.getItem(name)
