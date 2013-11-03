@@ -42,6 +42,24 @@ task :setup, :roles => [:app, :db, :web] do
   run "mkdir -p -m 775 #{release_path} #{shared_path}/system && mkdir -p -m 777 #{shared_path}/log"
 end
 
+namespace :passenger do
+  task :start, :roles => :app do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+
+  task :stop, :roles => :app do
+    # Do nothing.
+  end
+
+  desc "Restart Application"
+  task :restart, :roles => :app do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+end
+after "deploy:restart", "passenger:restart"
+
+
+
 
 desc "tail log files"
 task :tail, :roles => :app do

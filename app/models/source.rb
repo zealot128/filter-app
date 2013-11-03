@@ -26,7 +26,7 @@ class Source < ActiveRecord::Base
   end
 
   def download_thumb
-    doc = Nokogiri.parse(open(host))
+    doc = Nokogiri.parse(open(host, redirect: true))
     if rel = doc.at("link[rel=icon]") || rel = doc.at("link[rel='shortcut icon']") || rel = doc.at("link[rel='Shortcut icon']")
       path = URI.join(url, rel["href"]).to_s
     else

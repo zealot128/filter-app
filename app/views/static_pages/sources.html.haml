@@ -13,10 +13,10 @@
             %th Aktuelle News:
             %td=source.news_items.home_page.count
           %tr
-            %th News seit #{l source.created_at.to_date}
+            %th News insgesamt:
             %td=source.news_items.count
           %tr
-            %th News pro Woche
+            %th News pro Woche:
             %td
               = source.news_items.count / source.age_in_weeks
 
