@@ -41,6 +41,22 @@
       %input.slide.span4(name="wlength" type="range" value="50" max="100" min="0")
       %i.icon-file-text-alt
       Wortlänge
+
+.btn-group#filter
+  %a.btn.btn-large.dropdown-toggle(href="#")
+    Filter
+    %i.icon-filter(title='Filter')
+    %span.caret
+  %ul.dropdown-menu
+    -Category.all.each do |category|
+      %li
+        = check_box_tag "category[]", category.id, true, id: "category_#{category.id}"
+        = label_tag "category_#{category.id}" do
+          = category.name
+    %li
+      = check_box_tag "category[]", 'false', true, id: "category_false"
+      = label_tag "category_false" do
+        Ohne
 #items
   = render @news_items
 

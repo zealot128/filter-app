@@ -1,6 +1,6 @@
 module FetcherConcern
   extend ActiveSupport::Concern
-  MAX_AGE ||= 8.days
+  MAX_AGE ||= 14.days
   included do
     scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   end

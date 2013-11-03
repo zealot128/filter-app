@@ -1,5 +1,31 @@
+load_from_storage =->
+  if window.localStorage
+    $('input.slide').each ->
+      name = $(this).attr('name')
+      if value = window.localStorage.getItem(name)
+        $(this).val(value)
+
+    categories = window.localStorage.getItem('categories').split(',' )
+    if categories.length > 0
+      $('input[name=category\\[\\]]').attr('checked',false)
+      for category in categories
+        el = $("input[name=category\\[\\]][value=#{category}]")
+        el.prop('checked', true)
+
 
 resort = ->
+  categories = $("input[name=category\\[\\]]:checked").map( ->
+    this.value
+  ).get()
+
+  if window.localStorage
+    $('input.slide').each ->
+      name = $(this).attr('name')
+      val = $(this).val()
+      window.localStorage.setItem(name, val)
+    window.localStorage.setItem('categories', categories)
+
+
   freshness = $('.slide[name=freshness]').val()
   facebook  = $('.slide[name=facebook]').val()
   twitter   = $('.slide[name=twitter]').val()
@@ -9,6 +35,7 @@ resort = ->
   wlength   = $('.slide[name=wlength]').val()
 
 
+
   value = (jquery_object)->
     jquery_object.data("freshness") * freshness +
     jquery_object.data("gplus") * gplus +
@@ -16,23 +43,31 @@ resort = ->
     jquery_object.data("linkedin") * linkedin +
     jquery_object.data("twitter") * twitter +
     jquery_object.data("xing") * xing +
-    jquery_object.data("words") * wlength / 2 +
+    jquery_object.data("words") * Math.sqrt(wlength + 1) +
     jquery_object.data("bias") * 50
 
-  $Ul = $('#items')
-  $Ul.css({position:'relative',height:$Ul.height(),display:'block'})
-  $Li = $('.item')
+  lis = $('.item')
   iLnH = null
-  $Li.each (i,el)->
-    iY = $(el).position().top
-    $.data(el,'h',iY)
-    if (i==1)
-      iLnH = iY
+  lis.each (i,el)->
+    self = $(this)
+    my_categories = self.data('categories')
+    visible = false
+    for category in categories
+      if category =='false' and my_categories.length == 0
+        visible = true
+        break
+      if $.inArray(parseInt(category), my_categories) != -1
+        visible = true
+        break
+    if visible
+      self.show()
+    else
+      self.hide()
+      return
   $('#loader').show()
   setTimeout ->
     $('#loader').hide()
-  ,600
-
+  ,200
 
   $('.item').tsort
     order: "desc"
@@ -45,31 +80,31 @@ resort = ->
         0
       else
         -1
-  .each (i,el)->
-    $El = $(el)
-    iFr = $.data(el,'h')
-    iTo = i*iLnH
-    $El.css({position:'absolute',top:iFr}).animate({top:iTo},500)
-    if i == $('.item').length - 1
-      setTimeout ->
-        $('.item').css("position","static").css("top","auto")
-      , 600
 
 
 $ ->
+  load_from_storage()
   $('.slide').each ->
     el = $(@)
     el.val(el.attr("value"))
   .on "change", (ev)->
     resort()
+  $('#filter input').on 'change', ->
+    resort()
+
   setTimeout ->
     resort()
   , 500
   $('#settings .dropdown-toggle').click ->
     $('#settings .dropdown-menu').toggle()
+    $('#filter .dropdown-menu').hide()
+  $('#filter .dropdown-toggle').click ->
+    $('#settings .dropdown-menu').hide()
+    $('#filter .dropdown-menu').toggle()
   c =  $('.page-container')[0]
   $('body').on "click", (a,b)->
     if (a.target) == c
       $('#settings .dropdown-menu').hide()
+      $('#filter .dropdown-menu').hide()
 
 

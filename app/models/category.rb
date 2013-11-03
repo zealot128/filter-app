@@ -3,7 +3,7 @@ class Category < ActiveRecord::Base
 
   def matches?(text)
     self.keywords.split(',').any? do |keyword|
-      text.downcase[keyword.downcase]
+      text.downcase[ %r{(^|\W)#{Regexp.escape(keyword.downcase)}($|\W)}]
     end
   end
 end

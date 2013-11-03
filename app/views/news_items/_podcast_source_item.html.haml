@@ -1,6 +1,8 @@
+- feed_source_item = podcast_source_item
 - cache feed_source_item do
   .item{data: feed_source_item.to_data }
     %h3.title
+      .icon-volume-up.icon-large
       = link_to feed_source_item.url do
         = feed_source_item.title
     .sub

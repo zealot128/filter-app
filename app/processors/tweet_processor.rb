@@ -5,6 +5,7 @@ class TweetProcessor < Processor
       #main\ .content
       .node-content
       .transcript
+      #articleContent
       #content
       .post-content
       .postContent

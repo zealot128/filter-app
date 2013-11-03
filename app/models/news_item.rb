@@ -26,6 +26,7 @@ class NewsItem < ActiveRecord::Base
       freshness:  (published_at.to_i - FetcherConcern::MAX_AGE.ago.to_i) / 10000,
       bias: source.value,
       words: word_length,
+      categories: category_ids
     }
   end
 
@@ -33,7 +34,7 @@ class NewsItem < ActiveRecord::Base
   def categorize
     if plaintext
       self.categories = Category.all.select{|i|
-        i.matches?(plaintext)
+        i.matches?(plaintext + ' ' + title)
       }
     end
   end
@@ -63,6 +64,19 @@ class NewsItem < ActiveRecord::Base
 
   def to_partial_path
     "news_items/#{source.class.model_name.element}_item"
+  end
+  rails_admin do
+    list do
+      field :title
+      field :url
+      field :source
+      field :published_at do
+        date_format :short
+      end
+      field :categories
+      field :word_length
+      items_per_page 100    # Override default_items_per_page
+    end
   end
 
 end
