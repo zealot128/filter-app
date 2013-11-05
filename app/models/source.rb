@@ -33,6 +33,8 @@ class Source < ActiveRecord::Base
       path = URI.join(url, "/favicon.ico").to_s
     end
     self.update_attributes logo: download_url(path)
+  rescue Exception => e
+    Rails.logger.error "Logo download fehlgeschlagen fuer #{id} -> #{e.inspect}"
   end
 
   def self.cronjob
