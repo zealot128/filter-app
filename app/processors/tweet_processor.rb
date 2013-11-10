@@ -3,6 +3,7 @@ class TweetProcessor < Processor
     rules = %w[
       #main-content
       #main\ .content
+      #articleContent
       .node-content
       .transcript
       #articleContent
