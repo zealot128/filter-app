@@ -10,6 +10,7 @@ class TweetProcessor < Processor
       #content
       .post-content
       .postContent
+      .hcf-content
       .entry-content
       .entryContent
       .content
