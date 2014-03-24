@@ -10,15 +10,17 @@ gem "bcrypt-ruby"
 gem "sitemap_generator"
 gem "httparty"
 
-gem "thin"
 gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
-gem 'compass-rails', "~> 2.0.alpha.0"
+gem 'compass-rails' #, "~> 2.0.alpha.0"
 gem 'mechanize'
 gem 'rails_admin', '~> 0.5'
 
 group :capistrano do
-  gem "rvm-capistrano", github: "wayneeseguin/rvm-capistrano"
-  gem "capistrano", '~> 2.14'
+  gem 'capistrano', '~> 3.0.1'
+  gem 'capistrano-rvm', github: 'capistrano/rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails', '~> 1.1.0'
+  gem 'capistrano-rails-console'
   gem "whenever"
 end
 gem 'exception_notification'

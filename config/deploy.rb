@@ -1,75 +1,39 @@
-require 'bundler/capistrano'
-set :application, "HRcollect"
-set :repository,  "git://localhost/.com/zealot128/AutoShare-Gallery.git"
+set :application, 'pics.stefanwienert.de'
+set :repo_url, 'git@git.stefanwienert.de:hrfilter'
+set :rvm_ruby_version, '2.1.1'
+set :rvm_type, :user
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-role :web, "localhost"                          # Your HTTP server, Apache/etc
-role :app, "localhost"                          # This may be the same as your `Web` server
-role :db,  "localhost", :primary => true # This is where Rails migrations will run
+set :deploy_to, '/var/www/hrfilter.de'
+set :scm, :git
 
-after "deploy:restart", "deploy:cleanup"
-set :deploy_to, "/apps/hrcollect/prod"
-set :repository, "file:///apps/hrcollect/dev"
-set :local_repository, "file://."
-set :user, "stefan"
-set :use_sudo, false
-set :deploy_via, :remote_cache
-default_run_options[:pty] = true
-set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
-set :rvm_install_pkgs, %w[libyaml openssl]
-before 'deploy:setup', 'rvm:install_rvm'   # install RVM
-before 'deploy:setup', 'rvm:install_pkgs'  # install RVM packages before Ruby
-before 'deploy:setup', 'rvm:install_ruby'  # install Ruby and create gemset, or:
-require "rvm/capistrano"
+set :format, :pretty
+set :pty, true
+# set :log_level, :info
 
-set :whenever_command, "bundle exec whenever"
-require "whenever/capistrano"
+set :linked_files, %w{config/database.yml .env}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-#logger.level = Logger::INFO
+set :keep_releases, 5
 
-
-
-task :symlink_assets do
-  run "ln -nfs #{shared_path}/system #{release_path}/public/system"
-end
-after "deploy:update_code", :symlink_assets
-after 'deploy:update_code', 'deploy:migrate'
-
-after "deploy:setup", "setup"
-task :setup, :roles => [:app, :db, :web] do
-  run "mkdir -p -m 775 #{release_path} #{shared_path}/system && mkdir -p -m 777 #{shared_path}/log"
+namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+  after :finishing, 'deploy:cleanup'
+  # after 'restart', :ping_restart
 end
 
-namespace :passenger do
-  task :start, :roles => :app do
-    run "touch #{current_path}/tmp/restart.txt"
-  end
-
-  task :stop, :roles => :app do
-    # Do nothing.
-  end
-
-  desc "Restart Application"
-  task :restart, :roles => :app do
-    run "touch #{current_path}/tmp/restart.txt"
-  end
-end
-after "deploy:restart", "passenger:restart"
-
-
-
-
-desc "tail log files"
-task :tail, :roles => :app do
-  run "tail -f #{shared_path}/log/#{rails_env}.log" do |channel, stream, data|
-    puts "#{channel[:host]}: #{data}"
-    break if stream == :err
+desc 'ping server for passenger restart'
+task :ping_restart do
+  run_locally do
+    execute 'curl --silent -I http://www.hrfilter.de'
   end
 end
 
-task :console, :roles => :app do
-  hostname = find_servers_for_task(current_task).first
-  exec "ssh -l #{user} #{hostname} -t 'source ~/.profile && #{current_path}/script/rails c #{rails_env}'"
-end
+
+
