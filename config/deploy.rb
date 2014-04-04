@@ -1,5 +1,5 @@
-set :application, 'pics.stefanwienert.de'
-set :repo_url, 'git@git.stefanwienert.de:hrfilter'
+set :application, 'hrfilter.de'
+set :repo_url, 'git@localhost:stefan/hrfilter-de.git'
 set :rvm_ruby_version, '2.1.1'
 set :rvm_type, :user
 
@@ -25,6 +25,7 @@ namespace :deploy do
     end
   end
   after :finishing, 'deploy:cleanup'
+  after 'published', :update_crontab
   # after 'restart', :ping_restart
 end
 
@@ -36,4 +37,13 @@ task :ping_restart do
 end
 
 
+
+desc "Update crontab with whenever"
+task :update_crontab do
+  on roles(:all) do
+    within release_path do
+      execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
+    end
+  end
+end
 
