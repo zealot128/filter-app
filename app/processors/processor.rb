@@ -38,7 +38,7 @@ end
 class DefaultProcessor < Processor
   def process(source)
     @source = source
-    entries = Feedzirra::Feed.fetch_and_parse(url, max_redirects: 5, timeout: 30).entries
+    entries = Feedzirra::Feed.fetch_and_parse(source.url, max_redirects: 5, timeout: 30).entries
 
     entries.each do |entry|
       process_entry(entry)
