@@ -16,24 +16,4 @@
         = feed_source_item.categories.pluck(:name).to_sentence
     .body
       = feed_source_item.teaser
-    %ul.share.inline
-      %li
-        %i.icon-facebook
-        = feed_source_item.fb_likes
-      %li
-        %i.icon-twitter
-        = feed_source_item.retweets
-      %li
-        %i.icon-linkedin
-        = feed_source_item.linkedin
-      %li
-        = image_tag "xing-16.png", style: "margin-top: -3px"
-        = feed_source_item.xing
-      %li
-        %i.icon-google-plus
-        = feed_source_item.gplus
-      %li
-        %i.icon-file-text-alt(title='Anzahl Worte (ca.)')
-        = feed_source_item.word_length
-
-
+    = render "news_items/source", source: feed_source_item.source

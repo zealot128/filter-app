@@ -15,11 +15,4 @@
         &mdash;
         = link_to 'auf Twitter', twitter_source_item.url
 
-    %ul.share.inline
-      %li
-        %i.icon-twitter
-        = twitter_source_item.retweets
-      %li
-        %i.icon-file-text-alt(title='Anzahl Worte (ca.)')
-        = twitter_source_item.word_length
-
+    = render 'news_items/share', item: twitter_source_item

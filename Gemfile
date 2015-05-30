@@ -1,7 +1,7 @@
 #source "http://bundler-api.herokuapp.com"
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.2.0'
 gem "pg"
 gem "simple_form"
 
@@ -9,11 +9,8 @@ gem "browser"
 gem "bcrypt-ruby"
 gem "sitemap_generator"
 gem "httparty"
-
-gem "feedzirra", git: "git://github.com/pauldix/feedzirra.git"
-gem 'compass-rails' #, "~> 2.0.alpha.0"
+gem "feedjira"
 gem 'mechanize'
-gem 'rails_admin', '~> 0.5'
 
 group :capistrano do
   gem 'capistrano', '~> 3.0.1'
@@ -29,14 +26,15 @@ gem "paperclip"
 
 gem 'sass-rails'
 gem 'coffee-rails'
-gem 'bootstrap-sass-rails', '~> 2.3.2'
-gem "font-awesome-rails", '~> 3.2.1'
+gem 'bootstrap-sass', '~> 3.1'
+gem "font-awesome-rails", '~> 4.0'
 # gem 'therubyracer', :platforms => :ruby
 
 gem 'uglifier', '>= 1.0.3'
 gem 'jquery-rails'
 gem "sass"
 gem "haml-rails"
+gem 'slim-rails'
 
 group :test do
   gem 'timecop'
@@ -62,9 +60,4 @@ end
 gem 'twitter', '~> 5.0.0.rc.1'
 gem 'ruby-stemmer'
 gem 'rinku', require: 'rails_rinku'
-
-
-
-
-
 gem "devise"

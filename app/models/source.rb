@@ -51,14 +51,4 @@ class Source < ActiveRecord::Base
     raise "NotImplementedError"
   end
 
-  rails_admin do
-    list do
-      field :type
-      field :url
-      field :name
-      field :value
-      field :logo
-      items_per_page 100    # Override default_items_per_page
-    end
-  end
 end

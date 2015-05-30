@@ -1,0 +1,41 @@
+doctype html
+html lang=(locale) class=(browser.to_s)
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    title = content_for?(:title) ? yield(:title) : "HRfilter.de"
+    link rel="shortcut icon" href=image_path("hrfilter-thumb.png")
+    = csrf_meta_tags
+    = javascript_include_tag "web"
+    = stylesheet_link_tag "web"
+
+    = yield :head
+  body
+    nav.navbar.navbar-default
+      .container
+        a.navbar-brand href='/'
+          = image_tag "hrfilter-420x102.png", alt: "Logo", title: "HRfilter.de"
+
+    = yield :content_header if content_for?(:content_header)
+    .page-container
+      .container
+        section.content
+          = content_tag(:p, flash[:alert], :id => "alert", :class => "alert alert-danger fade in alert-auto-dismiss") if flash[:alert]
+          = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
+          = yield
+
+    footer.footer
+      .container
+        .ac
+          ul.footer-links
+            li
+              | \&copy; #{Date.today.year}
+            li= link_to "HRfilter.de", root_path
+            li= link_to "About/Impressum", about_path
+            li= link_to "Quellen", sources_path
+
+    = render "layouts/piwik"
+    / %script(src="https://platform.twitter.com/widgets.js" charset="utf-8")
+    #loader
+      i.icon-spinner.icon-spin.icon-4x
+

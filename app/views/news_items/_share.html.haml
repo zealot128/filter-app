@@ -1,0 +1,31 @@
+%ul.list.list-inline
+  - if item.fb_likes > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-facebook
+        = item.fb_likes
+  - if item.retweets > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-twitter
+        = item.retweets
+  - if item.linkedin > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-linkedin
+        = item.linkedin
+  - if item.xing > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-xing
+        = item.xing
+  - if item.gplus > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-google-plus
+        = item.gplus
+  - if item.word_length > 0
+    %li
+      %span.label.label-default
+        %i.fa.fa-file-text-alt(title='Anzahl Worte (ca.)')
+        = item.word_length

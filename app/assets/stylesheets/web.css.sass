@@ -1,34 +1,16 @@
-//= require font-awesome
-//= require _fonts
-//= require fd-slider.css
-//= require_tree ./web
+@import font-awesome
+// @import _fonts
+// @import fd-slider.css
 
-$gridColumnWidth: 42px
-$gridColumnWidth1200: 42px
-$linkColor: #aa4400
-@import twitter/bootstrap-no-sprites
-@import twitter/bootstrap/responsive-767px-max.scss
+@import bootstrap-sprockets
+$brand-color: #aa4400
+$navbar-height: 100px
 
-.item
-  margin-bottom: 40px
-  h3
-    margin-bottom: 0
-  .sub
-    margin-bottom: 5px
-    color: #444
-  .source
-    color: #999
-@media screen and (min-width: 1200px)
-  .container
-    width: auto
-    margin: 20px
-  .item
-    width: 49%
-    margin-left: 1%
-    display: inline-block
+$navbar-default-bg: #1d0066
+@import bootstrap
 
-@media screen and (min-width: 1600px)
-  .item
-    width: 31%
-    margin-right: 1%
-    display: inline-block
+.navbar-brand
+
+  padding: 10px
+  img
+    max-height: 80px

@@ -65,18 +65,5 @@ class NewsItem < ActiveRecord::Base
   def to_partial_path
     "news_items/#{source.class.model_name.element}_item"
   end
-  rails_admin do
-    list do
-      field :title
-      field :url
-      field :source
-      field :published_at do
-        date_format :short
-      end
-      field :categories
-      field :word_length
-      items_per_page 100    # Override default_items_per_page
-    end
-  end
 
 end
