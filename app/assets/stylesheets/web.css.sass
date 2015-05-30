@@ -3,14 +3,53 @@
 // @import fd-slider.css
 
 @import bootstrap-sprockets
+@import bootswatch/cosmo/variables
 $brand-color: #aa4400
 $navbar-height: 100px
 
-$navbar-default-bg: #1d0066
+$navbar-default-bg: #f3f3f3
+
 @import bootstrap
+@import bootswatch/cosmo/bootswatch
 
 .navbar-brand
-
   padding: 10px
   img
     max-height: 80px
+.navbar
+  border-radius: 0
+
+
+footer
+  margin-top: 100px
+  padding-top: 15px
+  border: 1px solid #ddd
+  background: #f2f2f2
+
+
+.panel-default
+  .panel-body
+    height: 200px
+    overflow: hidden
+  .panel-heading
+    height: 73px
+    overflow: hidden
+
+.panel-footer .categories
+  display: block
+  text-overflow: ellipsis
+  height: 1.5em
+  overflow: hidden
+  width: 100%
+  white-space: nowrap
+
+.panel-title, p, .panel-body
+  hyphens: auto
+  -moz-hyphens: auto
+  -webkit-hyphens: auto
+  -ms-hyphens: auto
+
+blockquote
+  line-height: 1.2
+  padding: 10px
+  font-size: 120%

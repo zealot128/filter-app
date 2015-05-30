@@ -1,18 +1,16 @@
-- cache twitter_source_item do
-  .item.twitter-item{data: twitter_source_item.to_data}
-    %br
-    .sub
-      = render "news_items/source", source: twitter_source_item.source
-      &ndash;
-      %span.date(data-time="#{twitter_source_item.published_at.to_i}" title="#{l twitter_source_item.published_at}")
-        = l twitter_source_item.published_at, format: :short
-      &ndash;
-      %span.categories
-        = twitter_source_item.categories.pluck(:name).to_sentence
+.panel.panel-default
+  .panel-heading
+    %i.fa.fa-twitter.fa-lg
+    = render "news_items/source", source: twitter_source_item.source
+    %span.date(data-time="#{twitter_source_item.published_at.to_i}" title="#{l twitter_source_item.published_at}")
+      = l twitter_source_item.published_at, format: :short
+  .panel-body
 
-      %blockquote.twitter-tweet
-        %p= auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
-        &mdash;
-        = link_to 'auf Twitter', twitter_source_item.url
+    %blockquote.twitter-tweet
+      %p= auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
+    = link_to 'auf Twitter', twitter_source_item.url
 
+  .panel-footer
+    %small.categories
+      = twitter_source_item.categories.pluck(:name).to_sentence
     = render 'news_items/share', item: twitter_source_item

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530203402) do
+ActiveRecord::Schema.define(version: 20150530225313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150530203402) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "full_text_selector", limit: 255
+    t.boolean  "error"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree

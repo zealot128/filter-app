@@ -27,6 +27,7 @@ gem "paperclip"
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'bootstrap-sass', '~> 3.1'
+gem 'bootswatch-rails'
 gem "font-awesome-rails", '~> 4.0'
 # gem 'therubyracer', :platforms => :ruby
 

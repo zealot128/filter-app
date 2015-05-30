@@ -26,13 +26,12 @@ html lang=(locale) class=(browser.to_s)
 
     footer.footer
       .container
-        .ac
-          ul.footer-links
-            li
-              | \&copy; #{Date.today.year}
-            li= link_to "HRfilter.de", root_path
-            li= link_to "About/Impressum", about_path
-            li= link_to "Quellen", sources_path
+        ul.list-inline
+          li
+            | &copy; #{Date.today.year}
+          li= link_to "HRfilter.de", root_path
+          li= link_to "About/Impressum", about_path
+          li= link_to "Quellen", sources_path
 
     = render "layouts/piwik"
     / %script(src="https://platform.twitter.com/widgets.js" charset="utf-8")

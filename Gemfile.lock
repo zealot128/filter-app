@@ -61,6 +61,8 @@ GEM
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
+    bootswatch-rails (3.2.0)
+      railties (>= 3.1)
     browser (0.8.0)
     buftok (0.1)
     builder (3.2.2)
@@ -358,6 +360,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.1)
+  bootswatch-rails
   browser
   cache_digests
   capistrano (~> 3.0.1)

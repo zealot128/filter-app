@@ -8,6 +8,7 @@ class Source < ActiveRecord::Base
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png]
   }
+  do_not_validate_attachment_file_type :logo
 
   def self.[](search)
     where('url ilike ?', '%' + search + '%').first

@@ -53,5 +53,8 @@
       = label_tag "category_false" do
         Ohne
 #items
-  = render @news_items
+  .row
+    - @news_items.each do |item|
+      .col-lg-3.col-sm-6
+        = render item
 
