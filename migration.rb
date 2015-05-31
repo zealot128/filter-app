@@ -7,3 +7,7 @@ FeedSource.create! url: 'http://www.saatkorn.com/feed', name: 'Saatkorn', value:
 Source.find(29).destroy
 Source.find(37).destroy
 Source.find(31).destroy
+
+Source.find_each do |s|
+  s.logo.reprocess!
+end

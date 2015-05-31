@@ -6,7 +6,8 @@ class Source < ActiveRecord::Base
   after_create :download_thumb
 
   has_attached_file :logo, styles: {
-    thumb: ["16x16", :png]
+    thumb: ["16x16", :png],
+    small: ["50x50", :png]
   }
   do_not_validate_attachment_file_type :logo
 

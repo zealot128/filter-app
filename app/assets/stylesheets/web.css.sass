@@ -37,6 +37,24 @@ $panel-body-height: 200px
   .panel-heading
     height: 73px
     overflow: hidden
+  .fog-fade
+    background-image: image-url('bg-trans.png')
+    position: absolute
+    top: $panel-body-height - 43px - 30px
+    left: 0
+    width: 100%
+    height: 79px
+    background-repeat: repeat-x
+    background-position: bottom
+
+$twitter-panel-offset: 30px
+.panel-twitter
+  .panel-heading
+    height:  73px - $twitter-panel-offset
+  .panel-body
+    height: $panel-body-height + $twitter-panel-offset
+  .fog-fade
+    top: $panel-body-height + $twitter-panel-offset - 43px - 30px
 
 .panel-footer .categories
   display: block
@@ -73,13 +91,7 @@ blockquote
   position: relative
   line-height: 1.3
   font-size: 14px
-.fog-fade
-  background-image: image-url('bg-trans.png')
-  position: absolute
-  top: $panel-body-height - 43px - 30px
-  left: 0
-  width: 100%
-  height: 79px
-  background-repeat: repeat-x
-  background-position: bottom
 
+.category-tabs
+  margin-bottom: 10px
+  font-size: 12px

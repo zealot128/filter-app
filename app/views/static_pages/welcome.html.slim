@@ -1,0 +1,55 @@
+- content_for :title, "HRfilter.de"
+
+- content_for :content_header do
+  div(style='background: #3C4692; color: #eee; padding-top: 30px; padding-bottom: 30px')
+    .container
+      p HRfilter ist ein Aggregator für Nachrichten aus dem Personalwesen / HR-Bereich. Zusammengefasst werden News aus <a href='# sources_path '>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
+
+.btn-group#settings
+  a.btn.btn-large.dropdown-toggle(href="#")
+    | Sortieren
+    i.icon-cogs(title="Einstellungen")
+    span.caret
+  ul.dropdown-menu
+    li
+      input.slide.span4(name="freshness" type="range" step="1" value="100" max="100" min="0")
+      i.icon-time
+      | Freshness
+    li
+      input.slide.span4(name="facebook" type="range" value="10" max="100" min="0")
+      i.icon-facebook
+      | Facebook
+    li
+      input.slide.span4(name="twitter" type="range" value="30" max="100" min="0")
+      i.icon-twitter
+      | Twitter
+    li
+      input.slide.span4(name="xing" type="range" value="100" max="100" min="0")
+      i.icon-xing
+      | XING
+    li
+      input.slide.span4(name="linkedin" type="range" value="50" max="100" min="0")
+      i.icon-linkedin
+      | Linkedin
+    li
+      input.slide.span4(name="gplus" type="range" value="50" max="100" min="0")
+      i.icon-google-plus-sign
+      | Google+
+    li
+      input.slide.span4(name="wlength" type="range" value="50" max="100" min="0")
+      i.icon-file-text-alt
+      | Wortlänge
+
+.category-tabs
+  ul.nav.nav-pills
+    li.active: a href='#/' Alle
+    - Category.all.each do |category|
+      li
+        a href='#/category/#{category.id}' = category.name
+
+#items
+  .row
+    - @news_items.each do |item|
+      .col-lg-3.col-sm-6
+        = render item
+

@@ -1,4 +1,4 @@
 %span.source
   - if source.logo.exists?
-    = image_tag source.logo.url(:thumb), size: '16x16'
-  = source.name
+    = image_tag source.logo.url(:small), size: '30x30'
+  %span{title: source.name}= truncate source.name, length: 50
