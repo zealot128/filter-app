@@ -3,10 +3,10 @@ class DefaultProcessor < Processor
     @source = source
     feed = Feedjira::Feed.fetch_and_parse(source.url, max_redirects: 5, timeout: 30)
     if !feed.respond_to?(:entries)
-      source.update_column :has_error, true
+      source.update_column :error, true
       # TODO Error reporting
     else
-      source.update_column :has_error, false
+      source.update_column :error, false
       feed.entries.each do |entry|
         process_entry(entry)
       end
@@ -33,7 +33,6 @@ class DefaultProcessor < Processor
       @item.source = @source
       @item.published_at = published
     end
-    categories(@item)
     follow_url(@item)
     @item.assign_attributes(
       teaser: teaser(text),
@@ -48,16 +47,16 @@ class DefaultProcessor < Processor
         page = get(item.url)
         item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
         content = page.at(@source.full_text_selector)
-        content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
-        item.full_text = clear content.inner_html
+        if content
+          content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
+          item.full_text = clear content.inner_html
+        else
+          item.full_text = @entry.content || @entry.summary
+        end
       end
     else
-      @item.full_text = @entry.content || @entry.summary
+      item.full_text = @entry.content || @entry.summary
     end
-  end
-
-  def categories(item)
-    @entry.categories
   end
 
 end

@@ -1,7 +1,7 @@
 class TwitterSource < Source
 
   def refresh
-    self.class.client.user_timeline(user_name).each do |tweet|
+    self.class.client.user_timeline(user_name).take(50).each do |tweet|
       TweetProcessor.new.process_tweet(self,tweet)
     end
   end

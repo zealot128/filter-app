@@ -4,7 +4,7 @@ html lang=(locale) class=(browser.to_s)
     meta charset="utf-8"
     meta content="width=device-width, initial-scale=1" name="viewport"
     title = content_for?(:title) ? yield(:title) : "HRfilter.de"
-    link rel="shortcut icon" href=image_path("hrfilter-thumb.png")
+    link rel="shortcut icon" href=image_path("hrfilter-favicon.png")
     = csrf_meta_tags
     = javascript_include_tag "web"
     = stylesheet_link_tag "web"

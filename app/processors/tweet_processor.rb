@@ -29,10 +29,14 @@ class TweetProcessor < Processor
       item.retweets += tweet.retweeted_status.retweet_count
     end
 
-    if link = tweet.urls.first.try(:expanded_url) and item.full_text.blank?
+    if (link = tweet.urls.first.try(:expanded_url)) and item.full_text.blank?
       res = get(link.to_s)
-      if html = res.at(rules.join(', '))
-        item.full_text = clear html.to_s
+      begin
+        if html = res.at(rules.join(', '))
+          item.full_text = clear html.to_s
+        end
+      rescue StandardError
+        item.full_text = ""
       end
     end
     item.xing = 0

@@ -32,6 +32,7 @@ class Processor
 
   def get(url)
     @m ||= Mechanize.new
+    @m.verify_mode = OpenSSL::SSL::VERIFY_NONE
     @m.user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     @m.get(url)
   end

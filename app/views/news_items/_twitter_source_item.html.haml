@@ -7,7 +7,7 @@
   .panel-body
 
     %blockquote.twitter-tweet
-      %p= auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
+      = auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
     = link_to 'auf Twitter', twitter_source_item.url
 
   .panel-footer

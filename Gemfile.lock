@@ -102,13 +102,6 @@ GEM
     curb (0.8.8)
     daemons (1.2.2)
     debug_inspector (0.0.2)
-    devise (3.5.1)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      responders
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
@@ -212,7 +205,6 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     ntlm-http (0.1.1)
-    orm_adapter (0.5.0)
     paperclip (4.2.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -256,8 +248,6 @@ GEM
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    responders (2.1.0)
-      railties (>= 4.2.0, < 5)
     rinku (1.7.3)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -343,8 +333,6 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     vcr (2.9.3)
-    warden (1.2.3)
-      rack (>= 1.0)
     webmock (1.21.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -369,7 +357,6 @@ DEPENDENCIES
   capistrano-rails-console
   capistrano-rvm!
   coffee-rails
-  devise
   exception_notification
   feedjira
   font-awesome-rails (~> 4.0)

@@ -1,4 +1,4 @@
 %span.source
-  - if source.logo.present?
-    = image_tag source.logo.url(:thumb)
+  - if source.logo.exists?
+    = image_tag source.logo.url(:thumb), size: '16x16'
   = source.name

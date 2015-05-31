@@ -42,8 +42,9 @@ class Source < ActiveRecord::Base
     Source.find_each do |t|
       begin
         t.refresh
-      rescue Exception
-        puts "Fehler bei #{t.url} (#{t.id})"
+      rescue Exception => e
+        t.update_column :error, true
+        $stderr.puts "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
       end
     end
   end

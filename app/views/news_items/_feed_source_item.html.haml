@@ -4,15 +4,15 @@
       = link_to feed_source_item.url, target: '_blank' do
         = feed_source_item.title
   .panel-body
-    %p
-      %small
-        = render "news_items/source", source: feed_source_item.source
-        &ndash;
-        %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
-          = l feed_source_item.published_at, format: :short
+    %p.source
+      = render "news_items/source", source: feed_source_item.source
+      &ndash;
+      %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
+        = l feed_source_item.published_at, format: :short
 
-        &ndash;
     = feed_source_item.teaser
+    .fog-fade
+
   .panel-footer
     %small.categories
       = feed_source_item.categories.pluck(:name).to_sentence
