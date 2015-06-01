@@ -8,6 +8,9 @@ class NewsItem < ActiveRecord::Base
   scope :home_page, -> { order("value desc").where("value is not null").current }
 
   include FetcherConcern
+  include PgSearch
+  pg_search_scope :search_full_text, :against => [:title, :plaintext], :using => [:tsearch, :trigram],
+    :order_within_rank => "news_items.published_at DESC"
 
   def self.cronjob
     NewsItem.current.each do |item|
@@ -38,12 +41,10 @@ class NewsItem < ActiveRecord::Base
       }
     end
   end
-  before_save do
-    self.word_length = words.length
-  end
 
-  def plaintext
-    ActionController::Base.helpers.strip_tags(full_text || teaser || title)
+  before_save do
+    self.plaintext = ActionController::Base.helpers.strip_tags(full_text || teaser || title || "")
+    self.word_length = words.length
   end
 
   def words

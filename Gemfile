@@ -12,6 +12,7 @@ gem "sitemap_generator"
 gem "httparty"
 gem "feedjira"
 gem 'mechanize'
+gem 'pg_search'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-director'

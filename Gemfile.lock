@@ -213,6 +213,10 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pg (0.18.2)
+    pg_search (0.7.8)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -381,6 +385,7 @@ DEPENDENCIES
   mechanize
   paperclip
   pg
+  pg_search
   pry-rails
   rails (~> 4.2.0)
   rails-assets-director!

@@ -11,10 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530225713) do
+ActiveRecord::Schema.define(version: 20150601145020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150530225713) do
     t.integer  "gplus"
     t.text     "full_text"
     t.integer  "word_length"
+    t.text     "plaintext"
   end
 
   add_index "news_items", ["guid"], name: "index_news_items_on_guid", using: :btree
