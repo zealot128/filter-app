@@ -40,11 +40,7 @@ var setCategoryActive = function() {
 
 var loadAllPosts = function(then) {
   $.get('/api/news_items/homepage.json', (data) => {
-    var str = "";
-    for(var el of data.news_items) {
-      str += el.html;
-    }
-    grid.html(str);
+    grid.html(data.html);
     then();
   });
 };
