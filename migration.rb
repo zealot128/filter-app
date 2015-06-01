@@ -11,3 +11,13 @@ Source.find(31).destroy
 Source.find_each do |s|
   s.logo.reprocess!
 end
+
+Category.where(name: 'Recruiting').first.tap do |c|
+  c.keywords += ',Stellenausschreibung'
+  c.save
+end
+
+Category.create!(
+  name: 'Gehalt',
+  keywords: 'Gehalt,Bezahlung,equal pay,einkommen,vergütung,Verdienst,Variabler Anteil'
+)

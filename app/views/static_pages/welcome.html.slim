@@ -1,11 +1,11 @@
 - content_for :title, "HRfilter.de"
 
 - content_for :content_header do
-  div(style='background: #3C4692; color: #eee; padding-top: 30px; padding-bottom: 30px')
+  .content-header
     .container
       p HRfilter ist ein Aggregator für Nachrichten aus dem Personalwesen / HR-Bereich. Zusammengefasst werden News aus <a href='# sources_path '>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
 
-.btn-group#settings
+/* .btn-group#settings */
   a.btn.btn-large.dropdown-toggle(href="#")
     | Sortieren
     i.icon-cogs(title="Einstellungen")
@@ -47,6 +47,9 @@
     - Category.all.each do |category|
       li data-active-on='/category/#{category.id}'
         a href='#/category/#{category.id}' = category.name
+    li data-active-on='/category/0'
+      a href='#/category/0' unkategorisiert
+
 
 #items
   .row.js-grid

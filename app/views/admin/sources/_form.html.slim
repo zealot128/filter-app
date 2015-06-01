@@ -1,0 +1,11 @@
+= simple_form_for [:admin, @source.becomes(Source)] do |f|
+  = f.input :url
+  = f.input :name
+  = f.input :full_text_selector
+  = f.input :value
+  - if @source.new_record?
+    = f.input :type, collection: ['FeedSource', 'TwitterSource', 'PodcastSource'], include_blank: false
+  = f.input :logo
+
+  = f.submit class: 'btn btn-primary'
+

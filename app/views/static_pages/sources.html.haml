@@ -2,11 +2,15 @@
   %h1 Quellen
 - Source.order("LOWER(name)").each do |source|
   .source.row
-    .span8
+    .col-sm-8
       = render "news_items/source", source: source
-      %pre
-        = source.url
-    .span4
+      - if source.is_a? TwitterSource
+        %pre
+          https://twitter.com/#{source.name}
+      - else
+        %pre
+          = source.url
+    .col-sm-4
       %table.table
         %tbody
           %tr

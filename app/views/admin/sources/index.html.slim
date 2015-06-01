@@ -1,0 +1,16 @@
+p
+  = link_to [:new, :admin, :source], class: 'btn btn-primary'  do
+    |Neu
+
+table.table.table-striped
+  - @sources.each do |source|
+    tr class='#{source.error ? 'danger' : ''}'
+      td = render 'news_items/source', source: source
+      td = source.news_items.current.count
+      td
+        = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
+          |bearbeiten
+        = ' '
+        = link_to source.url, class: 'btn btn-xs' do
+          |url
+

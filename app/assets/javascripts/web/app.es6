@@ -20,6 +20,9 @@ var reshuffle = function() {
       return true;
     }
     var data = el.data('item');
+    if (currentCategory === 0) {
+      return data.categories.length === 0;
+    }
     return data.categories.indexOf(currentCategory) != -1;
   });
 };
