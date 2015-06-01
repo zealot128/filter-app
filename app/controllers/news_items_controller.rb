@@ -10,7 +10,7 @@ class NewsItemsController < ApplicationController
   def homepage
     @news_items = NewsItem.home_page
     render json: {
-      html: render_to_string('homepage.html'),
+      html: render_to_string('homepage.html', layout: false),
     }
   end
 end
