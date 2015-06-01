@@ -8,7 +8,6 @@ set :rvm_type, :user
 set :deploy_to, '/var/www/hrfilter.de'
 set :scm, :git
 
-set :format, :pretty
 set :pty, true
 # set :log_level, :info
 

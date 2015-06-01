@@ -24,6 +24,7 @@ group :capistrano do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rails-console'
+  gem "airbrussh", :require => false
   gem "whenever"
 end
 gem 'exception_notification'
