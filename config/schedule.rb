@@ -8,3 +8,7 @@ end
 every 1.hour do
   runner ' NewsItem.cronjob'
 end
+
+every 1.day do
+  runner 'DuplicateFinder.run'
+end
