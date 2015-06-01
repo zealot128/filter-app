@@ -1,13 +1,16 @@
 h2 Alle indizierten News durchsuchen
 
-= form_tag '/search', class: 'form-inline', method: :get do
-  .form-group
-    label.control-label>(for='q')
-      | Suchbegriff
-    br
-  .form-group
-    = text_field_tag :q, params[:q], class: 'form-control'
-  input.btn.btn-primary type='submit' value='Suchen'
+- content_for :content_header do
+  .content-header
+    .container
+      = form_tag '/search', class: 'form-inline', method: :get do
+        .form-group
+          label.control-label>(for='q')
+            | Suchbegriff
+          br
+        .form-group
+          = text_field_tag :q, params[:q], class: 'form-control'
+        input.btn.btn-primary type='submit' value='Suchen'
 
 - if params[:q]
   br
