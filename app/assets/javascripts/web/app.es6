@@ -38,13 +38,26 @@ var setCategoryActive = function() {
   });
 };
 
+var loadAllPosts = function(then) {
+  $.get('/api/news_items/homepage.json', (data) => {
+    var str = "";
+    for(var el of data.news_items) {
+      str += el.html;
+    }
+    grid.html(str);
+    then();
+  });
+};
+
 $(document).on("ready page:load", () => {
   grid = $('.js-grid');
-  grid.shuffle('sort', {
-    itemSelector: '.js-grid-item'
+  loadAllPosts(function() {
+    grid.shuffle('sort', {
+      itemSelector: '.js-grid-item'
+    });
+    var router = Router(routes);
+    router.init();
+    window.router = router;
   });
-  var router = Router(routes);
-  router.init();
-  window.router = router;
 });
 
