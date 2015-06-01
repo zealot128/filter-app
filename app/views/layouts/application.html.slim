@@ -25,12 +25,14 @@ html lang=(locale) class=(browser.to_s)
           = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
           = yield
 
+    = yield :content_footer if content_for?(:content_header)
     footer.footer
       .container
         ul.list-inline
           li
             | &copy; #{Date.today.year}
           li= link_to "HRfilter.de", root_path
+          li= link_to "Suche", search_path
           li= link_to "FAQ/Impressum", about_path
           li= link_to "Quellen", sources_path
 

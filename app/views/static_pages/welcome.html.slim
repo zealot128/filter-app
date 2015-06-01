@@ -23,3 +23,15 @@
       .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
         = render item
 
+- content_for :content_footer do
+  .content-header
+    .container
+      h3 Alle News durchsuchen
+      = form_tag '/search', class: 'form-inline', method: :get do
+        .form-group
+          label.control-label>(for='q')
+            | Suchbegriff
+          br
+        .form-group
+          = text_field_tag :q, params[:q], class: 'form-control'
+        input.btn.btn-primary type='submit' value='Suchen'
