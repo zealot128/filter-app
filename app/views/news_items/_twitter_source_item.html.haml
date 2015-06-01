@@ -2,7 +2,7 @@
   .panel-heading
     .pull-right
       %i.fa.fa-twitter.fa-lg
-    = render "news_items/source", source: twitter_source_item.source
+    = render "news_items/source", source: twitter_source_item.source, size: '30x30'
   .panel-body
     %p.source
       = twitter_source_item.source.name

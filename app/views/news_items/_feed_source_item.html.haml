@@ -5,7 +5,7 @@
         = truncate(feed_source_item.title, length: 60)
   .panel-body
     %p.source
-      = render "news_items/source", source: feed_source_item.source
+      = render "news_items/source", source: feed_source_item.source, size: '16x16'
       &ndash;
       %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
         = l feed_source_item.published_at, format: :short

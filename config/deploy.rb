@@ -12,7 +12,7 @@ set :format, :pretty
 set :pty, true
 # set :log_level, :info
 
-set :linked_files, %w{config/database.yml .env}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :keep_releases, 5
@@ -43,7 +43,8 @@ namespace :deploy do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
+  after :finishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
   after 'published', :update_crontab
-  # after 'restart', :ping_restart
+  after 'finishing', :ping_restart
 end
