@@ -3,7 +3,7 @@
 - Source.order("LOWER(name)").each do |source|
   .source.row
     .col-sm-8
-      = render "news_items/source", source: source
+      = render "news_items/source", source: source, size: '16x16'
       - if source.is_a? TwitterSource
         %pre
           https://twitter.com/#{source.name}
