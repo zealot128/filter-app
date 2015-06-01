@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601145020) do
+ActiveRecord::Schema.define(version: 20150601151348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,27 +33,29 @@ ActiveRecord::Schema.define(version: 20150601145020) do
   add_index "categories_news_items", ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true, using: :btree
 
   create_table "news_items", force: :cascade do |t|
-    t.string   "title",        limit: 255
+    t.string   "title",         limit: 255
     t.text     "teaser"
-    t.string   "url",          limit: 255
+    t.string   "url",           limit: 255
     t.integer  "source_id"
     t.datetime "published_at"
     t.integer  "value"
     t.integer  "fb_likes"
     t.integer  "retweets"
-    t.string   "guid",         limit: 255
+    t.string   "guid",          limit: 255
     t.integer  "linkedin"
     t.integer  "xing"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "gplus"
     t.text     "full_text"
     t.integer  "word_length"
     t.text     "plaintext"
+    t.tsvector "search_vector"
   end
 
   add_index "news_items", ["guid"], name: "index_news_items_on_guid", using: :btree
   add_index "news_items", ["published_at"], name: "index_news_items_on_published_at", using: :btree
+  add_index "news_items", ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
   add_index "news_items", ["source_id"], name: "index_news_items_on_source_id", using: :btree
   add_index "news_items", ["value"], name: "index_news_items_on_value", using: :btree
 

@@ -1,0 +1,18 @@
+h2 Alle indizierten News durchsuchen
+
+= form_tag '/search', class: 'form-inline', method: :get do
+  .form-group
+    label.control-label>(for='q')
+      | Suchbegriff
+    = text_field_tag :q, params[:q], class: 'form-control'
+  input.btn.btn-primary type='submit' value='Suchen'
+
+- if params[:q]
+  - if @news_items.present?
+    .row
+      = render @news_items, length: 400
+    = will_paginate @collection, renderer: BootstrapPagination::Rails
+  - else
+    .alert.alert-warning
+      | Leider keine News gefunden
+

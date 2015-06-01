@@ -13,6 +13,7 @@ gem "httparty"
 gem "feedjira"
 gem 'mechanize'
 gem 'pg_search'
+gem 'will_paginate-bootstrap'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-director'

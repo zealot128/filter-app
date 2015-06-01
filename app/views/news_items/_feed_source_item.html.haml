@@ -1,8 +1,9 @@
+- length ||= 60
 .panel.panel-default
   .panel-heading
     %h3.panel-title
       = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title do
-        = truncate(feed_source_item.title, length: 60)
+        = truncate(feed_source_item.title, length: length)
   .panel-body
     %p.source
       = render "news_items/source", source: feed_source_item.source, size: '16x16'

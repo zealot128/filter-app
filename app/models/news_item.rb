@@ -9,8 +9,17 @@ class NewsItem < ActiveRecord::Base
 
   include FetcherConcern
   include PgSearch
-  pg_search_scope :search_full_text, :against => [:title, :plaintext], :using => [:tsearch, :trigram],
-    :order_within_rank => "news_items.published_at DESC"
+  pg_search_scope :search_full_text,
+    :order_within_rank => "news_items.published_at DESC",
+    against: :search_vector,
+    using: {
+      tsearch: {
+        dictionary: 'german',
+        any_word: true,
+        prefix: true,
+        tsvector_column: 'search_vector'
+      }
+    }
 
   def self.cronjob
     NewsItem.current.each do |item|

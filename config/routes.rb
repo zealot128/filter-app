@@ -7,6 +7,7 @@ Baseapp::Application.routes.draw do
     resources :sources
   end
 
+  get 'search' => 'news_items#index'
 
   root to: "static_pages#welcome"
 end
