@@ -32,6 +32,8 @@
           label.control-label>(for='q')
             | Suchbegriff
           br
+        = ' '
         .form-group
           = text_field_tag :q, params[:q], class: 'form-control'
+        = ' '
         input.btn.btn-primary type='submit' value='Suchen'
