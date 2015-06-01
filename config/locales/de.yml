@@ -1,0 +1,5 @@
+de:
+  will_paginate:
+    previous_label: "Vorherige Seite"
+    next_label:     "Nächste Seite"
+    page_gap:       "..."

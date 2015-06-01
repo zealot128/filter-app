@@ -4,13 +4,20 @@ h2 Alle indizierten News durchsuchen
   .form-group
     label.control-label>(for='q')
       | Suchbegriff
+    br
+  .form-group
     = text_field_tag :q, params[:q], class: 'form-control'
   input.btn.btn-primary type='submit' value='Suchen'
 
 - if params[:q]
+  br
+  br
   - if @news_items.present?
     .row
-      = render @news_items, length: 400
+      - @news_items.each do |ni|
+        .col-lg-3.col-sm-6
+          = render ni
+
     = will_paginate @collection, renderer: BootstrapPagination::Rails
   - else
     .alert.alert-warning
