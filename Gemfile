@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.0'
+gem 'sprockets-es6'
 gem "pg"
 gem "simple_form"
 
@@ -11,6 +12,11 @@ gem "sitemap_generator"
 gem "httparty"
 gem "feedjira"
 gem 'mechanize'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-director'
+  gem 'rails-assets-shufflejs'
+end
 
 group :capistrano do
   gem 'capistrano', '~> 3.0.1'

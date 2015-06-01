@@ -22,7 +22,7 @@ $ ->
       date = new Date(1000 * me.data("time"))
       me.html $.timeago(date)
 
-    setTimeout refresh_date, 5000
+    setTimeout refresh_date, 50000
 
   refresh_date()
 

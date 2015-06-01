@@ -42,14 +42,15 @@
 
 .category-tabs
   ul.nav.nav-pills
-    li.active: a href='#/' Alle
+    li.active data-active-on='/'
+      a href='#/' Alle
     - Category.all.each do |category|
-      li
+      li data-active-on='/category/#{category.id}'
         a href='#/category/#{category.id}' = category.name
 
 #items
-  .row
+  .row.js-grid
     - @news_items.each do |item|
-      .col-lg-3.col-sm-6
+      .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
         = render item
 
