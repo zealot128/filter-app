@@ -66,6 +66,19 @@ class NewsItem < ActiveRecord::Base
     plaintext.split(/[^\p{Word}]+/)
   end
 
+  def get_full_text
+    if source.full_text_selector?
+      page = get(item.url)
+      item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
+      content = page.at(@source.full_text_selector)
+      if content
+        content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
+        item.full_text = clear content.inner_html
+      end
+    end
+  rescue Mechanize::ResponseCodeError
+  end
+
   def refresh
     if source.is_a? FeedSource
       fetch_linkedin

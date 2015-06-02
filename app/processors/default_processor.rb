@@ -45,19 +45,8 @@ class DefaultProcessor < Processor
   def follow_url(item)
     is_blank = item.full_text.blank?
     item.full_text = @entry.content || @entry.summary
-    if @source.full_text_selector?
-      if is_blank
-        begin
-          page = get(item.url)
-          item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
-          content = page.at(@source.full_text_selector)
-          if content
-            content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
-            item.full_text = clear content.inner_html
-          end
-        rescue Mechanize::ResponseCodeError
-        end
-      end
+    if is_blank
+      item.get_full_text
     end
   end
 
