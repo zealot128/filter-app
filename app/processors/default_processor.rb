@@ -4,6 +4,7 @@ class DefaultProcessor < Processor
     feed = Feedjira::Feed.fetch_and_parse(source.url, max_redirects: 5, timeout: 30)
     if !feed.respond_to?(:entries)
       source.update_column :error, true
+      puts "Feed download fehlgeschlagen: #{feed}"
       # TODO Error reporting
     else
       source.update_column :error, false
@@ -42,20 +43,21 @@ class DefaultProcessor < Processor
   end
 
   def follow_url(item)
+    is_blank = item.full_text.blank?
+    item.full_text = @entry.content || @entry.summary
     if @source.full_text_selector?
-      if item.full_text.blank?
-        page = get(item.url)
-        item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
-        content = page.at(@source.full_text_selector)
-        if content
-          content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
-          item.full_text = clear content.inner_html
-        else
-          item.full_text = @entry.content || @entry.summary
+      if is_blank
+        begin
+          page = get(item.url)
+          item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
+          content = page.at(@source.full_text_selector)
+          if content
+            content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
+            item.full_text = clear content.inner_html
+          end
+        rescue Mechanize::ResponseCodeError
         end
       end
-    else
-      item.full_text = @entry.content || @entry.summary
     end
   end
 
