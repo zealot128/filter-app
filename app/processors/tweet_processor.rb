@@ -14,7 +14,11 @@ class TweetProcessor < Processor
       .entry-content
       .entryContent
       .content
+      .post
+      .entry
       article
+      main
+      section
     ]
 
     url = tweet.url.to_s
