@@ -9,7 +9,11 @@ class DefaultProcessor < Processor
     else
       source.update_column :error, false
       feed.entries.each do |entry|
-        process_entry(entry)
+        item = process_entry(entry)
+        if item
+          item.get_full_text
+          item.save
+        end
       end
     end
   end
@@ -34,20 +38,12 @@ class DefaultProcessor < Processor
       @item.source = @source
       @item.published_at = published
     end
-    follow_url(@item)
     @item.assign_attributes(
       teaser: teaser(text),
       title: title,
     )
     @item.save!
-  end
-
-  def follow_url(item)
-    is_blank = item.full_text.blank?
-    item.full_text = @entry.content || @entry.summary
-    if is_blank
-      item.get_full_text
-    end
+    @item
   end
 
 end
