@@ -27,6 +27,10 @@ class Source < ActiveRecord::Base
     uri.to_s
   end
 
+  def remote_url
+    url
+  end
+
   def age_in_weeks
     ((Time.now - created_at) / 1.week).ceil
   end

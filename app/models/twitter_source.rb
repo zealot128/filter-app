@@ -23,6 +23,10 @@ class TwitterSource < Source
     self.update_attributes logo: download_url(path)
   end
 
+  def remote_url
+    "https://twitter.com/#{user_name}"
+  end
+
   def self.client
     Twitter::REST::Client.new do |config|
       config.consumer_key        = "kX94bErw0YBysWtgHsegA"
