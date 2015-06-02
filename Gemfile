@@ -14,6 +14,7 @@ gem "feedjira"
 gem 'mechanize'
 gem 'pg_search'
 gem 'will_paginate-bootstrap'
+gem 'stringex'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-director'

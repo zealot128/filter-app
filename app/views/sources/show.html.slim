@@ -1,0 +1,35 @@
+.row
+  .col-sm-6
+    .text-center
+      h1 style='position: relative; top: 40px'
+        small Quelle
+        br
+        = ' '
+        = @source.name
+  .col-sm-6
+    .panel.panel-default
+      .panel-body
+        dl
+          dt Indiziert seit
+          dd = l @source.created_at.to_date
+          dt Beiträge insgesamt
+          dd
+            = @count
+            small<
+              | (#{@avg} / Woche)
+          dt Link
+          dd = link_to @source.url, @source.url
+          dt Themenfelder
+          dd
+            ul.list-inline
+              - @categories.each do |category,count|
+                li #{category} (#{count})
+
+- if @source.news_items.current.any?
+  h4 Aktuelle Beiträge
+
+  .row
+    - @source.news_items.current.order('value desc').each do |ni|
+      .col-lg-3.col-sm-6
+        = render ni
+

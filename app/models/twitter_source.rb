@@ -6,6 +6,10 @@ class TwitterSource < Source
     end
   end
 
+  def to_param
+    "#{id}-#{user_name.to_url}"
+  end
+
   def user_name
     url.gsub('@','')
   end

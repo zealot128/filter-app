@@ -321,6 +321,7 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    stringex (2.5.2)
     temple (0.7.5)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
@@ -403,6 +404,7 @@ DEPENDENCIES
   sitemap_generator
   slim-rails
   sprockets-es6
+  stringex
   thin
   timecop
   twitter (~> 5.0.0.rc.1)

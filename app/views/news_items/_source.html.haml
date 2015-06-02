@@ -1,4 +1,5 @@
 %span.source
   - if source.logo.exists?
     = image_tag source.logo.url(:small), size: size
-  %span{title: source.name}= truncate source.name, length: 50
+  %a{title: source.name, href: source_path(source)}
+    = truncate source.name, length: 50

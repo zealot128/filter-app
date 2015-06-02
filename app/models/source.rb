@@ -15,6 +15,10 @@ class Source < ActiveRecord::Base
     where('url ilike ?', '%' + search + '%').first
   end
 
+  def to_param
+    "#{id}-#{name.to_url}"
+  end
+
   def host
     uri = URI.parse(url)
     uri.path = "/"
