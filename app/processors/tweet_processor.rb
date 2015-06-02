@@ -30,12 +30,12 @@ class TweetProcessor < Processor
     end
 
     if (link = tweet.urls.first.try(:expanded_url)) and item.full_text.blank?
-      res = get(link.to_s)
       begin
+        res = get(link.to_s)
         if html = res.at(rules.join(', '))
           item.full_text = clear html.to_s
         end
-      rescue StandardError
+      rescue StandardError, Net::HTTPServiceUnavailable
         item.full_text = ""
       end
     end
