@@ -5,6 +5,10 @@ SitemapGenerator::Sitemap.create do
   add "/", priority: 0.9, changefreq: "daily"
   add about_path
 
+  Source.all.each do |s|
+    add source_path(s)
+  end
+
   # Put links creation logic here.
   #
   # The root path '/' and sitemap index file are added automatically for you.
