@@ -69,11 +69,11 @@ class NewsItem < ActiveRecord::Base
   def get_full_text
     if source.full_text_selector?
       page = get(item.url)
-      item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
+      self.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
       content = page.at(@source.full_text_selector)
       if content
         content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
-        item.full_text = clear content.inner_html
+        self.full_text = Processor.new.clear(content.inner_html)
       end
     end
   rescue Mechanize::ResponseCodeError
