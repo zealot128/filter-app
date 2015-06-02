@@ -4,6 +4,7 @@ SitemapGenerator::Sitemap.default_host = "http://www.example.com"
 SitemapGenerator::Sitemap.create do
   add "/", priority: 0.9, changefreq: "daily"
   add about_path
+  add '/quellen'
 
   Source.all.each do |s|
     add source_path(s)

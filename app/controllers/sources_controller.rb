@@ -1,4 +1,8 @@
 class SourcesController < ApplicationController
+  def index
+    @sources = Source.order('lower(name)')
+  end
+
   def show
     @source = Source.find(params[:id])
     @categories = @source.news_items.

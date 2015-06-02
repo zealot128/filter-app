@@ -1,0 +1,32 @@
+.page-header
+  h1 Quellen
+
+.row
+  - @sources.each_with_index do |source,i|
+    - if i % 4 == 0
+      .clearfix.visible-lg
+    - if i % 2 == 0
+      .clearfix.visible-sm
+
+    .col-lg-3.col-sm-6
+      .panel.panel-default
+        .panel-heading
+          - if source.logo.exists?
+            = image_tag source.logo.url(:thumb)
+            = ' '
+          = link_to source.name, source_path(source)
+        .panel-body
+          small
+            | #{source.news_items.count} Beiträge insgesamt
+            - if source.news_items.current.any?
+              = ', Aktuell:'
+          br
+          ul
+            - source.news_items.current.sorted.limit(5).each do |ni|
+              li title="#{ni.title}"
+                = truncate(ni.title, length: 60)
+
+css:
+  .panel-body ul {
+    padding-left: 15px;
+  }

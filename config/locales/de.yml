@@ -3,3 +3,9 @@ de:
     previous_label: "Vorherige Seite"
     next_label:     "Nächste Seite"
     page_gap:       "..."
+  source:
+    class:
+      FeedSource: 'Feed'
+      PodcastSource: 'Podcast-Feed'
+      TwitterSource: 'Twitter'
+

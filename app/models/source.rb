@@ -27,8 +27,16 @@ class Source < ActiveRecord::Base
     uri.to_s
   end
 
+  def host_name
+    URI.parse(host).host
+  end
+
   def remote_url
     url
+  end
+
+  def source_name
+    I18n.t("source.class.#{type}")
   end
 
   def age_in_weeks

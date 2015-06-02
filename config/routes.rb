@@ -6,7 +6,7 @@ Baseapp::Application.routes.draw do
     resources :sources
   end
 
-  get "sources", to: "static_pages#sources"
+  get "sources" => redirect('/quellen')
   resources :sources, path: 'quellen', only: [:index, :show]
 
   get 'search' => 'news_items#index'

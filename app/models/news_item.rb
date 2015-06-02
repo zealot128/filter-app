@@ -6,6 +6,7 @@ class NewsItem < ActiveRecord::Base
 
   scope :current, -> { where("published_at > ?", FetcherConcern::MAX_AGE.ago) }
   scope :home_page, -> { order("value desc").where("value is not null").current }
+  scope :sorted, -> { order("value desc") }
 
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
