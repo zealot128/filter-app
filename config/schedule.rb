@@ -10,5 +10,9 @@ every 1.hour do
 end
 
 every 1.day do
+  runner 'LinkageCalculator.run()'
+end
+
+every 1.day do
   runner 'DuplicateFinder.run'
 end

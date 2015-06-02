@@ -7,6 +7,10 @@ class NewsItem < ActiveRecord::Base
   scope :current, -> { where("published_at > ?", FetcherConcern::MAX_AGE.ago) }
   scope :home_page, -> { order("value desc").where("value is not null").current }
 
+  has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
+  has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
+  has_many :referenced_news, class_name: "NewsItem", through: :incoming_links, source: 'from'
+
   include FetcherConcern
   include PgSearch
   pg_search_scope :search_full_text,
@@ -54,6 +58,7 @@ class NewsItem < ActiveRecord::Base
   before_save do
     self.plaintext = ActionController::Base.helpers.strip_tags(full_text || teaser || title || "")
     self.word_length = words.length
+    self.incoming_link_count = referenced_news.count
   end
 
   def words

@@ -6,7 +6,7 @@ module FetcherConcern
   end
 
   def score
-    base = [ source.value, xing * 3, linkedin * 2, retweets, fb_likes / 2, gplus].reject(&:blank?).reduce(:+)
+    base = [ source.value, xing * 3, linkedin * 2, retweets, fb_likes / 2, gplus, (incoming_link_count || 0) * 2].reject(&:blank?).reduce(:+)
     time_factor = (published_at.to_i - MAX_AGE.ago.to_i) / (Time.now.to_i - MAX_AGE.ago.to_i).to_f
     base * time_factor
   end
