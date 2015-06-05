@@ -1,0 +1,15 @@
+
+
+.row
+  .col-md-4.col-sm-6
+    = simple_form_for @subscription do |f|
+      .panel.panel-primary
+        .panel-body
+          = f.input :email, as: :string
+          = f.input :categories, collection: Category.all, as: :check_boxes
+          = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
+          = f.submit 'Abonnieren', class: 'btn btn-primary'
+  .col-md-8.col-sm-6
+    h2 E-Mail Abonnement
+    p Verpassen Sie keine wichtigen News mehr. Im e-Mail Abo erhalten sie automatisch die wichtigsten und meistgeteilten Inhalten zu Ihren Lieblingsthemen. Das Abo können Sie jederzeit widerrufen und ist kostenfrei.
+    p Die Mail wird immer Sonntag abends verschickt.

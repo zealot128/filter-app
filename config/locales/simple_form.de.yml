@@ -1,0 +1,13 @@
+de:
+  simple_form:
+    labels:
+      mail_subscription:
+        categories: Themen
+        email: E-Mail
+        interval: Sendungshäufigkeit
+    options:
+      mail_subscription:
+        interval:
+          weekly: Wöchentlich
+          biweekly: Alle 2 Wochen
+          monthly: Monatlich

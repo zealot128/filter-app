@@ -15,6 +15,7 @@ gem 'mechanize'
 gem 'pg_search'
 gem 'will_paginate-bootstrap'
 gem 'stringex'
+gem 'email_verifier', git: 'https://github.com/zealot128-os/email_verifier.git'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-director'
