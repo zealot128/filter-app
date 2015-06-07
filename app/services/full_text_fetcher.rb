@@ -2,7 +2,7 @@ class FullTextFetcher
   def initialize(news_item)
     @news_item = news_item
     @source = news_item.source
-    @processor = DefaultProcessor.new
+    @processor = FeedProcessor.new
   end
 
   def run

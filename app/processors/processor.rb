@@ -9,7 +9,7 @@ class Processor
   end
 
   def self.process(source)
-    default = DefaultProcessor
+    default = FeedProcessor
     host = URI.parse(source.url).host
     delegated = @@classes.find do |klass|
       klass.host ==host

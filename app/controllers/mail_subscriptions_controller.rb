@@ -7,7 +7,7 @@ class MailSubscriptionsController < ApplicationController
     @subscription = MailSubscription.new(permitted_params)
     if @subscription.save
       SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-      render text: 'Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.', layout: true
+      render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>', layout: true
     else
       render :index
     end
@@ -15,7 +15,7 @@ class MailSubscriptionsController < ApplicationController
 
   def confirm
     subscription.confirm!
-    render text: 'Vielen Dank, Ihr Abo ist nun aktiviert.', layout: true
+    render text: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
   end
 
   def edit

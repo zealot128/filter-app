@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605200625) do
+ActiveRecord::Schema.define(version: 20150607122042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,8 +74,11 @@ ActiveRecord::Schema.define(version: 20150605200625) do
     t.text     "plaintext"
     t.tsvector "search_vector"
     t.integer  "incoming_link_count"
+    t.float    "absolute_score"
   end
 
+  add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
+  add_index "news_items", ["absolute_score"], name: "index_news_items_on_absolute_score", using: :btree
   add_index "news_items", ["guid"], name: "index_news_items_on_guid", using: :btree
   add_index "news_items", ["published_at"], name: "index_news_items_on_published_at", using: :btree
   add_index "news_items", ["search_vector"], name: "index_news_items_on_search_vector", using: :gin

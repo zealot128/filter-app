@@ -1,4 +1,4 @@
-class DefaultProcessor < Processor
+class FeedProcessor < Processor
   def process(source)
     @source = source
     feed = Feedjira::Feed.fetch_and_parse(source.url, max_redirects: 5, timeout: 30)
@@ -31,7 +31,7 @@ class DefaultProcessor < Processor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
-    return if published < FetcherConcern::MAX_AGE.days.ago
+    return if published < MAX_AGE.days.ago
     @item = news_item_by_guid(guid)
     @item.url ||= url
     if @item.new_record?

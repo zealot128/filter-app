@@ -5,8 +5,10 @@ class SubscriptionMailer < ActionMailer::Base
     mail to: subscription.email, subject: '[HRfilter] Bestätigung des E-Mail-Abos'
   end
 
-  def newsletter(subscription)
-    @subscription = subscription
-    mail to: subscription.email, subject: '[HRfilter] Newsletter'
+  def newsletter(mailing)
+    @mailing = mailing
+    if mailing.can_send?
+      mail to: subscription.email, subject: '[HRfilter] Newsletter'
+    end
   end
 end

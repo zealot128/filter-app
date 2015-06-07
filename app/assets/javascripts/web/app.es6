@@ -47,13 +47,19 @@ var loadAllPosts = function(then) {
 
 $(document).on("ready page:load", () => {
   grid = $('.js-grid');
-  loadAllPosts(function() {
-    grid.shuffle('sort', {
-      itemSelector: '.js-grid-item'
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  if(h < 600) {
+    Shuffle.options.speed = 1;
+  }
+  if(grid.length > 0) {
+    loadAllPosts(function() {
+      grid.shuffle('sort', {
+        itemSelector: '.js-grid-item'
+      });
+      var router = Router(routes);
+      router.init();
+      window.router = router;
     });
-    var router = Router(routes);
-    router.init();
-    window.router = router;
-  });
+  }
 });
 
