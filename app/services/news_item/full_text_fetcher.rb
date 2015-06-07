@@ -1,4 +1,4 @@
-class FullTextFetcher
+class NewsItem::FullTextFetcher
   def initialize(news_item)
     @news_item = news_item
     @source = news_item.source

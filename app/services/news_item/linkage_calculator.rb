@@ -1,4 +1,4 @@
-class LinkageCalculator
+class NewsItem::LinkageCalculator
   def self.run(scope: NewsItem.current)
     scope.find_each do |s|
       next if !s.full_text.present?

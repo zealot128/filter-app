@@ -1,12 +1,12 @@
-class LikeFetcher
+class NewsItem::LikeFetcher
   attr_reader :url, :eurl
   def initialize(url)
     @url = url
-    @eurl = CGI.escape(urL)
+    @eurl = CGI.escape(url)
   end
 
-  def self.fetch_for_news_items(news_item)
-    fetcher = new(new.url)
+  def self.fetch_for_news_item(news_item)
+    fetcher = new(news_item.url)
     news_item.retweets = fetcher.tweets
     news_item.fb_likes = fetcher.facebook
     news_item.linkedin = fetcher.linkedin

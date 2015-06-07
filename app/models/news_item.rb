@@ -1,20 +1,23 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
   MAX_AGE ||= 14.days
-  has_and_belongs_to_many :categories
-  belongs_to :source
-  validates_uniqueness_of :guid, scope: [:source_id]
 
   scope :current, -> { where("published_at > ?", MAX_AGE.ago) }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   scope :home_page, -> { order("value desc").where("value is not null").current }
   scope :sorted, -> { order("value desc") }
 
+  belongs_to :source
+  has_and_belongs_to_many :categories
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
   has_many :referenced_news, class_name: "NewsItem", through: :incoming_links, source: 'from'
 
-  include FetcherConcern
+  before_save :categorize
+  before_save :filter_plaintext
+
+  validates_uniqueness_of :guid, scope: [:source_id]
+
   include PgSearch
   pg_search_scope :search_full_text,
     :order_within_rank => "news_items.published_at DESC",
@@ -44,12 +47,14 @@ class NewsItem < ActiveRecord::Base
       gplus: gplus,
       freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10000,
       bias: source.value,
-      words: word_length,
-      categories: category_ids
+      word_length: word_length,
+      categories: category_ids,
+      parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
+      published_at: published_at.to_i,
+      incoming_link_count: incoming_link_count || 0
     }
   end
 
-  before_save :categorize
   def categorize
     if plaintext
       self.categories = Category.all.select{|i|
@@ -58,7 +63,7 @@ class NewsItem < ActiveRecord::Base
     end
   end
 
-  before_save do
+  def filter_plaintext
     self.plaintext = ActionController::Base.helpers.strip_tags(full_text || teaser || title || "")
     self.word_length = words.length
     self.incoming_link_count = referenced_news.count
@@ -69,25 +74,21 @@ class NewsItem < ActiveRecord::Base
   end
 
   def get_full_text
-    FullTextFetcher.new(self).run
+    NewsItem::FullTextFetcher.new(self).run
   end
 
   def refresh
     if source.is_a? FeedSource
-      LikeFetcher.fetch_for_news_items(self)
-      self.score!
-      save
+      NewsItem::LikeFetcher.fetch_for_news_item(self)
+      rescore!
     end
   end
 
-  def score!
-    base = [ source.value, xing * 3, linkedin * 2, retweets, fb_likes / 2, gplus, (incoming_link_count || 0) * 2].reject(&:blank?).reduce(:+)
-    parallel_news_count = [source.news_items.current.count, 2 ].min
-    base -= (parallel_news_count - 2) * 2
-
-    time_factor = (published_at.to_i - MAX_AGE.ago.to_i) / (Time.now.to_i - MAX_AGE.ago.to_i).to_f
-    self.absolute_score = score
-    self.value = base * time_factor
+  def rescore!
+    result = NewsItem::ScoringAlgorithm.new(to_data, max_age: MAX_AGE.ago).run
+    self.absolute_score = result[:absolute_score]
+    self.value = result[:relative_score]
+    save
   end
 
   def to_partial_path
