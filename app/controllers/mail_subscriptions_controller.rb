@@ -19,12 +19,20 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def edit
+    subscription
   end
 
   def update
+    if subscription.update(permitted_params)
+      render text: '<div class="alert alert-success">Änderungen gespeichert.</div>', layout: true
+    else
+      render :edit
+    end
   end
 
   def destroy
+    subscription.destroy
+    render text: '<div class="alert alert-success">Newsletter abbestellt!</div>', layout: true
   end
 
   private

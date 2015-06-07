@@ -18,8 +18,10 @@ class Processor
   end
 
   def teaser(text)
-    ActionController::Base.helpers.truncate Nokogiri::HTML.fragment(text).text,
+    ActionController::Base.helpers.truncate(
+      ActionController::Base.helpers.strip_tags(text).strip,
       length: 400
+    )
   end
 
   def sanitize(*args)

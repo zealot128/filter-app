@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title><%= @title %></title>
+  </head>
+  <body style='-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color:#565656;font-family:"Helvetica Neue", "Helvetica", "Helvetica", "Arial", sans-serif;font-style:normal;font-weight:300;min-width:100%;margin:25px 0;padding:0;width:94% !important'>
+    <table class="body" border="0" cellpadding="0" cellspacing="0" style='-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color:#565656;font-family:"Helvetica Neue", "Helvetica", "Helvetica", "Arial", sans-serif;font-style:normal;font-weight:300;min-width:100%;margin:25px 0;padding:0;width:94% !important'>
+      <tr>
+        <td class="center" align="center" valign="top">
+
+          <center>
+            <!-- content -->
+            <table class="container" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:0 auto;width:580px">
+              <tr>
+                <td>
+
+                  <!-- title -->
+                  <table class="row" border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100% !important">
+                    <tr>
+                      <td>
+
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" class="row subheader-container" style="margin-bottom:20px;width:100% !important">
+                          <tr>
+                            <td>
+                              <!-- left column -->
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" class="mobile-center subheader-container-left" style="width:67%">
+                                <tr>
+                                  <td class="mobile-center">
+                                    <h4 class="subheader" style="color:#565656;font-family:'Roboto', Helvetica, Helvetica, Arial, sans-serif;font-style:normal;font-weight:300;letter-spacing:0.04em;font-size:15px;margin-top:10px;margin-bottom:10px;font-size:14px;line-height:19px;margin-bottom:4px"></h4>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td class="alignable-paragraph" style="text-align:left">
+
+                              <img id="logo-url" src="https://goodbits-production.s3.amazonaws.com/uploads/newsletter_settings/logo/225/6a089571-be60-4339-9413-e4384efdb7f7.png" alt="Logo for This week in Rails" style="float:none;margin-bottom:4px;width: 100%;">
+
+                            </td>
+                          </tr>
+                        </table>
+
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- description -->
+                  <%= yield %>
+
+
+                </td>
+              </tr>
+            </table>
+            <!-- end content -->
+
+          </center>
+
+        </td>
+      </tr>
+    </table>
+    <style type="text/css">
+      @media only screen and (max-width: 580px) {
+        table[class="body"] table[class="container"] {
+          width: 90% !important;
+        }
+        table[class*="w100percent"] {
+          width: 100% !important;
+        }
+        table[class*="w270"] {
+          float: none;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          width: 270px !important;
+        }
+        table[class*="mobile-center"] {
+          text-align: center !important;
+          width: 100% !important;
+        }
+        h4[class*="right"] {
+          text-align: center !important;
+        }
+        table[class="row subheader-container"] {
+          margin-bottom: 20px !important;
+        }
+        h4[class*="subheader"] {
+          margin-top: 8px !important;
+          margin-bottom: 6px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+
+          font-size: 13px !important;
+          line-height: 20px !important;
+          text-align: center !important;
+        }
+      }
+  </style>
+</body>
+</html>

@@ -1,0 +1,17 @@
+.row
+  .col-sm-8
+    .panel.panel-primary
+      .panel-heading: h3.panel-title Einstellungen für <strong>#{subscription.email}</strong> ändern
+      .panel-body
+        = simple_form_for subscription do |f|
+          = f.input :categories, collection: Category.all, as: :check_boxes
+          = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
+          = f.submit 'Speichern', class: 'btn btn-primary'
+  .col-sm-4
+    .panel.panel-info
+      .panel-heading: h4.panel-title Abbestellen
+      .panel-body
+        p Der Newsletter für <strong>#{subscription.email}</strong> kann hier entgültig abbestellt werden.
+        = link_to subscription, method: :delete, class: 'btn btn-default' do
+          |Newsletter abbestellen
+

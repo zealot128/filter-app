@@ -71,4 +71,5 @@ end
 
 gem 'twitter', '~> 5.0.0.rc.1'
 gem 'ruby-stemmer'
+gem 'roadie-rails'
 gem 'rinku', require: 'rails_rinku'

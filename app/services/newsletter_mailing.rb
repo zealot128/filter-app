@@ -1,9 +1,7 @@
 class NewsletterMailing
+  attr_reader :subscription
   def initialize(subscription)
     @subscription = subscription
-  end
-
-  def can_send?
   end
 
   def mail

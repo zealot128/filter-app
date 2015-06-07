@@ -48,7 +48,6 @@ class TweetProcessor < Processor
     item.fb_likes = 0
     item.gplus = 0
 
-    item.value = item.score
-    item.save
+    item.rescore!
   end
 end

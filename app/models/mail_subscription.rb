@@ -18,6 +18,10 @@ class MailSubscription < ActiveRecord::Base
     self.token
   end
 
+  def categories=(vals)
+    super(vals.reject(&:blank?).map(&:to_i))
+  end
+
   def self.cleanup
     where('confirmed = ?', false).where('created_at < ?', 1.day.ago).delete_all
   end
