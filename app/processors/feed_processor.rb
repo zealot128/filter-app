@@ -31,7 +31,6 @@ class FeedProcessor < Processor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
-    # return if published < MAX_AGE.days.ago
     @item = news_item_by_guid(guid)
     @item.url ||= url
     if @item.new_record?

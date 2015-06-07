@@ -1,0 +1,10 @@
+p Hallo,
+
+p hier die neusten News aus den abonnierten Themenbereichen:
+
+- @mailing.categories.each do |category|
+  - stories = @mailing.top_news_items_for(category)
+
+  h3 = category.name
+  - stories.each do |story|
+    h4 = story.title
