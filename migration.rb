@@ -1,1 +1,1 @@
-NewsItem.find_each(&:save)
+NewsItem.find_each(&:rescore!)

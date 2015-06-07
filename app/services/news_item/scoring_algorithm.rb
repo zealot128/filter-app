@@ -10,7 +10,6 @@ class NewsItem::ScoringAlgorithm
   end
 
   def run
-
     base =
       data(:bias) +
       data(:xing) * 3 +
