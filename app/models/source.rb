@@ -2,8 +2,8 @@ require "download_url"
 class Source < ActiveRecord::Base
   has_many :news_items, dependent: :destroy
   validates_presence_of :url, :name
-  after_create :refresh
-  after_create :download_thumb
+
+  after_create :download_thumb, if: -> { !Rails.env.test?}
 
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],

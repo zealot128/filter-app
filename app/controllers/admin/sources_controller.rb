@@ -11,6 +11,7 @@ class Admin::SourcesController < AdminController
     type = params[:source].delete :type
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
+      @source.refresh
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :new
