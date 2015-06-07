@@ -15,19 +15,6 @@ describe Processor, type: :model do
     end
   end
 
-  specify "Haufe.de", freeze_time: "2013-11-02 12:00:00"  do
-    VCR.use_cassette "feed-urlhaufe" do
-      feed_source.url = 'https://www.haufe.de/xml/rss_129150.xml'
-      feed_source.full_text_selector = '#col1_content .floatbox'
-      Processor.process(feed_source)
-      NewsItem.first.tap do |i|
-        i.should be_present
-        i.full_text.length.should > 200
-        i.url.should == 'https://www.haufe.de/personal/hr-management/arbeitsmarkt-spezialisten-gesucht-arbeitslose-bleiben_80_205864.html'
-      end
-    end
-  end
-
   specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
     VCR.use_cassette 'feed-crosswater' do
       feed_source.url = 'http://crosswater-job-guide.com/feed'

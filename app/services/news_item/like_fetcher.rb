@@ -28,7 +28,7 @@ class NewsItem::LikeFetcher
 
   def linkedin
     body = Fetcher.fetch_url("http://www.linkedin.com/countserv/count/share?url=#{eurl}&lang=en_US").body
-    body[/.count.:(\d+)/, 1]
+    body[/.count.:(\d+)/, 1].to_i
   end
 
   def xing
