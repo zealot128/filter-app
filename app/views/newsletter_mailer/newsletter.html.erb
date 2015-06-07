@@ -27,9 +27,7 @@
 
 <!-- links / content -->
 
-<%- @mailing.categories.each do |category| %>
-  <% stories = @mailing.top_news_items_for(category) %>
-  <% next if stories.blank? %>
+<%- @mailing.categories_with_news.each do |category, stories| %>
   <%= render "section_title", title: category.name %>
 
   <% stories.each do |story|  %>

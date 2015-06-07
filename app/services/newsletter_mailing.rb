@@ -1,16 +1,48 @@
 class NewsletterMailing
   attr_reader :subscription
+
+  def self.cronjob
+    MailSubscription.confirmed.each do |s|
+      ms = new(s)
+      if ms.sendable?
+        ms.send!
+      end
+    end
+  end
+
   def initialize(subscription)
     @subscription = subscription
   end
 
+  def sendable?
+    categories_with_news.count > 0 && subscription.due?
+  end
+
+  def send!
+    begin
+      mail.deliver_now!
+    rescue StandardError => e
+      puts "[NewsletterMailing] #{e.inspect}"
+    ensure
+      subscription.update_column :last_send_date, Date.today
+    end
+  end
+
   def mail
-    SubscriptionMailer.newsletter(self)
+    NewsletterMailer.newsletter(self)
   end
 
   def email
     @subscription.email
   end
+
+  def categories_with_news
+    categories.map do |category|
+      [ category, top_news_items_for(category).to_a ]
+    end.reject{|c,ni| ni.count == 0 }
+  end
+
+  private
 
   def categories
     Category.find(@subscription.categories.reject(&:blank?))
@@ -21,7 +53,7 @@ class NewsletterMailing
       joins(:categories).
       where(categories: { id: category}).
       group('news_items.id').
-      where('published_at > ?', interval_from).
+      where('published_at > ?', subscription.interval_from.ago).
       order('absolute_score desc')
 
     count = all.count
@@ -34,14 +66,6 @@ class NewsletterMailing
     when 0..5 then count
     when 5..10000 then 5 + ((count - 5) ** 0.85).to_i
     end
-  end
-
-  def interval_from
-    {
-      'weekly' => 1.week.ago,
-      'biweekly' => 2.weeks.ago,
-      'monthly' => 1.month.ago
-    }[@subscription.interval]
   end
 
 end

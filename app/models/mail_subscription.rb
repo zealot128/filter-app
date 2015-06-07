@@ -9,9 +9,23 @@ class MailSubscription < ActiveRecord::Base
   before_create do
     self.token = SecureRandom.hex(32)
   end
+  scope :confirmed, -> { where confirmed: true }
 
   def confirm!
     self.update_column :confirmed, true
+  end
+
+  def due?
+    return true if last_send_date.nil?
+    return (last_send_date + interval_from).to_date <= Date.today
+  end
+
+  def interval_from
+    {
+      'weekly' => 1.week,
+      'biweekly' => 2.weeks,
+      'monthly' => 1.month
+    }[interval]
   end
 
   def to_param
