@@ -25,12 +25,15 @@ class NewsletterMailing
       order('absolute_score desc')
 
     count = all.count
-    limit = case count
-            when 0..5 then count
-            when 5..50 then 5 + (count - 5) / 2
-            when 50..10000 then (count ** 0.8).to_i
-            end
+    limit = limit_fn(count)
     all.limit(limit)
+  end
+
+  def limit_fn(count)
+    case count
+    when 0..5 then count
+    when 5..10000 then 5 + ((count - 5) ** 0.85).to_i
+    end
   end
 
   def interval_from
