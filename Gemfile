@@ -50,7 +50,7 @@ gem 'slim-rails'
 
 group :test do
   gem 'timecop'
-  gem "rspec-rails", '~> 2.14.0'
+  gem "rspec-rails", '~> 2.14'
   gem "guard-rspec"
   gem "vcr"
   gem 'webmock'

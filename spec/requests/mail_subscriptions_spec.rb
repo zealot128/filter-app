@@ -15,7 +15,7 @@ describe 'MailSubscriptionsController' do
     assert(response.success?)
     expect(ActionMailer::Base.deliveries.count).to be == 1
     body = ActionMailer::Base.deliveries.first.body.to_s
-    url = body[/http:[^\s]*/]
+    url = Nokogiri::HTML.fragment(body).at('a')['href']
 
     get URI.parse(url).path
     assert(response.success?)

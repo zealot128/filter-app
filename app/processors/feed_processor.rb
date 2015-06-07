@@ -1,7 +1,7 @@
 class FeedProcessor < Processor
   def process(source)
     @source = source
-    feed = Feedjira::Feed.fetch_and_parse(source.url, max_redirects: 5, timeout: 30)
+    feed = Feedjira::Feed.fetch_and_parse(source.url)
     if !feed.respond_to?(:entries)
       source.update_column :error, true
       puts "Feed download fehlgeschlagen: #{feed}"
