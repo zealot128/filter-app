@@ -49,7 +49,7 @@ class NewsItem < ActiveRecord::Base
       bias: source.value,
       word_length: word_length,
       categories: category_ids,
-      parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
+      # parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
       published_at: published_at.to_i,
       incoming_link_count: incoming_link_count || 0
     }

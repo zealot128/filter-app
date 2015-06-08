@@ -17,9 +17,9 @@ class NewsItem::ScoringAlgorithm
       data(:gplus) +
       data(:facebook) / 2 +
       data(:incoming_link_count) * 2 -
-      data(:word_length) ** 0.5 -      # Lange beitrage leicht nach oben, z.B.
+      data(:word_length) ** 0.5       # Lange beitrage leicht nach oben, z.B.
                                        # 1000 Worte -> 30pkt
-      (data(:parallel_news_count) ** 1.2 - 2)
+      # (data(:parallel_news_count) ** 1.2 + 2)
                                        # Oft postende Quellen benachteiligen
                                        # 20 News in 2 Wochen -> -34pkt
                                        # 10 News in 2 Wochen -> -13pkt
@@ -30,6 +30,9 @@ class NewsItem::ScoringAlgorithm
     else
       now = Time.now.to_i
       time_factor = (data(:published_at) - @max_age) / (now - @max_age).to_f
+    end
+    if base < 0
+      time_factor = 1 + time_factor * -1
     end
     {
       absolute_score: base,
