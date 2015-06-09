@@ -2,10 +2,11 @@ require "fetcher"
 class NewsItem < ActiveRecord::Base
   MAX_AGE ||= 14.days
 
-  scope :current, -> { where("published_at > ?", MAX_AGE.ago) }
+  scope :visible, -> { where('blacklisted != ?', true) }
+  scope :current, -> { visible.where("published_at > ?", MAX_AGE.ago) }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
-  scope :home_page, -> { order("value desc").where("value is not null").current }
-  scope :sorted, -> { order("value desc") }
+  scope :home_page, -> { visible.order("value desc").where("value is not null").current }
+  scope :sorted, -> { visible.order("value desc") }
 
   belongs_to :source
   has_and_belongs_to_many :categories
@@ -15,6 +16,7 @@ class NewsItem < ActiveRecord::Base
 
   before_save :categorize
   before_save :filter_plaintext
+  before_save :blacklist
 
   validates_uniqueness_of :guid, scope: [:source_id]
 
@@ -57,9 +59,7 @@ class NewsItem < ActiveRecord::Base
 
   def categorize
     if plaintext
-      self.categories = Category.all.select{|i|
-        i.matches?(plaintext + ' ' + title)
-      }
+      Categorizer.run(self)
     end
   end
 
@@ -93,6 +93,13 @@ class NewsItem < ActiveRecord::Base
 
   def to_partial_path
     "news_items/#{source.class.model_name.element}_item"
+  end
+
+  def blacklist
+    bl = ['Morgenimpuls', 'commun.it', '(insight by']
+    if title and bl.any?{|t| title.include?(t) }
+      self.blacklisted = true
+    end
   end
 
 end

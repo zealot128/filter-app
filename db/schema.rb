@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607122042) do
+ActiveRecord::Schema.define(version: 20150609214134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20150607122042) do
     t.string   "guid",                limit: 255
     t.integer  "linkedin"
     t.integer  "xing"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.integer  "gplus"
     t.text     "full_text"
     t.integer  "word_length"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20150607122042) do
     t.tsvector "search_vector"
     t.integer  "incoming_link_count"
     t.float    "absolute_score"
+    t.boolean  "blacklisted",                     default: false
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
