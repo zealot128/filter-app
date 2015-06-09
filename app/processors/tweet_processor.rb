@@ -42,6 +42,10 @@ class TweetProcessor < Processor
       rescue StandardError, Net::HTTPServiceUnavailable
         item.full_text = ""
       end
+    else
+      item.destroy if !item.new_record?
+      # Tweets ohne Link sind doof
+      return
     end
     item.xing = 0
     item.linkedin = 0
