@@ -10,6 +10,7 @@ class TweetProcessor < Processor
       .transcript
       #articleContent
       #content
+      [itemprop=articleBody]
       .postContent
       .hcf-content
       .entryContent
@@ -17,6 +18,7 @@ class TweetProcessor < Processor
       .post
       .entry
       article
+      .article
       main
       section
     ]
