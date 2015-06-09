@@ -4,6 +4,7 @@ class TwitterSource < Source
     self.class.client.user_timeline(user_name).take(take).each do |tweet|
       TweetProcessor.new.process_tweet(self,tweet)
     end
+    self.update_column :error, false
   end
 
   def to_param
