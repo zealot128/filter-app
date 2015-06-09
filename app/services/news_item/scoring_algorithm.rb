@@ -16,8 +16,8 @@ class NewsItem::ScoringAlgorithm
       data(:linkedin) * 2 +
       data(:gplus) +
       data(:facebook) / 2 +
-      data(:incoming_link_count) * 2 -
-      data(:word_length) ** 0.5       # Lange beitrage leicht nach oben, z.B.
+      data(:incoming_link_count) * 2 +
+      data(:word_length) ** 0.3       # Lange beitrage leicht nach oben, z.B.
                                        # 1000 Worte -> 30pkt
       # (data(:parallel_news_count) ** 1.2 + 2)
                                        # Oft postende Quellen benachteiligen
