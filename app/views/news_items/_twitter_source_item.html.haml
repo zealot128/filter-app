@@ -14,7 +14,6 @@
       = auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
     = link_to 'auf Twitter', twitter_source_item.url
 
-    .fog-fade
   .panel-footer
     %small.categories
       = twitter_source_item.categories.pluck(:name).to_sentence
