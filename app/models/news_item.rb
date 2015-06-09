@@ -5,7 +5,7 @@ class NewsItem < ActiveRecord::Base
   scope :visible, -> { where('blacklisted != ?', true) }
   scope :current, -> { visible.where("published_at > ?", MAX_AGE.ago) }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
-  scope :home_page, -> { visible.order("value desc").where("value is not null").current }
+  scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
 
   belongs_to :source
@@ -34,7 +34,7 @@ class NewsItem < ActiveRecord::Base
     }
 
   def self.cronjob
-    NewsItem.current.each do |item|
+    NewsItem.current.shuffle.each do |item|
       item.refresh
     end
   end
