@@ -1,6 +1,8 @@
 class TweetProcessor < Processor
   def process_tweet(source, tweet)
     rules = %w[
+      .entry-content
+      .post-content
       #main-content
       #main\ .content
       #articleContent
@@ -8,10 +10,8 @@ class TweetProcessor < Processor
       .transcript
       #articleContent
       #content
-      .post-content
       .postContent
       .hcf-content
-      .entry-content
       .entryContent
       .content
       .post
@@ -36,7 +36,7 @@ class TweetProcessor < Processor
     if (link = tweet.urls.first.try(:expanded_url)) and item.full_text.blank?
       begin
         res = get(link.to_s)
-        if html = res.at(rules.join(', '))
+        if html = res.search(rules.join(', ')).find{|f| f.text.strip.length > 100 }
           item.full_text = clear html.to_s
         end
       rescue StandardError, Net::HTTPServiceUnavailable
