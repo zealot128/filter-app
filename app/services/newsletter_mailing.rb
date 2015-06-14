@@ -64,7 +64,7 @@ class NewsletterMailing
   def limit_fn(count)
     case count
     when 0..5 then count
-    when 5..10000 then 5 + ((count - 5) ** 0.85).to_i
+    when 5..10000 then 5 + ((count - 5) ** 0.66).to_i
     end
   end
 
