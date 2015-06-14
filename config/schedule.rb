@@ -23,5 +23,5 @@ every 1.day, at: '03:25' do
 end
 
 every :sunday, at: '6pm' do
-  NewsletterMailer.cronjob
+  runner 'NewsletterMailer.cronjob'
 end
