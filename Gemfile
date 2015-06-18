@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.0'
+gem 'rack', '1.6.2'
 gem 'sprockets-es6'
 gem "pg"
 gem "simple_form"
@@ -69,7 +70,7 @@ group :development, :test do
   gem "thin"
 end
 
-gem 'twitter', '~> 5.0.0.rc.1'
+gem 'twitter', '~> 5.0'
 gem 'ruby-stemmer'
 gem 'roadie-rails'
 gem 'rinku', require: 'rails_rinku'
