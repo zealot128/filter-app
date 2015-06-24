@@ -25,11 +25,12 @@
               - @categories.each do |category,count|
                 li #{category} (#{count})
 
-- if @source.news_items.current.any?
+br
+br
+- if @news_items.any?
   h4 Aktuelle Beiträge
-
   .row
-    - @source.news_items.current.order('value desc').each do |ni|
+    - @news_items.each do |ni|
       .col-lg-3.col-sm-6
         = render ni
 
