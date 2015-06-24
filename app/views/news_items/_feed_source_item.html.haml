@@ -16,5 +16,5 @@
 
   .panel-footer
     %small.categories
-      = feed_source_item.categories.pluck(:name).to_sentence
+      = feed_source_item.categories.map(&:name).to_sentence
     = render 'news_items/share', item: feed_source_item

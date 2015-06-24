@@ -1,4 +1,6 @@
 h2 Alle indizierten News durchsuchen
+- content_for :head
+  link rel="alternate" type="application/rss+xml" title="RSS-Feed dieser Suche" href="#{@feed_url}"
 
 - content_for :content_header do
   .content-header
@@ -16,14 +18,29 @@ h2 Alle indizierten News durchsuchen
 
 - if params[:q]
   br
+  .pull-right
+    a.btn.btn-warning href='#{@feed_url}' title='RSS-Feed abonnieren'
+      i.fa.fa-rss.fa-lg.fa-fw
+  ul.nav.nav-tabs
+    li.disabled: a.text-link: small Sortierung
+    li class='#{params[:sort].blank? ? 'active' : ''}'
+      a href='#{search_path(q: params[:q])}'
+        |Keyword-Relevanz
+    li class='#{params[:sort] == 'freshness' ? 'active' : ''}'
+      a href='#{search_path(q: params[:q], sort: 'freshness')}'
+        |Aktualität
+    li class='#{params[:sort] == 'score' ? 'active' : ''}'
+      a href='#{search_path(q: params[:q], sort: 'score')}'
+        |Beliebtheit
   br
   - if @news_items.present?
+    p: small #{@news_items.total_entries} gefunden.
     .row
       - @news_items.each do |ni|
         .col-lg-3.col-sm-6
           = render ni
 
-    = will_paginate @collection, renderer: BootstrapPagination::Rails
+    = will_paginate @news_items, renderer: BootstrapPagination::Rails
   - else
     .alert.alert-warning
       | Leider keine News gefunden
