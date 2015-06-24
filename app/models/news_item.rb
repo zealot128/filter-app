@@ -49,6 +49,7 @@ class NewsItem < ActiveRecord::Base
       gplus: gplus,
       freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10000,
       bias: source.value,
+      multiplicator: source.multiplicator,
       word_length: word_length,
       categories: category_ids,
       # parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,

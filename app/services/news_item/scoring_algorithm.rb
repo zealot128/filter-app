@@ -25,6 +25,8 @@ class NewsItem::ScoringAlgorithm
                                        # 10 News in 2 Wochen -> -13pkt
     #                                  # 3  News in 2 Wochen -> -1pkt
 
+    base = base * data(:multiplicator)
+
     if data(:published_at) < @max_age
       time_factor = 0
     else
