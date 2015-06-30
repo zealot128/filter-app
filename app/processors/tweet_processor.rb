@@ -30,7 +30,7 @@ class TweetProcessor < Processor
     item.title = tweet.text
     item.published_at = tweet.created_at
     item.url = url
-    item.retweets = tweet.retweet_count + tweet.favourite_count
+    item.retweets = tweet.retweet_count + tweet.favorite_count
     if tweet.retweeted_status.present?
       item.retweets += tweet.retweeted_status.retweet_count
     end
