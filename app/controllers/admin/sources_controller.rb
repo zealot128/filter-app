@@ -27,6 +27,7 @@ class Admin::SourcesController < AdminController
     if @source.update(params[:source].permit!)
       @source.refresh
       @source.download_thumb
+      @source.news_items.current.map(&:rescore!)
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :edit
