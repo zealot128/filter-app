@@ -11,10 +11,20 @@ html lang=(locale) class=(browser.to_s)
 
     = yield :head
   body
-    nav.navbar.navbar-default
+    header.container
+      a href='/'
+        = image_tag "hrfilter-420x102.png", alt: "Logo", title: "HRfilter.de"
+
+    - if controller_path.to_s['admin']
       .container
-        a.navbar-brand href='/'
-          = image_tag "hrfilter-420x102.png", alt: "Logo", title: "HRfilter.de"
+        nav.navbar.navbar-inverse
+          a.navbar-brand href='#'
+            span.label.label-default ADMIN
+          ul.nav.navbar-nav
+            li = link_to [:admin, :sources]
+              | Quellen
+            li = link_to [:admin, :categories]
+              | Kategorien
 
     = yield :content_header if content_for?(:content_header)
     .page-container

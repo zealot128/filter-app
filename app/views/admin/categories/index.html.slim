@@ -1,0 +1,15 @@
+table.table
+  thead
+    tr
+      th Name
+      th Keywords
+  tbody
+    - @categories.each do |category|
+      tr
+        td = category.name
+        td = category.keywords
+        td = link_to [:edit, :admin, category], class: 'btn btn-default btn-xs' do
+          | edit
+
+p = link_to [:new, :admin, :category], class: 'btn btn-default' do
+  | Neu

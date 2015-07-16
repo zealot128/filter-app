@@ -4,6 +4,7 @@ Baseapp::Application.routes.draw do
 
   namespace :admin do
     resources :sources
+    resources :categories
   end
 
   get "sources" => redirect('/quellen')
