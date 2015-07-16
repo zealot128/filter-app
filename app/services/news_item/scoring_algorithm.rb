@@ -15,6 +15,7 @@ class NewsItem::ScoringAlgorithm
       data(:xing) * 3 +
       data(:linkedin) * 2 +
       data(:gplus) +
+      data(:retweets) +
       data(:facebook) / 2 +
       data(:incoming_link_count) * 2 +
       data(:word_length) ** 0.3       # Lange beitrage leicht nach oben, z.B.
