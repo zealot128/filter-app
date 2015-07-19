@@ -5,6 +5,13 @@ class NewsletterMailer < ActionMailer::Base
     @mailing = mailing
     @title = 'Newsletter'
 
-    roadie_mail to: mailing.email, subject: '[HRfilter] Newsletter'
+    @categories = mailing.categories
+    names = @categories.map(&:name)
+    if names.count > 5
+      names = "zu #{names.count} Themen"
+    else
+      names = "zum Thema " + names.to_sentence
+    end
+    roadie_mail to: mailing.email, subject: "[HRfilter] Newsletter #{names}"
   end
 end

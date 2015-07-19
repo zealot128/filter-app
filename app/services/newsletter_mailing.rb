@@ -38,15 +38,16 @@ class NewsletterMailing
 
   def categories_with_news
     categories.map do |category|
-      [ category, top_news_items_for(category).to_a ]
+      [ category, *top_news_items_for(category)]
     end.reject{|c,ni| ni.count == 0 }
   end
 
-  private
 
   def categories
     Category.find(@subscription.categories.reject(&:blank?))
   end
+
+  private
 
   def top_news_items_for(category)
     all = NewsItem.
@@ -56,15 +57,15 @@ class NewsletterMailing
       where('published_at > ?', subscription.interval_from.ago).
       order('absolute_score desc')
 
-    count = all.count
+    count = all.length
     limit = limit_fn(count)
-    all.limit(limit)
+    [all.limit(limit).to_a, count]
   end
 
   def limit_fn(count)
     case count
     when 0..5 then count
-    when 5..10000 then 5 + ((count - 5) ** 0.60).to_i
+    when 5..10000 then 5 + ((count - 5) ** 0.55).to_i
     end
   end
 

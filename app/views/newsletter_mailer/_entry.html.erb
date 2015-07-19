@@ -5,7 +5,11 @@
       <table width="140" border="0" cellspacing="0" cellpadding="0" align="left" class="w270">
         <tr>
           <td>
-            <a href="<%=link %>"><img class="thumbnail" src="<%= image %>" alt="<%= title %>" style="float:none;max-width:120px;max-height:120px;padding-right:10px;margin-bottom:10px"></a>
+            <% if image.present? %>
+            <a href="<%=link %>"><img class="thumbnail" src="<%= image %>" alt="<%= subtitle %>"></a>
+            <br />
+            <% end %>
+            <%= truncate subtitle, length: 60 %>
           </td>
         </tr>
       </table>
@@ -15,14 +19,12 @@
       <table width="440" border="0" cellspacing="0" cellpadding="0" align="left" class="w270">
         <tr>
           <td>
-            <h3 class="title seriously-break-word" style="color:#565656;font-family:'Roboto', Helvetica, Helvetica, Arial, sans-serif;font-style:normal;font-weight:300;letter-spacing:0.04em;font-size:18px;line-height:26px;margin-bottom:10px;word-wrap:break-word;word-break:break-word;white-space:normal;margin-top:0;margin-bottom:0;color:#a50000 !important"><a href="<%=link%>" style="color:#328EF5;text-decoration:none;color:#a50000 !important"><%=title %></a></h3>
+            <h3 class="title seriously-break-word"><a href="<%=link%>" style="color:#328EF5;text-decoration:none;color:#a50000 !important"><%=title %></a></h3>
           </td>
         </tr>
-
         <tr>
           <td>
-            <span class="link-description seriously-break-word" style="word-wrap:break-word;word-break:break-word;white-space:normal"><p style="color:#565656;font-family:'Roboto', Helvetica, Helvetica, Arial, sans-serif;font-style:normal;font-weight:300;letter-spacing:0.04em;font-size:15px;line-height:26px;margin-top:4px;margin-bottom:21px"><%= text %></p>
-            </span>
+            <span class="link-description seriously-break-word"><p><%= text %></p></span>
           </td>
         </tr>
       </table>
