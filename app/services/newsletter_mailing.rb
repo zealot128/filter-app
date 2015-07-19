@@ -37,9 +37,10 @@ class NewsletterMailing
   end
 
   def categories_with_news
-    categories.map do |category|
+    all = categories.map { |category|
       [ category, *top_news_items_for(category)]
-    end.reject{|c,ni| ni.count == 0 }
+    }
+    filter_doubles(all).reject{|c,ni| ni.count == 0 }
   end
 
 
@@ -48,6 +49,20 @@ class NewsletterMailing
   end
 
   private
+
+  def filter_doubles(categories_with_counts)
+    filtered = []
+    categories_with_counts.map do |cat, nis, total_count|
+      ids = nis.pluck(:id)
+      if filtered.present?
+        filtered_nis = nis.where("news_items.id not in (?)", filtered)
+      else
+        filtered_nis = nis
+      end
+      filtered += ids
+      [ cat, filtered_nis, total_count]
+    end
+  end
 
   def top_news_items_for(category)
     all = NewsItem.
@@ -59,7 +74,7 @@ class NewsletterMailing
 
     count = all.length
     limit = limit_fn(count)
-    [all.limit(limit).to_a, count]
+    [all.limit(limit), count]
   end
 
   def limit_fn(count)
