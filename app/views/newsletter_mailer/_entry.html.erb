@@ -2,24 +2,25 @@
   <tr>
     <td class="align-top link-content" style="vertical-align:top;padding-bottom:20px">
       <!-- left column -->
-      <table width="140" border="0" cellspacing="0" cellpadding="0" align="left" class="w270">
-        <tr>
-          <td>
-            <% if image.present? %>
-            <a href="<%=link %>"><img class="thumbnail" src="<%= image %>" alt="<%= subtitle %>"></a>
-            <br />
-            <% end %>
-            <%= truncate subtitle, length: 60 %>
-          </td>
-        </tr>
-      </table>
       <!-- end left column -->
 
       <!-- right column -->
-      <table width="440" border="0" cellspacing="0" cellpadding="0" align="left" class="w270">
+      <table border="0" cellspacing="0" cellpadding="0" align="left" class="w100percent">
         <tr>
           <td>
-            <h3 class="title seriously-break-word"><a href="<%=link%>" style="color:#328EF5;text-decoration:none;color:#a50000 !important"><%=title %></a></h3>
+            <table border="0" cellspacing="0" cellpadding="0" align="left" class="100percent">
+              <tr>
+                <td width='20'>
+                  <% if image.present? %>
+                    <a href="<%=link %>"><img class="thumbnail"src="<%= image %>" alt="<%= subtitle %>"></a>
+                  <% end %>
+                </td>
+                <td>
+                  <h3 class="title seriously-break-word"><a href="<%=link%>" style="color:#328EF5;text-decoration:none;color:#a50000 !important"><%=title %></a></h3>
+                  <small> <%= categories %> &ndash; <i><%= truncate subtitle, length: 60 %></i> </small>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
         <tr>

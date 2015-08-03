@@ -8,10 +8,10 @@ class NewsletterMailer < ActionMailer::Base
     @categories = mailing.categories
     names = @categories.map(&:name)
     if names.count > 5
-      names = "zu #{names.count} Themen"
+      names = "aus #{names.count} Themen"
     else
       names = "zum Thema " + names.to_sentence
     end
-    roadie_mail to: mailing.email, subject: "[HRfilter] Newsletter #{names}"
+    roadie_mail to: mailing.email, subject: "[HRfilter] #{@mailing.news_items.count} Beiträge #{names}"
   end
 end

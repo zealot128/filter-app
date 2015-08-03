@@ -36,13 +36,27 @@ class NewsletterMailing
     @subscription.email
   end
 
-  def categories_with_news
-    all = categories.map { |category|
-      [ category, *top_news_items_for(category)]
-    }
-    filter_doubles(all).reject{|c,ni| ni.count == 0 }
+  def news_items
+    @news_items ||=
+      begin
+        all = categories.map { |category|
+          top_news_items_for(category).to_a
+        }.flatten
+        all.uniq{|i| i.id }.sort_by{|i| -(i.absolute_score || 0)}
+      end
   end
 
+  def count
+    @count ||= news_items.count
+  end
+
+  def total_count
+    NewsItem.
+      joins(:categories).
+      where(categories: { id: categories}).
+      group('news_items.id').
+      where('published_at > ?', subscription.interval_from.ago).length
+  end
 
   def categories
     Category.find(@subscription.categories.reject(&:blank?))
@@ -74,13 +88,13 @@ class NewsletterMailing
 
     count = all.length
     limit = limit_fn(count)
-    [all.limit(limit), count]
+    all.limit(limit)
   end
 
   def limit_fn(count)
     case count
     when 0..5 then count
-    when 5..10000 then 5 + ((count - 5) ** 0.55).to_i
+    when 5..10000 then 5 + ((count - 5) ** 0.50).to_i
     end
   end
 

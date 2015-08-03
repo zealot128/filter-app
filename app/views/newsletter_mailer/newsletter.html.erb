@@ -51,7 +51,7 @@
           <td class="description alignable-paragraph" style="padding-bottom:30px;text-align:left">
             <p style="">Hallo,</p>
             <p>
-              hier einige der relevantesten News aus den abonnierten Themenbereichen.
+              hier die Top <%= @mailing.count %> der relevantesten News von insgesamt <%= @mailing.total_count %> aus den abonnierten Themenbereichen <strong><%= @mailing.categories.map(&:name).to_sentence %></strong>.
               <br/>
               Die Newsletter-Einstellungen können <a href='<%= edit_mail_subscription_url(@mailing.subscription) %>'>hier</a> vorgenommen werden.</p>
           </td>
@@ -61,30 +61,20 @@
   </tr>
 </table>
 
-<h2 class='section-title'>Inhalt</h2>
-<% @mailing.categories_with_news.each do |category, stories, total_count| %>
-  <a href='#<%=dom_id(category)%>'><%=category.name%> <small>(Top <%= stories.length %> von <%= total_count %> News)</small></a>
-  <br />
-<% end %>
-
 
 <!-- links / content -->
 
-<%- @mailing.categories_with_news.each do |category, stories| %>
-  <%= render "section_title", title: category.name, id: dom_id(category) %>
 
-  <% stories.in_groups_of(2).each do |inner_stories|  %>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="w100percent" style='vertical-align: top;'>
-      <tr>
-        <% inner_stories.compact.each do |story| %>
-        <td width='50%' style='vertical-align: top;'>
-          <%= render "entry", title: story.title, image: story.source.logo.present? && image_url(story.source.logo.url(:small)), link: story.url, text: story.teaser, subtitle: story.source.name %>
-        </td>
-        <% end %>
-      </tr>
-    </table>
-  <% end %>
-
+<% @mailing.news_items.in_groups_of(2).each do |inner_stories|  %>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="w100percent" style='vertical-align: top;'>
+    <tr>
+      <% inner_stories.compact.each do |story| %>
+      <td width='50%' style='vertical-align: top;'>
+        <%= render "entry", title: story.title, image: story.source.logo.present? && image_url(story.source.logo.url(:thumb)), link: story.url, text: story.teaser, subtitle: story.source.name, categories: story.categories.pluck(:name).join(', ') %>
+      </td>
+      <% end %>
+    </tr>
+  </table>
 <% end %>
 
 <br>
