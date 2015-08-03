@@ -97,7 +97,8 @@ class NewsItem < ActiveRecord::Base
   end
 
   def blacklist
-    bl = ['Morgenimpuls', 'commun.it', '(insight by']
+    bl = ['Morgenimpuls', 'commun.it', '(insight by', 'Partner im Profil:', 'Partner kurz vorgestellt', 'Partner im Fokus', 'Partner im Blickpunkt',
+          'Förderer kurz vorgestellt', 'Förderer im Fokus', 'Förderer im Blickpunkt', 'Community-Partner', 'Community-Förderer' ]
     if title and bl.any?{|t| title.include?(t) }
       self.blacklisted = true
     end
