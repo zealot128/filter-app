@@ -16,10 +16,8 @@ class SourcesController < ApplicationController
       other = @source.news_items.
         visible.
         order('absolute_score desc').
+        where('news_items.id not in (?)', @news_items.map(&:id).presence || [-1]).
         limit(50 - @news_items.count)
-      if @news_items.any?
-        other = other.where('news_items.id not in (?)', @news_items.map(&:id).presence || [-1])
-      end
       @news_items += other
     end
   end
