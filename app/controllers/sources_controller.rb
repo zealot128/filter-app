@@ -14,6 +14,7 @@ class SourcesController < ApplicationController
     @news_items = @source.news_items.current.order('value desc')
     if @news_items.count < 50
       other = @source.news_items.
+        visible.
         order('absolute_score desc').
         limit(50 - @news_items.count)
       if @news_items.any?
