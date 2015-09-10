@@ -1,6 +1,6 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
-  MAX_AGE ||= 14.days
+  MAX_AGE ||= ::Configuration.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true) }
   scope :current, -> { visible.where("published_at > ?", MAX_AGE.ago) }

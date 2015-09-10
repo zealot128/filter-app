@@ -6,6 +6,7 @@ default: &default
   database: hrcollect_<%= Rails.env.sub('elopment','') %>
   email: info@stefanwienert.de
   host: www.hrfilter.de
+  max_age: 14
   person: Stefan Wienert
   intro: |
     HRfilter.de ist ein Aggregator für Nachrichten aus dem Personalwesen / HR-Bereich. Zusammengefasst werden News aus <a href='/quellen'>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
