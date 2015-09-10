@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter do
     if request.host == ::Configuration.host.remove('www.','')
-      url = "http://www.#{::Configuration.host}" + request.env['REQUEST_URI']
+      url = "http://#{::Configuration.host}" + request.env['REQUEST_URI']
       redirect_to url, status:  :moved_permanently
     end
   end
