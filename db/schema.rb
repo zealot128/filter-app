@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20150624202416) do
   enable_extension "pg_trgm"
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.text     "keywords"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories_news_items", id: false, force: :cascade do |t|
@@ -55,19 +55,19 @@ ActiveRecord::Schema.define(version: 20150624202416) do
   add_index "mail_subscriptions", ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree
 
   create_table "news_items", force: :cascade do |t|
-    t.string   "title",               limit: 255
+    t.string   "title"
     t.text     "teaser"
-    t.string   "url",                 limit: 255
+    t.string   "url"
     t.integer  "source_id"
     t.datetime "published_at"
     t.integer  "value"
     t.integer  "fb_likes"
     t.integer  "retweets"
-    t.string   "guid",                limit: 255
+    t.string   "guid"
     t.integer  "linkedin"
     t.integer  "xing"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "gplus"
     t.text     "full_text"
     t.integer  "word_length"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150624202416) do
     t.tsvector "search_vector"
     t.integer  "incoming_link_count"
     t.float    "absolute_score"
-    t.boolean  "blacklisted",                     default: false
+    t.boolean  "blacklisted",         default: false
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
@@ -87,19 +87,19 @@ ActiveRecord::Schema.define(version: 20150624202416) do
   add_index "news_items", ["value"], name: "index_news_items_on_value", using: :btree
 
   create_table "sources", force: :cascade do |t|
-    t.string   "type",               limit: 255
-    t.string   "url",                limit: 255
-    t.string   "name",               limit: 255
+    t.string   "type"
+    t.string   "url"
+    t.string   "name"
     t.integer  "value"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.string   "logo_file_name",     limit: 255
-    t.string   "logo_content_type",  limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string   "full_text_selector", limit: 255
+    t.string   "full_text_selector"
     t.boolean  "error"
-    t.float    "multiplicator",                  default: 1.0
+    t.float    "multiplicator",      default: 1.0
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
