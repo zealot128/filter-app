@@ -8,6 +8,7 @@ table.table.table-striped
       th Quelle
       th aktuell
       th avg Wortlaenge
+      th Full-Text-Selector
       th
   - @sources.each do |source|
     tr class='#{source.error ? 'danger' : ''}'
@@ -17,6 +18,7 @@ table.table.table-striped
         span<> = '/'
         = source.news_items.current.count
       td = source.average_word_length
+      td = source.full_text_selector
       td
         = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
           |bearbeiten
