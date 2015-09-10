@@ -7,12 +7,12 @@
   Dresden
 
 %p
-  E-Mail: info@stefanwienert.net
+  E-Mail: #{Configuration.email}
   %br
-  Internet: http://stefanwienert.net/
+  Internet: http://#{Configuration.host}
 
 %p
-  Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV: Stefan Wienert
+  Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV: #{Configuration.person}
 
 %p
   Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir, die Betreiber dieser Webseite und deren Unterseiten (Subdomains) keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
@@ -23,7 +23,7 @@
   .panel-heading
     %h3.panel-title Was ist #{Configuration.short_name}
   .panel-body
-    = Configuration.explanation
+    = raw Configuration.explanation
 
 .panel.panel-primary
   .panel-heading
@@ -47,4 +47,4 @@
   .panel-heading
     %h3.panel-title Wer steckt dahinter?
   .panel-body
-    = Configuration.credits
+    = raw Configuration.credits
