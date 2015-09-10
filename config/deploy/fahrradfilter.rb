@@ -1,5 +1,6 @@
 set :stage, :production
-
+set :application, 'fahrrad-filter.de'
+set :deploy_to, '/var/www/fahrrad-filter.de'
 
 server 'localhost',
   user: 'stefan',

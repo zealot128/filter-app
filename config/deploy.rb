@@ -1,17 +1,15 @@
-set :application, 'hrfilter.de'
 set :repo_url, 'git@localhost:stefan/hrfilter-de.git'
 set :rvm_ruby_version, '2.1.1'
 set :rvm_type, :user
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :deploy_to, '/var/www/hrfilter.de'
 set :scm, :git
 
 set :pty, true
 # set :log_level, :info
 
-set :linked_files, %w{config/database.yml config/secrets.yml config/email.yml}
+set :linked_files, %w{config/database.yml config/application.yml config/secrets.yml config/email.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :keep_releases, 5
@@ -20,7 +18,7 @@ set :keep_releases, 5
 desc 'ping server for passenger restart'
 task :ping_restart do
   run_locally do
-    execute 'curl --silent -I http://www.hrfilter.de'
+    execute "curl --silent -I http://www.#{fetch(:application)}"
   end
 end
 
