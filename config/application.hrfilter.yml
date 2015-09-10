@@ -2,6 +2,7 @@ default: &default
   site_name: 'HRfilter.de'
   short_name: 'HRfilter'
   from: 'noreply@hrfilter.de'
+  key: 'hrfilter'
   email: info@stefanwienert.de
   host: www.hrfilter.de
   intro: |

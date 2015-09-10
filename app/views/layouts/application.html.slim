@@ -3,8 +3,8 @@ html lang=(locale) class=(browser.to_s)
   head
     meta charset="utf-8"
     meta content="width=device-width, initial-scale=1" name="viewport"
-    title = content_for?(:title) ? yield(:title) : Configuration.site_name
-    link rel="shortcut icon" href=image_path("#{Configuration.key}/favicon.png")
+    title = content_for?(:title) ? yield(:title) : ::Configuration.site_name
+    link rel="shortcut icon" href=image_path("#{::Configuration.key}/favicon.png")
     meta name="google-site-verification" content="mbm3Uup6rdXoTEZZfSZnxknTxyTj1PEDu7BODIa-X1Y"
     = csrf_meta_tags
     = stylesheet_link_tag "web"

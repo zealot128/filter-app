@@ -3,6 +3,8 @@ class Configuration
 
   def configuration
     @configuration ||= Rails.application.config_for(:application)
+  rescue RuntimeError
+    @configuration ||= Rails.application.config_for('application.hrfilter')
   end
 
   def respond_to?(m, foobar="")
