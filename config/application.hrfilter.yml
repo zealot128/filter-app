@@ -3,6 +3,7 @@ default: &default
   short_name: 'HRfilter'
   from: 'noreply@hrfilter.de'
   key: 'hrfilter'
+  database: hrcollect_<%= Rails.env.sub('elopment','') %>
   email: info@stefanwienert.de
   host: www.hrfilter.de
   person: Stefan Wienert
