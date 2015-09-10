@@ -13,7 +13,7 @@ html lang=(locale) class=(browser.to_s)
   body
     header.container
       a href='/'
-        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name
+        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name, style: 'max-width: 100%'
 
     - if controller_path.to_s['admin']
       .container

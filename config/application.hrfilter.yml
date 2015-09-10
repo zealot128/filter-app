@@ -14,6 +14,20 @@ default: &default
     Ein Aggregator für News rund um das Thema Personal + HR. Dabei werden die News nach Aktualität und Viralität bewertet und sortiert. Außerdem wird eine Klassifizierung vorgenommen.
   credits: |
     Dies ist ein privates Projekt von <a href='http://www.stefanwienert.de'>mir</a>. Ich habe das Projekt ins Leben gerufen, um mich, als fachfremder Softwareentwickler, effektiv und schnell über alle News aus dem Fachbereich auf dem Laufenden zu halten.
+  tracking_code: |
+    <!-- Piwik -->
+    <script type="text/javascript">
+    var pkBaseURL = (("https:" == document.location.protocol) ? "https://tools.stefanwienert.de/piwik/" : "http://tools.stefanwienert.de/piwik/");
+    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+    try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+    } catch( err ) {}
+    </script><noscript><p><img src="http://tools.stefanwienert.de/piwik/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
+    <!-- End Piwik Tracking Code -->
+
 
 development:
   << : *default
