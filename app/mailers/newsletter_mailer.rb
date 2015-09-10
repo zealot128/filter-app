@@ -1,5 +1,5 @@
 class NewsletterMailer < ActionMailer::Base
-  default from: 'noreply@hrfilter.de'
+  default from: ::Configuration.from
   include Roadie::Rails::Mailer
   def newsletter(mailing)
     @mailing = mailing
@@ -12,6 +12,6 @@ class NewsletterMailer < ActionMailer::Base
     else
       names = "zum Thema " + names.to_sentence
     end
-    roadie_mail to: mailing.email, subject: "[HRfilter] #{@mailing.news_items.count} Beiträge #{names}"
+    roadie_mail to: mailing.email, subject: "[#{::Configuration.site_name}] #{@mailing.news_items.count} Beiträge #{names}"
   end
 end

@@ -3,8 +3,8 @@ html lang=(locale) class=(browser.to_s)
   head
     meta charset="utf-8"
     meta content="width=device-width, initial-scale=1" name="viewport"
-    title = content_for?(:title) ? yield(:title) : "HRfilter.de"
-    link rel="shortcut icon" href=image_path("hrfilter-favicon.png")
+    title = content_for?(:title) ? yield(:title) : Configuration.site_name
+    link rel="shortcut icon" href=image_path("#{Configuration.key}/favicon.png")
     meta name="google-site-verification" content="mbm3Uup6rdXoTEZZfSZnxknTxyTj1PEDu7BODIa-X1Y"
     = csrf_meta_tags
     = stylesheet_link_tag "web"
@@ -13,7 +13,7 @@ html lang=(locale) class=(browser.to_s)
   body
     header.container
       a href='/'
-        = image_tag "hrfilter-420x102.png", alt: "Logo", title: "HRfilter.de"
+        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name
 
     - if controller_path.to_s['admin']
       .container
@@ -40,7 +40,7 @@ html lang=(locale) class=(browser.to_s)
         ul.list-inline
           li
             | &copy; #{Date.today.year}
-          li= link_to "HRfilter.de", root_path
+          li= link_to Configuration.site_name, root_path
           li= link_to "Suche/Feeds", search_path
           li= link_to "FAQ/Impressum", about_path
           li= link_to "Quellen", '/quellen'

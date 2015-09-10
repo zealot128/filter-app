@@ -1,9 +1,9 @@
-- content_for :title, "HRfilter.de"
+- content_for :title, Configuration.site_name
 
 - content_for :content_header do
   .content-header
     .container
-      p HRfilter ist ein Aggregator für Nachrichten aus dem Personalwesen / HR-Bereich. Zusammengefasst werden News aus <a href='#{sources_path}'>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
+      p = Configuration.intro
 
 
 .category-tabs

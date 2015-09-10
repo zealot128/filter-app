@@ -21,9 +21,9 @@
 
 .panel.panel-primary
   .panel-heading
-    %h3.panel-title Was ist HRfilter?
+    %h3.panel-title Was ist #{Configuration.short_name}
   .panel-body
-    Ein Aggregator für News rund um das Thema Personal + HR. Dabei werden die News nach Aktualität und Viralität bewertet und sortiert. Außerdem wird eine Klassifizierung vorgenommen.
+    = Configuration.explanation
 
 .panel.panel-primary
   .panel-heading
@@ -39,7 +39,7 @@
     %h3.panel-title Eine Quelle fehlt, wie kann ich diese aufnehmen lassen?
   .panel-body
     Schreiben Sie mir eine
-    = mail_to 'info@stefanwienert.de', subject: 'HRfilter: Neue Quelle' do
+    = mail_to Configuration.email, subject: "#{Configuration.short_name}: Neue Quelle" do
       eMail
 
 
@@ -47,4 +47,4 @@
   .panel-heading
     %h3.panel-title Wer steckt dahinter?
   .panel-body
-    Dies ist ein privates Projekt von <a href='http://www.stefanwienert.de'>mir</a>. Ich habe das Projekt ins Leben gerufen, um mich, als fachfremder Softwareentwickler, effektiv und schnell über alle News aus dem Fachbereich auf dem Laufenden zu halten.
+    = Configuration.credits
