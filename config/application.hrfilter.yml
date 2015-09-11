@@ -5,6 +5,7 @@ default: &default
   key: 'hrfilter'
   database: hrcollect_<%= Rails.env.sub('elopment','') %>
   email: info@stefanwienert.de
+  google_site_verification: "mbm3Uup6rdXoTEZZfSZnxknTxyTj1PEDu7BODIa-X1Y"
   host: www.hrfilter.de
   max_age: 14
   person: Stefan Wienert
