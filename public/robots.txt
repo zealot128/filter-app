@@ -3,4 +3,4 @@
 User-Agent: *
 Disallow: /admin
 
-Sitemap: http://www.hrfilter.de/system/sitemap.xml.gz
+Sitemap: /system/sitemap.xml.gz
