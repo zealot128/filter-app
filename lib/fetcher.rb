@@ -6,7 +6,7 @@ module Fetcher
 
   HTTP_OPTIONS = {
     headers: {
-      "User-Agent" => "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0",
+      "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",
       "Accept-Language" => "de-de,de,en-us,en",
       "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       #"Accept" => "text/html,application/xhtml+xml,application/xml"
@@ -23,7 +23,7 @@ module Fetcher
     response = nil
     [0,5,20,60].each do |seconds|
       response = HTTParty.get url, options
-      puts response.code
+      puts response.code if response.code != 200
       break if response.code < 400 or response.code == 404
       break if check_link
       Kernel.sleep seconds

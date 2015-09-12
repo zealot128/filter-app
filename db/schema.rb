@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624202416) do
+ActiveRecord::Schema.define(version: 20150912172906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20150624202416) do
     t.integer  "incoming_link_count"
     t.float    "absolute_score"
     t.boolean  "blacklisted",         default: false
+    t.integer  "reddit"
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree

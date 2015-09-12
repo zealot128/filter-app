@@ -63,12 +63,19 @@ $twitter-panel-offset: 30px
   overflow: hidden
   width: 100%
   white-space: nowrap
+
+$category-background: #666
 div.categories
-  background: #333
+  background: $category-background
   text-align: center
 .categories .label
+  padding-right: 0
   padding-left: 5px
-  background: #333
+  background: $category-background
+  font-size: 11px
+  i.fa
+    font-size: 10px
+    color: #bbb
   color: #eee
 
 .panel-title, p, .panel-body

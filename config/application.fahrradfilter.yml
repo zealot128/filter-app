@@ -6,6 +6,9 @@ default: &default
   database: fahrrad_<%= Rails.env.sub('elopment','') %>
   email: info@stefanwienert.de
   host: www.fahrrad-filter.de
+  max_age: 14
+  google_site_verification: ''
+  tracking_code: ''
   person: Stefan Wienert
   intro: |
     Fahrrad-Filter ist ein Aggregator für Nachrichten rund ums Fahrrad. Zusammengefasst werden News aus <a href='/quellen'>bekannten deutschsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.

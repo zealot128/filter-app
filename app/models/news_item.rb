@@ -47,6 +47,7 @@ class NewsItem < ActiveRecord::Base
       linkedin: linkedin,
       xing: xing,
       gplus: gplus,
+      reddit: reddit || 0,
       freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10000,
       bias: source.value,
       multiplicator: source.multiplicator,

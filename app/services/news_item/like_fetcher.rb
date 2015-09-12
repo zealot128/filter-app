@@ -12,6 +12,7 @@ class NewsItem::LikeFetcher
     news_item.linkedin = fetcher.linkedin
     news_item.xing     = fetcher.xing
     news_item.gplus    = fetcher.gplus
+    puts news_item.reddit = fetcher.reddit
   end
 
   def tweets
@@ -35,6 +36,12 @@ class NewsItem::LikeFetcher
     response = Fetcher.fetch_url("https://www.xing-share.com/app/share?op=get_share_button;url=#{eurl};counter=right;lang=de;type=iframe;hovercard_position=1;shape=rectangle")
     doc = Nokogiri.parse(response.body)
     doc.at(".xing-count").text.to_i
+  end
+
+  def reddit
+    response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}")
+    json = JSON.load response.body
+    json['data']['children'].map{|i| i['data']['score']}.sum
   end
 
   def gplus
