@@ -43,6 +43,7 @@ module Baseapp
 
     config.assets.enabled = true
     config.assets.version = '1.0'
+    config.assets.image_optim = false
     config.active_record.raise_in_transactional_callbacks = true
 
     config.generators do |g|

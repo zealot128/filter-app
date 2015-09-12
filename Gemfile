@@ -35,6 +35,8 @@ end
 gem 'exception_notification'
 gem "cache_digests"
 gem "paperclip"
+gem "paperclip-optimizer"
+gem "image_optim_bin", group: :production
 
 gem 'sass-rails'
 gem 'coffee-rails'

@@ -1,6 +1,9 @@
 - length ||= 60
+- background = feed_source_item.image
 .panel.panel-default
-  .panel-heading
+  .panel-heading{class: background.present? ? 'with-background' : ''}
+    - if background.present?
+      %img.background{src: background.url }
     %h3.panel-title
       = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title do
         = truncate(feed_source_item.title, length: length)

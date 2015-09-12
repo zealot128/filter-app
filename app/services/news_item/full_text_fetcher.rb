@@ -15,7 +15,23 @@ class NewsItem::FullTextFetcher
           content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
           @news_item.full_text = @processor.clear content.inner_html
         end
+        fetch_og_image(page)
       rescue Mechanize::ResponseCodeError
+      end
+    end
+  end
+
+  def fetch_og_image(page)
+    return if @news_item.image.present?
+
+    image = page.parser.xpath('//meta[@property="og:image" or @property="shareholic:image"]').first
+    if image
+      url = image['content']
+      begin
+        image = download_url(url)
+        @news_item.update_attributes image: image
+      rescue StandardError => e
+        Rails.logger.error "OG image download fehlgeschlagen #{url} #{e.inspect}"
       end
     end
   end

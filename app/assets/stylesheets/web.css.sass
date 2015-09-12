@@ -145,3 +145,25 @@ blockquote
     left: 50px
     top: 5px
 
+.panel-heading.with-background
+  position: relative
+  overflow: hidden
+  img.background
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: auto
+    opacity: 0.4
+    transition: opacity 0.3s ease
+  .panel-title
+    $shadow-color: #bbb
+
+    position: relative
+    z-index: 2
+    text-shadow: 1px 1px 0px $shadow-color, -1px -1px 0px $shadow-color, 1px -1px 0px $shadow-color, -1px 1px 0px $shadow-color
+    color: #000
+  &:hover
+    .background
+      opacity: 0.1
+

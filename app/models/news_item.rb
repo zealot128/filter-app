@@ -20,6 +20,12 @@ class NewsItem < ActiveRecord::Base
 
   validates_uniqueness_of :guid, scope: [:source_id]
 
+  has_attached_file :image, styles: {
+    original: ["150x150>", :jpg]
+  },
+  processors: [:thumbnail, :paperclip_optimizer]
+  do_not_validate_attachment_file_type :image
+
   include PgSearch
   pg_search_scope :search_full_text,
     :order_within_rank => "news_items.published_at DESC",
