@@ -15,7 +15,7 @@ class NewsletterMailing
   end
 
   def sendable?
-    categories_with_news.count > 0 && subscription.due?
+    news_items.count > 0 && subscription.due?
   end
 
   def send!
