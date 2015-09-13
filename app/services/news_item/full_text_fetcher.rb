@@ -17,7 +17,7 @@ class NewsItem::FullTextFetcher
           @news_item.full_text = @processor.clear content.inner_html
         end
         fetch_og_image(page)
-      rescue Mechanize::ResponseCodeError
+      rescue Mechanize::ResponseCodeError, SocketError
       end
     end
   end
@@ -25,7 +25,7 @@ class NewsItem::FullTextFetcher
   def fetch_og_image(page)
     return if @news_item.image.present?
 
-    image = page.parser.xpath('//meta[@property="og:image" or @property="shareaholic:image"]').first
+    image = page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first
     if image
       url = image['content']
       begin
