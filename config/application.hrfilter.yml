@@ -1,12 +1,12 @@
 default: &default
   site_name: 'HRfilter.de'
   short_name: 'HRfilter'
-  from: 'noreply@hrfilter.de'
+  from: ''
   key: 'hrfilter'
   database: hrcollect_<%= Rails.env.sub('elopment','') %>
-  email: info@stefanwienert.de
-  google_site_verification: "mbm3Uup6rdXoTEZZfSZnxknTxyTj1PEDu7BODIa-X1Y"
-  host: www.hrfilter.de
+  email: ''
+  google_site_verification: ""
+  host: 'localhost:3000'
   max_age: 14
   person: Stefan Wienert
   intro: |
@@ -16,18 +16,8 @@ default: &default
   credits: |
     Dies ist ein privates Projekt von <a href='http://www.stefanwienert.de'>mir</a>. Ich habe das Projekt ins Leben gerufen, um mich, als fachfremder Softwareentwickler, effektiv und schnell über alle News aus dem Fachbereich auf dem Laufenden zu halten.
   tracking_code: |
-    <!-- Piwik -->
     <script type="text/javascript">
-    var pkBaseURL = (("https:" == document.location.protocol) ? "https://tools.stefanwienert.de/piwik/" : "http://tools.stefanwienert.de/piwik/");
-    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-    </script><script type="text/javascript">
-    try {
-    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
-    piwikTracker.trackPageView();
-    piwikTracker.enableLinkTracking();
-    } catch( err ) {}
-    </script><noscript><p><img src="http://tools.stefanwienert.de/piwik/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
-    <!-- End Piwik Tracking Code -->
+    </script>
 
 
 development:

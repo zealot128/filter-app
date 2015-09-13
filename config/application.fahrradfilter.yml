@@ -4,8 +4,8 @@ default: &default
   from: 'noreply@fahrrad-filter.de'
   key: 'fahrrad-filter'
   database: fahrrad_<%= Rails.env.sub('elopment','') %>
-  email: info@stefanwienert.de
-  host: www.fahrrad-filter.de
+  email: 'info@example.com'
+  host: 'localhost:3000'
   max_age: 14
   google_site_verification: ''
   tracking_code: ''

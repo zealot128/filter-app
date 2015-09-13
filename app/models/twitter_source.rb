@@ -30,10 +30,10 @@ class TwitterSource < Source
 
   def self.client
     Twitter::REST::Client.new do |config|
-      config.consumer_key        = "kX94bErw0YBysWtgHsegA"
-      config.consumer_secret     = "b9s2IQeUs3OZJladh0QMsNsqqKCdaAdlOSPneVXUbHU"
-      config.access_token        = "98188244-PJe2v0Bq4MgPGuqz0j5cJFp9EvoTbTTah2h6MNUpa"
-      config.access_token_secret = "TzGlQG44b35OMCQZXI1N8rCWIkjVz6PZBrepaZG8dE"
+      config.consumer_key        = Rails.application.secrets.twitter_consumer_key
+      config.consumer_secret     = Rails.application.secrets.twitter_consumer_secret
+      config.access_token        = Rails.application.secrets.twitter_access_token
+      config.access_token_secret = Rails.application.secrets.twitter_access_token_secret
     end
   end
 end
