@@ -33,7 +33,6 @@ group :capistrano do
   gem "whenever"
 end
 gem 'exception_notification'
-gem "cache_digests"
 gem "paperclip"
 gem "paperclip-optimizer"
 

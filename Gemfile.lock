@@ -73,9 +73,6 @@ GEM
     browser (0.8.0)
     buftok (0.2.0)
     builder (3.2.2)
-    cache_digests (0.3.1)
-      actionpack (>= 3.2)
-      thread_safe
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
@@ -418,7 +415,6 @@ DEPENDENCIES
   bootstrap-sass (~> 3.1)
   bootswatch-rails
   browser
-  cache_digests
   capistrano
   capistrano-bundler
   capistrano-rails
