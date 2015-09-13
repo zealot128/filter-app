@@ -9,6 +9,7 @@ class NewsItem::FullTextFetcher
     if @source.full_text_selector?
       begin
         page = @processor.get(@news_item.url)
+        return if !page.respond_to?(:at)
         @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
         content = page.at(@source.full_text_selector)
         if content
@@ -24,7 +25,7 @@ class NewsItem::FullTextFetcher
   def fetch_og_image(page)
     return if @news_item.image.present?
 
-    image = page.parser.xpath('//meta[@property="og:image" or @property="shareholic:image"]').first
+    image = page.parser.xpath('//meta[@property="og:image" or @property="shareaholic:image"]').first
     if image
       url = image['content']
       begin

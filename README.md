@@ -1,65 +1,69 @@
-# Rails 3.2 Baseapp
+#  News aggregator app
 
-Rails provides a good set of defaults. Even so, we use some different subsets of gems and config, which we compiled into this base-application for new Ruby on Rails apps.
+This is a Ruby-on-Rails app for running (German) news aggregator websites. Today, it powers:
 
-* Rspec + capybara/poltergeist, webmock, timecop
-* HAML + SASS + Compass
-* SimpleForm (+Bootstrap)
-* Twitter Bootstrap + Font Awesome
-* Will-paginate with bootstrap
-* Chosen select box widget
-* sitemap_generator with config/sitemap.rb for easier search-engine sitemap
-* Sextant ( /rails/routes) until Rails 4
-* Quiet Assets
-* Guard with rspec (and spork: note: spork gem is commented out by default)
-* Debugging facilities: pry, better\_errors
-* opinionated style dir: /web.css and /user.css (for logged-in users) with subdirs in app/assets
-* IE9.js for better IE7-9 experience
-* Custom webfont (Without google fonts, keeping everything on the server)
-* browser classes for <html>-Tag ("ie9", "webkit", etc) for easier ie-Styling
-* **Spring** as application preloader for test/spec/rake/generator commands
+* http://www.hrfilter.de  (German news of HR/personal/recruiting)
+* http://www.fahrrad-filter.de (German/English news of cycling topic)
 
 
+## Reasoning
 
-## Twitter Bootstrap + Fonts
+I want to follow news of those two areas but struggle with RSS, as it is too much for me too process - I want to see the most "relevant" sources at once, without investing too much time. Other sources, like Twitter + Reddit I found too noisy to follow.
 
-* Twitter Bootstrap Sass
-* default haml-layout with navbar and footer
-* Font-awesome icons
-* font-kit "Lora" and "PTSerif"
-  * Download more Font-kits from font-squirrel with "rake font:kit NAME=lora" from fontsquirrel
+This is why I created that app
 
-## Rspec
+## News fetching + scoring algorithm
 
-TestUnit/minitest is dumped in favor for Rspec eco-system.
+The admin of the apps curates a list of trusted sources. Those will regularly checked for new content. Following news sources are supported:
 
-There are some helpers:
-
-* "be_valid" -> "@record.should be_valid" with better fail message
-* ``include MailHelper``
-  * provides convenience methods: "mail", "mails" instead of Actionmailer::Base.deliveries
-  * Checks all outgoing mails for missing translations
-* ``include PoltergeistHelper``
-  * screenshot(page) -> Screenshot of current page to localhost:3000/screenshot.jpg
-  * uses Poltergeist as capybara adapter
-  * Allow webmock connects
-  * skip_confirm -> Clicking Delete links with data-confirm
-
-* Rspec-Tags
-  * ``it "...", freeze_time: "2012-10-01 12:12"`` uses Timecop to freeze time for that scenario
-  * ``it "...", skip: true``, set scenario, describe-groups etc to pending at once
-  * ``it "...", caching: true``, enables controller/action caching for that test
-* ``include TranslationHelper`` to controller-specs
-  * will render views (render_views)
-  * will check response-bodys for missing translations
+* RSS/Atom feeds (FeedSource)
+* Podcast via RSS/Atom (similar as FeedSource but different visual)
+* Twitter Streams
+* (in planning) RedditSources - subscribe whole /r/'s
 
 
+In similar fashion, the app checks popularity of the news in social network, that means:
 
-## Install
+* Facebook likecount (as reported by Facebook Like Button)
+* Twitter retweets + favorites (as reported by Twitter API)
+* XING + LinkedIn shares (as reported by regarding Widgets)
+* Reddit total score sum in all subreddits (if exists)
+* Each of those sources is configured with a different value (e.g. Facebook likes are more common, so less value than XING share)
+
+The admin of the sites can give a Source individual:
+
+* Base factor (that means, how much "Likes" any link of that website is worth, can also be negative too remove noise from some sources)
+* Multiplicator, e.g. 0.2, 1.0, 2.0  - each like will be multiplied by that number -- Some sources have a much higher reach and can be leveled out so the news are more broad
+
+
+Altogether, the score is calculated regularly for fresh links.
+For Display on the homepage, the freshness is also important - the older the link, the more the score is reduced.
+
+## Topics
+
+The topic matching is very simple - just simple keyword lists. That means, the categorization is far far from perfect or even good. It might be an area of further development :)
+
+## Newsletter
+
+It is possible to subscribe via E-Mail. Then, once per week on sunday, you will receive a Mail with from the selected topics.
+
+# Development
+
+As it is a fully functioning Rails app, you can try to run it yourself. First make sure to have Ruby at least 2.0 installed and bundler, then:
 
 ```
-git clone git://github.com/zealot128/rails-baseapp.git
-cd rails-baseapp
-bundle
-rm -rf .git
+git clone ...
+cd ...
+bundle install
+rake db:create
+rake db:migrate
+rails server
+```
+
+before the rake commands, you might have to create a config/application.yml (see config/application.hrfilter.yml as example) and adjust config/database.yml and config/secrets.yml too your needs.
+
+If you'd like, you can try to import some of the HRfilter sources for an initial seed:
+
+```
+rake db:seed
 ```
