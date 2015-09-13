@@ -1,20 +1,22 @@
 - length ||= 60
 - background = feed_source_item.image
 .panel.panel-default
-  .panel-heading{class: background.present? ? 'with-background' : ''}
-    - if background.present?
-      %img.background{src: background.url }
+  .panel-heading
     %h3.panel-title
       = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title do
         = truncate(feed_source_item.title, length: length)
-  .panel-body
-    %p.source
-      = render "news_items/source", source: feed_source_item.source, size: '16x16'
-      &ndash;
-      %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
-        = l feed_source_item.published_at, format: :short
+  .panel-body{class: background.present? ? 'with-background' : ''}
+    - if background.present?
+      .background-frame
+        %img.background{src: background.url }
+    .background-text
+      %p.source
+        = render "news_items/source", source: feed_source_item.source, size: '16x16'
+        &ndash;
+        %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
+          = l feed_source_item.published_at, format: :short
 
-    = feed_source_item.teaser
+      = feed_source_item.teaser
     .fog-fade
 
   .panel-footer

@@ -21,7 +21,7 @@ class NewsItem < ActiveRecord::Base
   validates_uniqueness_of :guid, scope: [:source_id]
 
   has_attached_file :image, styles: {
-    original: ["150x150>", :jpg]
+    original: ["250x200>", :jpg]
   },
   processors: [:thumbnail, :paperclip_optimizer]
   do_not_validate_attachment_file_type :image

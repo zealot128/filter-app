@@ -3,7 +3,7 @@ Interne Verlinkungen besser
 RedditSource
   https://www.reddit.com/r/bicycling/.rss
   https://www.reddit.com/r/strava/
-
+  minscore z.B. -5
 
 OpenSource
   Tests
@@ -11,8 +11,9 @@ OpenSource
   config raus
 
 OpenGraph Fetching
-  Images anzeigen
-
+  Bilder komplett anzeigen bei hover Text focus?
+  Twitter Bilder
+  PodcastSource zeigt's noch nicht an
 
 sources seite
   * Suche ueber alle Artikel eines Anbieters
