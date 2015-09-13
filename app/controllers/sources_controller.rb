@@ -1,5 +1,4 @@
 class SourcesController < ApplicationController
-  before_action :skip_set_cookies_header
   def index
     @sources = Source.order('lower(name)')
   end

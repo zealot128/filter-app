@@ -1,4 +1,5 @@
 def download_url(url)
+  url = URI.escape(url)
   url.gsub!(" ","%20")
   io = open(url)
   logo_path = url.split("/").last
