@@ -1,0 +1,22 @@
+h1 Mail Abos
+
+
+table.table.table-bordered
+  thead
+    tr
+      th E-Mail
+      th Themen
+      th Bestätigt?
+      th Letzte empfangene Mail
+  tbody
+    - @subscriptions.each do |s|
+      tr
+        td = s.email
+        td
+          - mailing = NewsletterMailing.new(s)
+          = mailing.categories.map{|i| i.name}.join(', ')
+        td = s.confirmed
+        td = s.last_send_date.try(:to_s)
+        td
+          = link_to edit_mail_subscription_path(s) do
+            | bearbeiten/löschen

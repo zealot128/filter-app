@@ -25,6 +25,8 @@ html lang=(locale) class=(browser.to_s)
               | Quellen
             li = link_to [:admin, :categories]
               | Kategorien
+            li = link_to [:admin, :mail_subscriptions]
+              | Mail-Abos
 
     = yield :content_header if content_for?(:content_header)
     .page-container

@@ -5,6 +5,7 @@ Baseapp::Application.routes.draw do
   namespace :admin do
     resources :sources
     resources :categories
+    resources :mail_subscriptions, only: [:index, :show]
   end
 
   get "sources" => redirect('/quellen')
