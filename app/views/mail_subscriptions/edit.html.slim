@@ -4,7 +4,7 @@
       .panel-heading: h3.panel-title Einstellungen für <strong>#{subscription.email}</strong> ändern
       .panel-body
         = simple_form_for subscription do |f|
-          = f.input :categories, collection: Category.all, as: :check_boxes
+          = f.input :categories, collection: Category.select_collection, as: :check_boxes
           = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
           = f.submit 'Speichern', class: 'btn btn-primary'
   .col-sm-4

@@ -51,15 +51,33 @@ class NewsletterMailing
   end
 
   def total_count
-    NewsItem.
+    sql = NewsItem.
+      where('published_at > ?', subscription.interval_from.ago)
+
+    categorized = sql.
       joins(:categories).
       where(categories: { id: categories}).
-      group('news_items.id').
-      where('published_at > ?', subscription.interval_from.ago).length
+      group('news_items.id').length
+
+    if has_uncatorized?
+      categorized + sql.uncategorized.length
+    else
+      categorized
+    end
   end
 
   def categories
-    Category.find(@subscription.categories.reject(&:blank?))
+    ids = @subscription.categories.reject(&:blank?)
+    base = Category.where(id: ids).to_a
+    if has_uncatorized?
+      base + [Uncategorized.new]
+    else
+      base
+    end
+  end
+
+  def has_uncatorized?
+    @subscription.categories.include? 0
   end
 
   private
@@ -79,9 +97,14 @@ class NewsletterMailing
   end
 
   def top_news_items_for(category)
-    all = NewsItem.
-      joins(:categories).
-      where(categories: { id: category}).
+    if category.is_a?(Uncategorized)
+      all = NewsItem.uncategorized
+    else
+      all = NewsItem.
+        joins(:categories).
+        where(categories: { id: category})
+    end
+    all = all.
       group('news_items.id').
       where('published_at > ?', subscription.interval_from.ago).
       order('absolute_score desc')

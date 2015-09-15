@@ -6,7 +6,7 @@
       .panel.panel-primary
         .panel-body
           = f.input :email, as: :string
-          = f.input :categories, collection: Category.all, as: :check_boxes
+          = f.input :categories, collection: Category.select_collection, as: :check_boxes
           = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
           = f.submit 'Abonnieren', class: 'btn btn-primary'
   .col-md-8.col-sm-6
