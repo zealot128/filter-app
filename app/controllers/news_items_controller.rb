@@ -40,12 +40,9 @@ class NewsItemsController < ApplicationController
     @news_items = NewsItem.home_page.limit(36).page(params[:page])
     if params[:category].present?
       if params[:category].to_i == 0
-        @news_items = @news_items.joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
-          where('news_item_id is null').
-          group('news_items.id')
+        @news_items = @news_items.uncategorized
       else
-        @news_items =
-          @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
+        @news_items = @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
       end
     end
     render json: {

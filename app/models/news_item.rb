@@ -9,6 +9,12 @@ class NewsItem < ActiveRecord::Base
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
 
+  scope :uncategorized, -> {
+    joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
+    where('news_item_id is null').
+    group('news_items.id')
+  }
+
   belongs_to :source
   has_and_belongs_to_many :categories
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
