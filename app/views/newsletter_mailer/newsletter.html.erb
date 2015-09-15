@@ -69,8 +69,14 @@
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="w100percent" style='vertical-align: top;'>
     <tr>
       <% inner_stories.compact.each do |story| %>
-      <td width='50%' style='vertical-align: top;'>
-        <%= render "entry", title: story.title, image: story.source.logo.present? && image_url(story.source.logo.url(:thumb)), link: story.url, text: story.teaser, subtitle: story.source.name, categories: story.categories.pluck(:name).join(', ') %>
+      <td width='48%' style='vertical-align: top; padding-right: 30px'>
+        <%= render "entry", title: story.title,
+          image: story.source.logo.present? && image_url(story.source.logo.url(:thumb)),
+          link: click_proxy_url(story.id, sid: @mailing.subscription.id),
+          story_image: story.image.present? ? url_for(story.image.url) : nil,
+          text: story.teaser,
+          subtitle: story.source.name,
+          categories: story.categories.pluck(:name).join(', ') %>
       </td>
       <% end %>
     </tr>
