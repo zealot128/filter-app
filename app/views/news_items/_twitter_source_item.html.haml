@@ -12,7 +12,7 @@
 
     %blockquote.twitter-tweet
       = auto_link twitter_source_item.title.html_safe, link: :all, html: {target:"_blank", rel:"nofollow"}
-    = link_to 'auf Twitter', twitter_source_item.url
+    = link_to 'auf Twitter', twitter_source_item.url, data: { proxy: click_proxy_path(twitter_source_item) }
 
   .panel-footer
     %small.categories

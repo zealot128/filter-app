@@ -32,6 +32,7 @@ group :capistrano do
   gem "airbrussh", :require => false
   gem "whenever"
 end
+gem 'impressionist'
 gem 'exception_notification'
 gem "paperclip"
 gem "paperclip-optimizer"

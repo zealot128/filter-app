@@ -27,6 +27,13 @@ class NewsItemsController < ApplicationController
     end
   end
 
+  def show
+    news_item = NewsItem.find(params[:id])
+    # @current_user = ...
+    impressionist(news_item)
+    redirect_to news_item.url
+  end
+
   def homepage
     @news_items = NewsItem.home_page.limit(36).page(params[:page])
     if params[:category].present?

@@ -180,6 +180,7 @@ GEM
     httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpclient (2.4.0)
     i18n (0.7.0)
     image_optim (0.21.0)
       exifr (~> 1.2, >= 1.2.2)
@@ -188,6 +189,9 @@ GEM
       in_threads (~> 1.3)
       progress (~> 3.0, >= 3.0.1)
     image_size (1.4.1)
+    impressionist (1.5.1)
+      httpclient (~> 2.2)
+      nokogiri (~> 1.5)
     in_threads (1.3.1)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
@@ -430,6 +434,7 @@ DEPENDENCIES
   habtm_generator
   haml-rails
   httparty
+  impressionist
   jquery-rails
   mechanize
   paperclip

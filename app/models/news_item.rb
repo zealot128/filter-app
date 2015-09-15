@@ -1,5 +1,6 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
+  is_impressionable counter_cache: true, column_name: :impression_count, unique: :request_hash
   MAX_AGE ||= ::Configuration.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true) }
@@ -56,6 +57,7 @@ class NewsItem < ActiveRecord::Base
       reddit: reddit || 0,
       freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10000,
       bias: source.value,
+      impression_count: impression_count,
       multiplicator: source.multiplicator,
       word_length: word_length,
       categories: category_ids,

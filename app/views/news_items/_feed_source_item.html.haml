@@ -3,7 +3,7 @@
 .panel.panel-default
   .panel-heading
     %h3.panel-title
-      = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title do
+      = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item) } do
         = truncate(feed_source_item.title, length: length)
   .panel-body{class: background.present? ? 'with-background' : ''}
     - if background.present?

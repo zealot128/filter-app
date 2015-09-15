@@ -5,7 +5,7 @@
     %h3.panel-title
       .pull-right
         %i.fa.fa-volume-up.fa-lg
-      = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title do
+      = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item)} do
         = truncate(feed_source_item.title, length: 60)
   .panel-body{class: background.present? ? 'with-background' : ''}
     - if background.present?
