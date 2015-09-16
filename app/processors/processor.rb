@@ -21,7 +21,7 @@ class Processor
     return "" if text.blank?
     ActionController::Base.helpers.truncate(
       ActionController::Base.helpers.strip_tags(text).strip,
-      length: 400
+      length: 400, separator: ' '
     )
   end
 
@@ -45,7 +45,7 @@ class Processor
     @m.get(url)
   end
 
-  def get_full_text_from_random_link(link)
+  def get_full_text_and_image_from_random_link(link)
     rules = %w[
       .entry-content
       .post-content
@@ -60,6 +60,7 @@ class Processor
       .postContent
       .hcf-content
       .entryContent
+      .post-entry
       .content
       .post
       .entry
@@ -71,10 +72,12 @@ class Processor
     res = get(link.to_s)
 
     if html = res.search(rules.join(', ')).sort_by{|f| f.text.gsub(/\s+/,' ').strip.length  }.last
-      clear html.to_s
+      [ clear(html.to_s), @m ]
+    else
+      [ nil, nil ]
     end
   rescue StandardError, Net::HTTPServiceUnavailable
-    ""
+    [ "", nil ]
   end
 end
 
