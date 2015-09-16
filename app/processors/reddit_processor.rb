@@ -27,7 +27,7 @@ class RedditProcessor < Processor
     ni.gplus ||= 0
     ni.teaser = data['selftext']
     mechanize = nil
-    if ni.new_record? and data['domain'] != "self.#{@source.name}"
+    if ni.full_text.blank? and data['domain'] != "self.#{@source.name}"
       ni.full_text, mechanize = get_full_text_and_image_from_random_link(url)
     end
     if ni.teaser.blank? and ni.full_text.present?
