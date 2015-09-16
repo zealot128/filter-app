@@ -75,6 +75,10 @@ class Source < ActiveRecord::Base
     end
   end
 
+  def should_fetch_stats?(ni)
+    false
+  end
+
   def refresh
     raise "NotImplementedError"
   end

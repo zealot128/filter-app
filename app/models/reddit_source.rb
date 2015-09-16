@@ -16,4 +16,8 @@ class RedditSource < Source
     logo_url = 'https:' + doc.at('#header-img')['src']
     self.update_attributes logo: download_url(logo_url)
   end
+
+  def should_fetch_stats?(ni)
+    !ni.url.include?("www.reddit.com/r/#{name}")
+  end
 end

@@ -5,7 +5,8 @@
   .panel-heading
     %h3.panel-title
       .pull-right
-        %i.fa.fa-reddit
+        = link_to feed_source_item.social_url, target: '_blank', data: { proxy: click_proxy_path(feed_source_item) }, title: 'Reddit Comment Page' do
+          %i.fa.fa-reddit
       = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item) } do
         = truncate(feed_source_item.title, length: length)
   .panel-body{class: background.present? ? 'with-background' : ''}

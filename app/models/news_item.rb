@@ -94,7 +94,7 @@ class NewsItem < ActiveRecord::Base
   end
 
   def refresh
-    if source.is_a? FeedSource
+    if source.should_fetch_stats?(self)
       NewsItem::LikeFetcher.fetch_for_news_item(self)
       rescore!
     end
@@ -109,6 +109,12 @@ class NewsItem < ActiveRecord::Base
 
   def to_partial_path
     "news_items/#{source.class.model_name.element}_item"
+  end
+
+  def social_url
+    if source.is_a?(RedditSource)
+      source.url + "/comments/#{guid}/"
+    end
   end
 
   def blacklist
