@@ -12,14 +12,14 @@ class NewsItem::ScoringAlgorithm
   def run
     base =
       data(:bias) +
-      data(:xing) * 3 +
-      data(:linkedin) * 2 +
-      data(:gplus) +
-      data(:retweets) +
-      data(:reddit) +
-      data(:facebook) / 2 +
-      data(:incoming_link_count) * 2 +
-      data(:impression_count) / 5.0 +
+      smooth(data(:xing)) * 3 +
+      smooth(data(:linkedin)) * 2 +
+      smooth(data(:gplus)) +
+      smooth(data(:retweets)) +
+      smooth(data(:reddit)) +
+      smooth(data(:facebook)) / 2 +
+      smooth(data(:incoming_link_count)) * 2 +
+      smooth(data(:impression_count)) / 5.0 +
       data(:word_length) ** 0.3       # Lange beitrage leicht nach oben, z.B.
                                        # 1000 Worte -> 30pkt
       # (data(:parallel_news_count) ** 1.2 + 2)
@@ -44,5 +44,9 @@ class NewsItem::ScoringAlgorithm
       absolute_score: base,
       relative_score: base * time_factor
     }
+  end
+
+  def smooth(value)
+    Math.log(value * 2) ** 2.2
   end
 end
