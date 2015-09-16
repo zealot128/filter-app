@@ -13,7 +13,9 @@ class RedditSource < Source
   def download_thumb
     return if Rails.env.test?
     doc = Nokogiri.parse open(url)
-    logo_url = 'https:' + doc.at('#header-img')['src']
+    img = doc.at('#header-img')
+    return if img.blank?
+    logo_url = 'https:' + img['src']
     self.update_attributes logo: download_url(logo_url)
   end
 
