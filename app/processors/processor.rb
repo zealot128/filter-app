@@ -57,6 +57,7 @@ class Processor
       #articleContent
       #content
       [itemprop=articleBody]
+      .articleBody
       .postContent
       .hcf-content
       .entryContent
