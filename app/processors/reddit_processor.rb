@@ -30,7 +30,7 @@ class RedditProcessor < Processor
     if ni.new_record? and data['domain'] != "self.#{@source.name}"
       ni.full_text, mechanize = get_full_text_and_image_from_random_link(url)
     end
-    if ni.teaser.blank?
+    if ni.teaser.blank? and ni.full_text.present?
       ni.teaser = teaser(ni.full_text)
     end
     if data['preview'] and ni.image.blank?
