@@ -1,27 +1,5 @@
 class TweetProcessor < Processor
   def process_tweet(source, tweet)
-    rules = %w[
-      .entry-content
-      .post-content
-      #main-content
-      #main\ .content
-      #articleContent
-      .node-content
-      .transcript
-      #articleContent
-      #content
-      [itemprop=articleBody]
-      .postContent
-      .hcf-content
-      .entryContent
-      .content
-      .post
-      .entry
-      article
-      .article
-      main
-      section
-    ]
 
     url = tweet.url.to_s
     guid = url
@@ -36,14 +14,7 @@ class TweetProcessor < Processor
     end
 
     if (link = tweet.urls.first.try(:expanded_url)) and item.full_text.blank?
-      begin
-        res = get(link.to_s)
-        if html = res.search(rules.join(', ')).find{|f| f.text.strip.length > 100 }
-          item.full_text = clear html.to_s
-        end
-      rescue StandardError, Net::HTTPServiceUnavailable
-        item.full_text = ""
-      end
+      item.full_text = get_full_text_from_random_link(link)
     else
       item.destroy if !item.new_record?
       # Tweets ohne Link sind doof

@@ -12,6 +12,7 @@ class Admin::SourcesController < AdminController
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
       @source.refresh
+      @source.news_items.current.map(&:rescore!)
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :new

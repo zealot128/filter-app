@@ -12,7 +12,7 @@ class Processor
     default = FeedProcessor
     host = URI.parse(source.url).host
     delegated = @@classes.find do |klass|
-      klass.host ==host
+      klass.host == host
     end || default
     delegated.new.process(source)
   end
@@ -38,6 +38,37 @@ class Processor
     @m.verify_mode = OpenSSL::SSL::VERIFY_NONE
     @m.user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     @m.get(url)
+  end
+
+  def get_full_text_from_random_link(link)
+    rules = %w[
+      .entry-content
+      .post-content
+      #main-content
+      #main\ .content
+      #articleContent
+      .node-content
+      .transcript
+      #articleContent
+      #content
+      [itemprop=articleBody]
+      .postContent
+      .hcf-content
+      .entryContent
+      .content
+      .post
+      .entry
+      article
+      .article
+      main
+      section
+    ]
+    res = get(link.to_s)
+    if html = res.search(rules.join(', ')).find{|f| f.text.strip.length > 100 }
+      clear html.to_s
+    end
+  rescue StandardError, Net::HTTPServiceUnavailable
+    ""
   end
 end
 

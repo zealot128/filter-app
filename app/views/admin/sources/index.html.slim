@@ -6,6 +6,7 @@ table.table.table-striped
   thead
     tr
       th Quelle
+      th Art
       th aktuell
       th avg Wortlaenge
       th Full-Text-Selector
@@ -13,6 +14,7 @@ table.table.table-striped
   - @sources.each do |source|
     tr class='#{source.error ? 'danger' : ''}'
       td = render 'news_items/source', source: source, size: '16x16'
+      td = source.type
       td
         = source.news_items.home_page.count
         span<> = '/'

@@ -3,7 +3,7 @@ class NewsItem < ActiveRecord::Base
   is_impressionable counter_cache: true, column_name: :impression_count,  unique: [:impressionable_type, :impressionable_id, :session_hash]
   MAX_AGE ||= ::Configuration.max_age.days
 
-  scope :visible, -> { where('blacklisted != ?', true) }
+  scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0') }
   scope :current, -> { visible.where("published_at > ?", MAX_AGE.ago) }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
