@@ -30,7 +30,12 @@ class Processor
   end
 
   def clear(text)
-    sanitize text, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
+    doc = Nokogiri::HTML.fragment(text)
+    doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer').each(&:remove)
+    doc.search('a[href*="facebook.com/shar"], a[href*="twitter.com/intent"]').each(&:remove)
+    s = doc.to_s.gsub(/\s+/, ' ')
+    p s
+    sanitize s, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
   end
 
   def get(url)
@@ -64,7 +69,8 @@ class Processor
       section
     ]
     res = get(link.to_s)
-    if html = res.search(rules.join(', ')).find{|f| f.text.strip.length > 100 }
+
+    if html = res.search(rules.join(', ')).sort_by{|f| f.text.gsub(/\s+/,' ').strip.length  }.last
       clear html.to_s
     end
   rescue StandardError, Net::HTTPServiceUnavailable
