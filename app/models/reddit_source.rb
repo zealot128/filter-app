@@ -14,7 +14,7 @@ class RedditSource < Source
     return if Rails.env.test?
     doc = Nokogiri.parse open(url)
     img = doc.at('#header-img')
-    return if img.blank?
+    return if img.blank? or img['src'].blank?
     logo_url = 'https:' + img['src']
     self.update_attributes logo: download_url(logo_url)
   end
