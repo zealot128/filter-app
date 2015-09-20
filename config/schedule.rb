@@ -1,4 +1,4 @@
-set :output, "#{Dir.pwd}/shared/log/cron.log"
+set :output, "#{Dir.pwd}/log/cron.log"
 job_type :runner, "cd :path && bin/rails runner -e :environment ':task' :output"
 
 every 1.hour do
