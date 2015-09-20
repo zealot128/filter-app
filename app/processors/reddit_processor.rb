@@ -5,7 +5,6 @@ class RedditProcessor < Processor
     @source = source
     url = source.url + '/.json'
     json = JSON.load Fetcher.fetch_url(url).body
-    p json
     json['data']['children'].each do |child|
       process_child(child['data'])
     end

@@ -34,7 +34,6 @@ class Processor
     doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer').each(&:remove)
     doc.search('a[href*="facebook.com/shar"], a[href*="twitter.com/intent"]').each(&:remove)
     s = doc.to_s.gsub(/\s+/, ' ')
-    p s
     sanitize s, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
   end
 

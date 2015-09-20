@@ -238,6 +238,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     ntlm-http (0.1.1)
+    open_uri_redirections (0.2.1)
     paperclip (4.3.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -437,6 +438,7 @@ DEPENDENCIES
   impressionist
   jquery-rails
   mechanize
+  open_uri_redirections
   paperclip
   paperclip-optimizer
   pg
