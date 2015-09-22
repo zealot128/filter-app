@@ -1,0 +1,20 @@
+language: ruby
+
+rvm:
+  - 2.2
+
+services: [ redis ]
+
+branches:
+  only:
+    - master
+
+before_script:
+  - psql -c 'create database hrcollect_test' -U postgres
+  - cp config/application.hrfilter.yml config/application.yml
+  - "bundle exec rake db:schema:load RAILS_ENV=test"
+
+script:
+  - bundle exec rspec
+
+bundler_args: "--without development production"
