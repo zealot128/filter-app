@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/zealot128/filter-app.svg)](https://travis-ci.org/zealot128/filter-app)
+
 #  News aggregator app
 
 This is a Ruby-on-Rails app for running (German) news aggregator websites. Today, it powers:
