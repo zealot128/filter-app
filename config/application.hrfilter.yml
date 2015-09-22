@@ -1,10 +1,10 @@
 default: &default
   site_name: 'HRfilter.de'
   short_name: 'HRfilter'
-  from: ''
+  from: 'noreply@hrfilter.de'
   key: 'hrfilter'
   database: hrcollect_<%= Rails.env.sub('elopment','') %>
-  email: ''
+  email: 'info@example.com'
   google_site_verification: ""
   host: 'localhost:3000'
   max_age: 14
