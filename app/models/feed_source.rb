@@ -11,5 +11,3 @@ class FeedSource < Source
     true
   end
 end
-
-

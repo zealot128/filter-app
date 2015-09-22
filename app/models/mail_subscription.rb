@@ -2,7 +2,7 @@ class MailSubscription < ActiveRecord::Base
   store_accessor :preferences, :categories
   store_accessor :preferences, :interval
 
-  validates :interval, presence: true, inclusion: { in: ['weekly', 'monthly', 'biweekly'] }
+  validates :interval, presence: true, inclusion: { in: %w(weekly monthly biweekly) }
   validates :categories, presence: true
   validates :email, presence: true
   validates_email_realness_of :email
@@ -12,12 +12,12 @@ class MailSubscription < ActiveRecord::Base
   scope :confirmed, -> { where confirmed: true }
 
   def confirm!
-    self.update_column :confirmed, true
+    update_column :confirmed, true
   end
 
   def due?
     return true if last_send_date.nil?
-    return (last_send_date + interval_from).to_date <= Date.today
+    (last_send_date + interval_from).to_date <= Date.today
   end
 
   def interval_from
@@ -29,7 +29,7 @@ class MailSubscription < ActiveRecord::Base
   end
 
   def to_param
-    self.token
+    token
   end
 
   def categories=(vals)

@@ -1,14 +1,13 @@
 class NewsItemsController < ApplicationController
-
   def index
     minscore = 0.5
     if params[:q].present?
       @feed_url = search_url(q: params[:q], sort: params[:sort], format: :rss)
       @news_items = NewsItem.
-        where('published_at > ?', 2.years.ago).
-        includes(:source, :categories).
-        search_full_text(params[:q]).
-        where('pg_search_news_items.rank > ?', minscore)
+                    where('published_at > ?', 2.years.ago).
+                    includes(:source, :categories).
+                    search_full_text(params[:q]).
+                    where('pg_search_news_items.rank > ?', minscore)
       case params[:sort]
       when 'freshness'
         @news_items = @news_items.reorder('published_at desc')

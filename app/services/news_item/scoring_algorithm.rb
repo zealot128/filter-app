@@ -20,22 +20,22 @@ class NewsItem::ScoringAlgorithm
       smooth(data(:facebook)) / 2 +
       smooth(data(:incoming_link_count)) * 2 +
       smooth(data(:impression_count)) / 5.0 +
-      data(:word_length) ** 0.3       # Lange beitrage leicht nach oben, z.B.
-                                       # 1000 Worte -> 30pkt
-      # (data(:parallel_news_count) ** 1.2 + 2)
-                                       # Oft postende Quellen benachteiligen
-                                       # 20 News in 2 Wochen -> -34pkt
-                                       # 10 News in 2 Wochen -> -13pkt
+      data(:word_length)**0.3 # Lange beitrage leicht nach oben, z.B.
+    # 1000 Worte -> 30pkt
+    # (data(:parallel_news_count) ** 1.2 + 2)
+    # Oft postende Quellen benachteiligen
+    # 20 News in 2 Wochen -> -34pkt
+    # 10 News in 2 Wochen -> -13pkt
     #                                  # 3  News in 2 Wochen -> -1pkt
 
-    base = base * data(:multiplicator)
+    base *= data(:multiplicator)
 
     if data(:published_at) < @max_age
       time_factor = 0
     else
       now = Time.now.to_i
       time_factor = (data(:published_at) - @max_age) / (now - @max_age).to_f
-      time_factor = time_factor ** 2.5 # Smooth out -> je aelter desto deutlich weniger
+      time_factor **= 2.5 # Smooth out -> je aelter desto deutlich weniger
     end
     if base < 0
       time_factor = 1 + time_factor * -1
@@ -47,6 +47,6 @@ class NewsItem::ScoringAlgorithm
   end
 
   def smooth(value)
-    Math.log((value + 1) * 2) ** 2.2 - 1
+    Math.log((value + 1) * 2)**2.2 - 1
   end
 end

@@ -19,13 +19,11 @@ class NewsletterMailing
   end
 
   def send!
-    begin
-      mail.deliver_now!
-    rescue StandardError => e
-      puts "[NewsletterMailing] #{e.inspect}"
-    ensure
-      subscription.update_column :last_send_date, Date.today
-    end
+    mail.deliver_now!
+  rescue StandardError => e
+    puts "[NewsletterMailing] #{e.inspect}"
+  ensure
+    subscription.update_column :last_send_date, Date.today
   end
 
   def mail
@@ -42,7 +40,7 @@ class NewsletterMailing
         all = categories.map { |category|
           top_news_items_for(category).to_a
         }.flatten
-        all.uniq{|i| i.id }.sort_by{|i| -(i.absolute_score || 0)}
+        all.uniq(&:id).sort_by { |i| -(i.absolute_score || 0) }
       end
   end
 
@@ -52,12 +50,12 @@ class NewsletterMailing
 
   def total_count
     sql = NewsItem.
-      where('published_at > ?', subscription.interval_from.ago)
+          where('published_at > ?', subscription.interval_from.ago)
 
     categorized = sql.
-      joins(:categories).
-      where(categories: { id: categories}).
-      group('news_items.id').length
+                  joins(:categories).
+                  where(categories: { id: categories }).
+                  group('news_items.id').length
 
     if has_uncatorized?
       categorized + sql.uncategorized.length
@@ -92,7 +90,7 @@ class NewsletterMailing
         filtered_nis = nis
       end
       filtered += ids
-      [ cat, filtered_nis, total_count]
+      [cat, filtered_nis, total_count]
     end
   end
 
@@ -101,13 +99,13 @@ class NewsletterMailing
       all = NewsItem.uncategorized
     else
       all = NewsItem.
-        joins(:categories).
-        where(categories: { id: category})
+            joins(:categories).
+            where(categories: { id: category })
     end
     all = all.
-      group('news_items.id').
-      where('published_at > ?', subscription.interval_from.ago).
-      order('absolute_score desc')
+          group('news_items.id').
+          where('published_at > ?', subscription.interval_from.ago).
+          order('absolute_score desc')
 
     count = all.length
     limit = limit_fn(count)
@@ -117,8 +115,7 @@ class NewsletterMailing
   def limit_fn(count)
     case count
     when 0..5 then count
-    when 5..10000 then 5 + ((count - 5) ** 0.50).to_i
+    when 5..10_000 then 5 + ((count - 5)**0.50).to_i
     end
   end
-
 end

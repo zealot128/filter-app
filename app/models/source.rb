@@ -3,7 +3,7 @@ class Source < ActiveRecord::Base
   has_many :news_items, dependent: :destroy
   validates_presence_of :url, :name
 
-  after_create :download_thumb, if: -> { !Rails.env.test?}
+  after_create :download_thumb, if: -> { !Rails.env.test? }
 
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],
@@ -50,7 +50,7 @@ class Source < ActiveRecord::Base
     else
       path = URI.join(url, "/favicon.ico").to_s
     end
-    self.update_attributes logo: download_url(path)
+    update_attributes logo: download_url(path)
   rescue Exception => e
     Rails.logger.error "Logo download fehlgeschlagen fuer #{id} -> #{e.inspect}"
   end
@@ -67,7 +67,7 @@ class Source < ActiveRecord::Base
   end
 
   def average_word_length
-    words = news_items.visible.order('created_at desc').limit(5).map{|i| i.word_length}
+    words = news_items.visible.order('created_at desc').limit(5).map(&:word_length)
     if words.length > 0
       (words.sum / words.count.to_f).round
     else
@@ -80,7 +80,6 @@ class Source < ActiveRecord::Base
   end
 
   def refresh
-    raise "NotImplementedError"
+    fail "NotImplementedError"
   end
-
 end

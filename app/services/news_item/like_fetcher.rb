@@ -47,7 +47,7 @@ class NewsItem::LikeFetcher
   def reddit
     response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}")
     json = JSON.load response.body
-    json['data']['children'].map{|i| i['data']['score']}.sum
+    json['data']['children'].map { |i| i['data']['score'] }.sum
   end
 
   def gplus

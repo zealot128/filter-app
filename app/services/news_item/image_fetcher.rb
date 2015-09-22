@@ -19,5 +19,4 @@ class NewsItem::ImageFetcher
       end
     end
   end
-
 end

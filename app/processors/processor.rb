@@ -3,7 +3,7 @@ class Processor
     attr_accessor :host, :full_text_selector
   end
 
-  def self.inherited base
+  def self.inherited(base)
     @@classes ||= []
     @@classes << base
   end
@@ -34,7 +34,7 @@ class Processor
     doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer').each(&:remove)
     doc.search('a[href*="facebook.com/shar"], a[href*="twitter.com/intent"]').each(&:remove)
     s = doc.to_s.gsub(/\s+/, ' ')
-    sanitize s, attributes: ['href','src'], tags: %w[li ul strong b i em ol br p a img]
+    sanitize s, attributes: %w(href src), tags: %w[li ul strong b i em ol br p a img]
   end
 
   def get(url)
@@ -71,13 +71,12 @@ class Processor
     ]
     res = get(link.to_s)
 
-    if html = res.search(rules.join(', ')).sort_by{|f| f.text.gsub(/\s+/,' ').strip.length  }.last
-      [ clear(html.to_s), @m ]
+    if html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last
+      [clear(html.to_s), @m]
     else
-      [ nil, nil ]
+      [nil, nil]
     end
   rescue StandardError, Net::HTTPServiceUnavailable
-    [ "", nil ]
+    ["", nil]
   end
 end
-

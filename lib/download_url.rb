@@ -1,6 +1,6 @@
 def download_url(url)
   url = URI.escape(url)
-  url.gsub!(" ","%20")
+  url.gsub!(" ", "%20")
   io = open(url)
   logo_path = url.split("/").last
   io.define_singleton_method(:original_filename) do
@@ -11,4 +11,3 @@ rescue OpenURI::HTTPError
   $stderr.puts "FEHLER #{url} nicht gefunden"
   return nil
 end
-

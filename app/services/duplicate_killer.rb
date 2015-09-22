@@ -5,7 +5,7 @@ class DuplicateKiller
   end
 
   def run
-    dups = source.news_items.group("regexp_replace(url, 'https?:', '')").having('count(*) > 1').select('array_agg(id) as ids').map{|i| i.ids}
+    dups = source.news_items.group("regexp_replace(url, 'https?:', '')").having('count(*) > 1').select('array_agg(id) as ids').map(&:ids)
     dups.each do |group|
       nis = NewsItem.where(id: group).order('absolute_score desc').pluck(:id).to_a
       nis.shift

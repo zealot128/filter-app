@@ -1,6 +1,6 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
-  is_impressionable counter_cache: true, column_name: :impression_count,  unique: [:impressionable_type, :impressionable_id, :session_hash]
+  is_impressionable counter_cache: true, column_name: :impression_count, unique: [:impressionable_type, :impressionable_id, :session_hash]
   MAX_AGE ||= ::Configuration.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0') }
@@ -9,10 +9,10 @@ class NewsItem < ActiveRecord::Base
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
 
-  scope :uncategorized, -> {
+  scope :uncategorized, lambda {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
-    where('news_item_id is null').
-    group('news_items.id')
+      where('news_item_id is null').
+      group('news_items.id')
   }
 
   belongs_to :source
@@ -30,26 +30,24 @@ class NewsItem < ActiveRecord::Base
   has_attached_file :image, styles: {
     original: ["250x200>", :jpg]
   },
-  processors: [:thumbnail, :paperclip_optimizer]
+                            processors: [:thumbnail, :paperclip_optimizer]
   do_not_validate_attachment_file_type :image
 
   include PgSearch
   pg_search_scope :search_full_text,
-    :order_within_rank => "news_items.published_at DESC",
-    against: :search_vector,
-    using: {
-      tsearch: {
-        dictionary: 'german',
-        any_word: true,
-        prefix: true,
-        tsvector_column: 'search_vector'
-      }
-    }
+                  order_within_rank: "news_items.published_at DESC",
+                  against: :search_vector,
+                  using: {
+                    tsearch: {
+                      dictionary: 'german',
+                      any_word: true,
+                      prefix: true,
+                      tsvector_column: 'search_vector'
+                    }
+                  }
 
   def self.cronjob
-    NewsItem.current.shuffle.each do |item|
-      item.refresh
-    end
+    NewsItem.current.shuffle.each(&:refresh)
   end
 
   # freshness max 120
@@ -61,7 +59,7 @@ class NewsItem < ActiveRecord::Base
       xing: xing,
       gplus: gplus,
       reddit: reddit || 0,
-      freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10000,
+      freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10_000,
       bias: source.value,
       impression_count: impression_count,
       multiplicator: source.multiplicator,
@@ -119,10 +117,9 @@ class NewsItem < ActiveRecord::Base
 
   def blacklist
     bl = ['Morgenimpuls', 'commun.it', '(insight by', 'Partner im Profil:', 'Partner kurz vorgestellt', 'Partner im Fokus', 'Partner im Blickpunkt',
-          'Förderer kurz vorgestellt', 'Förderer im Fokus', 'Förderer im Blickpunkt', 'Community-Partner', 'Community-Förderer' ]
-    if title and bl.any?{|t| title.include?(t) }
+          'Förderer kurz vorgestellt', 'Förderer im Fokus', 'Förderer im Blickpunkt', 'Community-Partner', 'Community-Förderer']
+    if title and bl.any? { |t| title.include?(t) }
       self.blacklisted = true
     end
   end
-
 end

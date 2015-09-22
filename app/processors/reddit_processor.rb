@@ -33,7 +33,7 @@ class RedditProcessor < Processor
       ni.teaser = teaser(ni.full_text)
     end
     if data['preview'] and ni.image.blank?
-      if i=(data['preview']['images']) and image = i.first['source']['url']
+      if i = (data['preview']['images']) and image = i.first['source']['url']
         ni.image = download_url(image)
       end
     end
@@ -42,5 +42,4 @@ class RedditProcessor < Processor
       NewsItem::ImageFetcher.new(ni, mechanize.page).run
     end
   end
-
 end

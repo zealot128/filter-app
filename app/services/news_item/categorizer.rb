@@ -7,11 +7,11 @@ class NewsItem::Categorizer
     cats_with_matches =
       Category.all.map do |category|
         matches = category.keywords.split(',').select do |kw|
-          text.downcase[ %r{(^|\W)#{Regexp.escape(kw.downcase)}($|\W)}]
+          text.downcase[/(^|\W)#{Regexp.escape(kw.downcase)}($|\W)/]
         end
-        [ category, matches.count ]
+        [category, matches.count]
       end
-    categories = cats_with_matches.select{|_,count| count > 0}.sort_by{|_,count| -count}.take(3).map{|c,_| c}
+    categories = cats_with_matches.select { |_, count| count > 0 }.sort_by { |_, count| -count }.take(3).map { |c, _| c }
     @news_item.categories = categories
   end
 

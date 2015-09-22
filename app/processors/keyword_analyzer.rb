@@ -9,7 +9,7 @@ class KeywordAnalyzer
         all_words[word] += 1
       end
     end
-    all_words.sort_by{|a,b| -b}
+    all_words.sort_by { |_a, b| -b }
   end
 
   def strip_tags(*args)

@@ -1,6 +1,5 @@
 class TweetProcessor < Processor
   def process_tweet(source, tweet)
-
     url = tweet.url.to_s
     guid = url
 
@@ -14,9 +13,9 @@ class TweetProcessor < Processor
     end
 
     if (link = tweet.urls.first.try(:expanded_url)) and item.full_text.blank?
-      item.full_text, _ = get_full_text_and_image_from_random_link(link)
+      item.full_text, = get_full_text_and_image_from_random_link(link)
     else
-      item.destroy if !item.new_record?
+      item.destroy unless item.new_record?
       # Tweets ohne Link sind doof
       return
     end

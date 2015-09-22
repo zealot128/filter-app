@@ -5,7 +5,7 @@ class FeedProcessor < Processor
     if !feed.respond_to?(:entries)
       source.update_column :error, true
       puts "Feed download fehlgeschlagen: #{feed}"
-      # TODO Error reporting
+      # TODO: Error reporting
     else
       source.update_column :error, false
       feed.entries.each do |entry|
@@ -41,10 +41,9 @@ class FeedProcessor < Processor
     end
     @item.assign_attributes(
       teaser: teaser(text),
-      title: title,
+      title: title
     )
     @item.save!
     @item
   end
-
 end

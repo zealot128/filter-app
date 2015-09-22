@@ -5,5 +5,4 @@ class SubscriptionMailer < ActionMailer::Base
     @subscription = subscription
     mail to: subscription.email, subject: "[#{::Configuration.site_name}] Bestätigung des E-Mail-Abos"
   end
-
 end

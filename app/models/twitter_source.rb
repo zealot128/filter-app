@@ -1,10 +1,9 @@
 class TwitterSource < Source
-
   def refresh(take: 50)
     self.class.client.user_timeline(user_name).take(take).each do |tweet|
-      TweetProcessor.new.process_tweet(self,tweet)
+      TweetProcessor.new.process_tweet(self, tweet)
     end
-    self.update_column :error, false
+    update_column :error, false
   end
 
   def to_param
@@ -12,16 +11,16 @@ class TwitterSource < Source
   end
 
   def user_name
-    url.gsub('@','')
+    url.delete('@')
   end
 
   def user
-    TwitterSource.client.user(url.gsub('@',''))
+    TwitterSource.client.user(url.delete('@'))
   end
 
   def download_thumb
     path = user.profile_image_url.to_s
-    self.update_attributes logo: download_url(path)
+    update_attributes logo: download_url(path)
   end
 
   def remote_url

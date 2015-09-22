@@ -1,5 +1,4 @@
 class RedditSource < Source
-
   before_validation :set_url
 
   def refresh
@@ -16,7 +15,7 @@ class RedditSource < Source
     img = doc.at('#header-img')
     return if img.blank? or img['src'].blank?
     logo_url = 'https:' + img['src']
-    self.update_attributes logo: download_url(logo_url)
+    update_attributes logo: download_url(logo_url)
   end
 
   def should_fetch_stats?(ni)

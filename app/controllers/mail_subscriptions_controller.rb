@@ -40,7 +40,7 @@ class MailSubscriptionsController < ApplicationController
   def permitted_params
     params.require(:mail_subscription).permit(:interval,
                                               :email,
-                                              :categories => [])
+                                              categories: [])
   end
 
   def subscription

@@ -1,3 +1,2 @@
 class PodcastSource < FeedSource
-
 end

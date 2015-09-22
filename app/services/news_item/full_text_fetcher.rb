@@ -9,8 +9,8 @@ class NewsItem::FullTextFetcher
     if @source.full_text_selector?
       begin
         page = @processor.get(@news_item.url)
-        return if !page.respond_to?(:at)
-        @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/,"")
+        return unless page.respond_to?(:at)
+        @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/, "")
         content = page.at(@source.full_text_selector)
         if content
           content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
@@ -21,5 +21,4 @@ class NewsItem::FullTextFetcher
       end
     end
   end
-
 end

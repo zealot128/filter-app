@@ -1,6 +1,7 @@
 require "httparty"
 module Fetcher
   module_function
+
   class FetcherResponse < Struct.new(:code, :body, :content_type, :location)
   end
 
@@ -9,7 +10,7 @@ module Fetcher
       "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",
       "Accept-Language" => "de-de,de,en-us,en",
       "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-      #"Accept" => "text/html,application/xhtml+xml,application/xml"
+      # "Accept" => "text/html,application/xhtml+xml,application/xml"
     },
     format: :text
   }
@@ -18,10 +19,10 @@ module Fetcher
   #
   # Wir probieren 4x mit groesser werdenden Abstand
   #
-  def fetch_url(url, check_link=false)
-    options = HTTP_OPTIONS.merge( :base_uri => URI.parse(url).base_url)
+  def fetch_url(url, check_link = false)
+    options = HTTP_OPTIONS.merge(base_uri: URI.parse(url).base_url)
     response = nil
-    [0,5,20,60].each do |seconds|
+    [0, 5, 20, 60].each do |seconds|
       response = HTTParty.get url, options
       puts response.code if response.code != 200
       break if response.code < 400 or response.code == 404
@@ -47,7 +48,7 @@ module Fetcher
   def real_url(url)
     response = Fetcher.fetch_url(url)
     url = response.location || url
-    url.gsub(/\?utm_source.*/,"")
+    url.gsub(/\?utm_source.*/, "")
   end
 
   class URI::HTTP
@@ -59,5 +60,4 @@ module Fetcher
       bla.to_s
     end
   end
-
 end

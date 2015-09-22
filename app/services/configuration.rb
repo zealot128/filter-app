@@ -7,8 +7,8 @@ class Configuration
     @configuration ||= Rails.application.config_for('application.hrfilter')
   end
 
-  def respond_to?(m, foobar="")
-    configuration.has_key?(m.to_s)
+  def respond_to?(m, foobar = "")
+    configuration.key?(m.to_s)
   end
 
   def method_missing(m, *args, &block)

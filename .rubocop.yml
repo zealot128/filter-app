@@ -1,0 +1,42 @@
+AllCops:
+  RunRailsCops: true
+Style/GuardClause:
+  MinBodyLength: 1
+Style/AndOr:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters: {}
+Style/Documentation:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  Enabled: false
+Lint/UnusedMethodArgument:
+  Enabled: false
+Rails/HasAndBelongsToMany:
+  Enabled: false
+Rails/FindBy:
+  Enabled: false
+Rails/ActionFilter:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/LineLength:
+  Max: 110
+Metrics/AbcSize:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Style/DotPosition:
+  Enabled: false
+Style/BlockDelimiters:
+  Enabled: false
+Style/AndOr:
+  Enabled: false
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indention

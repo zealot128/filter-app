@@ -3,12 +3,12 @@ class Category < ActiveRecord::Base
   scope :sorted, -> { order :name }
 
   def matches?(text)
-    self.keywords.split(',').any? do |keyword|
-      text.downcase[ %r{(^|\W)#{Regexp.escape(keyword.downcase)}($|\W)}]
+    keywords.split(',').any? do |keyword|
+      text.downcase[/(^|\W)#{Regexp.escape(keyword.downcase)}($|\W)/]
     end
   end
 
   def self.select_collection
-    sorted.to_a.map{|i| [i.name, i.id]} + [ ['Unkategorisiert', 0]]
+    sorted.to_a.map { |i| [i.name, i.id] } + [['Unkategorisiert', 0]]
   end
 end
