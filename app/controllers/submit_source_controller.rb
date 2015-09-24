@@ -9,7 +9,7 @@ class SubmitSourceController < ApplicationController
     if @submit_source.deliver
       flash.now[:error] = nil
     else
-      flash.now[:error] = 'Cannot submit source.'
+      flash.now[:error] = "Cannot submit source."
       render :new
     end
   end
