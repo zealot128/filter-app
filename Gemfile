@@ -5,6 +5,7 @@ gem "rails", "~> 4.2.0"
 gem "rack", "1.6.2"
 gem "sprockets-es6"
 gem "pg"
+gem "mail_form"
 gem "simple_form"
 
 gem "browser"
