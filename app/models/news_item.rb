@@ -4,10 +4,11 @@ class NewsItem < ActiveRecord::Base
   MAX_AGE ||= ::Configuration.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0') }
-  scope :current, -> { visible.where("published_at > ?", MAX_AGE.ago) }
+  scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
+  scope :recent, -> { where("published_at > ?", MAX_AGE.ago) }
 
   scope :uncategorized, lambda {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
@@ -47,7 +48,7 @@ class NewsItem < ActiveRecord::Base
                   }
 
   def self.cronjob
-    NewsItem.current.shuffle.each(&:refresh)
+    NewsItem.recent.shuffle.each(&:refresh)
   end
 
   # freshness max 120
