@@ -15,7 +15,8 @@ class NewsItem::ScoringAlgorithm
       smooth(data(:xing)) * 3 +
       smooth(data(:linkedin)) * 2 +
       smooth(data(:gplus)) +
-      smooth(data(:retweets)) +
+      smooth(data(:retweets)) + # TODO maybe old?
+      smooth(data(:twitter)) +
       smooth(data(:reddit)) +
       smooth(data(:facebook)) / 2 +
       smooth(data(:incoming_link_count)) * 2 +
