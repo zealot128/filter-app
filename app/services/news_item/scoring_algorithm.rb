@@ -47,6 +47,6 @@ class NewsItem::ScoringAlgorithm
   end
 
   def smooth(value)
-    Math.log((value + 1) * 2)**2.2 - 1
+    [ Math.log((value + 1) * 2)**2.2 - 1 , 0].max
   end
 end
