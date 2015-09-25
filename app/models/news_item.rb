@@ -95,8 +95,8 @@ class NewsItem < ActiveRecord::Base
   def refresh
     if source.should_fetch_stats?(self)
       NewsItem::LikeFetcher.fetch_for_news_item(self)
-      rescore!
     end
+    rescore!
   end
 
   def rescore!
