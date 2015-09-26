@@ -1,6 +1,6 @@
 var currentCategory = null;
 var grid = null;
-var currentPage = false;
+var currentPage = 1;
 var posts = [];
 var moreButton = null;
 
