@@ -49,7 +49,14 @@ class NewsItem < ActiveRecord::Base
 
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"
-    NewsItem.recent.shuffle.each(&:refresh)
+    priority = NewsItem.recent.where(value: nil)
+    priority.each do |ni|
+      ni.refresh
+    end
+    NewsItem.recent.shuffle.find_each do |ni|
+      next if priority.include?(ni)
+      ni.refresh
+    end
     Rails.logger.info "Finished NewsItem refresh cronjob"
   end
 
