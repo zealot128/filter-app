@@ -48,7 +48,9 @@ class NewsItem < ActiveRecord::Base
                   }
 
   def self.cronjob
+    Rails.logger.info "Starting NewsItem refresh cronjob"
     NewsItem.recent.shuffle.each(&:refresh)
+    Rails.logger.info "Finished NewsItem refresh cronjob"
   end
 
   # freshness max 120

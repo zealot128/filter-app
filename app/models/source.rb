@@ -56,14 +56,17 @@ class Source < ActiveRecord::Base
   end
 
   def self.cronjob
+    Rails.logger.info "Starting Source.cronjob"
+
     Source.find_each do |t|
       begin
         t.refresh
       rescue Exception => e
         t.update_column :error, true
-        $stderr.puts "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
+        Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
       end
     end
+    Rails.logger.info "Finished Source.cronjob"
   end
 
   def average_word_length
