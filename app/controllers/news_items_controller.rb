@@ -7,7 +7,7 @@ class NewsItemsController < ApplicationController
                     where('published_at > ?', 2.years.ago).
                     includes(:source, :categories).
                     search_full_text(params[:q]).
-                    where('pg_search_news_items.rank > ?', minscore)
+                    with_pg_search_rank.where('rank > ?', minscore)
       case params[:sort]
       when 'freshness'
         @news_items = @news_items.reorder('published_at desc')
