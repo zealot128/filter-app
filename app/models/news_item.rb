@@ -53,7 +53,7 @@ class NewsItem < ActiveRecord::Base
     priority.each do |ni|
       ni.refresh
     end
-    NewsItem.recent.shuffle.find_each do |ni|
+    NewsItem.recent.shuffle.each do |ni|
       next if priority.include?(ni)
       ni.refresh
     end
