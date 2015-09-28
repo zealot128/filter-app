@@ -22,7 +22,7 @@ module Fetcher
   def fetch_url(url, check_link = false)
     options = HTTP_OPTIONS.merge(base_uri: URI.parse(url).base_url)
     response = nil
-    [0, 5, 20, 60].each do |seconds|
+    [0, 5].each do |seconds|
       response = HTTParty.get url, options
       puts response.code if response.code != 200
       break if response.code < 400 or response.code == 404
