@@ -68,12 +68,6 @@ group :development, :test do
 end
 
 group :capistrano do
-  gem "capistrano"
-  gem "capistrano-rvm"
-  gem "capistrano-bundler"
-  gem "capistrano-rails"
-  gem "capistrano-rails-console"
-  gem "airbrussh", :require => false
   gem "whenever"
   gem "rubocop"
 end

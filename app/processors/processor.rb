@@ -19,10 +19,8 @@ class Processor
 
   def teaser(text)
     return "" if text.blank?
-    ActionController::Base.helpers.truncate(
-      ActionController::Base.helpers.strip_tags(text).strip,
-      length: 400, separator: ' '
-    )
+    stripped = ActionController::Base.helpers.strip_tags(text).strip
+    ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
   end
 
   def sanitize(*args)

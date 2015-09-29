@@ -48,7 +48,16 @@ class NewsItem < ActiveRecord::Base
                   }
 
   def self.cronjob
-    NewsItem.recent.shuffle.each(&:refresh)
+    Rails.logger.info "Starting NewsItem refresh cronjob"
+    priority = NewsItem.recent.where(value: nil)
+    priority.each do |ni|
+      ni.refresh
+    end
+    NewsItem.recent.shuffle.each do |ni|
+      next if priority.include?(ni)
+      ni.refresh
+    end
+    Rails.logger.info "Finished NewsItem refresh cronjob"
   end
 
   # freshness max 120
@@ -95,8 +104,8 @@ class NewsItem < ActiveRecord::Base
   def refresh
     if source.should_fetch_stats?(self)
       NewsItem::LikeFetcher.fetch_for_news_item(self)
-      rescore!
     end
+    rescore!
   end
 
   def rescore!

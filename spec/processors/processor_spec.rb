@@ -16,6 +16,11 @@ describe Processor, type: :model do
     end
   end
 
+  specify 'teaser respects html entities' do
+    text = "I can't believe I missed this a few years ago."
+    Processor.new.teaser(text).should be ==  "I can't believe I missed this a few years ago."
+  end
+
   specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
     VCR.use_cassette 'feed-crosswater' do
       feed_source.url = 'http://crosswater-job-guide.com/feed'
