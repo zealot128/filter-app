@@ -12,7 +12,7 @@ Baseapp::Application.configure do
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
-  config.action_mailer.default_url_options = { :host => Configuration.host }
+  config.action_mailer.default_url_options = { host: Configuration.host }
   config.action_mailer.asset_host = "http://#{config.action_mailer.default_url_options[:host]}"
   config.lograge.enabled = true
 end

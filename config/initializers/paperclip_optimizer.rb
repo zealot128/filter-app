@@ -14,8 +14,8 @@ Paperclip::PaperclipOptimizer.default_options = {
   gifsicle: false,
   jhead: false,
   jpegoptim: {
-    strip: :all,        # List of extra markers to strip: :comments, :exif, :iptc, :icc or :all (defaults to :all)
-    max_quality: 90    # Maximum image quality factor 0..100 (defaults to 100)
+    strip: :all, # List of extra markers to strip: :comments, :exif, :iptc, :icc or :all (defaults to :all)
+    max_quality: 90 # Maximum image quality factor 0..100 (defaults to 100)
   },
   jpegrecompress: false,
   jpegtran: false,

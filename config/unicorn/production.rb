@@ -5,7 +5,7 @@ app_path = "/apps/hrcollect/prod/current"
 worker_processes 3
 preload_app true
 timeout 180
-listen 6000 #"127.0.0.1"
+listen 6000 # "127.0.0.1"
 
 # Spawn unicorn master worker for user apps (group: apps)
 user 'stefan', 'stefan'
@@ -23,14 +23,14 @@ stdout_path "log/unicorn.log"
 # Set master PID location
 pid "#{app_path}/tmp/pids/unicorn.pid"
 
-before_fork do |server, worker|
+before_fork do |server, _worker|
   if defined? ActiveRecord::Base
     ActiveRecord::Base.connection.disconnect!
   end
   I18n.t("active_record")
 
   old_pid = "#{server.config[:pid]}.oldbin"
-  if File.exists?(old_pid) && server.pid != old_pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
@@ -40,6 +40,6 @@ before_fork do |server, worker|
   I18n.t('activerecord')
 end
 
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   ActiveRecord::Base.establish_connection
 end

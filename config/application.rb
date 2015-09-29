@@ -4,7 +4,7 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -29,7 +29,6 @@ module Baseapp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-
     config.i18n.default_locale = :de
 
     config.encoding = "utf-8"
@@ -49,10 +48,9 @@ module Baseapp
     config.generators do |g|
       g.template_engine :haml
       g.test_framework = :rspec
-      g.helper         false
+      g.helper false
       g.view_specs false
       g.form_builder :simple_form
     end
-
   end
 end
