@@ -13,7 +13,7 @@ branches:
     - master
 
 before_script:
-  - psql -c 'create database hrcollect_test' -U postgres
+  - psql -c 'create database hrfilter_test' -U postgres
   - cp config/application.hrfilter.yml config/application.yml
   - "bundle exec rake db:schema:load RAILS_ENV=test"
 
