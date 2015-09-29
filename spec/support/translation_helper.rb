@@ -1,6 +1,5 @@
 # include into controller-scenarios to check for missing translations
 module TranslationHelper
-
   extend ActiveSupport::Concern
   included do
     render_views
@@ -9,7 +8,7 @@ module TranslationHelper
         if defined? response and response
           if response.body
             if response.body.to_s[/translation missing: (.*)"/]
-              fail "There are missing translations #{$1}"
+              fail "There are missing translations #{Regexp.last_match(1)}"
             end
           end
         end
@@ -18,4 +17,3 @@ module TranslationHelper
     end
   end
 end
-

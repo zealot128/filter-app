@@ -8,8 +8,7 @@ silence_warnings do
   BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
 end
 
-
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

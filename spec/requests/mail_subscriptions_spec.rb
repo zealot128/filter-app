@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe 'MailSubscriptionsController' do
   specify 'Anlegen' do
     get '/newsletter'
@@ -10,7 +9,7 @@ describe 'MailSubscriptionsController' do
     post '/newsletter', mail_subscription: {
       email: 'stwienert@gmail.com',
       interval: 'weekly',
-      categories: [ c.id ]
+      categories: [c.id]
     }
     assert(response.success?)
     expect(ActionMailer::Base.deliveries.count).to be == 1
@@ -25,5 +24,4 @@ describe 'MailSubscriptionsController' do
       expect(s.confirmed).to be == true
     end
   end
-
 end

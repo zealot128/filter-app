@@ -17,7 +17,6 @@ describe SubmitSourceController do
 
     ActionMailer::Base.deliveries.count.should be == 1
     mail = ActionMailer::Base.deliveries.first
-    mail.to.should be == [ Configuration.email]
+    mail.to.should be == [Configuration.email]
   end
-
 end

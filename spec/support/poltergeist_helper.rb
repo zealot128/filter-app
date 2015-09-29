@@ -18,4 +18,3 @@ module PoltergeistHelper
     page.evaluate_script('window.confirm = function() { return true; }')
   end
 end
-

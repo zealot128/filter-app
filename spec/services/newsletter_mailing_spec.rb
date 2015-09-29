@@ -37,7 +37,7 @@ describe 'NewsletterMailing' do
     # Keine neuen News
     ActionMailer::Base.deliveries.count.should be == 1
 
-    ni.update_columns  published_at: 2.days.ago
+    ni.update_columns published_at: 2.days.ago
     NewsletterMailing.cronjob
     ActionMailer::Base.deliveries.count.should be == 2
     Timecop.return

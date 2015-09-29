@@ -1,8 +1,8 @@
 require "spec_helper"
 describe Processor, type: :model do
-  let(:feed_source) {FeedSource.new(url: "...", name: "..") }
+  let(:feed_source) { FeedSource.new(url: "...", name: "..") }
 
-  specify "legt an - mit original url", freeze_time: "2013-11-02 12:00:00"  do
+  specify "legt an - mit original url", freeze_time: "2013-11-02 12:00:00" do
     VCR.use_cassette "feed-url" do
       feed_source.url = 'http://www.online-recruiting.net/feed/'
       feed_source.full_text_selector = '.entry-content'
@@ -18,7 +18,7 @@ describe Processor, type: :model do
 
   specify 'teaser respects html entities' do
     text = "I can't believe I missed this a few years ago."
-    Processor.new.teaser(text).should be ==  "I can't believe I missed this a few years ago."
+    Processor.new.teaser(text).should be == "I can't believe I missed this a few years ago."
   end
 
   specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
@@ -38,5 +38,4 @@ describe Processor, type: :model do
       rs.news_items.count.should be > 10
     end
   end
-
 end

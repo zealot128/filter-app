@@ -1,7 +1,5 @@
 RSpec::Matchers.define :be_valid do
-  match do |actual|
-    actual.valid?
-  end
+  match(&:valid?)
 
   failure_message_for_should do |actual|
     "expected that #{actual} would be valid (errors: #{actual.errors.full_messages})"
@@ -15,4 +13,3 @@ RSpec::Matchers.define :be_valid do
     "be valid"
   end
 end
-
