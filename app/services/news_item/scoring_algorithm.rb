@@ -15,7 +15,7 @@ class NewsItem::ScoringAlgorithm
       smooth(data(:xing)) * 3 +
       smooth(data(:linkedin)) * 2 +
       smooth(data(:gplus)) +
-      smooth(data(:retweets)) + # TODO maybe old?
+      smooth(data(:retweets)) + # TODO: maybe old?
       smooth(data(:twitter)) +
       smooth(data(:reddit)) +
       smooth(data(:facebook)) / 2 +
@@ -48,6 +48,6 @@ class NewsItem::ScoringAlgorithm
   end
 
   def smooth(value)
-    [ Math.log((value + 1) * 2)**2.2 - 1 , 0].max
+    [Math.log((value + 1) * 2)**2.2 - 1, 0].max
   end
 end
