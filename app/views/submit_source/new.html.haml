@@ -1,0 +1,15 @@
+- content_for :title, "Quelle einreichen"
+
+%h1 Quelle einreichen
+
+%p Fehlt eine Quelle? Dann nehmen wir diese gerne auf.
+
+= simple_form_for @submit_source, url: '', :html => {:class => 'form-horizontal' } do |f|
+  = f.input :url, :required => true
+  = f.input :email, :required => true
+  = f.input :comment, :as => :text, :required => false, :input_html => {:rows => 2}
+
+  .form-actions
+    = f.button :submit, 'Absenden', :class=> "btn btn-primary"
+
+%p

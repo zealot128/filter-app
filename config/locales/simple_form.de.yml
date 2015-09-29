@@ -1,6 +1,12 @@
 de:
   simple_form:
+    hints:
+      submit_source:
+        comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden?'
     labels:
+      submit_source:
+        email: 'E-Mail'
+        comment: 'Kommentar'
       mail_subscription:
         categories: Themen
         email: E-Mail

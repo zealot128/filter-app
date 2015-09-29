@@ -169,6 +169,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mail_form (1.5.1)
+      actionmailer (>= 3.2, < 5)
+      activemodel (>= 3.2, < 5)
     mechanize (2.7.3)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
@@ -382,6 +385,7 @@ DEPENDENCIES
   impressionist
   jquery-rails
   lograge
+  mail_form
   mechanize
   open_uri_redirections
   paperclip
@@ -415,4 +419,4 @@ DEPENDENCIES
   will_paginate-bootstrap
 
 BUNDLED WITH
-   1.10.5
+   1.10.6
