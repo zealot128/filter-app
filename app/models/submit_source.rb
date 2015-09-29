@@ -8,8 +8,8 @@ class SubmitSource < MailForm::Base
   def headers
     {
       :subject => "[HRfilter] Neue Quelle eingesendet",
-      :to => "tobiasmarkert@gmx.de",
-      :from => %("#{email}")
+      :to => ::Configuration.email,
+      :from => email
     }
   end
 end
