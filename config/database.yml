@@ -8,7 +8,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: <%= ::Configuration.database %>
+  database: "hrfilter_test"
   template: template0
   pool: 5
 

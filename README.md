@@ -57,7 +57,7 @@ As it is a fully functioning Rails app, you can try to run it yourself. First ma
 git clone ...
 cd ...
 bundle install
-rake db:create
+rake environment db:create
 rake db:migrate
 rails server
 ```

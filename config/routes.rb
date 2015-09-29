@@ -11,6 +11,9 @@ Baseapp::Application.routes.draw do
   get "sources" => redirect('/quellen')
   resources :sources, path: 'quellen', only: [:index, :show]
 
+  get '/quelle_einreichen' => 'submit_source#new', as: :new_submit_source
+  post '/quelle_einreichen' => 'submit_source#create'
+
   resources :mail_subscriptions, path: 'newsletter' do
     get :confirm, on: :member
   end
