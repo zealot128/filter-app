@@ -4,6 +4,7 @@ class NewsItem < ActiveRecord::Base
   MAX_AGE ||= ::Configuration.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0') }
+  scope :show_page, -> { where('blacklisted != ?').order('published_at desc').where('absolute_score is not null and absolute_score > 0') }
   scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }

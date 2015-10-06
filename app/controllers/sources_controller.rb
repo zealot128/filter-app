@@ -8,9 +8,9 @@ class SourcesController < ApplicationController
     @categories = @source.news_items.
                   joins(:categories).
                   group('categories.name').order('count_all desc').limit(5).count
-    @count = @source.news_items.visible.count
+    @count = @source.news_items.show_page.count
     @avg = @count / @source.age_in_weeks
 
-    @news_items = @source.news_items.visible.order('published_at desc').limit(100)
+    @news_items = @source.news_items.show_page.limit(100)
   end
 end
