@@ -11,6 +11,6 @@ class SourcesController < ApplicationController
     @count = @source.news_items.visible.count
     @avg = @count / @source.age_in_weeks
 
-    @news_items = @source.visible.news_items.order('published_at desc').limit(100)
+    @news_items = @source.news_items.visible.order('published_at desc').limit(100)
   end
 end
