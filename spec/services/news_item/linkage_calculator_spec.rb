@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe NewsItem::LinkageCalculator do
+  let(:source1) { Source.create! url: 'http://www.pludoni.de/xml', name: '1' }
+  let(:source2) { Source.create! url: 'http://www.empfehlungsbund.de/xml', name: '2' }
+
   it 'finds news item relationship via a href links - also ignores http/https' do
-    source1 = Source.create! url: 'http://www.pludoni.de/xml', name: '1'
-    source2 = Source.create! url: 'http://www.empfehlungsbund.de/xml', name: '2'
     source = source1.news_items.build.tap do |ni|
       ni.full_text = "Blab la <a href='http://www.empfehlungsbund.de/news/1'>EB1</a>"
       ni.save!
@@ -21,7 +22,6 @@ describe NewsItem::LinkageCalculator do
   end
 
   it 'ignores self referencing links' do
-    source1 = Source.create! url: 'http://www.pludoni.de/xml', name: '1'
     ni1 = source1.news_items.build.tap do |ni|
       ni.full_text = <<-DOC
         Blab la <a href='http://www.empfehlungsbund.de/news/1'>EB1</a>
@@ -34,7 +34,6 @@ describe NewsItem::LinkageCalculator do
     ni2 = source1.news_items.build.tap do |ni|
       ni.url = "http://www.empfehlungsbund.de/news/2"
       ni.guid = 2
-
       ni.save!
     end
 
@@ -42,4 +41,5 @@ describe NewsItem::LinkageCalculator do
 
     ni1.referenced_news.to_a.should be == []
   end
+
 end
