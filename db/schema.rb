@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915143257) do
+ActiveRecord::Schema.define(version: 20151007120213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,9 @@ ActiveRecord::Schema.define(version: 20150915143257) do
   create_table "linkages", force: :cascade do |t|
     t.integer  "from_id"
     t.integer  "to_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "different",  default: false
   end
 
   add_index "linkages", ["from_id"], name: "index_linkages_on_from_id", using: :btree

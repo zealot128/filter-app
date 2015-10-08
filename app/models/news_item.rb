@@ -23,7 +23,8 @@ class NewsItem < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
-  has_many :referenced_news, class_name: "NewsItem", through: :incoming_links, source: 'from'
+  has_many :referenced_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
+  has_many :referencing_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
 
   before_save :categorize
   before_save :filter_plaintext
@@ -33,8 +34,7 @@ class NewsItem < ActiveRecord::Base
 
   has_attached_file :image, styles: {
     original: ["250x200>", :jpg]
-  },
-                            processors: [:thumbnail, :paperclip_optimizer]
+  }, processors: [:thumbnail, :paperclip_optimizer]
   do_not_validate_attachment_file_type :image
 
   include PgSearch

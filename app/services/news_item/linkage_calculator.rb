@@ -10,7 +10,7 @@ class NewsItem::LinkageCalculator
         l.gsub!(/https?:\/\/(www\.)?/, '')
         if ref = NewsItem.where('url like ?', "%#{l}%").first
           unless ref.referenced_news.to_a.include?(ref)
-            ref.referenced_news << ref
+            ref.incoming_links << Linkage.new(from_id: s.id, different: s.source_id != ref.source_id)
             ref.save
           end
         end

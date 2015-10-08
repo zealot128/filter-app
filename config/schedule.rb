@@ -10,7 +10,7 @@ every 1.hour do
 end
 
 every 1.day, at: '03:15' do
-  runner 'LinkageCalculator.run()'
+  runner 'NewsItem::LinkageCalculator.run()'
 end
 
 every 1.day, at: '03:23' do
