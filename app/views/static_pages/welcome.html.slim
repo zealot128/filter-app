@@ -33,11 +33,6 @@
       h3 Alle News durchsuchen
       = form_tag '/search', class: 'form-inline', method: :get do
         .form-group
-          label.control-label>(for='q')
-            | Suchbegriff
-          br
-        = ' '
-        .form-group
-          = text_field_tag :q, params[:q], class: 'form-control'
+          = text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Suchbegriff'
         = ' '
         input.btn.btn-primary type='submit' value='Suchen'
