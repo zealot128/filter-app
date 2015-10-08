@@ -28,10 +28,10 @@
       %span.label.label-default(title='Anzahl Worte (ca.)')
         %i.fa.fa-file-text-o
         = item.word_length
-- if item.referenced_news.count > 0
-  .categories
+.categories
+  - if item.referenced_news.count > 0
     %span.label.label-default(title='Verlinkt von anderen Quellen')
       %i.fa.fa-link.fa-fw
       - item.referenced_news.each do |ni|
-        = link_to ni.url, target: '_blank', title: ni.title, data: { proxy: click_proxy_path(ni) } do
+        = link_to ni.url, target: '_blank', title: "#{ni.title} - #{ni.source.name}", data: { proxy: click_proxy_path(ni) } do
           = image_tag ni.source.logo.url(:small), size: '16x16', alt: truncate(ni.source.name, length: 20)
