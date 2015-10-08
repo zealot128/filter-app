@@ -19,6 +19,12 @@ describe NewsItem::LinkageCalculator do
 
     target.referenced_news.to_a.should be == [ source ]
     source.referencing_news.to_a.should be == [ target ]
+
+    # Multiple run idempotent
+    NewsItem::LinkageCalculator.run(scope: NewsItem.all)
+
+    target.referenced_news.to_a.should be == [ source ]
+    source.referencing_news.to_a.should be == [ target ]
   end
 
   it 'ignores self referencing links' do
