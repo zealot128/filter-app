@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def welcome
-    @news_items = NewsItem.home_page.limit(36)
+    @news_items = NewsItem.home_page.limit(48)
   end
 
   def about
