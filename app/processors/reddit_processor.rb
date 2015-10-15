@@ -15,6 +15,13 @@ class RedditProcessor < Processor
     id = data['id']
 
     ni = @source.news_items.where(guid: id).first_or_initialize
+
+    # Check if item with same url already exists
+    if url.present? and @source.news_items.where(url: url).where('guid != ?', id).any?
+      ni.destroy
+      next
+    end
+
     ni.title = data['title']
     ni.url = url
     ni.reddit = data['score']
