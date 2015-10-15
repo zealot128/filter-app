@@ -37,7 +37,7 @@ class FeedProcessor < Processor
     @item.url ||= url
     if @item.new_record?
       @item.source = @source
-      @item.published_at = published
+      @item.published_at = [Time.zone.now, published].min
     end
     @item.assign_attributes(
       teaser: teaser(text),
