@@ -8,7 +8,8 @@ class Source < ActiveRecord::Base
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],
     small: ["50x50", :png]
-  }
+  }, processors: [:thumbnail, :paperclip_optimizer]
+
   do_not_validate_attachment_file_type :logo
 
   def self.[](search)
