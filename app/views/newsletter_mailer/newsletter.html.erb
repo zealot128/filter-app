@@ -73,7 +73,7 @@
         <%= render "entry", title: story.title,
           image: story.source.logo.present? && image_url(story.source.logo.url(:thumb)),
           link: click_proxy_url(story.id, sid: @mailing.subscription.id),
-          story_image: story.image.present? ? url_for(story.image.url) : nil,
+          story_image: story.image.present? ? image_url(story.image.url) : nil,
           text: story.teaser,
           subtitle: story.source.name,
           categories: story.categories.pluck(:name).join(', ') %>
