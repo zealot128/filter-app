@@ -22,8 +22,10 @@ Paperclip::PaperclipOptimizer.default_options = {
   optipng: false,
   pngcrush: false,
   pngout: false,
-  pngquant: true,
-  svgo: false
+  pngquant: {
+    quality: 0..100
+  },
+  svgo: false,
 }
 if Rails.env.test?
   Paperclip::PaperclipOptimizer.default_options[:jpegoptim] = false
