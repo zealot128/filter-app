@@ -29,7 +29,7 @@ app.config(($routeProvider, $locationProvider) => {
 
 app.service('State', ()=> {
   return {
-    currentCategory: 0,
+    currentCategory: -1,
     sort: 'popular',
     hasMore: false
   };
