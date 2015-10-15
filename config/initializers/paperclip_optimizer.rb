@@ -22,7 +22,7 @@ Paperclip::PaperclipOptimizer.default_options = {
   optipng: false,
   pngcrush: false,
   pngout: false,
-  pngquant: false,
+  pngquant: true,
   svgo: false
 }
 if Rails.env.test?
