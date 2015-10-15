@@ -18,8 +18,8 @@ class RedditProcessor < Processor
 
     # Check if item with same url already exists
     if url.present? and @source.news_items.where(url: url).where('guid != ?', id).any?
-      ni.destroy
-      next
+      ni.destroy if !ni.new_record?
+      return
     end
 
     ni.title = data['title']
