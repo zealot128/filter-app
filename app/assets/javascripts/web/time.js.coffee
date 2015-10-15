@@ -25,4 +25,5 @@ $ ->
     setTimeout refresh_date, 50000
 
   refresh_date()
+  window.refresh_date = refresh_date
 

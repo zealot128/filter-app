@@ -20,6 +20,7 @@ gem "stringex"
 gem "email_verifier", git: "https://github.com/zealot128-os/email_verifier.git"
 gem "lograge"
 gem "open_uri_redirections"
+gem "angularjs-rails"
 
 source "https://rails-assets.org" do
   gem "rails-assets-director"

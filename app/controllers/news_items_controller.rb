@@ -8,8 +8,8 @@ class NewsItemsController < ApplicationController
                     includes(:source, :categories).
                     search_full_text(params[:q]).
                     with_pg_search_rank.where('rank > ?', minscore)
-      case params[:sort]
-      when 'freshness'
+      case params[:order]
+      when 'recent'
         @news_items = @news_items.reorder('published_at desc')
       when 'score'
         @news_items = @news_items.reorder('absolute_score desc')
@@ -38,11 +38,20 @@ class NewsItemsController < ApplicationController
   def homepage
     @news_items = NewsItem.home_page.limit(36).page(params[:page])
     if params[:category].present?
-      if params[:category].to_i == 0
+      case params[:category].to_i
+      when 0
         @news_items = @news_items.uncategorized
+      when -1
+        @news_items = @news_items
       else
         @news_items = @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
       end
+    end
+    case params[:order]
+    when 'recent'
+      @news_items = @news_items.reorder('published_at desc')
+    when 'score'
+      @news_items = @news_items.reorder('absolute_score desc')
     end
     render json: {
       html: render_to_string('homepage.html', layout: false),
