@@ -51,7 +51,16 @@ class Source < ActiveRecord::Base
     else
       path = URI.join(url, "/favicon.ico").to_s
     end
-    update_attributes logo: download_url(path)
+    file = download_url(path)
+
+    if !update_attributes logo: file
+      # imagemagick can't find file-type -> try renaming to ico
+      file.rewind
+      tf = Tempfile.new(["thumb", ".ico"])
+      tf.binmode
+      tf.write file.read
+      update_attributes logo: tf
+    end
   rescue Exception => e
     Rails.logger.error "Logo download fehlgeschlagen fuer #{id} -> #{e.inspect}"
   end
