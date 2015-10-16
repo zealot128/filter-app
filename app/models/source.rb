@@ -10,7 +10,9 @@ class Source < ActiveRecord::Base
     small: ["50x50", :png]
   }, processors: [:thumbnail, :paperclip_optimizer]
 
-  do_not_validate_attachment_file_type :logo
+  validates_attachment :logo,
+    content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "image/x-icon", "image/vnd.microsoft.icon"] }
+  # do_not_validate_attachment_file_type :logo
 
   def self.[](search)
     where('url ilike ?', '%' + search + '%').first
@@ -59,7 +61,9 @@ class Source < ActiveRecord::Base
       tf = Tempfile.new(["thumb", ".ico"])
       tf.binmode
       tf.write file.read
-      update_attributes logo: tf
+      if update_attributes logo: tf
+        logo.reprocess!
+      end
     end
   rescue Exception => e
     Rails.logger.error "Logo download fehlgeschlagen fuer #{id} -> #{e.inspect}"
