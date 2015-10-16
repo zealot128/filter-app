@@ -27,7 +27,7 @@ class Admin::SourcesController < AdminController
     @source = Source.find(params[:id])
     if @source.update(params[:source].permit!)
       @source.refresh
-      @source.download_thumb
+      @source.download_thumb if @source.logo.blank?
       @source.news_items.current.map(&:rescore!)
       redirect_to [:admin, :sources], notice: 'Done'
     else
