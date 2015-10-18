@@ -14,6 +14,6 @@ Baseapp::Application.configure do
   ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
   config.action_mailer.default_url_options = { host: Configuration.host }
   config.action_mailer.asset_host = "http://#{config.action_mailer.default_url_options[:host]}"
-  config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = :uglifier
   config.lograge.enabled = true
 end
