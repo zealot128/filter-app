@@ -36,7 +36,7 @@ class NewsItemsController < ApplicationController
   end
 
   def homepage
-    @news_items = NewsItem.home_page.limit(36).page(params[:page] || 1)
+    @news_items = NewsItem.home_page.limit(36).page(page)
     if params[:category].present?
       case params[:category].to_i
       when 0
@@ -61,4 +61,11 @@ class NewsItemsController < ApplicationController
       }
     }
   end
+
+  private
+
+  def page
+    [1, params[:page].to_i].max
+  end
+
 end
