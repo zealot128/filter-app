@@ -31,7 +31,7 @@ app.service('State', ()=> {
   return {
     currentCategory: -1,
     sort: 'popular',
-    hasMore: false
+    hasMore: true
   };
 });
 
@@ -64,6 +64,7 @@ app.factory("PostLoader", (State, $http) => {
           grid.removeClass('leaving');
         } else {
           grid.append(data.html);
+          grid.addClass('entering').removeClass('leaving');
         }
         if(window.refresh_date) {
           window.refresh_date();
