@@ -13,9 +13,9 @@ class RedditProcessor < Processor
   def process_child(data)
     url = data['url']
     id = data['id']
-    next if data['over_18']
-    next if data['hidden']
-    next if data['thumbnail'] == 'nsfw'
+    return if data['over_18']
+    return if data['hidden']
+    return if data['thumbnail'] == 'nsfw'
 
     ni = @source.news_items.where(guid: id).first_or_initialize
 
