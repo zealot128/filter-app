@@ -4,7 +4,7 @@
       %span.label.label-default(title='Facebook likes')
         %i.fa.fa-facebook
         = item.fb_likes
-    - if item.retweets > 0
+    - if item.retweets.to_i > 0
       %span.label.label-default(title='Twitter favs + retweets')
         %i.fa.fa-twitter
         = item.retweets
