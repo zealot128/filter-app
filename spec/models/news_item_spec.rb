@@ -5,8 +5,10 @@ describe NewsItem do
 
   describe "Fetcher" do
     specify "Twitter" do
-      Fetcher.stub fetch_url: OpenStruct.new(code: 200, body: { count: 5 }.to_json)
-      like_fetcher.tweets.should == 5
+      ni = NewsItem.new(retweets: nil)
+      like_fetcher.stub twitter_search: OpenStruct.new(count: 1)
+      like_fetcher.maybe_update_tweets(ni)
+      ni.retweets.should == 1
     end
     specify "Linkedin" do
       Fetcher.stub fetch_url: OpenStruct.new(code: 200, body: 'IN.Tags.Share.handleCount({"count":174,"fCnt":"174","fCntPlusOne":"175","url":"http:\/\/developer.linkedin.com\/share-plugin"});')
