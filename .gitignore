@@ -16,3 +16,4 @@
 /public/sitemap*
 /public/system/
 config/application.yml
+config/secrets.yml
