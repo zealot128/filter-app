@@ -75,6 +75,7 @@ class Source < ActiveRecord::Base
     Source.find_each do |t|
       begin
         t.refresh
+        t.update_column :error, false
       rescue Exception => e
         t.update_column :error, true
         Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
