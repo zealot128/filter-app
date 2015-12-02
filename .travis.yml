@@ -13,6 +13,7 @@ branches:
     - master
 
 before_script:
+  - cp config/secrets.yml.example config/secrets.yml
   - psql -c 'create database hrfilter_test' -U postgres
   - cp config/application.hrfilter.yml config/application.yml
   - "bundle exec rake db:schema:load RAILS_ENV=test"
