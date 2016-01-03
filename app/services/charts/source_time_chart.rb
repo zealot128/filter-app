@@ -1,11 +1,12 @@
 module Charts
   class SourceTimeChart
-    def initialize(source)
+    def initialize(source, news_items: source.news_items)
       @source = source
+      @news_items = news_items.reorder!
     end
 
     def show?
-      @source.news_items.any?
+      @news_items.any?
     end
 
     def to_highcharts
@@ -47,7 +48,7 @@ module Charts
     end
 
     def data
-      couples = @source.news_items.group('to_char( published_at, \'YYYY/MM\')').where('published_at > ?', 25.months.ago).count
+      couples = @news_items.group('to_char( published_at, \'YYYY/MM\')').where('published_at > ?', 25.months.ago).count
       24.times.map {|i| i.month.ago.strftime('%Y/%m')}.each do |month|
         couples[month] ||= 0
       end

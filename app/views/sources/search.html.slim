@@ -1,0 +1,37 @@
+- content_for :content_header do
+  .content-header
+    .container
+      = form_tag search_source_path(@source), class: 'form-inline', method: :get do
+        .form-group
+          label.control-label>(for='q' style='margin-right: 5px')
+            | Suchbegriff
+          br
+        = ' '
+        .form-group
+          = text_field_tag :q, params[:q], class: 'form-control'
+        = ' '
+        input.btn.btn-primary type='submit' value='Suchen'
+
+
+h1
+  small Suchergebnisse für <q>#{params[:q]}</q>
+  br
+  = ' '
+  = link_to source_path(@source) do
+    = @source.name
+- if @chart && @chart.show?
+  .js-chart data-hc=(@chart.to_highcharts.to_json) style='height: 200px'
+
+- if @news_items.present?
+  br
+  p: small #{@news_items.total_entries} gefunden.
+  .row
+    - @news_items.each do |ni|
+      .col-lg-3.col-sm-6
+        = render ni
+
+  = will_paginate @news_items, renderer: BootstrapPagination::Rails
+- else
+  .alert.alert-warning
+    | Leider keine News gefunden
+

@@ -1,7 +1,7 @@
 .row
   .col-sm-6
     .text-center
-      h1 style='position: relative; top: 40px'
+      h1
         small Quelle
         br
         = ' '
@@ -23,18 +23,29 @@
           dd
             ul.list-inline
               - @categories.each do |category,count|
-                li #{category} (#{count})
+                li
+                  = link_to search_source_path(@source, q: category)
+                    = category
+                  small.badge.badge-default< = count
 
 br
 br
-- chart = Charts::SourceTimeChart.new(@source)
-- if chart.show?
-  .js-chart data-hc=(chart.to_highcharts.to_json) style='height: 200px'
+- if @chart.show?
+  .js-chart data-hc=(@chart.to_highcharts.to_json) style='height: 200px'
 
 - if @news_items.any?
-  h4 Aktuelle Beiträge
+  h3 Aktuelle Beiträge
   .row
     - @news_items.each do |ni|
       .col-lg-3.col-sm-6
         = render ni
 
+- content_for :content_footer do
+  .content-header: .container
+    - if @source.news_items.any?
+      h3 Alle News von <strong>#{@source.name}</strong> durchsuchen
+      = form_tag search_source_path(@source), class: 'form-inline', method: :get do
+        .form-group
+          = text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Suchbegriff'
+        = ' '
+        input.btn.btn-primary type='submit' value='Suchen'

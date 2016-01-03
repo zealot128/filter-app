@@ -3,7 +3,8 @@ html lang=(locale) class=(browser.to_s)
   head
     meta charset="utf-8"
     meta content="width=device-width, initial-scale=1" name="viewport"
-    title = content_for?(:title) ? yield(:title) : ::Configuration.site_name
+    title
+      = page_title
     link rel="shortcut icon" href=image_path("#{::Configuration.key}/favicon.png")
     meta name="google-site-verification" content=(::Configuration.google_site_verification)
     = csrf_meta_tags
@@ -29,14 +30,15 @@ html lang=(locale) class=(browser.to_s)
               | Mail-Abos
 
     = yield :content_header if content_for?(:content_header)
+    - @container_class ||= 'container'
     .page-container
-      .container
+      div class='#{@container_class}'
         section.content
           = content_tag(:p, flash[:alert], :id => "alert", :class => "alert alert-danger fade in alert-auto-dismiss") if flash[:alert]
           = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
           = yield
 
-    = yield :content_footer if content_for?(:content_header)
+    = yield :content_footer if content_for?(:content_footer)
     footer.footer
       .container
         ul.list-inline

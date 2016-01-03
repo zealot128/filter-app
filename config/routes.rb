@@ -8,7 +8,11 @@ Baseapp::Application.routes.draw do
   end
 
   get "sources" => redirect('/quellen')
-  resources :sources, path: 'quellen', only: [:index, :show]
+  resources :sources, path: 'quellen', only: [:index, :show] do
+    member do
+      get :search
+    end
+  end
 
   get '/quelle_einreichen' => 'submit_source#new', as: :new_submit_source
   post '/quelle_einreichen' => 'submit_source#create'
