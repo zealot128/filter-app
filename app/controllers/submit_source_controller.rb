@@ -1,4 +1,8 @@
 class SubmitSourceController < ApplicationController
+  before_action do
+    @title = 'Quelle einreichen'
+  end
+
   def new
     @submit_source = SubmitSource.new
   end
