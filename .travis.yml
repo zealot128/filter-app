@@ -1,4 +1,6 @@
 language: ruby
+sudo: false
+cache: bundler
 
 addons:
   postgresql: 9.3
@@ -8,14 +10,10 @@ rvm:
 
 services: [ redis ]
 
-branches:
-  only:
-    - master
-
 before_script:
   - cp config/secrets.yml.example config/secrets.yml
-  - psql -c 'create database hrfilter_test' -U postgres
   - cp config/application.hrfilter.yml config/application.yml
+  - "bundle exec rake db:create RAILS_ENV=test"
   - "bundle exec rake db:schema:load RAILS_ENV=test"
 
 script:
