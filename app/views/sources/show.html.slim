@@ -27,6 +27,10 @@
 
 br
 br
+- chart = Charts::SourceTimeChart.new(@source)
+- if chart.show?
+  .js-chart data-hc=(chart.to_highcharts.to_json) style='height: 200px'
+
 - if @news_items.any?
   h4 Aktuelle Beiträge
   .row

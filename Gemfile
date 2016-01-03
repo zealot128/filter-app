@@ -44,6 +44,7 @@ gem "jquery-rails"
 gem "sass"
 gem "haml-rails"
 gem "slim-rails"
+gem "highcharts-rails"
 
 gem "twitter", "~> 5.0"
 gem "ruby-stemmer"

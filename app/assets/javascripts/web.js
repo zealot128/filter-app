@@ -8,3 +8,5 @@
 //= require angular
 //= require angular-route
 //= require_tree ./web
+//= require highcharts
+//= require_tree ./charts
