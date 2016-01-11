@@ -3,6 +3,8 @@
   .content-header
     .container
       p = raw Configuration.intro
+      - cache 'counts', expires_in: 1.day do
+        p #{Source.count} Quellen mit #{NewsItem.count} Beiträgen indiziert.
 
 div ng-app='frontpage'
   .category-tabs

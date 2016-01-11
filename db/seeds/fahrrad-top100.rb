@@ -21,7 +21,7 @@ class Analyser
     return if skip?
     begin
       m.get(url)
-    rescue SocketError => e
+    rescue SocketError, Mechanize::ResponseCodeError => e
       puts "  FEHLER #{url} -> #{e.inspect}"
       return
     end
