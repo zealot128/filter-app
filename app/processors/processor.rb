@@ -1,4 +1,28 @@
 class Processor
+  RULES = %w[
+      .entry-content
+      .post-content
+      #main-content
+      #main\ .content
+      #articleContent
+      .node-content
+      .transcript
+      #articleContent
+      #content
+      [itemprop=articleBody]
+      .articleBody
+      .postContent
+      .hcf-content
+      .entryContent
+      .post-entry
+      .content
+      .post
+      .entry
+      article
+      .article
+      main
+      section
+  ]
   class << self
     attr_accessor :host, :full_text_selector
   end
@@ -43,30 +67,7 @@ class Processor
   end
 
   def get_full_text_and_image_from_random_link(link)
-    rules = %w[
-      .entry-content
-      .post-content
-      #main-content
-      #main\ .content
-      #articleContent
-      .node-content
-      .transcript
-      #articleContent
-      #content
-      [itemprop=articleBody]
-      .articleBody
-      .postContent
-      .hcf-content
-      .entryContent
-      .post-entry
-      .content
-      .post
-      .entry
-      article
-      .article
-      main
-      section
-    ]
+    rules = RULES
     res = get(link.to_s)
 
     if html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last
