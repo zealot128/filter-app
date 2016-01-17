@@ -30,6 +30,9 @@ table.table.table-striped
         = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
           |bearbeiten
         = ' '
+        = link_to [:admin, source.becomes(Source)], class: 'btn btn-default btn-xs', data: { method: :delete, confirm: 'really?'} do
+          |löschen
+        = ' '
         = link_to source.url, class: 'btn btn-xs' do
           |url
 
