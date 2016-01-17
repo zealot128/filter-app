@@ -2,15 +2,16 @@ p
   = link_to [:new, :admin, :source], class: 'btn btn-primary'  do
     |Neu
 
-table.table.table-striped
+table.table.table-striped.js-tablesorter
   thead
     tr
       th Quelle
       th Art
-      th aktuell
+      th visible / aktuell / insg.
       th avg Wortlaenge
       th Full-Text-Selector
-      th Bias/Multiplikator
+      th Bias
+      th Multiplikator
       th
   - @sources.each do |source|
     tr class='#{source.error ? 'danger' : ''}'
@@ -20,12 +21,12 @@ table.table.table-striped
         = source.news_items.home_page.count
         span<> = '/'
         = source.news_items.recent.count
+        span<> = '/'
+        = source.news_items.count
       td = source.average_word_length
       td = source.full_text_selector
-      td
-        = source.value
-        |/
-        = source.multiplicator
+      td = source.value
+      td = source.multiplicator
       td
         = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
           |bearbeiten

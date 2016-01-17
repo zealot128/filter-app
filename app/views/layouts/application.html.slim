@@ -51,8 +51,11 @@ html lang=(locale) class=(browser.to_s)
           li= link_to "Quelle einreichen", new_submit_source_path
           li= link_to "Newsletter", '/newsletter'
 
-    = render "layouts/piwik"
+    - if Rails.env.production?
+      = render "layouts/piwik"
     = javascript_include_tag "web"
+    - if controller_path.to_s['admin']
+      = javascript_include_tag 'admin'
     #loader
       i.icon-spinner.icon-spin.icon-4x
 
