@@ -1,0 +1,22 @@
+- content_for :content_header do
+  .content-header
+    .container
+      p = raw Configuration.intro
+      - cache 'counts', expires_in: 1.day do
+        p #{Source.count} Quellen mit #{NewsItem.count} Beiträgen indiziert.
+
+p
+  br
+  |Jeweils Top 50% News der letzten Tage
+
+- 14.times.each do |i|
+  - date = i.days.ago.to_date
+  - all =  NewsItem.top_of_day(date)
+  - take = [(all.count * 0.5).ceil, 8].max
+  - news = all.limit(take)
+  - if news.any?
+    h3 = l date, format: '%A, %d. %b'
+    .row.js-grid
+      - news.each do |item|
+        .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
+          = render item

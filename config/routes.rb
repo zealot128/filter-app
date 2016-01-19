@@ -26,5 +26,7 @@ Baseapp::Application.routes.draw do
   get 'search' => 'news_items#index'
   get 'api/news_items/homepage' => 'news_items#homepage'
 
+  get 'days' => 'static_pages#index'
   root to: "static_pages#welcome"
+  # root to: "static_pages#welcome"
 end

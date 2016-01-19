@@ -18,7 +18,9 @@ div ng-app='frontpage'
       li ng-class='{ active: state.currentCategory == 0 }'
         a ng-href='#/{{state.sort}}/Category/0' Unkategorisiert
 
-      li.pull-right.dropdown
+      li.pull-right
+        a href='/days' Top-News des Tages
+      /* li.pull-right.dropdown */
         a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
           i.fa.fa-sort-amount-desc
           span.caret<

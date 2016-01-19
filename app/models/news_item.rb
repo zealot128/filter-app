@@ -7,11 +7,13 @@ class NewsItem < ActiveRecord::Base
   scope :show_page, -> { where('blacklisted != ?', true).
                          order('published_at desc').
                          where('absolute_score is not null and absolute_score > 0') }
+  scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
   scope :recent, -> { where("published_at > ?", MAX_AGE.ago) }
+  scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
   scope :uncategorized, lambda {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
