@@ -43,7 +43,6 @@ app.controller('CategoryCtrl', ($scope, $routeParams, State, PostLoader) => {
     State.currentCategory = -1;
   }
   $scope.state = State;
-  console.log(State);
   PostLoader.loadPosts();
 });
 
@@ -75,7 +74,6 @@ app.factory("PostLoader", (State, $http) => {
         } else {
           State.hasMore = false;
         }
-        console.log(State);
       });
     }
   };
