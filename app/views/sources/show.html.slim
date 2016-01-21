@@ -17,7 +17,10 @@
             = @count
             small<
               | (#{@avg} / Woche)
-          dt Link
+          - if @source.is_a?(FeedSource) and @source.remote_url[/feedburner|soundcloud/i]
+            dt Homepage
+            dd = link_to l=homepage(@source.remote_url), l
+          dt Quelle / Feed
           dd = link_to @source.remote_url, @source.remote_url
           dt Themenfelder
           dd
@@ -34,7 +37,7 @@ br
   .js-chart data-hc=(@chart.to_highcharts.to_json) style='height: 200px'
 
 - if @news_items.any?
-  h3 Aktuelle Beiträge
+  h3 Beiträge
   .row
     - @news_items.each do |ni|
       .col-lg-3.col-sm-6
