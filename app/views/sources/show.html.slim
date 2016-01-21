@@ -17,7 +17,7 @@
             = @count
             small<
               | (#{@avg} / Woche)
-          - if @source.is_a?(FeedSource) and @source.remote_url[/feedburner|soundcloud/i]
+          - if @source.is_a?(FeedSource) and !@source.remote_url[/feedburner|soundcloud/i]
             dt Homepage
             dd = link_to l=homepage(@source.remote_url), l
           dt Quelle / Feed
