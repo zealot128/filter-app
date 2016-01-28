@@ -36,6 +36,8 @@ class NewsItem::LikeFetcher
     if new_tweets > tweet_count
       news_item.retweets = new_tweets
     end
+  rescue Twitter::Error::TooManyRequests
+    nil
   end
 
   def facebook
