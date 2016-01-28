@@ -3,7 +3,7 @@ describe Processor, type: :model do
   let(:feed_source) { FeedSource.new(url: "...", name: "..") }
 
   specify "legt an - mit original url", freeze_time: "2013-11-02 12:00:00" do
-    VCR.use_cassette "feed-url" do
+    VCR.use_cassette "feed-url", record: :new_episodes do
       feed_source.url = 'http://www.online-recruiting.net/feed/'
       feed_source.full_text_selector = '.entry-content'
       feed_source.save
