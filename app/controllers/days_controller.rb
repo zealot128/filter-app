@@ -11,6 +11,16 @@ class DaysController < ApplicationController
 
   def show
     @day = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    if @day > Date.today
+      raise ArgumentError
+    end
     @news = NewsItem.top_of_day(@day)
+    @tomorrow = @day + 1
+    if @tomorrow > Date.today
+      @tomorrow = nil
+    end
+    @yesterday = @day - 1
+  rescue ArgumentError
+    render text: "<h3>Ungültiges Datum</h3>", layout: true, status: 400
   end
 end

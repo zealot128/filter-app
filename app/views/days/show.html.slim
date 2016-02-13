@@ -12,3 +12,21 @@ h3.day-title = l @day, format: '%A, %d. %b %Y'
         - @news.each do |item|
           .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
             = render item
+
+.day-title.clearfix
+  .pull-left
+    - if @yesterday
+      = link_to day_path(@yesterday) do
+        i.fa.fa-fw.fa-angle-left>
+        = l(@yesterday, format: '%A, %d. %b')
+        br
+        small älter
+
+
+  .pull-right
+    - if @tomorrow
+      = link_to day_path(@tomorrow) do
+        = l(@tomorrow, format: '%A, %d. %b')
+        i.fa.fa-fw.fa-angle-right<
+        br
+        small neuer
