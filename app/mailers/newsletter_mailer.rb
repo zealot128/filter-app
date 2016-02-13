@@ -1,6 +1,5 @@
 class NewsletterMailer < ActionMailer::Base
   default from: ::Configuration.from
-  include Roadie::Rails::Mailer
   def newsletter(mailing)
     @mailing = mailing
     @title = 'Newsletter'
