@@ -12,6 +12,6 @@ class NewsletterMailer < ActionMailer::Base
     else
       names = "zum Thema " + names.to_sentence
     end
-    roadie_mail to: mailing.email, subject: "[#{::Configuration.site_name}] #{@mailing.news_items.count} Beiträge #{names}"
+    mail to: mailing.email, subject: "[#{::Configuration.site_name}] #{@mailing.news_items.count} Beiträge #{names}"
   end
 end

@@ -1,0 +1,68 @@
+doctype 1.1
+html xmlns="http://www.w3.org/1999/xhtml"
+  /* !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> */
+  head
+    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+    meta name="viewport" content="width=device-width"
+    = stylesheet_link_tag 'mailer'
+  body
+    table.body: tr: td.center align="center" valign="top": center
+      table.container: tr: td
+        table.row: tr: td.wrapper.last
+          table.twelve.columns: tr: td
+            p Hallo,
+            p
+              |hier die Top #{@mailing.count} von insgesamt #{@mailing.total_count} der relevantesten News aus letzter Woche aus den abonnierten Themenbereichen <strong>#{@mailing.categories.map(&:name).to_sentence}</strong>.
+            p Die Newsletter-Einstellungen können <a href='#{edit_mail_subscription_url(@mailing.subscription)}'>hier</a> vorgenommen werden.
+
+            table.button: tr: td
+              a href='https://www.#{Configuration.host}' #{Configuration.site_name} Tagesübersicht
+
+        - @mailing.news_items.each_with_index do |story,i|
+          - if i > 15
+            table.row: tr
+              td.wrapper
+                table.two.columns: tr
+                  td
+                    - story.source.logo.present?
+                      = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle")
+                  td.expander
+              td.wrapper
+                table.ten.columns: tr
+                  td
+                    strong
+                      = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
+                        = story.title
+                    br
+                    small
+                      = story.source.name
+                      span<> &ndash;
+                      = story.categories.pluck(:name).join(', ')
+                  td.expander
+
+          - else
+
+            table.row: tr
+              td.wrapper
+                table.two.columns: tr
+                  td
+                    - if story.image.present?
+                      = image_tag image_url(story.image.url), alt: "Bild", height: 70, width: 70
+                  td.expander
+              td.wrapper
+                table.ten.columns: tr
+                  td
+                    - story.source.logo.present?
+                      = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle")
+                      = ' '
+                    strong
+                      = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
+                        = story.title
+                    br
+                    small
+                      = story.source.name
+                      - if story.categories.any?
+                        span<> &ndash;
+                        = story.categories.pluck(:name).join(', ')
+                  td.expander
+

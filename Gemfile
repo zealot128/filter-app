@@ -45,7 +45,8 @@ gem "highcharts-rails"
 
 gem "twitter", "~> 5.0"
 gem "ruby-stemmer"
-gem "roadie-rails"
+gem 'premailer-rails'
+gem "zurb-ink"
 gem "rinku", require: "rails_rinku"
 
 group :test do
