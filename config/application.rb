@@ -18,7 +18,7 @@ module Baseapp
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
-    config.assets.precompile += %w( font-awesome-ie7.min.css web.css web.js IE9.js admin.js)
+    config.assets.precompile += %w( font-awesome-ie7.min.css web.css web.js IE9.js admin.js app.js)
 
     config.assets.enabled = true
     config.assets.version = '1.0'

@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
-  def welcome
+
+  def categories
+    @_include_app_js = true
     @news_items = NewsItem.home_page.limit(48)
   end
 

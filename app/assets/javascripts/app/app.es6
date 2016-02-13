@@ -1,5 +1,3 @@
-
-
 var app = angular.module('frontpage', ['ngRoute']);
 
 var grid = null;

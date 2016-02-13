@@ -1,7 +1,11 @@
 class DaysController < ApplicationController
   def index
-    @days = 14.times.map { |i|
-      date = i.days.ago.to_date
+    reference = Date.today
+    if params[:to]
+      reference = Date.parse(params[:to]) - 1
+    end
+    @days = 7.times.map { |i|
+      date = reference - i
       all =  NewsItem.top_of_day(date)
       take = [(all.count * 0.33).ceil, 8].max
       news = all.limit(take)

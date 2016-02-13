@@ -9,25 +9,14 @@ html lang=(locale) class=(browser.to_s)
     meta name="google-site-verification" content=(::Configuration.google_site_verification)
     = csrf_meta_tags
     = stylesheet_link_tag "web"
+    = javascript_include_tag "web"
 
     = yield :head
   body
-    header.container
-      a href='/'
-        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name, style: 'max-width: 100%'
-
-    - if controller_path.to_s['admin']
-      .container
-        nav.navbar.navbar-inverse
-          a.navbar-brand href='#'
-            span.label.label-default ADMIN
-          ul.nav.navbar-nav
-            li = link_to [:admin, :sources]
-              | Quellen
-            li = link_to [:admin, :categories]
-              | Kategorien
-            li = link_to [:admin, :mail_subscriptions]
-              | Mail-Abos
+    nav.navbar.navbar-default
+      a.navbar-brand href='#'
+        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name, style: 'height: 35px'
+      = render_navigation :expand_all => true, :renderer => :bootstrap
 
     = yield :content_header if content_for?(:content_header)
     - @container_class ||= 'container'
@@ -53,9 +42,10 @@ html lang=(locale) class=(browser.to_s)
 
     - if Rails.env.production?
       = render "layouts/piwik"
-    = javascript_include_tag "web"
     - if controller_path.to_s['admin']
       = javascript_include_tag 'admin'
+    - if @_include_app_js
+      = javascript_include_tag 'app'
     #loader
       i.icon-spinner.icon-spin.icon-4x
 

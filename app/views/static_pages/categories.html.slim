@@ -1,0 +1,52 @@
+
+- content_for :content_header do
+  .content-header
+    .container
+      p = raw Configuration.intro
+      - cache 'counts', expires_in: 1.day do
+        p #{Source.count} Quellen mit #{NewsItem.count} Beiträgen indiziert.
+
+div ng-app='frontpage'
+  .category-tabs
+    ul.nav.nav-pills ng-controller='NavCtrl'
+      li ng-class='{ active: state.currentCategory == -1 }'
+        a ng-href='#/{{state.sort}}' Alle
+
+      - Category.all.each do |category|
+        li ng-class='{ active: state.currentCategory == #{category.id} }'
+          a ng-href='#/{{state.sort}}/Category/{{#{category.id}}}' = category.name
+      li ng-class='{ active: state.currentCategory == 0 }'
+        a ng-href='#/{{state.sort}}/Category/0' Unkategorisiert
+
+      /* li.pull-right.dropdown */
+        a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          i.fa.fa-sort-amount-desc
+          span.caret<
+        ul class="dropdown-menu"
+          li ng-class='{ active: state.sort == "popular"}'
+            a ng-href='#/popular/Category/{{state.currentCategory}}' Hot
+          li ng-class='{ active: state.sort == "recent"}'
+            a ng-href='#/recent/Category/{{state.currentCategory}}' Aktuell
+
+  div[ng-view]
+  script type="text/ng-template" id="index.html"
+
+
+  #items
+    .row.js-grid
+      - @news_items.each do |item|
+        .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
+          = render item
+  .text-center style='margin-bottom: 15px' ng-controller='PageCtrl'
+    a ng-click='nextPage()' ng-if='hasNextPage()' class='btn btn-default btn-lg'
+      |Mehr
+
+- content_for :content_footer do
+  .content-header
+    .container
+      h3 Alle News durchsuchen
+      = form_tag '/search', class: 'form-inline', method: :get do
+        .form-group
+          = text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Suchbegriff'
+        = ' '
+        input.btn.btn-primary type='submit' value='Suchen'

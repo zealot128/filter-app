@@ -2,12 +2,16 @@
 @import bootstrap-sprockets
 @import bootswatch/cosmo/variables
 $brand-color: #aa4400
+$feature-color: #3C4692
 
 $navbar-default-bg: white
+$navbar-default-color: $feature-color
+$navbar-default-link-color: $feature-color
+$navbar-default-link-hover-color: darken($feature-color, 20%)
+$navbar-default-link-hover-bg: #f2f2f2
 
 @import bootstrap
 @import bootswatch/cosmo/bootswatch
-@import bootstrap-slider.min
 
 // tablesorter
 @import "theme.bootstrap.min.css"
@@ -15,14 +19,14 @@ $navbar-default-bg: white
 //@import "jquery.tablesorter/css/theme.default.scss"
 
 .navbar-default .navbar-brand
-  padding: 10px
-  margin-top: 10px
   img
-    max-height: 80px
+    height: 50px
 
 .navbar
   border-radius: 0
   border: 0
+.navbar-nav
+  padding-top: 5px
 
 header
   margin-top: 10px
@@ -89,7 +93,6 @@ div.categories
   -webkit-hyphens: auto
   -ms-hyphens: auto
 
-$feature-color: #3C4692
 
 .content-header
   background: $feature-color

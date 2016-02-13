@@ -7,15 +7,19 @@
 
 - @container_class = ''
 .container
-  p
-    br
-    |Jeweils Top 33% News der letzten Tage
+  br
+  br
+  .text-center
+    h3 Top-News der letzten Tage
 
 - @days.each do |day, total_count, news|
   .day-row
     h3.day-title.js-follow-me
       = link_to day_path(day) do
-        = l day, format: '%A, %d. %b'
+        - if day == Date.today
+          |Heute
+        - else
+          = l day, format: '%A, %d. %b'
     .container
       - if not news.any?
         p Keine News an diesem Tag.
@@ -28,3 +32,9 @@
           .pull-right
             = link_to day_path(day), class: 'btn btn-default' do
               |Alle News dieses Tages (#{total_count})
+
+.container
+  .pull-right
+    = link_to "/?to=#{@days.last[0].to_s}", class: 'btn btn-default', rel: 'nofollow' do
+      |Vorherige Woche
+  br

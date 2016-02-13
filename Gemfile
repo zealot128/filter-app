@@ -7,6 +7,8 @@ gem "sprockets-es6"
 gem "pg"
 gem "mail_form"
 gem "simple_form"
+gem "simple-navigation"
+gem "simple-navigation-bootstrap", git: "https://github.com/pzgz/simple-navigation-bootstrap.git"
 
 gem "browser"
 gem "bcrypt-ruby"

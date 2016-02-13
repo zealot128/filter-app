@@ -26,8 +26,9 @@ Baseapp::Application.routes.draw do
   get 'search' => 'news_items#index'
   get 'api/news_items/homepage' => 'news_items#homepage'
 
-  get 'days' => 'days#index'
+  get 'days' => redirect('/')
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
-  root to: "static_pages#welcome"
+  get 'categories' => 'static_pages#categories'
+  root to: "days#index"
   # root to: "static_pages#welcome"
 end
