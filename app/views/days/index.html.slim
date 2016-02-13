@@ -1,0 +1,30 @@
+- content_for :content_header do
+  .content-header
+    .container
+      p = raw Configuration.intro
+      - cache 'counts', expires_in: 1.day do
+        p #{Source.count} Quellen mit #{NewsItem.count} Beiträgen indiziert.
+
+- @container_class = ''
+.container
+  p
+    br
+    |Jeweils Top 33% News der letzten Tage
+
+- @days.each do |day, total_count, news|
+  .day-row
+    h3.day-title.js-follow-me
+      = link_to day_path(day) do
+        = l day, format: '%A, %d. %b'
+    .container
+      - if not news.any?
+        p Keine News an diesem Tag.
+      - if news.any?
+        .clearfix
+          .row.js-grid
+            - news.each do |item|
+              .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
+                = render item
+          .pull-right
+            = link_to day_path(day), class: 'btn btn-default' do
+              |Alle News dieses Tages (#{total_count})

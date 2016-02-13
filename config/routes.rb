@@ -26,7 +26,8 @@ Baseapp::Application.routes.draw do
   get 'search' => 'news_items#index'
   get 'api/news_items/homepage' => 'news_items#homepage'
 
-  get 'days' => 'static_pages#index'
+  get 'days' => 'days#index'
+  get 'days/:year/:month/:day' => 'days#show', as: :raw_day
   root to: "static_pages#welcome"
   # root to: "static_pages#welcome"
 end

@@ -3,10 +3,6 @@ class StaticPagesController < ApplicationController
     @news_items = NewsItem.home_page.limit(48)
   end
 
-  def index
-    @news_items = NewsItem.home_page.limit(48)
-  end
-
   def about
     @impressum = I18n.t("impressum.#{::Configuration.key}")
   end

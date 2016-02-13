@@ -1,0 +1,14 @@
+
+- @container_class = ''
+
+h3.day-title = l @day, format: '%A, %d. %b %Y'
+
+.container
+  - if not @news.any?
+    p Keine News an diesem Tag.
+  - if @news.any?
+    .clearfix
+      .row.js-grid
+        - @news.each do |item|
+          .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
+            = render item
