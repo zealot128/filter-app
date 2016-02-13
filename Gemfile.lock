@@ -16,7 +16,6 @@ GIT
 
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.5.1)
       actionpack (= 4.2.5.1)
@@ -249,12 +248,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.5.1)
       sprockets-rails
-    rails-assets-director (1.2.8)
-    rails-assets-jquery (2.1.4)
-    rails-assets-modernizr (2.8.3)
-    rails-assets-shufflejs (3.1.1)
-      rails-assets-jquery (>= 1.9.0)
-      rails-assets-modernizr (>= 2.6.2, < 3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -417,8 +410,6 @@ DEPENDENCIES
   quiet_assets
   rack (= 1.6.2)
   rails (~> 4.2.0)
-  rails-assets-director!
-  rails-assets-shufflejs!
   rinku
   roadie-rails
   rspec-rails (~> 2.14)

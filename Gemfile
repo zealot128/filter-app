@@ -24,11 +24,6 @@ gem "lograge"
 gem "open_uri_redirections"
 gem "angularjs-rails"
 
-source "https://rails-assets.org" do
-  gem "rails-assets-director"
-  gem "rails-assets-shufflejs"
-end
-
 gem "impressionist"
 gem "exception_notification"
 gem "paperclip"
