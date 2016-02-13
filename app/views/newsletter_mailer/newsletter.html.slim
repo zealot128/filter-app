@@ -19,50 +19,28 @@ html xmlns="http://www.w3.org/1999/xhtml"
               a href='https://www.#{Configuration.host}' #{Configuration.site_name} Tagesübersicht
 
         - @mailing.news_items.each_with_index do |story,i|
-          - if i > 15
-            table.row: tr
-              td.wrapper
-                table.two.columns: tr
-                  td
-                    - story.source.logo.present?
-                      = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle")
-                  td.expander
-              td.wrapper
-                table.ten.columns: tr
-                  td
-                    strong
-                      = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
-                        = story.title
-                    br
-                    small
-                      = story.source.name
-                      span<> &ndash;
-                      = story.categories.pluck(:name).join(', ')
-                  td.expander
-
-          - else
-
-            table.row: tr
-              td.wrapper
-                table.two.columns: tr
+          table.row: tr
+            td.wrapper
+              table.three.columns: tr
+                - if i < 15
                   td
                     - if story.image.present?
-                      = image_tag image_url(story.image.url), alt: "Bild", height: 70, width: 70
-                  td.expander
-              td.wrapper
-                table.ten.columns: tr
-                  td
-                    - story.source.logo.present?
-                      = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle")
-                      = ' '
-                    strong
-                      = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
-                        = story.title
-                    br
-                    small
-                      = story.source.name
-                      - if story.categories.any?
-                        span<> &ndash;
-                        = story.categories.pluck(:name).join(', ')
-                  td.expander
+                      center = image_tag image_url(story.image.url), alt: "Bild", width: 110, height: 50, style: 'text-align: center'
+                td.expander
+            td.wrapper.last
+              table.nine.columns: tr
+                td
+                  - story.source.logo.present?
+                    /* = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle") */
+                    = ' '
+                  strong
+                    = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
+                      = story.title
+                  br
+                  small
+                    = story.source.name
+                    - if story.categories.any?
+                      span<> &ndash;
+                      = story.categories.pluck(:name).join(', ')
+                td.expander
 
