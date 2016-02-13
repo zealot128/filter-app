@@ -33,8 +33,11 @@ class FeedProcessor < Processor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
+    if url.starts_with?('/')
+      url = URI.join(@source.url, url).to_s
+    end
     @item = find_news_item(guid, url)
-    @item.url ||= url
+    @item.url = url
     if @item.new_record?
       @item.source = @source
       @item.published_at = [Time.zone.now, published].min

@@ -16,7 +16,7 @@ class NewsItem::Categorizer
   end
 
   def text
-    @text ||= (@news_item.plaintext + ' ' + @news_item.title).downcase
+    @text ||= (@news_item.plaintext.to_s + ' ' + @news_item.title.to_s).downcase
   end
 
   def self.run(ni)
