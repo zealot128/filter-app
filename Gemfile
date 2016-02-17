@@ -54,6 +54,7 @@ group :test do
   gem "rspec-rails", "~> 2.14"
   gem "vcr"
   gem "webmock"
+  gem "fabrication"
 end
 
 group :development do

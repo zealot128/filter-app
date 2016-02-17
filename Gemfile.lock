@@ -111,6 +111,7 @@ GEM
       activesupport (>= 3.0.4)
     execjs (2.6.0)
     exifr (1.2.4)
+    fabrication (2.14.1)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
@@ -392,6 +393,7 @@ DEPENDENCIES
   coffee-rails
   email_verifier!
   exception_notification
+  fabrication
   feedjira
   font-awesome-rails (~> 4.0)
   fontsquirrel-download

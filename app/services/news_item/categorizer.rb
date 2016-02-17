@@ -1,4 +1,7 @@
 class NewsItem::Categorizer
+  MAX_CATEGORIES = 3
+
+
   def initialize(news_item)
     @news_item = news_item
   end
@@ -11,7 +14,15 @@ class NewsItem::Categorizer
         end
         [category, matches.count]
       end
-    categories = cats_with_matches.select { |_, count| count > 0 }.sort_by { |_, count| -count }.take(3).map { |c, _| c }
+    categories = cats_with_matches.select { |_, count| count > 0 }
+
+    if default = @news_item.source.default_category
+      unless categories.find{|cat, _| cat.id == default.id }
+        categories << [ default, 100000]
+      end
+    end
+
+    categories = categories.sort_by { |_, count| -count }.take(MAX_CATEGORIES).map { |c, _| c }
     @news_item.categories = categories
   end
 

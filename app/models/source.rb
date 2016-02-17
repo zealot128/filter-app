@@ -3,6 +3,7 @@ class Source < ActiveRecord::Base
   has_many :news_items, dependent: :destroy
   validates_presence_of :url, :name
 
+  belongs_to :default_category, class_name: 'Category'
   after_create :download_thumb, if: -> { !Rails.env.test? }
   scope :visible, -> { where(deactivated: false) }
 
