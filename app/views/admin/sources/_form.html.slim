@@ -7,6 +7,11 @@
   - if @source.new_record?
     = f.input :type, collection: ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource'], include_blank: false
   = f.input :logo
+  - if @source.logo.present?
+    = image_tag @source.logo.url(:small)
+  = f.input :lsr_active
+  = f.input :deactivated
+  = f.input :default_category_id, as: :select, collection: Category.all
 
   = f.submit class: 'btn btn-primary'
 

@@ -4,6 +4,7 @@ class Source < ActiveRecord::Base
   validates_presence_of :url, :name
 
   after_create :download_thumb, if: -> { !Rails.env.test? }
+  scope :visible, -> { where(deactivated: false) }
 
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],
@@ -72,7 +73,7 @@ class Source < ActiveRecord::Base
   def self.cronjob
     Rails.logger.info "Starting Source.cronjob"
 
-    Source.find_each do |t|
+    Source.visible.find_each do |t|
       begin
         t.refresh
         t.update_column :error, false

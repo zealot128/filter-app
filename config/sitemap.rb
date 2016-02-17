@@ -7,7 +7,7 @@ SitemapGenerator::Sitemap.create do
   add about_path
   add '/quellen'
 
-  Source.all.each do |s|
+  Source.visible.each do |s|
     add source_path(s)
   end
 
