@@ -42,6 +42,7 @@ gem "sass"
 gem "haml-rails"
 gem "slim-rails"
 gem "highcharts-rails"
+gem "migration_data"
 
 gem "twitter", "~> 5.0"
 gem "ruby-stemmer"

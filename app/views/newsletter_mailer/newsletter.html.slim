@@ -25,7 +25,8 @@ html xmlns="http://www.w3.org/1999/xhtml"
                 - if i < 15
                   td
                     - if story.image.present?
-                      center = image_tag image_url(story.image.url), alt: "Bild", width: 110, height: 50, style: 'text-align: center'
+                      - w, h = NewsItem::NEWSLETTER_SIZE
+                      center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
                 td.expander
             td.wrapper.last
               table.nine.columns: tr
@@ -42,5 +43,7 @@ html xmlns="http://www.w3.org/1999/xhtml"
                     - if story.categories.any?
                       span<> &ndash;
                       = story.categories.pluck(:name).join(', ')
+                    span<> &ndash;
+                    i = l story.published_at.to_date
                 td.expander
 

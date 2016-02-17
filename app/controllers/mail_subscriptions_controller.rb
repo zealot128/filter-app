@@ -1,6 +1,7 @@
 class MailSubscriptionsController < ApplicationController
   def index
     @subscription = MailSubscription.new
+    @subscription.interval = 'weekly'
   end
 
   def create

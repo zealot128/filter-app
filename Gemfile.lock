@@ -197,6 +197,7 @@ GEM
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
+    migration_data (0.2.1)
     mime-types (2.99)
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
@@ -406,6 +407,7 @@ DEPENDENCIES
   lograge
   mail_form
   mechanize
+  migration_data
   open_uri_redirections
   paperclip
   paperclip-optimizer
