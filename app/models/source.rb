@@ -87,12 +87,7 @@ class Source < ActiveRecord::Base
   end
 
   def average_word_length
-    words = news_items.visible.order('created_at desc').limit(5).map(&:word_length)
-    if words.length > 0
-      (words.sum / words.count.to_f).round
-    else
-      0
-    end
+    (s = news_items.visible.order('created_at desc').limit(5).average(:word_length)) && s.round
   end
 
   def should_fetch_stats?(ni)
