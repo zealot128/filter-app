@@ -16,6 +16,8 @@ html xmlns="http://www.w3.org/1999/xhtml"
             p
               |hier die Top #{@mailing.count} von insgesamt #{@mailing.total_count} der relevantesten News aus letzter Woche aus den abonnierten Themenbereichen <strong>#{@mailing.categories.map(&:name).to_sentence}</strong>.
             p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
+        - if @mailing.new_categories.any?
+          = render 'new_categories', categories: @mailing.new_categories
 
         table.row: tr
           td.wrapper: table.six.columns: tr: td

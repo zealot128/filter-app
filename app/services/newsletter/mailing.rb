@@ -1,7 +1,7 @@
 module Newsletter
   class Mailing
 
-    attr_reader :subscription
+    attr_reader :subscription, :new_categories
 
     def self.cronjob
       MailSubscription.confirmed.each do |s|
@@ -58,6 +58,7 @@ module Newsletter
             already_checked += section.news_items
           end
           s.reject!{|i| i.news_items.count == 0 }
+          @new_categories = Category.where('created_at between ? and ?', *interval) - categories
           s
         end
       # Alle News-Items bilden
@@ -76,7 +77,7 @@ module Newsletter
     end
 
     def count
-      sections.map{|i| i.news_items.count}.sum
+      sections.map{|i| i.respond_to?(:news_items) ? i.news_items.count : 0}.sum
     end
 
     def total_count
