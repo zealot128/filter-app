@@ -51,6 +51,25 @@ It is possible to subscribe via E-Mail. Then, once per week on sunday, you will 
 
 # Development
 
+## Setting up the Rails Environment
+
+### Using a Virtual Machine or Linux (recommended)
+
+In case you are using *Windows* or *OSX* as OS you should consider developing in a VM since
+it is alot easier to set up the rails environment.
+You just need *Vagrant* (which is THE tool to simply configure and manage headless VM's)
+and Oracle's *VirtualBox* to be able to spawn VM's.
+
+[Here](https://coderwall.com/p/vm2uha/setting-up-a-brand-new-postgres-powered-ruby-rails-development-environment-with-vagrant) you can find a link pointing to a pretty good installation guide using *postgreSQL* as database since this project requires postgreSQL as well (disclaiming that the guide might be 100% correct, just in case ;) ).
+
+### Using Windows or OSX
+
+Just don't. It is not recommended to do so since you are going to run in a lot of frustrating problems when setting up
+the environment. Vagrant is the way to go though. Once you've set up the environment you can take the VM and easily
+install it on any machine you want only requiring Vagrant and VirtualBox!
+
+## Setting up project
+
 As it is a fully functioning Rails app, you can try to run it yourself. First make sure to have Ruby at least 2.0 installed and bundler, then:
 
 ```

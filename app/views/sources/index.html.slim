@@ -1,5 +1,5 @@
 .page-header
-  h1 Quellen
+  h1 Quellen      
 
 .row
   - @sources.each_with_index do |source,i|
@@ -27,6 +27,14 @@
                 = truncate(ni.title, length: 60)
 
 css:
+  .panel-body {
+     padding: 0;
+  }
   .panel-body ul {
+    padding-left: 15px;
+  }
+  .panel-body small {
+    display:block;
+    color:#bfbfbf;
     padding-left: 15px;
   }
