@@ -1,0 +1,35 @@
+br
+br
+table.row: tr: td.wrapper.last
+  h4 id="#{category_section.anchor}"
+    a name=category_section.anchor
+      = category_section.title
+
+- category_section.news_items.each_with_index do |story,i|
+  table.row: tr
+    td.wrapper
+      table.three.columns: tr
+        - if i < 5
+          td
+            - if story.image.present?
+              - w, h = NewsItem::NEWSLETTER_SIZE.map{|i| (i * 0.9).round }
+              center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
+        td.expander
+    td.wrapper.last
+      table.nine.columns: tr
+        td
+          - story.source.logo.present?
+            /* = image_tag(image_url(story.source.logo.url(:thumb)), alt: "Quelle") */
+            = ' '
+          strong
+            = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
+              = story.title
+          br
+          small
+            = story.source.name
+            - if story.categories.any?
+              span<> &ndash;
+              = story.categories.pluck(:name).join(', ')
+            span<> &ndash;
+            i = l story.published_at.to_date
+        td.expander

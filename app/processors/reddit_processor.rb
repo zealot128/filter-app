@@ -25,7 +25,7 @@ class RedditProcessor < Processor
       return
     end
 
-    ni.title = data['title']
+    ni.title = data['title'].truncate(255)
     ni.url = url
     ni.reddit = data['score']
     ni.published_at = Time.at data['created_utc']

@@ -6,12 +6,13 @@ describe 'NewsletterMailing' do
     subscription = MailSubscription.create!(
       email: 'stwienert@gmail.com',
       categories: [category.id],
+      limit: 50,
       interval: 'weekly'
     )
     subscription.confirm!
 
     # Keine Mail, wenn nichts neues
-    NewsletterMailing.cronjob
+    Newsletter::Mailing.cronjob
     ActionMailer::Base.deliveries.count.should be == 0
 
     ni = nil
@@ -25,20 +26,20 @@ describe 'NewsletterMailing' do
     end
 
     # 1 news da, mail geht raus
-    NewsletterMailing.cronjob
+    Newsletter::Mailing.cronjob
     ActionMailer::Base.deliveries.count.should be == 1
 
     # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
-    NewsletterMailing.cronjob
+    Newsletter::Mailing.cronjob
     ActionMailer::Base.deliveries.count.should be == 1
 
     Timecop.travel 7.days.from_now
-    NewsletterMailing.cronjob
+    Newsletter::Mailing.cronjob
     # Keine neuen News
     ActionMailer::Base.deliveries.count.should be == 1
 
     ni.update_columns published_at: 2.days.ago
-    NewsletterMailing.cronjob
+    Newsletter::Mailing.cronjob
     ActionMailer::Base.deliveries.count.should be == 2
     Timecop.return
   end

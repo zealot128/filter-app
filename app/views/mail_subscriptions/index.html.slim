@@ -8,6 +8,7 @@
           = f.input :email, as: :string
           = f.input :categories, collection: Category.select_collection, as: :check_boxes
           = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
+          = f.input :limit, as: :radio_buttons, collection: %w[10 25 50 100]
           = f.submit 'Abonnieren', class: 'btn btn-primary'
   .col-md-8.col-sm-6
     h2 E-Mail Abonnement

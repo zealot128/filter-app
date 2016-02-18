@@ -32,7 +32,7 @@ describe Processor, type: :model do
   end
 
   specify 'Reddit' do
-    VCR.use_cassette 'reddit-1', record: :new_episodes do
+    VCR.use_cassette 'reddit-1' do
       rs = RedditSource.create!(name: 'bicycling')
       rs.refresh
       rs.news_items.count.should be > 10

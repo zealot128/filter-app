@@ -4,6 +4,6 @@ class NewsletterPreview < ActionMailer::Preview
   end
 
   def newsletter
-    NewsletterMailer.newsletter(NewsletterMailing.new(MailSubscription.last))
+    NewsletterMailer.newsletter(Newsletter::Mailing.new(MailSubscription.last))
   end
 end

@@ -9,6 +9,7 @@ describe 'MailSubscriptionsController' do
     post '/newsletter', mail_subscription: {
       email: 'stwienert@gmail.com',
       interval: 'weekly',
+      limit: 50,
       categories: [c.id]
     }
     assert(response.success?)
