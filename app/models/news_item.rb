@@ -1,7 +1,7 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
   is_impressionable counter_cache: true, column_name: :impression_count, unique: [:impressionable_type, :impressionable_id, :session_hash]
-  MAX_AGE ||= ::Configuration.max_age.days
+  MAX_AGE ||= Setting.max_age.days
 
   scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0').where(source_id: Source.visible.select('id')) }
   scope :show_page, -> { where('blacklisted != ?', true).

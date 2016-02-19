@@ -2,4 +2,4 @@
 #
 
 
-load "db/seeds/#{Configuration.key}.rb"
+load "db/seeds/#{Setting.key}.rb"

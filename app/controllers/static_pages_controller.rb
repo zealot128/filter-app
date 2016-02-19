@@ -6,7 +6,7 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-    @impressum = I18n.t("impressum.#{::Configuration.key}")
+    @impressum = I18n.t("impressum.#{Setting.key}")
   end
 
   def sources

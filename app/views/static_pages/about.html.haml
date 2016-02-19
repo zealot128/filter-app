@@ -8,9 +8,9 @@
 
 .panel.panel-primary
   .panel-heading
-    %h3.panel-title Was ist #{Configuration.short_name}
+    %h3.panel-title Was ist #{Setting.short_name}
   .panel-body
-    = raw Configuration.explanation
+    = raw Setting.explanation
 
 .panel.panel-primary
   .panel-heading
@@ -26,7 +26,7 @@
     %h3.panel-title Eine Quelle fehlt, wie kann ich diese aufnehmen lassen?
   .panel-body
     Schreiben Sie mir eine
-    = mail_to Configuration.email, subject: "#{Configuration.short_name}: Neue Quelle" do
+    = mail_to Setting.email, subject: "#{Setting.short_name}: Neue Quelle" do
       eMail
 
 
@@ -34,4 +34,4 @@
   .panel-heading
     %h3.panel-title Wer steckt dahinter?
   .panel-body
-    = raw Configuration.credits
+    = raw Setting.credits

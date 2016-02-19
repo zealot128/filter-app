@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://#{Configuration.host}"
+SitemapGenerator::Sitemap.default_host = "http://#{Setting.host}"
 SitemapGenerator::Sitemap.sitemaps_path = 'system/'
 
 SitemapGenerator::Sitemap.create do

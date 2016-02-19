@@ -1,5 +1,5 @@
 class NewsletterMailer < ActionMailer::Base
-  default from: ::Configuration.from
+  default from: Setting.get('from')
   def newsletter(mailing)
     @mailing = mailing
     @title = 'Newsletter'
@@ -11,6 +11,6 @@ class NewsletterMailer < ActionMailer::Base
     else
       names = "zum Thema " + names.to_sentence
     end
-    mail to: mailing.email, subject: "[#{::Configuration.site_name}] #{@mailing.count} Beiträge #{names}"
+    mail to: mailing.email, subject: "[#{Setting.site_name}] #{@mailing.count} Beiträge #{names}"
   end
 end

@@ -1,8 +1,8 @@
 table.row: tr: td.wrapper.last
   table.twelve.columns: tr: td
     - if categories.count == 1
-      | Auf #{::Configuration.host} wurde kürzlich eine neue Kategorie "<strong>#{categories.first.name}</strong>" hinzugefügt.
+      | Auf #{Setting.host} wurde kürzlich eine neue Kategorie "<strong>#{categories.first.name}</strong>" hinzugefügt.
     - else
-      | Auf #{::Configuration.host} wurden kürzlich die neuen Kategorien <strong>#{categories.map(&:name).to_sentence}</strong> hinzugefügt.
+      | Auf #{Setting.host} wurden kürzlich die neuen Kategorien <strong>#{categories.map(&:name).to_sentence}</strong> hinzugefügt.
     = ' '
     | Diese können Sie bei Interesse in Ihrem Profil aktivieren.

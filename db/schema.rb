@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218163955) do
+ActiveRecord::Schema.define(version: 20160219094825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,13 @@ ActiveRecord::Schema.define(version: 20160218163955) do
   add_index "news_items", ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
   add_index "news_items", ["source_id"], name: "index_news_items_on_source_id", using: :btree
   add_index "news_items", ["value"], name: "index_news_items_on_value", using: :btree
+
+  create_table "settings", force: :cascade do |t|
+    t.string "key"
+    t.text   "value"
+  end
+
+  add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
   create_table "sources", force: :cascade do |t|
     t.string   "type",                limit: 255

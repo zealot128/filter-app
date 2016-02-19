@@ -1,3 +1,3 @@
 EmailVerifier.config do |config|
-  config.verifier_email = Configuration.from
+  config.verifier_email = Setting.get('from')
 end

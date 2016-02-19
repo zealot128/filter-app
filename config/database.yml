@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: <%= ::Configuration.database %>
+  database: hrfilter_<%= ENV['USER'] %>_dev
   template: template0
   pool: 5
 

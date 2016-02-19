@@ -1,3 +1,4 @@
+# Deprecated class for initial configuration seed
 class Configuration
   include Singleton
 

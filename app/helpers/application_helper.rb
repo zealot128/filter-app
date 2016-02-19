@@ -1,6 +1,6 @@
 module ApplicationHelper
   def page_title
-    [ @title, Configuration.site_name].reject(&:blank?).join(' | ')
+    [ @title, Setting.site_name].reject(&:blank?).join(' | ')
   end
 
   def homepage(url)

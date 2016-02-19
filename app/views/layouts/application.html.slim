@@ -5,8 +5,8 @@ html lang=(locale) class=(browser.to_s)
     meta content="width=device-width, initial-scale=1" name="viewport"
     title
       = page_title
-    link rel="shortcut icon" href=image_path("#{::Configuration.key}/favicon.png")
-    meta name="google-site-verification" content=(::Configuration.google_site_verification)
+    link rel="shortcut icon" href=image_path("#{Setting.key}/favicon.png")
+    meta name="google-site-verification" content=(Setting.google_site_verification)
     = csrf_meta_tags
     = stylesheet_link_tag "web"
     = javascript_include_tag "web"
@@ -15,7 +15,7 @@ html lang=(locale) class=(browser.to_s)
   body
     nav.navbar.navbar-default
       a.navbar-brand href='#'
-        = image_tag "#{Configuration.key}/logo-large.png", alt: "Logo", title: Configuration.site_name, style: 'height: 35px'
+        = image_tag "#{Setting.key}/logo-large.png", alt: "Logo", title: Setting.site_name, style: 'height: 35px'
       = render_navigation :expand_all => true, :renderer => :bootstrap
 
     = yield :content_header if content_for?(:content_header)
@@ -33,7 +33,7 @@ html lang=(locale) class=(browser.to_s)
         ul.list-inline
           li
             | &copy; #{Date.today.year}
-          li= link_to Configuration.site_name, root_path
+          li= link_to Setting.site_name, root_path
           li= link_to "Suche/Feeds", search_path
           li= link_to "FAQ/Impressum", about_path
           li= link_to "Quellen", '/quellen'

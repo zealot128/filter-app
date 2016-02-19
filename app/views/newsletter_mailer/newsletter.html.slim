@@ -22,7 +22,7 @@ html xmlns="http://www.w3.org/1999/xhtml"
         table.row: tr
           td.wrapper: table.six.columns: tr: td
             table.button: tr: td
-              a href='https://www.#{Configuration.host}' #{Configuration.site_name} Tagesübersicht
+              a href='https://www.#{Setting.host}' #{Setting.site_name} Tagesübersicht
           td.wrapper.last: table.six.columns: tr: td
             table.button: tr: td
               a href='#{profile_url}' Newsletter Einstellungen
@@ -36,6 +36,6 @@ html xmlns="http://www.w3.org/1999/xhtml"
                     |#{raw section.toc_title}
 
 
-
-        = render @mailing.sections
+        - @mailing.sections.each_with_index do |s,i|
+          = render s, index: i
 

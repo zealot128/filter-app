@@ -7,8 +7,8 @@ class SubmitSource < MailForm::Base
   # in ActionMailer accepts.
   def headers
     {
-      subject: "[#{Configuration.site_name}] Neue Quelle eingesendet",
-      to: ::Configuration.email,
+      subject: "[#{Setting.site_name}] Neue Quelle eingesendet",
+      to: Setting.email,
       from: email
     }
   end
