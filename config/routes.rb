@@ -19,7 +19,9 @@ Baseapp::Application.routes.draw do
   post '/quelle_einreichen' => 'submit_source#create'
 
   resources :mail_subscriptions, path: 'newsletter' do
-    get :confirm, on: :member
+    member do
+      get :confirm
+    end
   end
 
   get 'ni/:id' => 'news_items#show', as: :click_proxy
@@ -31,5 +33,4 @@ Baseapp::Application.routes.draw do
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
   get 'categories' => 'static_pages#categories'
   root to: "days#index"
-  # root to: "static_pages#welcome"
 end

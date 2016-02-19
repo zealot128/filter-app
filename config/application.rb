@@ -12,6 +12,7 @@ end
 module Baseapp
   class Application < Rails::Application
     config.i18n.default_locale = :de
+    config.i18n.locale = :de
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
 

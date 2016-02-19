@@ -12,8 +12,8 @@ Baseapp::Application.configure do
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
-  config.action_mailer.default_url_options = { host: Setting.host }
-  config.action_mailer.asset_host = "http://#{config.action_mailer.default_url_options[:host]}"
+  config.action_mailer.default_url_options = { host: h=Rails.application.secrets.domain_name }
+  config.action_mailer.asset_host = "http://#{h}"
   # config.assets.js_compressor = :uglifier
   config.lograge.enabled = true
 end

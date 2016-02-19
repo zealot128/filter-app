@@ -6,16 +6,14 @@ html xmlns="http://www.w3.org/1999/xhtml"
     meta name="viewport" content="width=device-width"
     = stylesheet_link_tag 'mailer'
 
-  - profile_url = edit_mail_subscription_url(@mailing.subscription)
+  - profile_url = @mailing.subscription.persisted? && edit_mail_subscription_url(@mailing.subscription)
   body
     table.body: tr: td.center align="center" valign="top": center
       table.container: tr: td
         table.row: tr: td.wrapper.last
           table.twelve.columns: tr: td
-            p Hallo,
-            p
-              |hier die Top #{@mailing.count} von insgesamt #{@mailing.total_count} der relevantesten News aus letzter Woche aus den abonnierten Themenbereichen <strong>#{@mailing.categories.map(&:name).to_sentence}</strong>.
-            p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
+            p = @mailing.salutation + ','
+            p = raw @mailing.intro
         - if @mailing.new_categories.any?
           = render 'new_categories', categories: @mailing.new_categories
 
@@ -24,8 +22,9 @@ html xmlns="http://www.w3.org/1999/xhtml"
             table.button: tr: td
               a href='https://www.#{Setting.host}' #{Setting.site_name} Tagesübersicht
           td.wrapper.last: table.six.columns: tr: td
-            table.button: tr: td
-              a href='#{profile_url}' Newsletter Einstellungen
+            - if profile_url
+              table.button: tr: td
+                a href='#{profile_url}' Newsletter-Einstellungen
         table.row: tr
           td.wrapper: table.six.columns: tr: td
             strong Inhalt
@@ -39,3 +38,9 @@ html xmlns="http://www.w3.org/1999/xhtml"
         - @mailing.sections.each_with_index do |s,i|
           = render s, index: i
 
+        br
+        hr
+        br
+        - if profile_url
+          table.row: tr: td.wrapper.last
+            p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.

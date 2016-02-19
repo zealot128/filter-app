@@ -1,0 +1,23 @@
+h4 Persönliche Angaben
+p Diese optionalen Angaben werden verwendet, um Sie im Newsletter persönlich anzusprechen. Bei generischen Ansprachen kann es sonst passieren, dass die E-Mail als Spam gesehen wird.
+.row
+  .col-sm-6
+    = f.input :gender, as: :radio_buttons, collection: [:female, :male]
+  .col-sm-6
+    = f.input :academic_title, as: :select, collection: %w[Dr. Prof.Dr.]
+.row
+  .col-sm-6
+    = f.input :first_name
+  .col-sm-6
+    = f.input :last_name
+= f.input :company
+= f.input :position
+h4 Angaben zum Inhalt
+.row
+  .col-sm-6
+    = f.input :categories, collection: Category.select_collection, as: :check_boxes
+    - if AdLogic.extended_member?
+      = f.input :extended_member, as: :boolean
+  .col-sm-6
+    = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
+    = f.input :limit, as: :radio_buttons, collection: %w[10 25 50 100]

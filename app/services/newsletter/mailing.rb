@@ -2,6 +2,7 @@ module Newsletter
   class Mailing
 
     attr_reader :subscription, :new_categories
+    attr_accessor :from
 
     def self.cronjob
       MailSubscription.confirmed.each do |s|
@@ -12,12 +13,28 @@ module Newsletter
       end
     end
 
-    def initialize(subscription)
+    def initialize(subscription, from: subscription.interval_from.ago)
       @subscription = subscription
+      @from = from
     end
 
     def sendable?
       sections.any? && subscription.due?
+    end
+
+    def salutation
+      @subscription.salutation
+    end
+
+    def intro
+      Setting.mail_intro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
+        case $1.strip
+        when 'top' then count.to_s
+        when 'total_count' then total_count.to_s
+        when 'categories' then categories.map(&:name).to_sentence
+        else "missing_token #{pattern}"
+        end
+      end
     end
 
     def send!
@@ -89,7 +106,6 @@ module Newsletter
     end
 
     def interval
-      from = subscription.interval_from.ago
       to = from + subscription.interval_from
       [ from, to ]
     end

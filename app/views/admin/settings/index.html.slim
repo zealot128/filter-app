@@ -1,0 +1,10 @@
+h2 Einstellungen
+
+table.table
+  - @settings.each do |setting|
+    tr
+      td = setting.key
+      td = truncate(setting.value.to_s)
+      td
+        = link_to [:edit, :admin, setting], class: 'btn btn-default btn-xs' do
+          |bearbeiten

@@ -3,7 +3,6 @@ default: &default
   short_name: 'Fahrrad-filter'
   from: 'noreply@fahrrad-filter.de'
   key: 'fahrrad-filter'
-  database: fahrrad_<%= Rails.env.sub('elopment','') %>
   email: 'info@example.com'
   host: 'localhost:3000'
   max_age: 14
@@ -14,6 +13,8 @@ default: &default
     Fahrrad-Filter ist ein Aggregator für Nachrichten rund ums Fahrrad. Zusammengefasst werden News aus <a href='/quellen'>bekannten deutschsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
   explanation: |
     Ein Aggregator für News rund um das Thema Fahrrad. Dabei werden die News nach Aktualität und Viralität bewertet und sortiert. Außerdem wird eine Klassifizierung vorgenommen.
+  mail_intro: |
+    hier die Top {{top}} von insgesamt {{total_count}} der relevantesten News aus letzter Woche aus den abonnierten Themenbereichen <strong>{{categories}}</strong>.
   credits: |
     Dies ist ein privates Projekt von <a href='http://www.stefanwienert.de'>mir</a>. Ich habe das Projekt ins Leben gerufen, um mich effektiv und schnell über alle News auf dem Laufenden zu halten.
 

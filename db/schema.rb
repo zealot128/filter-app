@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219094825) do
+ActiveRecord::Schema.define(version: 20160219132824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,9 +74,16 @@ ActiveRecord::Schema.define(version: 20160219094825) do
     t.string   "token"
     t.boolean  "confirmed"
     t.datetime "last_send_date"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "limit"
+    t.integer  "gender"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "academic_title"
+    t.string   "company"
+    t.string   "position"
+    t.boolean  "extended_member", default: false
   end
 
   add_index "mail_subscriptions", ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree

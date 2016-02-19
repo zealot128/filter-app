@@ -1,6 +1,7 @@
 class MailSubscription < ActiveRecord::Base
   store_accessor :preferences, :categories
   store_accessor :preferences, :interval
+  enum gender: [:female, :male]
 
   validates :interval, presence: true, inclusion: { in: %w(weekly monthly biweekly) }
   validates :categories, presence: true
@@ -27,6 +28,14 @@ class MailSubscription < ActiveRecord::Base
       'biweekly' => 2.weeks,
       'monthly' => 1.month
     }[interval]
+  end
+
+  def salutation
+    if gender? and last_name?
+      [ male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].reject(&:blank?).join(' ')
+    else
+      'Hallo'
+    end
   end
 
   def to_param

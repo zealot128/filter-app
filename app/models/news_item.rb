@@ -1,7 +1,10 @@
 require "fetcher"
 class NewsItem < ActiveRecord::Base
   is_impressionable counter_cache: true, column_name: :impression_count, unique: [:impressionable_type, :impressionable_id, :session_hash]
-  MAX_AGE ||= Setting.max_age.days
+
+  def self.max_age
+    Setting.max_age.to_i.days
+  end
 
   scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0').where(source_id: Source.visible.select('id')) }
   scope :show_page, -> { where('blacklisted != ?', true).
@@ -9,10 +12,10 @@ class NewsItem < ActiveRecord::Base
                          where('absolute_score is not null and absolute_score > 0') }
   scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
-  scope :old, -> { where("published_at < ?", (MAX_AGE + 1.day).ago) }
+  scope :old, -> { where("published_at < ?", (max_age + 1.day).ago) }
   scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
   scope :sorted, -> { visible.order("value desc") }
-  scope :recent, -> { where("published_at > ?", MAX_AGE.ago) }
+  scope :recent, -> { where("published_at > ?", max_age.ago) }
   scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
   scope :uncategorized, lambda {
@@ -78,7 +81,7 @@ class NewsItem < ActiveRecord::Base
       xing: xing,
       gplus: gplus,
       reddit: reddit || 0,
-      freshness:  (published_at.to_i - MAX_AGE.ago.to_i) / 10_000,
+      freshness:  (published_at.to_i - self.class.max_age.ago.to_i) / 10_000,
       bias: source.value,
       impression_count: impression_count,
       multiplicator: source.multiplicator,
@@ -118,7 +121,7 @@ class NewsItem < ActiveRecord::Base
   end
 
   def rescore!
-    result = NewsItem::ScoringAlgorithm.new(to_data, max_age: MAX_AGE.ago).run
+    result = NewsItem::ScoringAlgorithm.new(to_data, max_age: self.class.max_age.ago).run
     self.absolute_score = result[:absolute_score]
     self.value = result[:relative_score]
     save

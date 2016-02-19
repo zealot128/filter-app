@@ -1,0 +1,4 @@
+= simple_form_for [:admin, @setting] do |f|
+  |Setting: #{@setting.key}
+  = f.input :value
+  = f.submit class: "btn btn-primary"
