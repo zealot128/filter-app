@@ -1,0 +1,11 @@
+- if events = AdLogic.events and events.any?
+  td.panel
+    |Partner-Veranstaltungen
+    br
+    - events.each do |event|
+      p
+        = link_to event.url
+          = event.title
+        = " "
+        small = l event.from.to_date
+  td.expander

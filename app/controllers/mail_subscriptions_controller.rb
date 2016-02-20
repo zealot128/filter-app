@@ -61,6 +61,7 @@ class MailSubscriptionsController < ApplicationController
                                               :academic_title,
                                               :position,
                                               :company,
+                                              :extended_member,
                                               :limit,
                                               categories: [])
   end

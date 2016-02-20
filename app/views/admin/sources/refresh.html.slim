@@ -1,0 +1,7 @@
+- if @error
+  .alert.alert-danger
+    = @error
+
+- else
+  .alert.alert-success
+    | Refresh erfolgreich. #{@count} aktuelle News-Items aktualisiert. #{@stale_count} Alte Beiträge aktualisiert.

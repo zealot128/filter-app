@@ -51,5 +51,8 @@ table.table.table-striped.table-bordered.js-tablesorter
           |löschen
         = ' '
         = link_to source.url, class: 'btn btn-xs' do
-          |url
+          |feed-url
+        = ' '
+        = link_to [:refresh, :admin, source.becomes(Source)], data: { method: :post}, class: 'btn btn-xs btn-primary' do
+          |refresh
 

@@ -13,30 +13,32 @@ describe 'NewsletterMailing' do
     Category.create!(name: 'Gehalt', keywords: '')
   }
   specify 'tracks send status so no duplicate send' do
-    subscription.confirm!
+    VCR.use_cassette 'events' do
+      subscription.confirm!
 
-    # Keine Mail, wenn nichts neues
-    Newsletter::Mailing.cronjob
-    ActionMailer::Base.deliveries.count.should be == 0
+      # Keine Mail, wenn nichts neues
+      Newsletter::Mailing.cronjob
+      ActionMailer::Base.deliveries.count.should be == 0
 
-    import_stuff!
-    # 1 news da, mail geht raus
-    Newsletter::Mailing.cronjob
-    ActionMailer::Base.deliveries.count.should be == 1
+      import_stuff!
+      # 1 news da, mail geht raus
+      Newsletter::Mailing.cronjob
+      ActionMailer::Base.deliveries.count.should be == 1
 
-    # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
-    Newsletter::Mailing.cronjob
-    ActionMailer::Base.deliveries.count.should be == 1
+      # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
+      Newsletter::Mailing.cronjob
+      ActionMailer::Base.deliveries.count.should be == 1
 
-    Timecop.travel 7.days.from_now
-    Newsletter::Mailing.cronjob
-    # Keine neuen News
-    ActionMailer::Base.deliveries.count.should be == 1
+      Timecop.travel 7.days.from_now
+      Newsletter::Mailing.cronjob
+      # Keine neuen News
+      ActionMailer::Base.deliveries.count.should be == 1
 
-    @ni.update_columns published_at: 2.days.ago
-    Newsletter::Mailing.cronjob
-    ActionMailer::Base.deliveries.count.should be == 2
-    Timecop.return
+      @ni.update_columns published_at: 2.days.ago
+      Newsletter::Mailing.cronjob
+      ActionMailer::Base.deliveries.count.should be == 2
+      Timecop.return
+    end
   end
 
   specify 'adds newly added categories, even if not subscribed' do

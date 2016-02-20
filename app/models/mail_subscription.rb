@@ -13,6 +13,8 @@ class MailSubscription < ActiveRecord::Base
   end
   scope :confirmed, -> { where confirmed: true }
 
+  has_many :impressions, foreign_key: 'user_id'
+
   def confirm!
     update_column :confirmed, true
   end

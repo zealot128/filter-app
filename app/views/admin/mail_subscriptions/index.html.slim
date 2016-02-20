@@ -8,15 +8,22 @@ table.table.table-bordered
       th Themen
       th Bestätigt?
       th Letzte empfangene Mail
+      th Klicks
   tbody
     - @subscriptions.each do |s|
       tr
         td = s.email
         td
-          - mailing = NewsletterMailing.new(s)
+          - mailing = Newsletter::Mailing.new(s)
           = mailing.categories.map{|i| i.name}.join(', ')
-        td = s.confirmed
-        td = s.last_send_date.try(:to_s)
+        td
+          = s.confirmed
+          - if !s.confirmed?
+            = link_to [:confirm, :admin, s], data: {method: :post} do
+              | Confirm Mail erneut senden
+        td = (d=s.last_send_date) && d.to_date
+        td = s.impressions.count
         td
           = link_to edit_mail_subscription_path(s) do
             | bearbeiten/löschen
+          = ' '

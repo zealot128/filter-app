@@ -33,14 +33,18 @@ html xmlns="http://www.w3.org/1999/xhtml"
                 li
                   a href="##{section.anchor}"
                     |#{raw section.toc_title}
+          td.wrapper.last: table.six.columns: tr
+            - if AdLogic.enabled?
+              = render "ad_section_right", mailing: @mailing
+
 
 
         - @mailing.sections.each_with_index do |s,i|
           = render s, index: i
 
         br
-        hr
         br
         - if profile_url
           table.row: tr: td.wrapper.last
             p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
+        = render 'newsletter_mailer/impressum'

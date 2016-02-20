@@ -1,0 +1,33 @@
+- section = extended_member_section
+br
+br
+table.row.blue: tr: td.wrapper.last.left-text-pad
+  h5 id="#{section.anchor}" style='font-weight: normal'
+    center style='text-align: center'
+      a name=section.anchor
+        = section.toc_title
+
+br
+- section.news_items.each_with_index do |story,i|
+  table.row: tr
+    td.wrapper
+      table.three.columns: tr
+        td
+          - if story.image.present?
+            - w, h = NewsItem::NEWSLETTER_SIZE.map{|i| (i * 0.9).round }
+            center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
+        td.expander
+    td.wrapper.last
+      table.nine.columns: tr
+        td
+          = link_to click_proxy_url(story.id, sid: @mailing.subscription.id) do
+            = story.title
+          br
+          small
+            = story.source.name
+            - if story.categories.any?
+              span<> &ndash;
+              = story.categories.pluck(:name).join(', ')
+            span<> &ndash;
+            i = l story.published_at.to_date
+        td.expander

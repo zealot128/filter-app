@@ -2,9 +2,15 @@ Baseapp::Application.routes.draw do
   get "about", to: "static_pages#about"
 
   namespace :admin do
-    resources :sources
+    resources :sources do
+      member do
+        post :refresh
+      end
+    end
     resources :categories
-    resources :mail_subscriptions, only: [:index, :show]
+    resources :mail_subscriptions, only: [:index, :show] do
+      post :confirm, on: :member
+    end
     resources :settings
   end
 

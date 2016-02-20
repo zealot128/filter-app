@@ -35,6 +35,19 @@ class Admin::SourcesController < AdminController
     end
   end
 
+  def refresh
+    @source = Source.find(params[:id])
+    begin
+      @source.refresh
+      @count = @source.news_items.current.map(&:refresh!).count
+      @stale_count = @source.news_items.where(absolute_score: nil).each(&:refresh)
+      @source.update_column :error, false
+    rescue Exception => e
+      @source.update_column :error, true
+      @error = e.inspect
+    end
+  end
+
   def destroy
     @source = Source.find(params[:id])
     @source.destroy
