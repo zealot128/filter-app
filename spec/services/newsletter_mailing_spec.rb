@@ -13,7 +13,7 @@ describe 'NewsletterMailing' do
     Category.create!(name: 'Gehalt', keywords: '')
   }
   specify 'tracks send status so no duplicate send' do
-    VCR.use_cassette 'events' do
+    VCR.use_cassette 'events', record: :new_episodes do
       subscription.confirm!
 
       # Keine Mail, wenn nichts neues
