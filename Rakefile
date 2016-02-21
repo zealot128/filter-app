@@ -4,9 +4,9 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-namespace :db do
-  task :migrate => :environment
-  task :create => :environment
-end
+# namespace :db do
+#   task :migrate => :environment
+#   task :create => :environment
+# end
 
 Baseapp::Application.load_tasks
