@@ -65,7 +65,7 @@ class Setting < ActiveRecord::Base
       configuration.each do |k,v|
         set k,v
       end
-    rescue ActiveRecord::NoDatabaseError
+    rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
     end
   end
 end
