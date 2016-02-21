@@ -15,6 +15,8 @@ class Setting < ActiveRecord::Base
         return value if !value.nil?
       end
       nil
+    rescue ActiveRecord::StatementInvalid
+      nil
     end
 
     def set(name, value)
@@ -63,6 +65,7 @@ class Setting < ActiveRecord::Base
       configuration.each do |k,v|
         set k,v
       end
+    rescue ActiveRecord::NoDatabaseError
     end
   end
 end
