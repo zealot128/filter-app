@@ -1,50 +1,38 @@
-doctype 1.1
-html xmlns="http://www.w3.org/1999/xhtml"
-  /* !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> */
-  head
-    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
-    meta name="viewport" content="width=device-width"
-    = stylesheet_link_tag 'mailer'
+- profile_url = @mailing.subscription.persisted? && edit_mail_subscription_url(@mailing.subscription)
+table.row: tr: td.wrapper.last
+  table.twelve.columns: tr: td
+    p = @mailing.salutation + ','
+    p = raw @mailing.intro
+- if @mailing.new_categories.any?
+  = render 'new_categories', categories: @mailing.new_categories
 
-  - profile_url = @mailing.subscription.persisted? && edit_mail_subscription_url(@mailing.subscription)
-  body
-    table.body: tr: td.center align="center" valign="top": center
-      table.container: tr: td
-        table.row: tr: td.wrapper.last
-          table.twelve.columns: tr: td
-            p = @mailing.salutation + ','
-            p = raw @mailing.intro
-        - if @mailing.new_categories.any?
-          = render 'new_categories', categories: @mailing.new_categories
-
-        table.row: tr
-          td.wrapper: table.six.columns: tr: td
-            table.button: tr: td
-              a href='https://www.#{Setting.host}' #{Setting.site_name} Tagesübersicht
-          td.wrapper.last: table.six.columns: tr: td
-            - if profile_url
-              table.button: tr: td
-                a href='#{profile_url}' Newsletter-Einstellungen
-        table.row: tr
-          td.wrapper: table.six.columns: tr: td
-            strong Inhalt
-            ul
-              - @mailing.sections.each do |section|
-                li
-                  a href="##{section.anchor}"
-                    |#{raw section.toc_title}
-          td.wrapper.last: table.six.columns: tr
-            - if AdLogic.enabled?
-              = render "ad_section_right", mailing: @mailing
+table.row: tr
+  td.wrapper: table.six.columns: tr: td
+    table.button: tr: td
+      a href='https://www.#{Setting.host}' #{Setting.site_name} Tagesübersicht
+  td.wrapper.last: table.six.columns: tr: td
+    - if profile_url
+      table.button: tr: td
+        a href='#{profile_url}' Newsletter-Einstellungen
+table.row: tr
+  td.wrapper: table.six.columns: tr: td
+    strong Inhalt
+    ul
+      - @mailing.sections.each do |section|
+        li
+          a href="##{section.anchor}"
+            |#{raw section.toc_title}
+  td.wrapper.last: table.six.columns: tr
+    - if AdLogic.enabled?
+      = render "ad_section_right", mailing: @mailing
 
 
 
-        - @mailing.sections.each_with_index do |s,i|
-          = render s, index: i
+- @mailing.sections.each_with_index do |s,i|
+  = render s, index: i
 
-        br
-        br
-        - if profile_url
-          table.row: tr: td.wrapper.last
-            p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
-        = render 'newsletter_mailer/impressum'
+br
+br
+- if profile_url
+  table.row: tr: td.wrapper.last
+    p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.

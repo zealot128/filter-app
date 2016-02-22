@@ -1,26 +1,15 @@
-doctype 1.1
-html xmlns="http://www.w3.org/1999/xhtml"
-  /* !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> */
-  head
-    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
-    meta name="viewport" content="width=device-width"
-    = stylesheet_link_tag 'mailer'
-  body
-    table.body: tr: td.center align="center" valign="top": center
-      table.container: tr: td
-        table.row: tr: td.wrapper.last
-          table.twelve.columns: tr: td
-            p = @subscription.salutation + ','
-            p bitte bestätigen Sie Ihre Anmeldung für den <%= Setting.site_name %> Newsletter. Sollten Sie dieses Abo nicht ausgelöst haben, so brauchen Sie nichts weiter zu tun, Ihre E-Mail wird automatisch gelöscht.
-            p: strong Bitte klicken Sie auf diesen Link, um Ihr Abo zu aktivieren:
+table.row: tr: td.wrapper.last
+  table.twelve.columns: tr: td
+    p = @subscription.salutation + ','
+    p bitte bestätigen Sie Ihre Anmeldung für den <%= Setting.site_name %> Newsletter. Sollten Sie dieses Abo nicht ausgelöst haben, so brauchen Sie nichts weiter zu tun, Ihre E-Mail wird automatisch gelöscht.
+    p: strong Bitte klicken Sie auf diesen Link, um Ihr Abo zu aktivieren:
 
-            table.button: tr: td
-              = link_to (a=confirm_mail_subscription_url(@subscription)) do
-                |Abo bestätigen
-            br
-            p Bitte klicken Sie auf den oben stehenden Link oder kopieren Sie diesen Link in einen Webbrowser:
-            br
-            =a
+    table.button: tr: td
+      = link_to (a=confirm_mail_subscription_url(@subscription)) do
+        |Abo bestätigen
+    br
+    p Bitte klicken Sie auf den oben stehenden Link oder kopieren Sie diesen Link in einen Webbrowser:
+    br
+    =a
 
-        = render 'newsletter_mailer/impressum'
 

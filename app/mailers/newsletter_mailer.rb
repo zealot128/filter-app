@@ -1,4 +1,5 @@
 class NewsletterMailer < ActionMailer::Base
+  layout 'newsletter'
   default from: Setting.get('from')
   def newsletter(mailing)
     @mailing = mailing
@@ -12,5 +13,10 @@ class NewsletterMailer < ActionMailer::Base
       names = "zum Thema " + names.to_sentence
     end
     mail to: mailing.email, subject: "[#{Setting.site_name}] #{@mailing.count} Beiträge #{names}"
+  end
+
+  def initial_mail(subscription)
+    @subscription = subscription
+    mail to: subscription.email, subject: "[#{Setting.site_name}] Empfehlungsbund-Newsletter jetzt HRfilter.de"
   end
 end

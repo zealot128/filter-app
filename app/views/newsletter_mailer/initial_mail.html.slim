@@ -1,0 +1,10 @@
+p = @subscription.salutation + ","
+
+- profile_url = edit_mail_subscription_url(@subscription)
+
+p WILLKOMMEN BEI HRfilter
+
+table.button: tr: td
+  = link_to profile_url do
+    | Einstellungen bearbeiten
+

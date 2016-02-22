@@ -1,5 +1,6 @@
 class SubscriptionMailer < ActionMailer::Base
   default from: Setting.get('from')
+  layout 'newsletter'
 
   def confirmation_mail(subscription)
     @subscription = subscription
