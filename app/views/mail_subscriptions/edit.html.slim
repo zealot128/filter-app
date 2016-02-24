@@ -11,12 +11,17 @@
       .panel-heading: h4.panel-title Abbestellen
       .panel-body
         p Der Newsletter für <strong>#{subscription.email}</strong> kann hier entgültig abbestellt werden.
-        = link_to subscription, method: :delete, class: 'btn btn-default' do
+        = link_to subscription, method: :delete, class: 'btn btn-default btn-xs' do
           |Newsletter abbestellen
 
     - if subscription.last_send_date?
       h4 Sie haben hier Zugriff auf den letzen Newsletter, den wir an Sie versandt haben:
       = link_to subscription do
         | Letzter Newsletter vom #{l subscription.last_send_date.to_date}
+    - else
+      h4 Vorschau des nächsten Newsletters
+      p Hier können Sie die Abonnement-Einstellungen testen
+      = link_to subscription, target: '_blank', class: 'btn btn-default' do
+        | Vorschau
 
 

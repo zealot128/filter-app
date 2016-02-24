@@ -44,7 +44,11 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def show
-    from = subscription.last_send_date - subscription.interval_from
+    if subscription.last_send_date
+      from = subscription.last_send_date - subscription.interval_from
+    else
+      from = Time.now - subscription.interval_from
+    end
     preview(subscription, from: from)
   end
 

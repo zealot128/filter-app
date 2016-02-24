@@ -17,6 +17,6 @@ class NewsletterMailer < ActionMailer::Base
 
   def initial_mail(subscription)
     @subscription = subscription
-    mail to: subscription.email, subject: "[#{Setting.site_name}] Empfehlungsbund-Newsletter jetzt HRfilter.de"
+    mail to: subscription.email, subject: "Empfehlungsbund-Newsletter jetzt HRfilter.de"
   end
 end
