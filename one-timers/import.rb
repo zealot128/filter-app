@@ -36,6 +36,6 @@ import = File.read('one-timers/import.tsv')
 
 header = [:email,:anrede,:vorname,:nachname]
 people = import.split("\n").map{|i| header.zip(i.split("\t")).to_h }
-people.take(2).each do |person|
+people.each do |person|
   InitialImport.new(person).run
 end
