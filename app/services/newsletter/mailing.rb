@@ -31,6 +31,12 @@ module Newsletter
         case $1.strip
         when 'top' then count.to_s
         when 'total_count' then total_count.to_s
+        when 'from_interval', 'interval_from'
+          case subscription.interval
+          when 'weekly' then 'aus letzter Woche'
+          when 'monthly' then 'des letzten Monats'
+          when 'biweekly' then 'der letzten zwei Wochen'
+          end
         when 'categories' then categories.map(&:name).to_sentence
         else "missing_token #{pattern}"
         end
@@ -61,7 +67,7 @@ module Newsletter
             s << CategorySection.new(cat, self)
           end
 
-          all_news_items = s.flat_map(&:news_items).sort_by{|i| -(i.absolute_score || 0)}
+          all_news_items = s.flat_map(&:news_items).sort_by{|i| -(i.absolute_score || 0)}.uniq(&:id)
           @total_count = all_news_items.count
           filtered_news_items = all_news_items.take(@subscription.limit || 100)
           s.each do |section|

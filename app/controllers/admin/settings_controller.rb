@@ -10,6 +10,7 @@ class Admin::SettingsController < AdminController
   def update
     @setting = Setting.find(params[:id])
     if @setting.update(params[:setting].permit!)
+      Setting.clear
       redirect_to [:admin, :settings], notice: 'Done!'
     else
       render :edit

@@ -8,7 +8,8 @@ class MailSubscriptionsController < ApplicationController
     @subscription = MailSubscription.new(permitted_params)
     if @subscription.valid?
       if params[:commit] == 'Vorschau'
-        preview(@subscription)
+        from = Time.now - subscription.interval_from
+        preview(@subscription, from: from)
         return
       else
         @subscription.save
@@ -49,7 +50,7 @@ class MailSubscriptionsController < ApplicationController
 
   private
 
-  def preview(subscription,from: 1.week.ago.at_end_of_week)
+  def preview(subscription, from: 1.week.ago.at_beginning_of_week)
     @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from))
     ActionMailer::Base.preview_interceptors.each {|i| i.previewing_email(@mail) }
     @body = @mail.html_part.body.to_s
