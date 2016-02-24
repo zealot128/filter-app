@@ -4,6 +4,7 @@ default: &default
   from: 'noreply@hrfilter.de'
   key: 'hrfilter'
   email: 'info@example.com'
+  person_email: "andreas.manietta@pludoni.de"
   google_site_verification: ""
   host: 'localhost:3000'
   max_age: 14
