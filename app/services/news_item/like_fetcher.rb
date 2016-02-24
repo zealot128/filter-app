@@ -38,6 +38,12 @@ class NewsItem::LikeFetcher
     end
   rescue Twitter::Error::TooManyRequests
     nil
+  rescue Twitter::Error::BadRequest => e
+    if Rails.env.development?
+      nil
+    else
+      raise e
+    end
   end
 
   def facebook

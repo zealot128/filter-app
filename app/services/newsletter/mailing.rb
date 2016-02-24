@@ -85,7 +85,7 @@ module Newsletter
           if @subscription.extended_member?
             section = ExtendedMemberSection.new(self)
             if section.news_items.any?
-              s.prepend
+              s.prepend(section)
             end
           end
           s
