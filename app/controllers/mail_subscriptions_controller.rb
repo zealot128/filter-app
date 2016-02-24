@@ -6,13 +6,15 @@ class MailSubscriptionsController < ApplicationController
 
   def create
     @subscription = MailSubscription.new(permitted_params)
-    if params[:commit] == 'Vorschau'
-      preview(@subscription)
-      return
-    end
-    if @subscription.save
-      SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-      render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>', layout: true
+    if @subscription.valid?
+      if params[:commit] == 'Vorschau'
+        preview(@subscription)
+        return
+      else
+        @subscription.save
+        SubscriptionMailer.confirmation_mail(@subscription).deliver_now
+        render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>', layout: true
+      end
     else
       render :index
     end
@@ -48,7 +50,9 @@ class MailSubscriptionsController < ApplicationController
   private
 
   def preview(subscription,from: 1.week.ago.at_end_of_week)
-    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from)).body
+    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from))
+    ActionMailer::Base.preview_interceptors.each {|i| i.previewing_email(@mail) }
+    @body = @mail.html_part.body.to_s
     render 'preview', layout: false
   end
 

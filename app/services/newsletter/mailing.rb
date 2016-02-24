@@ -63,7 +63,7 @@ module Newsletter
 
           all_news_items = s.flat_map(&:news_items).sort_by{|i| -(i.absolute_score || 0)}
           @total_count = all_news_items.count
-          filtered_news_items = all_news_items.take(@subscription.limit)
+          filtered_news_items = all_news_items.take(@subscription.limit || 100)
           s.each do |section|
             section.news_items = section.news_items.select{|ni| filtered_news_items.include?(ni) }
           end
