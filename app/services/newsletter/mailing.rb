@@ -55,8 +55,8 @@ module Newsletter
       NewsletterMailer.newsletter(self)
     end
 
-    def email
-      @subscription.email
+    def full_email
+      @subscription.full_email
     end
 
     def sections

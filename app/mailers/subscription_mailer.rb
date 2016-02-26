@@ -4,6 +4,6 @@ class SubscriptionMailer < ActionMailer::Base
 
   def confirmation_mail(subscription)
     @subscription = subscription
-    mail to: subscription.email, subject: "[#{Setting.site_name}] Bestätigung des E-Mail-Abos"
+    mail to: subscription.full_email, subject: "[#{Setting.site_name}] Bestätigung des E-Mail-Abos"
   end
 end

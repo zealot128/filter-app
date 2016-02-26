@@ -43,6 +43,16 @@ class MailSubscription < ActiveRecord::Base
     end
   end
 
+  def full_email
+    if gender? and last_name?
+      address = Mail::Address.new email
+      address.display_name = [first_name, last_name].reject(&:blank?).join(' ')
+      address.format
+    else
+      email
+    end
+  end
+
   def to_param
     token
   end

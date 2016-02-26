@@ -12,11 +12,11 @@ class NewsletterMailer < ActionMailer::Base
     else
       names = "zum Thema " + names.to_sentence
     end
-    mail to: mailing.email, subject: "[#{Setting.site_name}] #{@mailing.count} Beiträge #{names}"
+    mail to: mailing.full_email, subject: "[#{Setting.site_name}] #{@mailing.count} Beiträge #{names}"
   end
 
   def initial_mail(subscription)
     @subscription = subscription
-    mail to: subscription.email, subject: "Mit dem neuen Empfehlungsbund-Newsletter alle HR-News auf einen Blick"
+    mail to: subscription.full_email, subject: "Mit dem neuen Empfehlungsbund-Newsletter alle HR-News auf einen Blick"
   end
 end
