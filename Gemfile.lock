@@ -8,11 +8,10 @@ GIT
 
 GIT
   remote: https://github.com/zealot128-os/email_verifier.git
-  revision: da10a7734f5444d175beaf74fd2ef09899e3826b
+  revision: 1f9d3a483f132ba4731147e25cf3a422709330dd
   specs:
-    email_verifier (0.0.7)
+    email_verifier (0.0.9)
       dnsruby (>= 1.5)
-      rails (>= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -100,7 +99,7 @@ GEM
       addressable
     daemons (1.2.3)
     diff-lcs (1.2.5)
-    dnsruby (1.58.0)
+    dnsruby (1.59.1)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
@@ -198,7 +197,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     migration_data (0.2.1)
-    mime-types (2.99)
+    mime-types (2.99.1)
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
@@ -334,7 +333,7 @@ GEM
     sprockets-es6 (0.6.2)
       babel-transpiler
       sprockets (>= 3.0.0)
-    sprockets-rails (3.0.1)
+    sprockets-rails (3.0.3)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)

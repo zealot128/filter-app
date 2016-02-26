@@ -1,14 +1,23 @@
 h1 Mail Abos
 
+dl
+  dt Abonnenten bestätigt / insgesamt
+  dd
+    | #{@subscriptions.confirmed.count} / #{@subscriptions.count}
+  dt Abonnenten aktiv (min. 1 Klick im letzten Monat):
+  dd
+    = MailSubscription.joins(:impressions).where('impressions.created_at > ?', 1.month.ago).count('distinct(mail_subscriptions.id)')
 
-table.table.table-bordered
+table.table.table-bordered.js-tablesorter
   thead
     tr
       th E-Mail
       th Themen
+      th Frequenz
       th Bestätigt?
       th Letzte empfangene Mail
-      th Klicks
+      th ∑ Klicks
+      th ∑ Klicks aktuell<abbr title='letzter Monat'>*</abbr>
   tbody
     - @subscriptions.each do |s|
       tr
@@ -16,6 +25,7 @@ table.table.table-bordered
         td
           - mailing = Newsletter::Mailing.new(s)
           = mailing.categories.map{|i| i.name}.join(', ')
+        td = s.interval
         td
           = s.confirmed
           - if !s.confirmed?
@@ -23,6 +33,7 @@ table.table.table-bordered
               | Confirm Mail erneut senden
         td = (d=s.last_send_date) && d.to_date
         td = s.impressions.count
+        td = s.impressions.where('created_at > ?', 1.month.ago).count
         td
           = link_to edit_mail_subscription_path(s) do
             | bearbeiten/löschen

@@ -44,6 +44,22 @@ class MailSubscription < ActiveRecord::Base
     token
   end
 
+  def destroy
+    self.email = "deleted_#{id}_#{email}"
+    self.gender = nil
+    self.extended_member = false
+    self.confirmed = false
+    self.first_name = nil
+    self.last_name = nil
+    self.company = nil
+    self.academic_title = nil
+    self.position = nil
+    self.deleted_at = Time.now
+    self.categories = []
+    self.token = nil
+    self.save validate: false
+  end
+
   def categories=(vals)
     super(vals.reject(&:blank?).map(&:to_i))
   end
