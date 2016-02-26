@@ -11,12 +11,15 @@ class MailSubscription < ActiveRecord::Base
   before_create do
     self.token = SecureRandom.hex(32)
   end
-  scope :confirmed, -> { where confirmed: true }
+  scope :confirmed, -> { where status: 1 }
+  scope :deleted, -> { where 'deleted_at is not null' }
 
   has_many :impressions, foreign_key: 'user_id'
 
+  enum status: [:unconfirmed, :confirmed, :unsubscribed ]
+
   def confirm!
-    update_column :confirmed, true
+    update_column :status, MailSubscription.statuses[:confirmed]
   end
 
   def due?
@@ -48,7 +51,7 @@ class MailSubscription < ActiveRecord::Base
     self.email = "deleted_#{id}_#{email}"
     self.gender = nil
     self.extended_member = false
-    self.confirmed = false
+    self.status = 'unsubscribed'
     self.first_name = nil
     self.last_name = nil
     self.company = nil
@@ -64,7 +67,7 @@ class MailSubscription < ActiveRecord::Base
     super(vals.reject(&:blank?).map(&:to_i))
   end
 
-  def self.cleanup
-    where('confirmed = ?', false).where('created_at < ?', 1.day.ago).delete_all
-  end
+  # def self.cleanup
+  #   where('confirmed = ? and deleted_at is null', false).where('created_at < ?', 14.day.ago).delete_all
+  # end
 end

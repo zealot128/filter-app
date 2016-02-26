@@ -14,7 +14,7 @@ table.table.table-bordered.js-tablesorter
       th E-Mail
       th Themen
       th Frequenz
-      th Bestätigt?
+      th Status
       th Letzte empfangene Mail
       th ∑ Klicks
       th ∑ Klicks aktuell<abbr title='letzter Monat'>*</abbr>
@@ -26,15 +26,15 @@ table.table.table-bordered.js-tablesorter
           - mailing = Newsletter::Mailing.new(s)
           = mailing.categories.map{|i| i.name}.join(', ')
         td = s.interval
-        td
-          = s.confirmed
-          - if !s.confirmed?
-            = link_to [:confirm, :admin, s], data: {method: :post} do
-              | Confirm Mail erneut senden
+        td = s.status
         td = (d=s.last_send_date) && d.to_date
         td = s.impressions.count
         td = s.impressions.where('created_at > ?', 1.month.ago).count
         td
-          = link_to edit_mail_subscription_path(s) do
-            | bearbeiten/löschen
-          = ' '
+          - if s.unconfirmed?
+            = link_to [:confirm, :admin, s], data: {method: :post} do
+              | Confirm-Mail erneut senden
+          - if s.confirmed?
+            = link_to edit_mail_subscription_path(s) do
+              | bearbeiten/löschen
+            = ' '

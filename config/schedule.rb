@@ -13,9 +13,9 @@ every 1.day, at: '03:15' do
   runner 'NewsItem::LinkageCalculator.run()'
 end
 
-every 1.day, at: '03:23' do
-  runner 'MailSubscription.cleanup'
-end
+# every 1.day, at: '03:23' do
+#   runner 'MailSubscription.cleanup'
+# end
 
 every 1.day, at: '03:25' do
   runner 'DuplicateFinder.run'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226110010) do
+ActiveRecord::Schema.define(version: 20160226111023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20160226110010) do
     t.text     "email"
     t.json     "preferences"
     t.string   "token"
-    t.boolean  "confirmed"
     t.datetime "last_send_date"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
@@ -85,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160226110010) do
     t.string   "position"
     t.boolean  "extended_member", default: false
     t.datetime "deleted_at"
+    t.integer  "status",          default: 0
   end
 
   add_index "mail_subscriptions", ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree

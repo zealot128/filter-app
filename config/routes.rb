@@ -8,7 +8,7 @@ Baseapp::Application.routes.draw do
       end
     end
     resources :categories
-    resources :mail_subscriptions, only: [:index, :show] do
+    resources :mail_subscriptions, only: [:index, :show, :destroy] do
       post :confirm, on: :member
     end
     resources :settings

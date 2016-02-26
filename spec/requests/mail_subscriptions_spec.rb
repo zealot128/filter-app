@@ -22,7 +22,7 @@ describe 'MailSubscriptionsController' do
 
     MailSubscription.first.tap do |s|
       expect(s.email).to be == 'stwienert@gmail.com'
-      expect(s.confirmed).to be == true
+      expect(s.status).to be == 'confirmed'
     end
   end
 end
