@@ -21,8 +21,8 @@ every 1.day, at: '03:25' do
   runner 'DuplicateFinder.run'
 end
 
-every :sunday, at: '6pm' do
-  runner 'NewsletterMailing.cronjob'
+every :monday, at: '9am' do
+  runner 'Newsletter::Mailing.cronjob'
 end
 
 every 1.day, at: '5:00 am' do
