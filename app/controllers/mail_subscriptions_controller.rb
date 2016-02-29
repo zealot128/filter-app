@@ -4,6 +4,13 @@ class MailSubscriptionsController < ApplicationController
     @subscription.interval = 'weekly'
   end
 
+  def embed
+    @subscription = MailSubscription.new
+    @subscription.interval = 'weekly'
+    response.headers.delete('X-Frame-Options')
+    render layout: 'embed'
+  end
+
   def create
     @subscription = MailSubscription.new(permitted_params)
     if @subscription.valid?

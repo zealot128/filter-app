@@ -1,0 +1,26 @@
+doctype html
+html lang=(locale) class=(browser.to_s)
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    title
+      = page_title
+    link rel="shortcut icon" href=image_path("#{Setting.key}/favicon.png")
+    meta name="google-site-verification" content=(Setting.google_site_verification)
+    = csrf_meta_tags
+    = stylesheet_link_tag "web"
+    = javascript_include_tag "web"
+
+    = yield :head
+    = yield :content_header if content_for?(:content_header)
+    - @container_class ||= 'container'
+    .page-container
+      div class='#{@container_class}'
+        section.content
+          = content_tag(:p, flash[:alert], :id => "alert", :class => "alert alert-danger fade in alert-auto-dismiss") if flash[:alert]
+          = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
+          = yield
+
+    = yield :content_footer if content_for?(:content_footer)
+    - if Rails.env.production?
+      = render "layouts/piwik"

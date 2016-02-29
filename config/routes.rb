@@ -28,6 +28,9 @@ Baseapp::Application.routes.draw do
     member do
       get :confirm
     end
+    collection do
+      get :embed
+    end
   end
 
   get 'ni/:id' => 'news_items#show', as: :click_proxy

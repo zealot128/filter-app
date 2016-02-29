@@ -1,0 +1,23 @@
+- content_for :content_header do
+  .content-header
+    .container
+      = image_tag "#{Setting.key}/logo-large.png", alt: "Logo", title: Setting.site_name, style: 'height: 35px'
+      p
+        = raw Setting.intro
+        - cache 'counts_newsletter', expires_in: 1.day do
+          p Aktuell sind #{Source.count} Quellen mit insgesamt #{NewsItem.count} Beiträgen indiziert.
+      p Verpassen Sie keine wichtigen News mehr. Im e-Mail Abo erhalten sie automatisch die wichtigsten und meistgeteilten Inhalten zu Ihren Lieblingsthemen. Das Abo können Sie jederzeit widerrufen und ist kostenfrei.
+      p Die besten Beiträge aus den Bereichen #{Category.pluck(:name).to_sentence} können Sie hier als E-Mail Newsletter abonnieren.
+      p Die Mail wird immer Montag vormittags verschickt.
+br
+br
+.row
+  .col-sm-8
+    = simple_form_for @subscription, target: '_top' do |f|
+      .panel.panel-primary
+        .panel-body
+          = f.input :email, as: :string
+          = render "form", f: f
+          = f.submit 'Vorschau', class: 'btn btn-default'
+          = ' '
+          = f.submit 'Abonnieren', class: 'btn btn-primary'

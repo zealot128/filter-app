@@ -2,7 +2,7 @@ de:
   simple_form:
     hints:
       mail_subscription:
-        extended_member: "Als Mitglied od. Interessent des <a href='https://www.empfehlungsbund.de'>Empfehlungsbund</a> erhalten Sie exklusive Informationen für Mitglieder."
+        extended_member: "Als Mitglied oder Interessent des <a href='https://www.empfehlungsbund.de'>Empfehlungsbunds</a> erhalten Sie exklusive Informationen für Mitglieder."
       submit_source:
         comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden?'
       source:
