@@ -10,6 +10,7 @@
   - if @source.logo.present?
     = image_tag @source.logo.url(:small)
   = f.input :lsr_active
+  = f.input :lsr_confirmation
   = f.input :deactivated
   = f.input :default_category_id, as: :select, collection: Category.all
 

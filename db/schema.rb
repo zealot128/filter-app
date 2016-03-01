@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226111023) do
+ActiveRecord::Schema.define(version: 20160301100118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,22 +135,26 @@ ActiveRecord::Schema.define(version: 20160226111023) do
   add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
   create_table "sources", force: :cascade do |t|
-    t.string   "type",                limit: 255
-    t.string   "url",                 limit: 255
-    t.string   "name",                limit: 255
+    t.string   "type",                          limit: 255
+    t.string   "url",                           limit: 255
+    t.string   "name",                          limit: 255
     t.integer  "value"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "logo_file_name",      limit: 255
-    t.string   "logo_content_type",   limit: 255
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "logo_file_name",                limit: 255
+    t.string   "logo_content_type",             limit: 255
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string   "full_text_selector",  limit: 255
+    t.string   "full_text_selector",            limit: 255
     t.boolean  "error"
-    t.float    "multiplicator",                   default: 1.0
-    t.boolean  "lsr_active",                      default: false
-    t.boolean  "deactivated",                     default: false
+    t.float    "multiplicator",                             default: 1.0
+    t.boolean  "lsr_active",                                default: false
+    t.boolean  "deactivated",                               default: false
     t.integer  "default_category_id"
+    t.string   "lsr_confirmation_file_name"
+    t.string   "lsr_confirmation_content_type"
+    t.integer  "lsr_confirmation_file_size"
+    t.datetime "lsr_confirmation_updated_at"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree

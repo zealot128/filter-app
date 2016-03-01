@@ -33,7 +33,13 @@ table.table.table-striped.table-bordered.js-tablesorter
         = source.news_items.count
       td = source.average_word_length
       td = bool_checkmark !!source.full_text_selector
-      td = bool_checkmark source.lsr_active?
+      td
+        = bool_checkmark source.lsr_active?
+        - if source.lsr_confirmation.present?
+          br
+          small
+            = link_to source.lsr_confirmation.url do
+              | pdf
       td = bool_checkmark source.deactivated?
       td = (s =source.news_items.recent.average(:absolute_score)) && s.round(1)
       td = source.value

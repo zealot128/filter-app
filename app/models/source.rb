@@ -12,6 +12,8 @@ class Source < ActiveRecord::Base
     small: ["50x50", :png]
   }, processors: [:thumbnail, :paperclip_optimizer]
 
+  has_attached_file :lsr_confirmation
+
   validates_attachment :logo,
     content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "image/x-icon", "image/vnd.microsoft.icon"] }
   # do_not_validate_attachment_file_type :logo
