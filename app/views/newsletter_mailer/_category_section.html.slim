@@ -13,9 +13,8 @@ br
       table.three.columns: tr
         - if i < 5
           td
-            - if story.image.present? and !story.source.lsr_active?
-              - w, h = NewsItem::NEWSLETTER_SIZE.map{|i| (i * 0.9).round }
-              center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
+            - w, h = NewsItem::NEWSLETTER_SIZE.map{|i| (i * 0.9).round }
+            center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
         td.expander
     td.wrapper.last
       table.nine.columns: tr
