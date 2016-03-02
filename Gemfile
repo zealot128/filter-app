@@ -52,7 +52,7 @@ gem "rinku", require: "rails_rinku"
 
 group :test do
   gem "timecop"
-  gem "rspec-rails", "~> 2.14"
+  gem "rspec-rails", "~> 3.1"
   gem "vcr"
   gem "webmock"
   gem "fabrication"
