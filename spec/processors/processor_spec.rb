@@ -9,16 +9,16 @@ describe Processor, type: :model do
       feed_source.save
       Processor.process(feed_source)
       NewsItem.first.tap do |i|
-        i.should be_present
-        i.url.should == "http://www.online-recruiting.net/hr-tech-startup-investments-im-mai/"
-        i.full_text.should be_present
+        expect(i).to be_present
+        expect(i.url).to eq("http://www.online-recruiting.net/hr-tech-startup-investments-im-mai/")
+        expect(i.full_text).to be_present
       end
     end
   end
 
   specify 'teaser respects html entities' do
     text = "I can't believe I missed this a few years ago."
-    Processor.new.teaser(text).should be == "I can't believe I missed this a few years ago."
+    expect(Processor.new.teaser(text)).to eq("I can't believe I missed this a few years ago.")
   end
 
   specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
@@ -27,7 +27,7 @@ describe Processor, type: :model do
       feed_source.full_text_selector = '.art-PostContent:nth-child(3)'
       feed_source.save
       Processor.process(feed_source)
-      NewsItem.first.full_text.length.should > 200
+      expect(NewsItem.first.full_text.length).to be > 200
     end
   end
 
@@ -35,7 +35,7 @@ describe Processor, type: :model do
     VCR.use_cassette 'reddit-1' do
       rs = RedditSource.create!(name: 'bicycling')
       rs.refresh
-      rs.news_items.count.should be > 10
+      expect(rs.news_items.count).to be > 10
     end
   end
 end

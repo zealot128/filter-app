@@ -5,7 +5,7 @@ describe SubmitSourceController do
 
   specify 'form works' do
     get :new
-    response.should be_success
+    expect(response).to be_success
   end
 
   specify 'successful form post delivers mail' do
@@ -15,8 +15,8 @@ describe SubmitSourceController do
       comment: 'bla'
     }
 
-    ActionMailer::Base.deliveries.count.should be == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
     mail = ActionMailer::Base.deliveries.first
-    mail.to.should be == [Setting.email]
+    expect(mail.to).to eq([Setting.email])
   end
 end

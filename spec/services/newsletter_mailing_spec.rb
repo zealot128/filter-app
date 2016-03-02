@@ -18,25 +18,25 @@ describe 'NewsletterMailing' do
 
       # Keine Mail, wenn nichts neues
       Newsletter::Mailing.cronjob
-      ActionMailer::Base.deliveries.count.should be == 0
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
 
       import_stuff!
       # 1 news da, mail geht raus
       Newsletter::Mailing.cronjob
-      ActionMailer::Base.deliveries.count.should be == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
 
       # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
       Newsletter::Mailing.cronjob
-      ActionMailer::Base.deliveries.count.should be == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
 
       Timecop.travel 7.days.from_now
       Newsletter::Mailing.cronjob
       # Keine neuen News
-      ActionMailer::Base.deliveries.count.should be == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
 
       @ni.update_columns published_at: 2.days.ago
       Newsletter::Mailing.cronjob
-      ActionMailer::Base.deliveries.count.should be == 2
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
       Timecop.return
     end
   end
@@ -49,7 +49,7 @@ describe 'NewsletterMailing' do
       Category.create!(name: 'NewCategoryOk', keywords:'')
       Category.create!(name: 'NewCategoryTooOld', keywords:'', created_at: 14.days.ago)
       Newsletter::Mailing.cronjob
-      ActionMailer::Base.deliveries.count.should be == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
 
       body = ActionMailer::Base.deliveries.first.html_part.body.to_s
       expect(body).to include "NewCategoryOk"
@@ -61,7 +61,7 @@ describe 'NewsletterMailing' do
     VCR.use_cassette 'feed-pludoni.xml' do
       source = FeedSource.create!(url: 'http://www.pludoni.de/posts/feed.rss', name: 'pludoni')
       source.refresh
-      source.news_items.count.should be > 0
+      expect(source.news_items.count).to be > 0
       @ni = source.news_items.first
       @ni.categories << category
       @ni.update_columns absolute_score: 100, published_at: 2.days.ago

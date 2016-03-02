@@ -6,8 +6,8 @@ describe Source do
       source = Source.new(url: 'https://persoblogger.wordpress.com/feed/', name: 'perso')
       source.save
       source.download_thumb
-      source.reload.logo.should be_present
-      File.exists?(source.reload.logo.path(:small)).should be == true
+      expect(source.reload.logo).to be_present
+      expect(File.exists?(source.reload.logo.path(:small))).to eq(true)
     end
   end
   specify 'shouldnt download anything if logo not available' do
@@ -15,7 +15,7 @@ describe Source do
       source= Source.new(url: 'http://www.arbeit-und-arbeitsrecht.de/aktuelle_meldungen', name: 'feed')
       source.save
       source.download_thumb
-      source.reload.logo.should_not be_present
+      expect(source.reload.logo).not_to be_present
     end
   end
 end

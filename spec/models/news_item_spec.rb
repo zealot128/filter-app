@@ -6,13 +6,13 @@ describe NewsItem do
 
     specify "Twitter" do
       ni = NewsItem.new(retweets: nil)
-      like_fetcher.stub twitter_search: OpenStruct.new(count: 1)
+      allow(like_fetcher).to receive_messages twitter_search: OpenStruct.new(count: 1)
       like_fetcher.maybe_update_tweets(ni)
-      ni.retweets.should == 1
+      expect(ni.retweets).to eq(1)
     end
     specify "Linkedin" do
-      Fetcher.stub fetch_url: OpenStruct.new(code: 200, body: 'IN.Tags.Share.handleCount({"count":174,"fCnt":"174","fCntPlusOne":"175","url":"http:\/\/developer.linkedin.com\/share-plugin"});')
-      like_fetcher.linkedin.should == 174
+      allow(Fetcher).to receive_messages fetch_url: OpenStruct.new(code: 200, body: 'IN.Tags.Share.handleCount({"count":174,"fCnt":"174","fCntPlusOne":"175","url":"http:\/\/developer.linkedin.com\/share-plugin"});')
+      expect(like_fetcher.linkedin).to eq(174)
     end
   end
 
@@ -24,11 +24,11 @@ describe NewsItem do
       ni = Fabricate.build(:news_item, title: 'Gehalt bla')
       ni.source.default_category = c2
       ni.categorize
-      ni.categories.sort_by{|i| i.id}.should be == [c1,c2]
+      expect(ni.categories.sort_by{|i| i.id}).to eq([c1,c2])
 
       ni.source.default_category = nil
       ni.categorize
-      ni.categories.should be == [c1]
+      expect(ni.categories).to eq([c1])
     end
   end
 end
