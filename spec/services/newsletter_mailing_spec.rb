@@ -42,17 +42,19 @@ describe 'NewsletterMailing' do
   end
 
   specify 'adds newly added categories, even if not subscribed' do
-    subscription.confirm!
-    import_stuff!
+    VCR.use_cassette 'events', record: :new_episodes do
+      subscription.confirm!
+      import_stuff!
 
-    Category.create!(name: 'NewCategoryOk', keywords:'')
-    Category.create!(name: 'NewCategoryTooOld', keywords:'', created_at: 14.days.ago)
-    Newsletter::Mailing.cronjob
-    ActionMailer::Base.deliveries.count.should be == 1
+      Category.create!(name: 'NewCategoryOk', keywords:'')
+      Category.create!(name: 'NewCategoryTooOld', keywords:'', created_at: 14.days.ago)
+      Newsletter::Mailing.cronjob
+      ActionMailer::Base.deliveries.count.should be == 1
 
-    body = ActionMailer::Base.deliveries.first.html_part.body.to_s
-    expect(body).to include "NewCategoryOk"
-    expect(body).to_not include "NewCategoryTooOld"
+      body = ActionMailer::Base.deliveries.first.html_part.body.to_s
+      expect(body).to include "NewCategoryOk"
+      expect(body).to_not include "NewCategoryTooOld"
+    end
   end
 
   def import_stuff!
