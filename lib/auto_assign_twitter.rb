@@ -21,7 +21,7 @@ class AutoAssignTwitter < Processor
     end
     if intent = s.links.select{|i| i.href.to_s[%r{twitter.com/\w+/?$}]}.first
       acc = intent.href.to_s[%r{twitter.com/(\w+)/?$}, 1]
-      return if !acc[/share/]
+      return if acc[/share/]
       assign_account acc
       return
     end
