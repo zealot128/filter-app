@@ -19,8 +19,8 @@ class AutoAssignTwitter < Processor
       assign_account  CGI.parse(URI.parse(intent.href).query)['screen_name'].first
       return
     end
-    if intent = s.links.select{|i| i.href.to_s[%r{twitter.com/\w+/?$}]}.first
-      acc = intent.href.to_s[%r{twitter.com/(\w+)/?$}, 1]
+    if intent = s.links.select{|i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}]}.first
+      acc = intent.href.split('/').last
       return if acc[/share/]
       assign_account acc
       return
