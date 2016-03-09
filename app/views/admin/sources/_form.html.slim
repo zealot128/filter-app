@@ -6,6 +6,8 @@
   = f.input :multiplicator
   - if @source.new_record?
     = f.input :type, collection: ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource'], include_blank: false
+  - if @source.new_record? || @source.is_a?(FeedSource)
+    = f.input :twitter_account
   = f.input :logo
   - if @source.logo.present?
     = image_tag @source.logo.url(:small)

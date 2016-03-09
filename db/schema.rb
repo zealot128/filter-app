@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301100118) do
+ActiveRecord::Schema.define(version: 20160309163557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20160301100118) do
     t.string   "lsr_confirmation_content_type"
     t.integer  "lsr_confirmation_file_size"
     t.datetime "lsr_confirmation_updated_at"
+    t.string   "twitter_account"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree

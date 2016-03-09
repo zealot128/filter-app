@@ -26,6 +26,10 @@ class Source < ActiveRecord::Base
     "#{id}-#{name.to_url}"
   end
 
+  def homepage_url
+    URI.parse(url).tap{|o| o.path = '/'; o.query =nil}.to_s
+  end
+
   def host
     uri = URI.parse(url)
     uri.path = "/"

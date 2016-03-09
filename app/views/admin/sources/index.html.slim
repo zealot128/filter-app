@@ -20,6 +20,7 @@ table.table.table-striped.table-bordered.js-tablesorter
       th Bias
       th Multiplikator
       th Sum / Avg Klicks Beiträge
+      th Twitter
       th
   - @sources.each do |source|
     tr class='#{source.error ? 'danger' : ''}'
@@ -49,6 +50,7 @@ table.table.table-striped.table-bordered.js-tablesorter
         span<> = '/'
         = (s =source.news_items.average(:impression_count)) && s.round
 
+      td = source.twitter_account
       td
         = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
           |bearbeiten
