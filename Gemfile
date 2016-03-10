@@ -69,9 +69,9 @@ group :development do
 end
 
 group :development, :test do
-  gem "pry-rails"
   gem "thin"
 end
+gem "pry-rails"
 
 group :capistrano do
   gem "whenever"
