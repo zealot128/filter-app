@@ -35,7 +35,7 @@ html lang=(locale) class=(browser.to_s)
             | &copy; #{Date.today.year}
           li= link_to Setting.site_name, root_path
           li= link_to "Suche/Feeds", search_path
-          li= link_to "FAQ/Impressum", about_path
+          li= link_to "FAQ/Impressum/Datenschutz", about_path
           li= link_to "Quellen", '/quellen'
           li= link_to "Quelle einreichen", new_submit_source_path
           li= link_to "Newsletter", '/newsletter'
