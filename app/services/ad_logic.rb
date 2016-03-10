@@ -16,5 +16,14 @@ class AdLogic
       "Empfehlungsbund News"
     end
 
+    def twitter_news(interval)
+      NewsItem.
+        where(source_id: FeedSource.visible.where(language: 'german').select('id')).
+        where('published_at > ?', interval).
+        where('absolute_score > 20').
+        order('absolute_score desc').
+        limit(3)
+    end
+
   end
 end

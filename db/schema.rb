@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309163557) do
+ActiveRecord::Schema.define(version: 20160310104833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160309163557) do
     t.text     "keywords"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "hash_tag"
   end
 
   create_table "categories_news_items", id: false, force: :cascade do |t|
@@ -117,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160309163557) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "impression_count",                default: 0
+    t.integer  "tweet_id"
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
@@ -156,6 +158,7 @@ ActiveRecord::Schema.define(version: 20160309163557) do
     t.integer  "lsr_confirmation_file_size"
     t.datetime "lsr_confirmation_updated_at"
     t.string   "twitter_account"
+    t.string   "language"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
