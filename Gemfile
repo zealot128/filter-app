@@ -47,9 +47,11 @@ gem "migration_data"
 gem "twitter", "~> 5.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"
-gem 'premailer-rails'
+gem "premailer-rails"
 gem "zurb-ink"
 gem "rinku", require: "rails_rinku"
+gem "ipcat"
+gem "voight_kampff"
 
 group :test do
   gem "timecop"

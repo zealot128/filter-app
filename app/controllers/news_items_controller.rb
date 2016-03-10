@@ -28,10 +28,12 @@ class NewsItemsController < ApplicationController
 
   def show
     news_item = NewsItem.find(params[:id])
-    if params[:sid]
-      @current_user = MailSubscription.find(params[:sid])
+    unless bot?
+      if params[:sid]
+        @current_user = MailSubscription.find(params[:sid])
+      end
+      impressionist(news_item)
     end
-    impressionist(news_item)
     redirect_to news_item.url
   end
 
@@ -63,6 +65,10 @@ class NewsItemsController < ApplicationController
   end
 
   private
+
+  def bot?
+    IPCat.datacenter?(request.ip) || request.bot?
+  end
 
   def page
     [1, params[:page].to_i].max
