@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 20160310104833) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "impression_count",                default: 0
-    t.integer  "tweet_id"
+    t.string   "tweet_id"
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree

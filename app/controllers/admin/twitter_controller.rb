@@ -15,7 +15,7 @@ class Admin::TwitterController < AdminController
 
   def follow
     accounts = (Source.where.not(twitter_account: nil).pluck(:twitter_account) + TwitterSource.all.map(&:user_name)).map(&:downcase).uniq
-    accounts = ['pludoni']
+    # accounts = ['pludoni', 'itsax', 'stefanwienert']
     @new_follows = TwitterGateway.new.follow_all(accounts)
   end
 end

@@ -1,6 +1,7 @@
 class TwitterPosting
-  def self.cronjob(interval: 2.days.ago)
-    candidates = AdLogic.twitter_news(interval)
+  def self.cronjob(from: 1.days.ago, to: Time.now)
+    return if !Setting.get('twitter_access_token')
+    candidates = AdLogic.twitter_news(from, to)
 
     candidates.select{|i| i.tweet_id.blank? }.take(1).each do |ni|
       new(ni).run
@@ -12,7 +13,9 @@ class TwitterPosting
   end
 
   def run
-    binding.pry
+    Rails.logger.info "[TwitterPosting]: #{tweet}"
+    response = TwitterGateway.new.api.update(tweet)
+    @news_item.update(tweet_id: response.id.to_s)
   end
 
   def tweet

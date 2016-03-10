@@ -15,14 +15,10 @@ class TwitterGateway
   end
 
   def follow_all(accounts)
-    to_follow = accounts
     cursor = api.friends
-    loop do
-      existing = cursor.to_a.map{|i| i.screen_name}.map(&:downcase)
-      to_follow = to_follow - existing
-      break if api.last?
-      cursor.fetch_next_page
-    end
+    existing = cursor.to_a.map{|i| i.screen_name}.map(&:downcase)
+    to_follow = accounts - existing
+
     new_follows = []
     to_follow.each do |name|
       if not api.friendship? account, name

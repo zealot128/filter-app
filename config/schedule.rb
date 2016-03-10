@@ -28,3 +28,16 @@ end
 every 1.day, at: '5:00 am' do
   rake "-s sitemap:refresh"
 end
+
+every 1.day, at: '09:33' do
+  runner "TwitterPosting.cronjob"
+end
+every 1.day, at: '12:20' do
+  runner "TwitterPosting.cronjob"
+end
+every 1.day, at: '16:33' do
+  runner "TwitterPosting.cronjob"
+end
+every 1.day, at: '19:12' do
+  runner "TwitterPosting.cronjob"
+end

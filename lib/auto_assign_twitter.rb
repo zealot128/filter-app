@@ -25,7 +25,7 @@ class AutoAssignTwitter < Processor
     find_link_on_page(page)
     return if @source.twitter_account
     puts "Nichts gefunden #{@source.name}"
-  rescue Mechanize::ResponseCodeError, SocketError => e
+  rescue Mechanize::ResponseCodeError, SocketError, SystemCallError => e
     puts "FEHLER bei #{@source.name} -> #{e.inspect}"
     run(news_item: @source.news_items.order('created_at desc')[count + 1], count: count + 1)
   end

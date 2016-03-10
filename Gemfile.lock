@@ -383,6 +383,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     vcr (3.0.1)
+    voight_kampff (1.0.2)
+      rack (~> 1.6)
     webmock (1.21.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -452,6 +454,7 @@ DEPENDENCIES
   twitter (~> 5.0)
   uglifier (>= 1.0.3)
   vcr
+  voight_kampff
   webmock
   whenever
   will_paginate-bootstrap
