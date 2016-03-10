@@ -45,6 +45,7 @@ gem "highcharts-rails"
 gem "migration_data"
 
 gem "twitter", "~> 5.0"
+gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem 'premailer-rails'
 gem "zurb-ink"

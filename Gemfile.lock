@@ -139,6 +139,7 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
+    hashie (3.4.3)
     highcharts-rails (4.1.9)
       railties (>= 3.1)
     html2haml (2.0.0)
@@ -201,6 +202,7 @@ GEM
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
+    multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     naught (1.0.0)
@@ -209,6 +211,16 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
+    oauth (0.4.7)
+    omniauth (1.2.2)
+      hashie (>= 1.2, < 4)
+      rack (~> 1.0)
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-twitter (1.1.0)
+      multi_json (~> 1.3)
+      omniauth-oauth (~> 1.0)
     open_uri_redirections (0.2.1)
     paperclip (4.3.2)
       activemodel (>= 3.2.0)
@@ -409,6 +421,7 @@ DEPENDENCIES
   mail_form
   mechanize
   migration_data
+  omniauth-twitter
   open_uri_redirections
   paperclip
   paperclip-optimizer

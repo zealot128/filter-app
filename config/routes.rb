@@ -12,7 +12,11 @@ Baseapp::Application.routes.draw do
       post :confirm, on: :member
     end
     resources :settings
+    get 'twitter' => 'twitter#index'
+    post 'twitter/follow' => 'twitter#follow'
+
   end
+  get 'admin' => redirect('/admin/sources')
 
   get "sources" => redirect('/quellen')
   resources :sources, path: 'quellen', only: [:index, :show] do
@@ -41,5 +45,7 @@ Baseapp::Application.routes.draw do
   get 'days' => redirect('/')
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
   get 'categories' => 'static_pages#categories'
+
+  get '/auth/:provider/callback', to: 'admin/twitter#create'
   root to: "days#index"
 end
