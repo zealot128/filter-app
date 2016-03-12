@@ -22,7 +22,7 @@ class AdLogic
         where('published_at between ? and ?', from, to).
         where('absolute_score > 20').
         order('absolute_score desc').
-        limit(3)
+        limit(4)
     end
 
   end

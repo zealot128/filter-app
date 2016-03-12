@@ -35,6 +35,9 @@ end
 every 1.day, at: '12:20' do
   runner "TwitterPosting.cronjob"
 end
+every 1.day, at: '14:14' do
+  runner "TwitterPosting.cronjob"
+end
 every 1.day, at: '16:33' do
   runner "TwitterPosting.cronjob"
 end
