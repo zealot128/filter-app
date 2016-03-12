@@ -19,7 +19,7 @@ class TwitterPosting
   end
 
   def tweet
-    url = "https://www.hrfilter.de/ni/#{@news_item.id}"
+    url = "https://www.#{Rails.application.secrets.domain_name}/ni/#{@news_item.id}"
     meta_data = "#{maybe_mention}#{maybe_hashtags}"
     length = 140 - 24 - 1 - meta_data.length
     title = @news_item.title.strip.truncate(length)
