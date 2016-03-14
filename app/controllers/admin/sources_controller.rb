@@ -11,8 +11,11 @@ class Admin::SourcesController < AdminController
     type = params[:source].delete :type
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
-      @source.refresh
-      @source.news_items.current.map(&:rescore!)
+      begin
+        @source.refresh
+        @source.news_items.current.map(&:rescore!)
+      rescue StandardError
+      end
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :new
