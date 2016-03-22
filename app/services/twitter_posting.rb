@@ -1,5 +1,5 @@
 class TwitterPosting
-  def self.cronjob(from: 1.days.ago, to: Time.now)
+  def self.cronjob(from: 2.days.ago, to: Time.now)
     return if !Setting.get('twitter_access_token')
     candidates = AdLogic.twitter_news(from, to)
 
