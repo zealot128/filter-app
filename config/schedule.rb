@@ -32,7 +32,7 @@ end
 
 %w[09 10 12 14 16 18].each do |h|
   minute = rand(0..59)
-  every 1.day, at: "#{h}:#{minute.strftime("%H:%m")}" do
+  every 1.day, at: "#{h}:#{minute.sprintf("%02d")}" do
     runner "TwitterPosting.cronjob"
   end
 end
