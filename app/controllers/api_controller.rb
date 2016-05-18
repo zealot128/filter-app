@@ -5,19 +5,19 @@ class ApiController < ApplicationController
     end
   end
 
-  def news_items
+  def news_items(category: "0", order: "recent")
     @news_items = NewsItem.visible
-    if params[:category].present?
-      case params[:category].to_i
+    if category.present?
+      case category.to_i
       when 0
         @news_items = @news_items.uncategorized
       when -1
         @news_items = @news_items
       else
-        @news_items = @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
+        @news_items = @news_items.joins(:categories).where(categories: { id: category }).group('news_items.id')
       end
     end
-    case params[:order]
+    case order
     when 'recent'
       @news_items = @news_items.reorder('published_at desc')
     when 'score'
