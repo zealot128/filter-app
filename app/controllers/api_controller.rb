@@ -21,25 +21,22 @@ class ApiController < ApplicationController
     when 'score'
       @news_items = @news_items.reorder('absolute_score desc')
     end
-    render json: {
-      news_items: @news_items
-    }
-  end
-
-  def category
-    if params[:id] and category = grouped_categories.select{|cat| cat["id"] == params[:id]}.first
-      render json: {status: :success, category: category.to_json}, status: 200
-    else
-      render json: {status: :error, message: 'Not found'}, status: 404
-    end
+    render json: @news_items, status: 200
   end
 
   def categories
-    render json: {
-      status: :success,
-      categories: @grouped_categories.to_json
-    }, status: 200
+    if params[:id]
+      if category = grouped_categories.select{|cat| cat["id"] == params[:id].to_i}.first
+        render json: category.to_json, status: 200
+      else
+        render json: {status: :error, message: 'Not found'}, status: 404
+      end
+    else
+      render json: grouped_categories, status: 200
+    end
   end
+
+  private
 
   def grouped_categories
     grouped_categories ||= Category.joins(:categories_news_items).group("categories_news_items.category_id").count

@@ -44,7 +44,6 @@ Baseapp::Application.routes.draw do
 
   get 'api/news_items' => 'api#news_items'
   get 'api/categories' => 'api#categories'
-  get 'api/categories/:id' => 'api#category'
 
   get 'days' => redirect('/')
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
