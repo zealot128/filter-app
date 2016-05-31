@@ -14,7 +14,7 @@ class ApiController < ApplicationController
       when -1
         @news_items = @news_items
       else
-        @news_items = @news_items.joins(:categories).where(categories: { id: category }).group('news_items.id')
+        @news_items = @news_items.joins(:categories).where(categories: { id: category })
       end
     end
     case order
