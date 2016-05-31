@@ -10,8 +10,6 @@ class ApiController < ApplicationController
     if category.present?
       case category.to_i
       when 0
-        @news_items = @news_items.uncategorized
-      when -1
         @news_items = @news_items
       else
         @news_items = @news_items.joins(:categories).where(categories: { id: category })
