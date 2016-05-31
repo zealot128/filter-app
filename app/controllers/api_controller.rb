@@ -5,15 +5,15 @@ class ApiController < ApplicationController
     end
   end
 
-  def news_items(category: "0", order: "recent")
+  def news_items
+    category = params["category"] || 0
+    order = params["order"] || "recent"
     @news_items = NewsItem.visible
-    if category.present?
-      case category.to_i
-      when 0
-        @news_items = @news_items
-      else
-        @news_items = @news_items.joins(:categories).where(categories: { id: category })
-      end
+    case category.to_i
+    when 0
+      @news_items = @news_items
+    else
+      @news_items = @news_items.joins(:categories).where(categories: { id: category })
     end
     case order
     when 'recent'
