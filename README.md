@@ -67,5 +67,6 @@ before the rake commands, you might have to create a config/application.yml (see
 If you'd like, you can try to import some of the HRfilter sources for an initial seed:
 
 ```
+rails r 'Setting.read_yaml'
 rake db:seed
 ```

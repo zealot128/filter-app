@@ -20,6 +20,8 @@ Dir.chdir APP_ROOT do
   puts "\n== Preparing database =="
   system "bin/rake db:setup"
 
+
+  system 'bin/rails r \'Setting.read_yaml\''
   puts "\n== Removing old logs and tempfiles =="
   system "rm -f log/*"
   system "rm -rf tmp/cache"

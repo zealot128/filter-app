@@ -9,6 +9,8 @@ default: &default
   google_site_verification: ''
   tracking_code: ''
   person: Stefan Wienert
+  person_email: info@example.com
+  promoted_feed_id: 0
   intro: |
     Fahrrad-Filter ist ein Aggregator für Nachrichten rund ums Fahrrad. Zusammengefasst werden News aus <a href='/quellen'>bekannten deutschsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
   explanation: |
