@@ -144,4 +144,13 @@ class NewsItem < ActiveRecord::Base
       self.blacklisted = true
     end
   end
+
+  def as_json(options)
+    super(methods: :image_url_full)
+  end
+
+  def image_url_full
+    "http://www.hrfilter.de" + image.url
+  end
+
 end
