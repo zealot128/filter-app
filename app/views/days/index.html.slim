@@ -1,5 +1,5 @@
 - content_for :content_header do
-  .content-header
+  .content-header.hidden-xs
     .container
       p = raw Setting.intro
       - cache 'counts', expires_in: 1.day do
@@ -43,7 +43,8 @@
               |Alle News dieses Tages (#{total_count})
 
 .container
-  .pull-right
-    = link_to "/?to=#{@days.last[0].to_s}", class: 'btn btn-default', rel: 'nofollow' do
-      |Vorherige Woche
+  .clearfix
+    .pull-right
+      = link_to "/?to=#{@days.last[0].to_s}", class: 'btn btn-default', rel: 'nofollow' do
+        |Vorherige Woche
   br

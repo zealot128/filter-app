@@ -1,0 +1,10 @@
+nav.navbar.navbar-default: .container-fluid
+  .navbar-header
+    button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"
+      .sr-only
+        | Toggle navigation
+      i.fa.fa-fw.fa-bars.fa-2x
+    a.navbar-brand href='/'
+      = image_tag "#{Setting.key}/logo-large.png", alt: "Logo", title: Setting.site_name, style: 'height: 35px'
+  #navbar-collapse.collapse.navbar-collapse
+    = render_navigation expand_all: true, renderer: :bootstrap

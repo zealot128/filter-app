@@ -13,10 +13,7 @@ html lang=(locale) class=(browser.to_s)
 
     = yield :head
   body
-    nav.navbar.navbar-default
-      a.navbar-brand href='/'
-        = image_tag "#{Setting.key}/logo-large.png", alt: "Logo", title: Setting.site_name, style: 'height: 35px'
-      = render_navigation :expand_all => true, :renderer => :bootstrap
+    = render "layouts/navbar"
 
     = yield :content_header if content_for?(:content_header)
     - @container_class ||= 'container'
