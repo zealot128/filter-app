@@ -11,7 +11,7 @@ br
   table.row: tr
     td.wrapper
       table.three.columns: tr
-        - if i < 5
+        - if i < 5 and story.image.present?
           td
             - w, h = NewsItem::NEWSLETTER_SIZE.map{|i| (i * 0.9).round }
             center = image_tag image_url(story.image.url(:newsletter)), alt: "Bild", width: w, height: h, style: 'text-align: center'
