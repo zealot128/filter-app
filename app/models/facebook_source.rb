@@ -10,7 +10,7 @@ class FacebookSource < Source
   end
 
   def remote_url
-    "https://www.facebook.com/#{name}/" #personalwirtschaft.de/?fref=nf
+    "https://www.facebook.com/#{url}/" #personalwirtschaft.de/?fref=nf
   end
 
   def agent
