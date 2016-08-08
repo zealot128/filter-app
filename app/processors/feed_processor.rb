@@ -1,10 +1,10 @@
 class FeedProcessor < Processor
   def process(source)
     @source = source
-    feed = Feedjira::Feed.fetch_and_parse(source.url)
+
+    feed = parse_feed(source.url)
     if !feed.respond_to?(:entries)
       source.update_column :error, true
-      puts "Feed download fehlgeschlagen: #{feed}"
       # TODO: Error reporting
     else
       source.update_column :error, false
@@ -16,6 +16,32 @@ class FeedProcessor < Processor
         end
       end
     end
+  end
+
+  def log(message)
+    puts message
+  end
+
+  def parse_feed(feed_url)
+    # Import from Feedjra, because no Timeout support yet :(
+    # https://github.com/feedjira/feedjira/issues/294
+    connection = Faraday.new do |conn|
+      conn.use FaradayMiddleware::FollowRedirects, limit: 3
+      conn.adapter :net_http
+      conn.options.timeout = 2000
+      conn.options.open_timeout = 2000
+    end
+    response = connection.get(feed_url)
+    xml = response.body
+    if xml.nil?
+      log "Feed Download fehlgeschlagen: #{feed_url}, kein Inhalt (Timeout?)"
+      return
+    end
+    Feedjira::Feed.parse(xml)
+  rescue Feedjira::NoParserAvailable
+    log "Feed Download fehlgeschlagen: Kein Feed Format: #{feed_url}"
+  rescue Feedjira::FetchFailure
+    log "Download fehlgeschlagen: #{feed_url} -> #{response.status}"
   end
 
   def find_news_item(guid, url)
