@@ -18,7 +18,7 @@ class NewsItem::FullTextFetcher
         @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/, "")
         content = page.at(selector)
         if content
-          content.search('script, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
+          content.search('script, style, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
           @news_item.full_text = @processor.clear content.inner_html
         end
         NewsItem::ImageFetcher.new(@news_item, page).run
