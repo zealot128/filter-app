@@ -1,6 +1,6 @@
 class Admin::MailSubscriptionsController < AdminController
   def index
-    @subscriptions = MailSubscription.all
+    @subscriptions = MailSubscription.order('created_at desc')
   end
 
   def confirm
