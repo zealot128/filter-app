@@ -12,6 +12,7 @@ table.table.table-bordered.js-tablesorter
   thead
     tr
       th E-Mail
+      th Anmeldedatum
       th Themen
       th Frequenz
       th Status
@@ -22,6 +23,7 @@ table.table.table-bordered.js-tablesorter
     - @subscriptions.each do |s|
       tr
         td = s.email
+        td = l(s.created_at).to_date
         td
           - mailing = Newsletter::Mailing.new(s)
           = mailing.categories.map{|i| i.name}.join(', ')
