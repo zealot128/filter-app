@@ -4,7 +4,7 @@ Rack::Attack.blocklist('fail2ban pentesters') do |req|
   Rack::Attack::Fail2Ban.filter("pentesters-#{req.ip}", maxretry: 3, findtime: 10.minutes, bantime: 5.minutes) do
 		qs = CGI.unescape(req.query_string)
     #  # The count for the IP is incremented if the return value is truthy
-    CGI.unescape(req.query_string) =~ %r{/etc/passwd|/proc/self|/etc/hosts} ||
+    qs =~ %r{/etc/passwd|/proc/self|/etc/hosts} ||
       req.path.include?('/etc/passwd') ||
       req.path.include?('/etc/passwd') ||
       req.path.include?('wp-admin') ||
