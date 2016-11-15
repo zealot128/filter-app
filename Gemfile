@@ -28,6 +28,7 @@ gem "impressionist"
 gem "exception_notification"
 gem "paperclip"
 gem "paperclip-optimizer"
+gem 'image_optim_pack'
 
 gem "sass-rails"
 gem "coffee-rails"
