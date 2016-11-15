@@ -59,7 +59,10 @@ class FeedProcessor < Processor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
-    if url.starts_with?('/')
+    if url.starts_with?('//')
+      url = "http:#{url}"
+    end
+    unless url[%r{^http|^/}]
       url = URI.join(@source.url, url).to_s
     end
     @item = find_news_item(guid, url)
