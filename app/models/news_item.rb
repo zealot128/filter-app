@@ -63,6 +63,8 @@ class NewsItem < ActiveRecord::Base
 
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"
+    # 	delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
+    NewsItem.where.not(source_id: Source.select('id')).delete_all
     priority = NewsItem.recent.where(value: nil)
     priority.each(&:refresh)
     NewsItem.recent.shuffle.each do |ni|
@@ -114,7 +116,7 @@ class NewsItem < ActiveRecord::Base
   end
 
   def refresh
-    if source.should_fetch_stats?(self)
+    if source && source.should_fetch_stats?(self)
       NewsItem::LikeFetcher.fetch_for_news_item(self)
     end
     rescore!
