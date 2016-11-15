@@ -35,16 +35,16 @@ class NewsItem < ActiveRecord::Base
   before_save :filter_plaintext
   before_save :blacklist
 
-  validates_uniqueness_of :guid, scope: [:source_id]
+  validates :guid, uniqueness: { scope: [:source_id] }
 
   NEWSLETTER_SIZE = [140, 70]
   has_attached_file :image,
     styles: {
       original: ["250x200>", :jpg],
-      newsletter: [NEWSLETTER_SIZE.join('x')+"^", :jpg] },
+      newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg] },
     processors: [:thumbnail, :paperclip_optimizer],
     convert_options: {
-      newsletter: "-flatten -colorspace RGB -size #{NEWSLETTER_SIZE.join("x")} xc:white +swap -gravity center -composite"
+      newsletter: "-flatten -colorspace RGB -size #{NEWSLETTER_SIZE.join('x')} xc:white +swap -gravity center -composite"
     }
   do_not_validate_attachment_file_type :image
 
@@ -96,9 +96,7 @@ class NewsItem < ActiveRecord::Base
   end
 
   def categorize
-    if plaintext
-      Categorizer.run(self)
-    end
+    Categorizer.run(self) if plaintext
   end
 
   def filter_plaintext

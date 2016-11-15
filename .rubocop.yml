@@ -27,7 +27,7 @@ Style/IfUnlessModifier:
 Metrics/MethodLength:
   Enabled: false
 Metrics/LineLength:
-  Max: 110
+  Max: 150
 Metrics/AbcSize:
   Enabled: false
 Metrics/ClassLength:
