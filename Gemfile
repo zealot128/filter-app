@@ -72,6 +72,7 @@ group :development, :test do
   gem "thin"
 end
 gem "pry-rails"
+gem 'rack-attack'
 
 group :capistrano do
   gem "whenever"

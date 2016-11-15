@@ -256,6 +256,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.2)
+    rack-attack (4.3.1)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.5.2)
@@ -435,6 +437,7 @@ DEPENDENCIES
   pry-rails
   quiet_assets
   rack (= 1.6.2)
+  rack-attack
   rails (~> 4.2.0)
   rinku
   rspec-rails (~> 3.1)
