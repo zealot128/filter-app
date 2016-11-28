@@ -1,7 +1,7 @@
 class DaysController < ApplicationController
   def index
     reference = Date.today
-    if params[:to]
+    if params[:to] && params[:to].to_s[/^(\d\-)$/]
       reference = Date.parse(params[:to]) - 1
     end
     @days = 7.times.map { |i|

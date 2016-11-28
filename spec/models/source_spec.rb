@@ -7,15 +7,25 @@ describe Source do
       source.save
       source.download_thumb
       expect(source.reload.logo).to be_present
-      expect(File.exists?(source.reload.logo.path(:small))).to eq(true)
+      expect(File.exist?(source.reload.logo.path(:small))).to eq(true)
     end
   end
   specify 'shouldnt download anything if logo not available' do
     VCR.use_cassette 'broken_thumb', record: :new_episodes do
-      source= Source.new(url: 'http://www.arbeit-und-arbeitsrecht.de/aktuelle_meldungen', name: 'feed')
+      source = Source.new(url: 'http://www.arbeit-und-arbeitsrecht.de/aktuelle_meldungen', name: 'feed')
       source.save
       source.download_thumb
       expect(source.reload.logo).not_to be_present
+    end
+  end
+
+  specify 'relative urls are converted' do
+    VCR.use_cassette 'relative_url', record: :new_episodes do
+      source = FeedSource.new(url: "https://parisax.de/index.php?id=131&type=7531", name: 'pixmax')
+      source.save
+      source.refresh
+      expect(source.news_items.count).to be > 0
+      expect(source.news_items.first.url).to start_with 'http'
     end
   end
 end

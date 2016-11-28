@@ -12,11 +12,11 @@
       %span.label.label-default(title='LinkedIn shares')
         %i.fa.fa-linkedin
         = item.linkedin
-    - if item.xing > 0
+    - if item.xing.to_i > 0
       %span.label.label-default(title='XING shares')
         %i.fa.fa-xing
         = item.xing
-    - if item.gplus > 0
+    - if item.gplus.to_i > 0
       %span.label.label-default(title='G+ likes')
         %i.fa.fa-google-plus
         = item.gplus

@@ -64,7 +64,12 @@ class NewsItem::LikeFetcher
   def xing
     response = Fetcher.fetch_url("https://www.xing-share.com/app/share?op=get_share_button;url=#{eurl};counter=right;lang=de;type=iframe;hovercard_position=1;shape=rectangle")
     doc = Nokogiri.parse(response.body)
-    doc.at(".xing-count").text.to_i
+    element = doc.at(".xing-count")
+    if element
+      element.text.to_i
+    else
+      nil
+    end
   end
 
   def reddit
@@ -82,5 +87,4 @@ class NewsItem::LikeFetcher
   def twitter_search(str)
     TwitterSource.client.search(str)
   end
-
 end

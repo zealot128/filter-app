@@ -19,10 +19,10 @@ class TweetProcessor < Processor
       # Tweets ohne Link sind doof
       return
     end
-    item.xing = 0
-    item.linkedin = 0
-    item.fb_likes = 0
-    item.gplus = 0
+    item.xing ||= 0
+    item.linkedin ||= 0
+    item.fb_likes ||= 0
+    item.gplus ||= 0
 
     item.rescore!
   end

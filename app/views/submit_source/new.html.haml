@@ -3,7 +3,7 @@
 %p Fehlt eine Quelle? Dann nehmen wir diese gerne auf.
 
 = simple_form_for @submit_source, url: '', :html => {:class => 'form-horizontal' } do |f|
-  = f.input :url, :required => true
+  = f.input :url, :required => true, label: 'URL zum RSS- oder Atom-Feed', hint: 'Bitte geben Sie hier die URL zu dem XML-Feed mit allen News Ihrer Quelle an. Ohne einen solchen Feed ist eine automatisierte Indizierung nicht möglich. In der Regel bieten alle Content-Management-Systeme eine solche Funktion an.'
   = f.input :email, :required => true
   = f.input :comment, :as => :text, :required => false, :input_html => {:rows => 2}
 
