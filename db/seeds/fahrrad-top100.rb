@@ -76,7 +76,7 @@ class Analyser
         if m.page.response['content-type'].to_s[/rss|atom|xml/]
           return try_url
         end
-      rescue Mechanize::ResponseCodeError, Mechanize::RedirectLimitReachedError
+      rescue Mechanize::ResponseCodeError, Mechanize::RedirectLimitReachedError, SocketError
       end
     end
     nil
