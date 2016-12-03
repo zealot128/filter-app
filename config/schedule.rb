@@ -19,6 +19,7 @@ end
 
 every 1.day, at: '03:25' do
   runner 'DuplicateFinder.run'
+  runner 'NewsItem.cleanup'
 end
 
 every :monday, at: '9am' do

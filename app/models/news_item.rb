@@ -153,4 +153,11 @@ class NewsItem < ActiveRecord::Base
     "http://www.hrfilter.de" + image.url
   end
 
+  def self.cleanup
+    NewsItem.where('published_at < ?', 6.months.ago).where.not(image_file_name: nil).find_each{|i|
+      i.image = nil
+      i.save validate: false
+    }
+  end
+
 end
