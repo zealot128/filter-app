@@ -42,7 +42,7 @@ class Admin::SourcesController < AdminController
     @source = Source.find(params[:id])
     begin
       @source.refresh
-      @count = @source.news_items.current.map(&:refresh!).count
+      @count = @source.news_items.current.map(&:refresh).count
       @stale_count = @source.news_items.where(absolute_score: nil).each(&:refresh)
       @source.update_column :error, false
     rescue Exception => e

@@ -63,7 +63,7 @@ class NewsItem < ActiveRecord::Base
 
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"
-    # 	delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
+    #	delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
     NewsItem.where.not(source_id: Source.select('id')).delete_all
     priority = NewsItem.recent.where(value: nil)
     priority.each(&:refresh)
