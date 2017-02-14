@@ -76,6 +76,15 @@ class FeedProcessor < Processor
       title: title
     )
     @item.save!
+    if @entry.image.present? and @item.image.blank?
+      begin
+        image = download_url(@entry.image)
+        @item.update_attributes image: image
+      rescue SocketError, StandardError => e
+        Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
+      end
+
+    end
     @item
   end
 end
