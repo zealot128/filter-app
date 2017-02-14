@@ -22,7 +22,7 @@ class NewsItem::FullTextFetcher
           @news_item.full_text = @processor.clear content.inner_html
         end
         if @news_item.teaser.blank?
-          @processor.teaser = @news_item.full_text
+          @news_item.teaser = @processor.teaser(@news_item.full_text)
         end
         if @news_item.title.blank?
           @news_item.title = page.at('title').try(:text)
