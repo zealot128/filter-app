@@ -71,10 +71,8 @@ class FeedProcessor < Processor
       @item.source = @source
       @item.published_at = [Time.zone.now, published].min
     end
-    @item.assign_attributes(
-      teaser: teaser(text),
-      title: title
-    )
+    @item.title = title if title.present?
+    @item.teaser = teaser(text) if text.present?
     @item.save!
     if @entry.image.present? and @item.image.blank?
       begin
