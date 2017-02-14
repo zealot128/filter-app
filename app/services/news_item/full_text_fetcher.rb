@@ -20,6 +20,12 @@ class NewsItem::FullTextFetcher
         if content
           content.search('script, style, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove
           @news_item.full_text = @processor.clear content.inner_html
+          if @news_item.teaser.blank?
+            @processor.teaser(@news_item.full_text)
+          end
+        end
+        if @news_item.title.blank?
+          @news_item.title = page.at('title').try(:text)
         end
         NewsItem::ImageFetcher.new(@news_item, page).run
       rescue Mechanize::ResponseCodeError, SocketError, Mechanize::RedirectLimitReachedError, Nokogiri::CSS::SyntaxError => e
