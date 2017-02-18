@@ -60,6 +60,10 @@ GEM
     autoprefixer-rails (5.2.0.1)
       execjs
       json
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     babel-source (5.4.7)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -85,6 +89,8 @@ GEM
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -98,13 +104,15 @@ GEM
     css_parser (1.3.7)
       addressable
     daemons (1.2.3)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
-    dnsruby (1.59.1)
+    dnsruby (1.60.0)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
-    eventmachine (1.0.8)
+    eventmachine (1.2.2)
     exception_notification (4.1.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
@@ -129,6 +137,16 @@ GEM
     fspath (2.1.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    grape (0.19.1)
+      activesupport
+      builder
+      hashie (>= 2.1.0)
+      multi_json (>= 1.3.2)
+      multi_xml (>= 0.5.2)
+      mustermann-grape (~> 0.4.0)
+      rack (>= 1.3.0)
+      rack-accept
+      virtus (>= 1.0.0)
     habtm_generator (0.3)
       activerecord
     haml (4.0.7)
@@ -158,6 +176,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.4.0)
     i18n (0.7.0)
+    ice_nine (0.11.2)
     image_optim (0.21.0)
       exifr (~> 1.2, >= 1.2.2)
       fspath (~> 2.1)
@@ -209,6 +228,10 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mustermann (0.4.0)
+      tool (~> 0.2)
+    mustermann-grape (0.4.0)
+      mustermann (= 0.4.0)
     naught (1.0.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
@@ -259,6 +282,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.2)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
     rack-attack (5.0.1)
       rack
     rack-test (0.6.3)
@@ -368,6 +393,7 @@ GEM
     tilt (1.4.1)
     timecop (0.7.4)
     tins (1.6.0)
+    tool (0.2.3)
     twitter (5.14.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -388,6 +414,11 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     vcr (3.0.1)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     voight_kampff (1.0.2)
       rack (~> 1.6)
     webmock (1.21.0)
@@ -419,6 +450,7 @@ DEPENDENCIES
   feedjira
   font-awesome-rails (~> 4.0)
   fontsquirrel-download
+  grape
   habtm_generator
   haml-rails
   highcharts-rails
@@ -468,4 +500,4 @@ DEPENDENCIES
   zurb-ink
 
 BUNDLED WITH
-   1.11.2
+   1.13.6

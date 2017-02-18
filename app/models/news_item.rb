@@ -146,11 +146,13 @@ class NewsItem < ActiveRecord::Base
   end
 
   def as_json(options)
+    binding.pry
+    raise e
     super(methods: :image_url_full)
   end
 
   def image_url_full
-    "http://www.hrfilter.de" + image.url
+    "https://www.hrfilter.de" + image.url
   end
 
   def self.cleanup

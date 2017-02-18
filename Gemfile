@@ -45,6 +45,8 @@ gem "slim-rails"
 gem "highcharts-rails"
 gem "migration_data"
 
+gem 'grape'
+
 gem "twitter", "~> 5.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"

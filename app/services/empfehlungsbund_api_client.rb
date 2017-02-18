@@ -32,7 +32,7 @@ class EmpfehlungsbundApiClient
     end
 
     def url
-      "http://login.empfehlungsbund.de/partner_events/#{id}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
+      "https://login.empfehlungsbund.de/partner_events/#{id}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
     end
 
     def from
@@ -46,7 +46,7 @@ class EmpfehlungsbundApiClient
     end
 
     def url
-      "http://login.empfehlungsbund.de/events/#{id}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
+      "https://login.empfehlungsbund.de/events/#{id}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
     end
   end
 
