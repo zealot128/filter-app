@@ -46,6 +46,7 @@ gem "highcharts-rails"
 gem "migration_data"
 
 gem 'grape'
+gem 'active_model_serializers', '~> 0.10'
 
 gem "twitter", "~> 5.0"
 gem "omniauth-twitter"

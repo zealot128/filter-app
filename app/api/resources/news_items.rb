@@ -1,21 +1,38 @@
 class Resources::NewsItems < Grape::API
+  include BaseApi
   namespace :news_items do
     params do
       optional :to, Date
       optional :page, Integer, default: 1
       optional :limit, Integer, default: 30
+      optional :source_id, Integer
     end
     get '/' do
-      @news_items = NewsItem.news_items.limit(30).page(params[:page])
-      render json: {
-        news_items: @news_items.as_json(brief: true),
-        pagination: {
-          total_pages: @news_items.total_pages,
-          total_entries: @news_items.total_entries
-        }
-      }
+      @news_items = NewsItem.sorted.includes(:categories, :source).limit(params[:limit]).page(params[:page])
+      if params[:source_id]
+        @news_items = @news_items.where(source_id: params[:source_id])
+      end
+      render @news_items, meta: { total_count: @news_items.total_entries, pages: @news_items.total_pages, current_page: @news_items.current_page }
     end
+  end
 
+  namespace :categories do
+    get '/' do
+      Category.sorted
+    end
+  end
+
+  namespace :sources do
+    params do
+      optional :category_id, Integer
+    end
+    get '/' do
+      base = Source.visible.order('name')
+      if params[:category_id]
+        base = base.where(default_category_id: params[:category_id])
+      end
+      base
+    end
   end
 
 end

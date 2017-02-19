@@ -16,7 +16,7 @@ module BaseApi
       if Rails.env.test?
         raise e
       end
-      trace = e.backtrace.grep(File.basename(Rails.root))
+      trace = e.backtrace
       Rails.logger.error "#{e.message}\n\n#{trace.join("\n")}"
       if Rails.env.production?
         Airbrake.notify(e) if defined?(Airbrake)
@@ -24,7 +24,10 @@ module BaseApi
       end
       Rack::Response.new({ message: e.message, backtrace: trace }.to_json, 500, { 'Content-type' => 'application/json' }).finish
     end
-    default_format :json
+    format :json
+    use Grape::Middleware::Globals
+    require 'grape/active_model_serializers'
+    include Grape::ActiveModelSerializers
     logger Rails.logger
   end
 end

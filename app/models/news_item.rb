@@ -146,8 +146,6 @@ class NewsItem < ActiveRecord::Base
   end
 
   def as_json(options)
-    binding.pry
-    raise e
     super(methods: :image_url_full)
   end
 
