@@ -1,4 +1,4 @@
-class SourceSerializer < SourceSerializer
+class SourceSerializer < SourcePreviewSerializer
   attributes :remote_url
   belongs_to :default_category
   attribute :statistics
