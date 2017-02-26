@@ -9,7 +9,10 @@ class NewsItem < ActiveRecord::Base
     Setting.max_age.to_i.days
   end
 
-  scope :visible, -> { where('blacklisted != ?', true).where('news_items.absolute_score is not null and news_items.absolute_score > 0').where(source_id: Source.visible.select('id')) }
+  scope :visible, -> { where('blacklisted != ?', true).
+                       where('news_items.absolute_score is not null and news_items.absolute_score > 0').
+                       where('absolute_score_per_halflife is not null').
+                       where(source_id: Source.visible.select('id')) }
   scope :show_page, -> { where('blacklisted != ?', true).
                          order('published_at desc').
                          where('absolute_score is not null and absolute_score > 0') }
