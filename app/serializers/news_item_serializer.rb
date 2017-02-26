@@ -6,12 +6,6 @@ class NewsItemSerializer < ApplicationSerializer
   has_one :source, serializer: SourcePreviewSerializer
 
 
-  attribute :current_score
-
-  def current_score
-    object.current_score
-  end
-
   def url
     click_proxy_url(object, host: 'www.hrfilter.de', protocol: 'https')
   end
