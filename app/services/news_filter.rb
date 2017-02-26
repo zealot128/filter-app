@@ -14,7 +14,7 @@ class NewsFilter
   end
 
   def apply_order!
-    ranking = "news_items.value * (#{boost})"
+    ranking = "news_items.absolute_score_per_halflife + (news_items.absolute_score *  #{boost}) "
     @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
     @news_items = @news_items.reorder!('current_score desc')
   end
@@ -35,9 +35,9 @@ class NewsFilter
   def boost
     if @preferred.present?
       s = @preferred.split(',').map(&:to_i).join(',')
-      "case when source_id in (#{s}) then 2 when true then 1 end"
+      "case when source_id in (#{s}) then 2 when true then 0 end"
     else
-      '1'
+      '0'
     end
   end
 

@@ -50,4 +50,12 @@ class NewsItem::ScoringAlgorithm
   def smooth(value)
     [Math.log((value + 1) * 2)**2.2 - 1, 0].max
   end
+
+  def self.hot_score(score, date, half_life)
+    smoothed_score = Math.log([score, 1].max, 10)
+
+    # substraction is arbitrary, just to make the numbers a l'l smaller
+    dateval = (date.to_time.to_i - 1210996800) / half_life
+    smoothed_score + dateval
+  end
 end

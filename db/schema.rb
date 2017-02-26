@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160314140252) do
+ActiveRecord::Schema.define(version: 20170226203645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,19 +91,19 @@ ActiveRecord::Schema.define(version: 20160314140252) do
   add_index "mail_subscriptions", ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree
 
   create_table "news_items", force: :cascade do |t|
-    t.string   "title",               limit: 255
+    t.string   "title",                       limit: 255
     t.text     "teaser"
-    t.string   "url",                 limit: 255
+    t.string   "url",                         limit: 255
     t.integer  "source_id"
     t.datetime "published_at"
     t.integer  "value"
     t.integer  "fb_likes"
     t.integer  "retweets"
-    t.string   "guid",                limit: 255
+    t.string   "guid",                        limit: 255
     t.integer  "linkedin"
     t.integer  "xing"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
     t.integer  "gplus"
     t.text     "full_text"
     t.integer  "word_length"
@@ -111,14 +111,15 @@ ActiveRecord::Schema.define(version: 20160314140252) do
     t.tsvector "search_vector"
     t.integer  "incoming_link_count"
     t.float    "absolute_score"
-    t.boolean  "blacklisted",                     default: false
+    t.boolean  "blacklisted",                             default: false
     t.integer  "reddit"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.integer  "impression_count",                default: 0
+    t.integer  "impression_count",                        default: 0
     t.string   "tweet_id"
+    t.integer  "absolute_score_per_halflife"
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree

@@ -17,6 +17,9 @@ Fabricator(:news_item) do
   word_length 100
   plaintext { |a| a[:teaser] }
   url 'http://www.pludoni.de/news/6/open-source-technologien-bei-pludoni'
+
+  after_create { rescore! }
+
 end
 
 Fabricator(:category) do
