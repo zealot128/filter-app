@@ -1,7 +1,7 @@
 Fabricator(:source) do
   name 'pludoni news'
   type 'FeedSource'
-  url 'http://www.pludoni.de/news.rss'
+  url { sequence(:url) { |i| "http://www.pludoni.de/#{i}/news.rss" }}
   value 1
   multiplicator 1
 end

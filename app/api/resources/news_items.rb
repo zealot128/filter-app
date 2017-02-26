@@ -8,9 +8,10 @@ class Resources::NewsItems < Grape::API
       optional :source_id, Integer
       optional :preferred, String
       optional :blacklisted, String
+      optional :categories, String
     end
     get '/' do
-      filter = NewsFilter.new(preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page])
+      filter = NewsFilter.new(preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page], categories: params[:categories])
       @news_items = filter.news_items
       if params[:source_id]
         @news_items = @news_items.where(source_id: params[:source_id])

@@ -6,15 +6,15 @@ class NewsItem < ActiveRecord::Base
     Setting.max_age.to_i.days
   end
 
-  scope :visible, -> { where('blacklisted != ?', true).where('value is not null and value > 0').where(source_id: Source.visible.select('id')) }
+  scope :visible, -> { where('blacklisted != ?', true).where('news_items.value is not null and news_items.value > 0').where(source_id: Source.visible.select('id')) }
   scope :show_page, -> { where('blacklisted != ?', true).
                          order('published_at desc').
                          where('absolute_score is not null and absolute_score > 0') }
   scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (max_age + 1.day).ago) }
-  scope :home_page, -> { where('value > 0').visible.order("value desc").where("value is not null").current }
-  scope :sorted, -> { visible.order("value desc") }
+  scope :home_page, -> { where('news_items.value > 0').visible.order("news_items.value desc").where("news_items.value is not null").current }
+  scope :sorted, -> { visible.order("news_items.value desc") }
   scope :recent, -> { where("published_at > ?", max_age.ago) }
   scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
