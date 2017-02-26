@@ -6,9 +6,12 @@ class Resources::NewsItems < Grape::API
       optional :page, Integer, default: 1
       optional :limit, Integer, default: 30
       optional :source_id, Integer
+      optional :preferred, String
+      optional :blacklisted, String
     end
     get '/' do
-      @news_items = NewsItem.sorted.includes(:categories, :source).limit(params[:limit]).page(params[:page])
+      filter = NewsFilter.new(preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page])
+      @news_items = filter.news_items
       if params[:source_id]
         @news_items = @news_items.where(source_id: params[:source_id])
       end

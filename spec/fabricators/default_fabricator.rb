@@ -1,4 +1,5 @@
 Fabricator(:source) do
+  name 'pludoni news'
   type 'FeedSource'
   url 'http://www.pludoni.de/news.rss'
   value 1
