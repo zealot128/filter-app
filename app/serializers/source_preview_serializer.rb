@@ -1,5 +1,6 @@
 class SourcePreviewSerializer < ApplicationSerializer
   attributes :id, :name, :homepage_url, :lsr_active, :language, :twitter_account
+  attributes :type
 
   attribute :logo
 

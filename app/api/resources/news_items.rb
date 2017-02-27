@@ -37,6 +37,10 @@ class Resources::NewsItems < Grape::API
       end
       base
     end
+
+    get '/:id' do
+      Source.visible.find(params[:id])
+    end
   end
 
 end
