@@ -27,16 +27,16 @@ class NewsItem < ActiveRecord::Base
   scope :top_percent_per_day, ->(min_date, percentile, min_news_per_day) {
     NewsItem.where(
       %{ news_items.id in (
-      SELECT id from (
-        SELECT count(*) over(PARTITION BY published_at::date ) AS total_count,
-        ROW_NUMBER() OVER (PARTITION BY published_at::date ORDER BY absolute_score DESC) as rank,
-        published_at::date as date,
-        id
-        FROM news_items
-        WHERE published_at > '#{min_date.to_date.to_s}'
-      ) sub
-      WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
-      ORDER BY date DESC, rank DESC
+          SELECT id from (
+            SELECT count(*) over(PARTITION BY published_at::date ) AS total_count,
+            ROW_NUMBER() OVER (PARTITION BY published_at::date ORDER BY absolute_score DESC) as rank,
+            published_at::date as date,
+            id
+            FROM news_items
+            WHERE published_at > '#{min_date.to_date.to_s}'
+          ) sub
+          WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
+          ORDER BY date DESC, rank DESC
       )
       }
     )
