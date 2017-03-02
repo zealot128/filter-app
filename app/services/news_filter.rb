@@ -5,6 +5,7 @@ class NewsFilter
   attr_accessor :blacklisted
   attr_accessor :page
   attr_accessor :categories
+  attr_accessor :order
 
   def news_items
     @news_items = NewsItem.sorted.includes(:categories, :source).limit(@limit).page(@page)
@@ -14,9 +15,13 @@ class NewsFilter
   end
 
   def apply_order!
-    ranking = "news_items.absolute_score_per_halflife + (log(news_items.absolute_score) *  #{boost}) "
-    @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
-    @news_items = @news_items.reorder!('current_score desc')
+    if order == 'best'
+      @news_items = @news_items.visible.top_percent_per_day(14.days.ago, 0.3334, 8)
+    else #hot_score
+      ranking = "news_items.absolute_score_per_halflife + (log(news_items.absolute_score) *  #{boost}) "
+      @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
+      @news_items = @news_items.reorder!('current_score desc')
+    end
   end
 
   def apply_filter!

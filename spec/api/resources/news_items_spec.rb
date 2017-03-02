@@ -48,6 +48,14 @@ describe Resources::NewsItems, type: :request do
       get '/api/v1/news_items.json'
       expect(json.news_items.map(&:id)).to be == [n2.id, n1.id]
     end
+
+    specify 'order by top score per day (Smoke test)' do
+      Fabricate(:news_item, absolute_score: 1)
+
+      get '/api/v1/news_items.json', order: 'best'
+      expect(json.news_items.length).to be == 1
+    end
+
   end
 
   describe '/api/v1/sources' do
