@@ -50,7 +50,7 @@ describe Resources::NewsItems, type: :request do
     end
 
     specify 'order by top score per day (Smoke test)' do
-      Fabricate(:news_item, absolute_score: 1)
+      Fabricate(:news_item, absolute_score: 10, value: 10, published_at: 1.day.ago)
 
       get '/api/v1/news_items.json', order: 'best'
       expect(json.news_items.length).to be == 1
