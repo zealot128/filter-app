@@ -136,10 +136,6 @@ GEM
       sax-machine (~> 1.0)
     font-awesome-rails (4.4.0.0)
       railties (>= 3.2, < 5.0)
-    fontsquirrel-download (1.1.1)
-      rails (>= 3.1)
-      rubyzip
-      rubyzip (>= 1.0)
     fspath (2.1.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -359,7 +355,6 @@ GEM
     ruby-stemmer (0.9.6)
     ruby_parser (3.8.4)
       sexp_processor (~> 4.1)
-    rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -466,7 +461,6 @@ DEPENDENCIES
   fabrication
   feedjira
   font-awesome-rails (~> 4.0)
-  fontsquirrel-download
   grape
   habtm_generator
   haml-rails
