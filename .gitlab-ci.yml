@@ -1,0 +1,39 @@
+---
+image: pludoni/rails-base:v6
+
+stages:
+  - test
+  - checks
+  - deploy
+
+rspec:
+  script:
+    - gem install bundler
+    - bundle install --jobs $(nproc) --path=/cache/bundler --without production
+    - cp config/application.hrfilter.yml config/application.yml
+    - cp config/secrets.yml.example config/secrets.yml
+    - cp config/database.yml.gitlab config/database.yml
+    - bundle exec rake db:create RAILS_ENV=test
+    - bundle exec rake db:schema:load RAILS_ENV=test
+    - "bundle exec rspec -f d --color --tty"
+  stage: test
+
+pronto:
+  image: pludoni/code-quality:v1
+  stage: test
+  script: 'run'
+
+bundle_audit:
+  stage: checks
+  script: |
+    gem install bundler-audit
+    bundle-audit update
+    bundle-audit check
+
+deploy:
+  image: pludoni/deploy:v2
+  script: deploy_products hrfilter
+  stage: deploy
+  environment: production
+  only:
+    - master
