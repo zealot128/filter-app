@@ -1,0 +1,9 @@
+
+test: &test
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  host: postgres
+  database: mydbname
+  username: postgres

@@ -1,11 +1,19 @@
 AllCops:
-  RunRailsCops: true
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'bin/*'
+    - 'scripts/**/*'
+    - 'db/**/*'
+Rails:
+  Enabled: true
 Style/GuardClause:
   MinBodyLength: 1
 Style/AndOr:
-  Enabled: false
+  EnforcedStyle: conditionals
 Style/PercentLiteralDelimiters:
   PreferredDelimiters: {}
+Style/Alias:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/PercentLiteralDelimiters:
@@ -13,10 +21,6 @@ Style/PercentLiteralDelimiters:
 Lint/UnusedMethodArgument:
   Enabled: false
 Rails/HasAndBelongsToMany:
-  Enabled: false
-Rails/FindBy:
-  Enabled: false
-Rails/ActionFilter:
   Enabled: false
 Metrics/ModuleLength:
   Enabled: false
@@ -39,4 +43,40 @@ Style/BlockDelimiters:
 Style/AndOr:
   Enabled: false
 Style/AlignParameters:
-  EnforcedStyle: with_fixed_indention
+  EnforcedStyle: with_fixed_indentation
+Rails/ActionFilter:
+  Enabled: false
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/NumericPredicate:
+  Enabled: false
+Performance/StringReplacement:
+  Enabled: false
+Style/Lambda:
+  EnforcedStyle: 'literal'
+Style/NilComparison:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Rails/HttpPositionalArguments:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+Style/WordArray:
+  Enabled: false
+Metrics/BlockLength:
+  # RSpec nervt
+  ExcludedMethods: ['task', 'namespace', 'get', 'post', 'describe', 'context', 'specify', 'it', 'route_param']
+Bundler/OrderedGems:
+  Enabled: false
+Rails/SkipsModelValidations:
+  Enabled: false
+Style/AccessorMethodName:
+  Enabled: false
+
+
+
