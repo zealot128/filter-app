@@ -63,6 +63,7 @@ group :test do
   gem "vcr"
   gem "webmock"
   gem "fabrication"
+  gem "simplecov"
 end
 
 group :development do

@@ -1,4 +1,15 @@
 ENV["RAILS_ENV"] ||= 'test'
+if ENV['CI']
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    # add_filter do |source_file|
+    #   source_file.lines.count < 10
+    # end
+    add_group "Long files" do |src_file|
+      src_file.lines.count > 150
+    end
+  end
+end
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
