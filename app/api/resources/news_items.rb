@@ -9,9 +9,10 @@ class Resources::NewsItems < Grape::API
       optional :preferred, String
       optional :blacklisted, String
       optional :categories, String
+      optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage)"
     end
     get '/' do
-      filter = NewsFilter.new(preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page], categories: params[:categories])
+      filter = NewsFilter.new(preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page], categories: params[:categories], order: params[:order])
       @news_items = filter.news_items
       if params[:source_id]
         @news_items = @news_items.where(source_id: params[:source_id])
@@ -36,6 +37,10 @@ class Resources::NewsItems < Grape::API
         base = base.where(default_category_id: params[:category_id])
       end
       base
+    end
+
+    get '/:id' do
+      Source.visible.find(params[:id])
     end
   end
 
