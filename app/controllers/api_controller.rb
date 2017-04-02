@@ -1,9 +1,6 @@
+# :nocov:
+# Legacy API
 class ApiController < ApplicationController
-  before_action do
-    # if params[:api_key] != Rails.application.secrets.api_key
-    #   render json: {status: :error, message: 'Unauthorized Access'}, status: :unauthorized
-    # end
-  end
 
   def news_items
     category = params["category"] || 0

@@ -14,6 +14,7 @@ class TwitterGateway
     Setting.get('twitter_account')
   end
 
+  # :nocov:
   def follow_all(accounts)
     cursor = api.friends
     existing = cursor.to_a.map{|i| i.screen_name}.map(&:downcase)
@@ -28,4 +29,5 @@ class TwitterGateway
     end
     new_follows
   end
+  # :nocov:
 end
