@@ -39,7 +39,7 @@ class NewsItem::LikeFetcher
   rescue Twitter::Error::TooManyRequests
     nil
   rescue Twitter::Error::BadRequest => e
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       nil
     else
       raise e

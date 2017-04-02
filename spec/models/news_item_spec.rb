@@ -10,9 +10,18 @@ describe NewsItem do
       like_fetcher.maybe_update_tweets(ni)
       expect(ni.retweets).to eq(1)
     end
+
     specify "Linkedin" do
       allow(Fetcher).to receive_messages fetch_url: OpenStruct.new(code: 200, body: 'IN.Tags.Share.handleCount({"count":174,"fCnt":"174","fCntPlusOne":"175","url":"http:\/\/developer.linkedin.com\/share-plugin"});')
       expect(like_fetcher.linkedin).to eq(174)
+    end
+
+    specify 'All' do
+      VCR.use_cassette 'like_fetcher/one', record: :new_episodes do
+        ni = Fabricate(:news_item, url: 'http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben')
+        NewsItem::LikeFetcher.fetch_for_news_item(ni)
+      end
+
     end
   end
 
