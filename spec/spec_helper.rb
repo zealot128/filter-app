@@ -8,6 +8,8 @@ if ENV['CI']
     add_group "Long files" do |src_file|
       src_file.lines.count > 150
     end
+    add_filter 'app/controllers/admin/'
+    add_filter 'lib/auto_assign_twitter.rb'
   end
 end
 require File.expand_path("../../config/environment", __FILE__)

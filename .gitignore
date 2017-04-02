@@ -19,3 +19,4 @@ config/application.yml
 config/secrets.yml
 .DS_Store
 .rspec.failed.txt
+coverage

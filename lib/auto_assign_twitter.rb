@@ -1,3 +1,4 @@
+# :nocov:
 class AutoAssignTwitter < Processor
 
   def self.run_all
@@ -51,4 +52,5 @@ class AutoAssignTwitter < Processor
     end
   end
 end
+# :nocov:
 
