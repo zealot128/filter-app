@@ -37,7 +37,7 @@ describe NewsItem::LinkageCalculator do
       ni.save!
     end
 
-    ni2 = source1.news_items.build.tap do |ni|
+    _ni2 = source1.news_items.build.tap do |ni|
       ni.url = "http://www.empfehlungsbund.de/news/2"
       ni.guid = 2
       ni.save!
@@ -45,6 +45,27 @@ describe NewsItem::LinkageCalculator do
 
     NewsItem::LinkageCalculator.run(scope: NewsItem.all)
 
+    expect(ni1.referenced_news.to_a).to eq([])
+  end
+
+  it 'ignores relative urls' do
+    ni1 = source1.news_items.build.tap do |ni|
+      ni.full_text = <<-DOC
+        Blab la <a href='/kontakt'>EB1</a>
+        Blab la <a href='./kontakt'>EB2</a>
+        Blab la <a href='kontakt'>EB3</a>
+      DOC
+      ni.url = "http://www.pludoni.de/kontakt"
+      ni.save!
+    end
+
+    _ni2 = source2.news_items.build.tap do |ni|
+      ni.url = "http://www.empfehlungsbund.de/kontakt"
+      ni.guid = 2
+      ni.save!
+    end
+
+    NewsItem::LinkageCalculator.run(scope: NewsItem.all)
     expect(ni1.referenced_news.to_a).to eq([])
   end
 
