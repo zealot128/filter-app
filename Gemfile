@@ -1,8 +1,6 @@
-#source "http://bundler-api.herokuapp.com"
 source "https://rubygems.org"
 
 gem "rails", "~> 4.2.0"
-gem "rack", "1.6.2"
 gem "sprockets-es6"
 gem "pg"
 gem "mail_form"
@@ -68,8 +66,6 @@ end
 
 group :development do
   gem "quiet_assets"
-  # gem "fontsquirrel-download"
-  gem "better_errors"
   gem "habtm_generator"
 end
 
