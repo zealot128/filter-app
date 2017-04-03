@@ -3,7 +3,15 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'scripts/**/*'
+    - 'script/**/*'
+    - 'one-time/**/*'
+    - 'one-timer/**/*'
+    - 'one-timers/**/*'
     - 'db/**/*'
+    - 'config.ru'
+    - 'Rakefile'
+    - 'lib/templates/**/*'
+    - 'vender/**/*'
 Rails:
   Enabled: true
 Style/GuardClause:
@@ -50,33 +58,52 @@ Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Style/FrozenStringLiteralComment:
   Enabled: false
+# class Admin::PageController
 Style/ClassAndModuleChildren:
   Enabled: false
+
+# asddsa == 0  -> asddsa.zero?
 Style/NumericPredicate:
   Enabled: false
 Performance/StringReplacement:
   Enabled: false
+# ->() {}  -- lambda {|a| }
 Style/Lambda:
   EnforcedStyle: 'literal'
+# if bla.nil?  --  if bla == nil
 Style/NilComparison:
   Enabled: false
+# Ruby 3
 Style/FrozenStringLiteralComment:
   Enabled: false
+# Rails 5 -> im Controller/Request Test get :foo, params: {}
 Rails/HttpPositionalArguments:
   Enabled: false
+# def bla; end
 Style/EmptyMethod:
   Enabled: false
+# [ "700", "200" ] -> %w[w w]
 Style/WordArray:
   Enabled: false
+# RSpec nervt
 Metrics/BlockLength:
-  # RSpec nervt
-  ExcludedMethods: ['task', 'namespace', 'get', 'post', 'describe', 'context', 'specify', 'it', 'route_param']
+  ExcludedMethods: ['task', 'namespace', 'get', 'post', 'describe', 'context', 'specify', 'it', 'route_param', 'draw', 'register', 'register_page', 'controller', 'included', 'params']
 Bundler/OrderedGems:
   Enabled: false
+# update_all, update_column
 Rails/SkipsModelValidations:
   Enabled: false
+# set_ und get_ verbote
 Style/AccessorMethodName:
   Enabled: false
+Style/TrailingCommaInLiteral:
+  Enabled: false
+  # EnforcedStyleForMultiline: consistent_comma
 
+Style/SymbolArray:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
 
 

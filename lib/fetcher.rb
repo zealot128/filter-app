@@ -13,7 +13,7 @@ module Fetcher
       # "Accept" => "text/html,application/xhtml+xml,application/xml"
     },
     format: :text
-  }
+  }.freeze
   # Ruft eine URL auf, probiert es mehrmals
   # liefert eine Struktur FetcherResponse zurueck
   #
@@ -32,19 +32,17 @@ module Fetcher
       break if check_link
       Kernel.sleep seconds
     end
-    if response.request and redirected = response.request.path and redirected.to_s != url
-      location = redirected.to_s
-    else
-      location = nil
-    end
+    location = if response.request and (redirected = response.request.path) and redirected.to_s != url
+                 redirected.to_s
+               end
     FetcherResponse.new response.code, response.body, response.content_type, location
   rescue Errno::ETIMEDOUT, Timeout::Error => e
     return FetcherResponse.new 408, e.to_s, "", ""
   rescue SocketError => e
     if e.to_s["getaddrinfo"]
-      message = "Die Webadresse konnte nicht gefunden werden (DNS-Problem)"
+      "Die Webadresse konnte nicht gefunden werden (DNS-Problem)"
     else
-      message = e.to_s
+      e.to_s
     end
   end
 
