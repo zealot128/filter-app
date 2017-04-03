@@ -42,7 +42,7 @@ describe Resources::NewsItems, type: :request do
 
     specify 'ranking by freshness' do
       n1 = Fabricate(:news_item, absolute_score: 11, published_at: 5.days.ago)
-      n2 = Fabricate(:news_item, absolute_score: 10, published_at: Time.now)
+      n2 = Fabricate(:news_item, absolute_score: 10, published_at: Time.zone.now)
 
       get '/api/v1/news_items.json'
       expect(json.news_items.map(&:id)).to be == [n2.id, n1.id]

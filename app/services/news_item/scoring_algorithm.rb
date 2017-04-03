@@ -34,7 +34,7 @@ class NewsItem::ScoringAlgorithm
     if data(:published_at) < @max_age
       time_factor = 0
     else
-      now = Time.now.to_i
+      now = Time.zone.now.to_i
       time_factor = (data(:published_at) - @max_age) / (now - @max_age).to_f
       time_factor **= 2.5 # Smooth out -> je aelter desto deutlich weniger
     end

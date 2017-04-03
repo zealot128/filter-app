@@ -51,7 +51,7 @@ class Source < ActiveRecord::Base
   end
 
   def age_in_weeks
-    ((Time.now - created_at) / 1.week).ceil
+    ((Time.zone.now - created_at) / 1.week).ceil
   end
 
   def download_thumb

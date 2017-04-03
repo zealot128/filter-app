@@ -67,7 +67,7 @@ class MailSubscription < ActiveRecord::Base
     self.company = nil
     self.academic_title = nil
     self.position = nil
-    self.deleted_at = Time.now
+    self.deleted_at = Time.zone.now
     self.categories = []
     self.token = nil
     self.save validate: false

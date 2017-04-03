@@ -15,7 +15,7 @@ class MailSubscriptionsController < ApplicationController
     @subscription = MailSubscription.new(permitted_params)
     if @subscription.valid?
       if params[:commit] == 'Vorschau'
-        from = Time.now - subscription.interval_from
+        from = Time.zone.now - subscription.interval_from
         preview(@subscription, from: from)
         return
       else
@@ -54,7 +54,7 @@ class MailSubscriptionsController < ApplicationController
     if subscription.last_send_date
       from = subscription.last_send_date - subscription.interval_from
     else
-      from = Time.now - subscription.interval_from
+      from = Time.zone.now - subscription.interval_from
     end
     preview(subscription, from: from)
   end
