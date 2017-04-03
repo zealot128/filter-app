@@ -24,12 +24,10 @@ class FacebookProcessor < Processor
     end
 
     text = parent.at('.userContent').text
-    filteredText = text.gsub(/[^\p{Word} #\b\.\,\/:]/, '').gsub(/ +/, ' ')
-    news_item.teaser = filteredText
-    news_item.published_at = Time.at parent.at('.timestampContent').parent['data-utime'].to_i
+    filtered_text = text.gsub(/[^\p{Word} #\b\.\,\/:]/, '').gsub(/ +/, ' ')
+    news_item.teaser = filtered_text
+    news_item.published_at = Time.zone.at parent.at('.timestampContent').parent['data-utime'].to_i
     news_item.rescore!
-    if !news_item.full_text.present?
-      NewsItem::FullTextFetcher.new(news_item, unknown_selector: true).run
-    end
+    NewsItem::FullTextFetcher.new(news_item, unknown_selector: true).run if news_item.full_text.blank?
   end
 end

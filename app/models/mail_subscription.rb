@@ -24,7 +24,7 @@ class MailSubscription < ActiveRecord::Base
 
   def due?
     return true if last_send_date.nil?
-    (last_send_date + interval_from).to_date <= Date.today
+    (last_send_date + interval_from).to_date <= Time.zone.today
   end
 
   def interval_from
@@ -70,7 +70,7 @@ class MailSubscription < ActiveRecord::Base
     self.deleted_at = Time.zone.now
     self.categories = []
     self.token = nil
-    self.save validate: false
+    save validate: false
   end
 
   def categories=(vals)

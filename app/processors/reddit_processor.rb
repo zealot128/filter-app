@@ -21,14 +21,14 @@ class RedditProcessor < Processor
 
     # Check if item with same url already exists
     if url.present? and @source.news_items.where(url: url).where('guid != ?', id).any?
-      ni.destroy if !ni.new_record?
+      ni.destroy unless ni.new_record?
       return
     end
 
     ni.title = data['title'].truncate(255)
     ni.url = url
     ni.reddit = data['score']
-    ni.published_at = Time.at data['created_utc']
+    ni.published_at = Time.zone.at data['created_utc']
     ni.xing ||= 0
     ni.linkedin ||= 0
     ni.fb_likes ||= 0
@@ -43,13 +43,11 @@ class RedditProcessor < Processor
       ni.teaser = teaser(ni.full_text)
     end
     if data['preview'] and ni.image.blank?
-      if i = (data['preview']['images']) and image = i.first['source']['url']
+      if (i = data['preview']['images']) and (image = i.first['source']['url'])
         ni.image = download_url(image)
       end
     end
     ni.save
-    if mechanize
-      NewsItem::ImageFetcher.new(ni, mechanize.page).run
-    end
+    NewsItem::ImageFetcher.new(ni, mechanize.page).run if mechanize
   end
 end

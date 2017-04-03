@@ -56,14 +56,14 @@ class Source < ActiveRecord::Base
 
   def download_thumb
     doc = Nokogiri.parse(open(host, redirect: true, allow_redirections: :all))
-    if rel = doc.at("link[rel=icon]") || rel = doc.at("link[rel='shortcut icon']") || rel = doc.at("link[rel='Shortcut icon']")
-      path = URI.join(url, rel["href"]).to_s
-    else
-      path = URI.join(url, "/favicon.ico").to_s
-    end
+    path = if (rel = doc.at("link[rel=icon]")) || (rel = doc.at("link[rel='shortcut icon']")) || (rel = doc.at("link[rel='Shortcut icon']"))
+             URI.join(url, rel["href"]).to_s
+           else
+             URI.join(url, "/favicon.ico").to_s
+           end
     file = download_url(path)
 
-    if !update_attributes logo: file
+    unless update_attributes logo: file
       # imagemagick can't find file-type -> try renaming to ico
       file.rewind
       tf = Tempfile.new(["thumb", ".ico"])
@@ -73,7 +73,7 @@ class Source < ActiveRecord::Base
         logo.reprocess!
       end
     end
-  rescue Exception => e
+  rescue StandardError => e
     Rails.logger.error "Logo download fehlgeschlagen fuer #{id} -> #{e.inspect}"
   end
 
@@ -84,7 +84,7 @@ class Source < ActiveRecord::Base
       begin
         t.refresh
         t.update_column :error, false
-      rescue Exception => e
+      rescue StandardError => e
         t.update_column :error, true
         Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
       end
@@ -101,6 +101,6 @@ class Source < ActiveRecord::Base
   end
 
   def refresh
-    fail "NotImplementedError"
+    raise "NotImplementedError"
   end
 end

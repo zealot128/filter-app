@@ -21,7 +21,9 @@ class MailSubscriptionsController < ApplicationController
       else
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-        render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>', layout: true
+        render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
+               'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>',
+               layout: true
       end
     else
       render :index
@@ -51,11 +53,11 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def show
-    if subscription.last_send_date
-      from = subscription.last_send_date - subscription.interval_from
-    else
-      from = Time.zone.now - subscription.interval_from
-    end
+    from = if subscription.last_send_date
+             subscription.last_send_date - subscription.interval_from
+           else
+             Time.zone.now - subscription.interval_from
+           end
     preview(subscription, from: from)
   end
 
@@ -70,20 +72,20 @@ class MailSubscriptionsController < ApplicationController
 
   def permitted_params
     params.require(:mail_subscription).permit(:interval,
-                                              :email,
-                                              :first_name,
-                                              :last_name,
-                                              :gender,
-                                              :academic_title,
-                                              :position,
-                                              :company,
-                                              :extended_member,
-                                              :limit,
-                                              categories: [])
+      :email,
+      :first_name,
+      :last_name,
+      :gender,
+      :academic_title,
+      :position,
+      :company,
+      :extended_member,
+      :limit,
+      categories: [])
   end
 
   def subscription
-    @subscription ||= MailSubscription.find_by_token!(params[:id])
+    @subscription ||= MailSubscription.find_by!(token: params[:id])
   end
   helper_method :subscription
 end

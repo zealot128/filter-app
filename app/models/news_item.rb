@@ -1,4 +1,6 @@
 require "fetcher"
+
+# rubocop:disable Style/GuardClause
 class NewsItem < ActiveRecord::Base
   # half life of items is 12.5 hours; all items within the same batch get the same base time score
   HALF_LIFE = 45_000
@@ -10,14 +12,16 @@ class NewsItem < ActiveRecord::Base
   end
 
   scope :visible, -> {
-                    where('blacklisted != ?', true).
-                       where('news_items.absolute_score is not null and news_items.absolute_score > 0').
-                       where('absolute_score_per_halflife is not null').
-                       where(source_id: Source.visible.select('id')) }
+    where('blacklisted != ?', true).
+      where('news_items.absolute_score is not null and news_items.absolute_score > 0').
+      where('absolute_score_per_halflife is not null').
+      where(source_id: Source.visible.select('id'))
+  }
   scope :show_page, -> {
-                      where('blacklisted != ?', true).
-                         order('published_at desc').
-                         where('absolute_score is not null and absolute_score > 0') }
+    where('blacklisted != ?', true).
+      order('published_at desc').
+      where('absolute_score is not null and absolute_score > 0')
+  }
   scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (max_age + 1.day).ago) }
@@ -35,7 +39,7 @@ class NewsItem < ActiveRecord::Base
             published_at::date as date,
             id
             FROM news_items
-            WHERE published_at > '#{min_date.to_date.to_s}'
+            WHERE published_at > '#{min_date.to_date}'
           ) sub
           WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
           ORDER BY date DESC, rank DESC
@@ -44,7 +48,7 @@ class NewsItem < ActiveRecord::Base
     )
   }
 
-  scope :uncategorized, lambda {
+  scope :uncategorized, -> {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
       where('news_item_id is null').
       group('news_items.id')
@@ -63,12 +67,12 @@ class NewsItem < ActiveRecord::Base
 
   validates :guid, uniqueness: { scope: [:source_id] }
 
-  NEWSLETTER_SIZE = [140, 70]
+  NEWSLETTER_SIZE = [140, 70].freeze
   has_attached_file :image,
     styles: {
       original: ["250x200>", :jpg],
       newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg]
-},
+    },
     processors: [:thumbnail, :paperclip_optimizer],
     convert_options: {
       newsletter: "-flatten -colorspace RGB -size #{NEWSLETTER_SIZE.join('x')} xc:white +swap -gravity center -composite"
@@ -77,16 +81,16 @@ class NewsItem < ActiveRecord::Base
 
   include PgSearch
   pg_search_scope :search_full_text,
-                  order_within_rank: "news_items.published_at DESC",
-                  against: :search_vector,
-                  using: {
-                    tsearch: {
-                      dictionary: 'german',
-                      any_word: true,
-                      prefix: true,
-                      tsvector_column: 'search_vector'
-                    }
-                  }
+    order_within_rank: "news_items.published_at DESC",
+    against: :search_vector,
+    using: {
+      tsearch: {
+        dictionary: 'german',
+        any_word: true,
+        prefix: true,
+        tsvector_column: 'search_vector'
+      }
+    }
 
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"

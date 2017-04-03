@@ -1,4 +1,5 @@
 # :nocov:
+# rubocop:disable Rails/Output,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/GuardClause
 class AutoAssignTwitter < Processor
   def self.run_all
     FeedSource.where(twitter_account: nil).find_each do |a|
@@ -13,7 +14,7 @@ class AutoAssignTwitter < Processor
   def run(news_item: @source.news_items.order('created_at desc').first, count: 0)
     return if @source.twitter_account
     return if count > 3
-    return if !news_item
+    return unless news_item
     if count == 0
       base_url = URI.parse(news_item.url).tap { |q| q.path = '/' }.to_s
       page = get base_url
@@ -31,10 +32,10 @@ class AutoAssignTwitter < Processor
   end
 
   def find_link_on_page(page)
-    if intent = page.links.select { |i| i.href.to_s['https://twitter.com/intent/follow'] }.first
+    if (intent = page.links.select { |i| i.href.to_s['https://twitter.com/intent/follow'] }.first)
       assign_account CGI.parse(URI.parse(intent.href).query)['screen_name'].first
     end
-    if intent = page.links.select { |i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}] && !i.href[/share/] }.first
+    if (intent = page.links.select { |i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}] && !i.href[/share/] }.first)
       acc = intent.href.split('/').last
       assign_account acc
     end
@@ -43,12 +44,9 @@ class AutoAssignTwitter < Processor
   private
 
   def assign_account(a)
-    if a
-      @source.twitter_account = a
-      if @source.save
-        puts "Found Twitter-Account #{a} #{@source.name}"
-      end
-    end
+    return unless a
+    @source.twitter_account = a
+    puts "Found Twitter-Account #{a} #{@source.name}" if @source.save
   end
 end
 # :nocov:
