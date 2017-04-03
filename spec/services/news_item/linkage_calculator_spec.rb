@@ -17,14 +17,14 @@ describe NewsItem::LinkageCalculator do
 
     NewsItem::LinkageCalculator.run(scope: NewsItem.all)
 
-    expect(target.referenced_news.to_a).to eq([ source ])
-    expect(source.referencing_news.to_a).to eq([ target ])
+    expect(target.referenced_news.to_a).to eq([source])
+    expect(source.referencing_news.to_a).to eq([target])
 
     # Multiple run idempotent
     NewsItem::LinkageCalculator.run(scope: NewsItem.all)
 
-    expect(target.referenced_news.to_a).to eq([ source ])
-    expect(source.referencing_news.to_a).to eq([ target ])
+    expect(target.referenced_news.to_a).to eq([source])
+    expect(source.referencing_news.to_a).to eq([target])
   end
 
   it 'ignores self referencing links' do
@@ -68,5 +68,4 @@ describe NewsItem::LinkageCalculator do
     NewsItem::LinkageCalculator.run(scope: NewsItem.all)
     expect(ni1.referenced_news.to_a).to eq([])
   end
-
 end

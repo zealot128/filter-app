@@ -27,7 +27,7 @@ class Source < ActiveRecord::Base
   end
 
   def homepage_url
-    URI.parse(url).tap{|o| o.path = '/'; o.query =nil}.to_s
+    URI.parse(url).tap { |o| o.path = '/'; o.query = nil }.to_s
   end
 
   def host

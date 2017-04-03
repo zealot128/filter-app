@@ -1,6 +1,5 @@
 require "spec_helper"
 describe Resources::NewsItems, type: :request do
-
   describe '/api/v1/news_items' do
     specify 'filter' do
       Fabricate(:news_item, absolute_score: 1)
@@ -31,10 +30,10 @@ describe Resources::NewsItems, type: :request do
     specify 'Category filter' do
       c1 = Fabricate(:category)
       c2 = Fabricate(:category)
-      n1  = Fabricate(:news_item, absolute_score: 10)
+      n1 = Fabricate(:news_item, absolute_score: 10)
       n1.categories << c1
       n1.categories << c2
-      n2  = Fabricate(:news_item, absolute_score: 11)
+      n2 = Fabricate(:news_item, absolute_score: 11)
       n2.categories << c1
 
       get '/api/v1/news_items.json', categories: c2.id
@@ -55,7 +54,6 @@ describe Resources::NewsItems, type: :request do
       get '/api/v1/news_items.json', order: 'best'
       expect(json.news_items.length).to be == 1
     end
-
   end
 
   describe '/api/v1/sources' do
@@ -65,7 +63,6 @@ describe Resources::NewsItems, type: :request do
       get "/api/v1/sources/#{s.id}.json"
       expect(json.source.name).to be == s.name
     end
-
   end
 
   def json

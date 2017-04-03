@@ -13,7 +13,7 @@ describe 'NewsletterMailing' do
     Category.create!(name: 'Gehalt', keywords: '')
   }
   specify 'tracks send status so no duplicate send' do
-    VCR.use_cassette 'events', record: :new_episodes do
+    VCR.use_cassette 'events' do
       subscription.confirm!
 
       # Keine Mail, wenn nichts neues
@@ -42,12 +42,12 @@ describe 'NewsletterMailing' do
   end
 
   specify 'adds newly added categories, even if not subscribed' do
-    VCR.use_cassette 'events', record: :new_episodes do
+    VCR.use_cassette 'events' do
       subscription.confirm!
       import_stuff!
 
-      Category.create!(name: 'NewCategoryOk', keywords:'')
-      Category.create!(name: 'NewCategoryTooOld', keywords:'', created_at: 14.days.ago)
+      Category.create!(name: 'NewCategoryOk', keywords: '')
+      Category.create!(name: 'NewCategoryTooOld', keywords: '', created_at: 14.days.ago)
       Newsletter::Mailing.cronjob
       expect(ActionMailer::Base.deliveries.count).to eq(1)
 

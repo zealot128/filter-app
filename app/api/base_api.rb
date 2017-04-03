@@ -22,7 +22,7 @@ module BaseApi
         Airbrake.notify(e) if defined?(Airbrake)
         ExceptionNotification.notify_exception(e) if defined?(ExceptionNotification)
       end
-      Rack::Response.new({ message: e.message, backtrace: trace }.to_json, 500, { 'Content-type' => 'application/json' }).finish
+      Rack::Response.new({ message: e.message, backtrace: trace }.to_json, 500, 'Content-type' => 'application/json').finish
     end
     format :json
     use Grape::Middleware::Globals
@@ -31,4 +31,3 @@ module BaseApi
     logger Rails.logger
   end
 end
-

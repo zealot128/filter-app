@@ -17,7 +17,7 @@ class TwitterGateway
   # :nocov:
   def follow_all(accounts)
     cursor = api.friends
-    existing = cursor.to_a.map{|i| i.screen_name}.map(&:downcase)
+    existing = cursor.to_a.map { |i| i.screen_name }.map(&:downcase)
     to_follow = accounts - existing
 
     new_follows = []

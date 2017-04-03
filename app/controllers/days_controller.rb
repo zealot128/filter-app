@@ -9,7 +9,7 @@ class DaysController < ApplicationController
       all =  NewsItem.top_of_day(date)
       take = [(all.count * 0.33).ceil, 8].max
       news = all.limit(take)
-      [ date, all.count, news]
+      [date, all.count, news]
     }
   end
 

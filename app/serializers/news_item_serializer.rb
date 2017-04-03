@@ -5,7 +5,6 @@ class NewsItemSerializer < ApplicationSerializer
   attribute :categories
   has_one :source, serializer: SourcePreviewSerializer
 
-
   def url
     click_proxy_url(object, host: 'www.hrfilter.de', protocol: 'https')
   end
@@ -37,7 +36,5 @@ class NewsItemSerializer < ApplicationSerializer
     else
       {}
     end
-
   end
-
 end

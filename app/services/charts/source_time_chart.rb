@@ -26,7 +26,7 @@ module Charts
         xAxis: {
           categories: true,
           labels: {
-            style: { fontSize: '8px'}
+            style: { fontSize: '8px' }
           }
         },
         legend: { enabled: false },
@@ -49,11 +49,10 @@ module Charts
 
     def data
       couples = @news_items.group('to_char( published_at, \'YYYY/MM\')').where('published_at > ?', 25.months.ago).count
-      24.times.map {|i| i.month.ago.strftime('%Y/%m')}.each do |month|
+      24.times.map { |i| i.month.ago.strftime('%Y/%m') }.each do |month|
         couples[month] ||= 0
       end
-      couples.sort_by{|k,v| k}
+      couples.sort_by { |k, v| k }
     end
-
   end
 end

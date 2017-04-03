@@ -26,6 +26,5 @@ describe NewsItemsController do
       # TODO: Doesn't work in Test - no trigger/stored procs
       expect(assigns(:news_items)).to be == []
     end
-
   end
 end

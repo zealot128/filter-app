@@ -73,5 +73,4 @@ class NewsItemsController < ApplicationController
   def page
     [1, params[:page].to_i].max
   end
-
 end

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Configures your navigation
 SimpleNavigation::Configuration.run do |navigation|
-
   navigation.consider_item_names_as_safe = true
   navigation.items do |primary|
     primary.dom_class = 'nav navbar-nav'
@@ -19,6 +18,5 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_nav.item :key_2_3, 'Abonnenten', admin_mail_subscriptions_path
       end
     end
-
   end
 end

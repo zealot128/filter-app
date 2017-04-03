@@ -1,5 +1,4 @@
 class FacebookSource < Source
-
   def refresh
     FacebookProcessor.new.run_all(self)
   end

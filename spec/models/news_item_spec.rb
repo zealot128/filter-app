@@ -21,7 +21,6 @@ describe NewsItem do
         ni = Fabricate(:news_item, url: 'http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben')
         NewsItem::LikeFetcher.fetch_for_news_item(ni)
       end
-
     end
   end
 
@@ -33,7 +32,7 @@ describe NewsItem do
       ni = Fabricate.build(:news_item, title: 'Gehalt bla')
       ni.source.default_category = c2
       ni.categorize
-      expect(ni.categories.sort_by{|i| i.id}).to eq([c1,c2])
+      expect(ni.categories.sort_by { |i| i.id }).to eq([c1, c2])
 
       ni.source.default_category = nil
       ni.categorize

@@ -9,11 +9,13 @@ class NewsItem < ActiveRecord::Base
     Setting.max_age.to_i.days
   end
 
-  scope :visible, -> { where('blacklisted != ?', true).
+  scope :visible, -> {
+                    where('blacklisted != ?', true).
                        where('news_items.absolute_score is not null and news_items.absolute_score > 0').
                        where('absolute_score_per_halflife is not null').
                        where(source_id: Source.visible.select('id')) }
-  scope :show_page, -> { where('blacklisted != ?', true).
+  scope :show_page, -> {
+                      where('blacklisted != ?', true).
                          order('published_at desc').
                          where('absolute_score is not null and absolute_score > 0') }
   scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
@@ -65,7 +67,8 @@ class NewsItem < ActiveRecord::Base
   has_attached_file :image,
     styles: {
       original: ["250x200>", :jpg],
-      newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg] },
+      newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg]
+},
     processors: [:thumbnail, :paperclip_optimizer],
     convert_options: {
       newsletter: "-flatten -colorspace RGB -size #{NEWSLETTER_SIZE.join('x')} xc:white +swap -gravity center -composite"
@@ -180,10 +183,9 @@ class NewsItem < ActiveRecord::Base
   end
 
   def self.cleanup
-    NewsItem.where('published_at < ?', 6.months.ago).where.not(image_file_name: nil).find_each{|i|
+    NewsItem.where('published_at < ?', 6.months.ago).where.not(image_file_name: nil).find_each { |i|
       i.image = nil
       i.save validate: false
     }
   end
-
 end

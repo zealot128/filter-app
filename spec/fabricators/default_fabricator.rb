@@ -1,7 +1,7 @@
 Fabricator(:source) do
   name 'pludoni news'
   type 'FeedSource'
-  url { sequence(:url) { |i| "http://www.pludoni.de/#{i}/news.rss" }}
+  url { sequence(:url) { |i| "http://www.pludoni.de/#{i}/news.rss" } }
   value 1
   multiplicator 1
 end
@@ -19,7 +19,6 @@ Fabricator(:news_item) do
   url 'http://www.pludoni.de/news/6/open-source-technologien-bei-pludoni'
 
   after_create { rescore! }
-
 end
 
 Fabricator(:category) do

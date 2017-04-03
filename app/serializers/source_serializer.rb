@@ -14,6 +14,6 @@ class SourceSerializer < SourcePreviewSerializer
 
   def top_categories
     object.news_items.joins(:categories).
-      group('categories.id').order('count_all desc').limit(3).count.to_a.map{|id, count| Category.find(id).as_json.merge(count: count) }
+      group('categories.id').order('count_all desc').limit(3).count.to_a.map { |id, count| Category.find(id).as_json.merge(count: count) }
   end
 end

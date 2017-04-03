@@ -1,6 +1,6 @@
 xml.instruct!
 xml.rss(version: "2.0",
-        "xmlns:atom"=>"http://www.w3.org/2005/Atom") do
+        "xmlns:atom" => "http://www.w3.org/2005/Atom") do
   xml.channel do
     xml.title "HR-Filter Feed für Suche nach #{params[:q]}"
     xml.link search_url(q: params[:q], sort: params[:sort])
@@ -18,4 +18,3 @@ xml.rss(version: "2.0",
     end
   end
 end
-

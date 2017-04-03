@@ -1,6 +1,5 @@
 module Newsletter
   class Mailing
-
     attr_reader :subscription, :new_categories
     attr_accessor :from
 
@@ -67,20 +66,20 @@ module Newsletter
             s << CategorySection.new(cat, self)
           end
 
-          all_news_items = s.flat_map(&:news_items).sort_by{|i| -(i.absolute_score || 0)}.uniq(&:id)
+          all_news_items = s.flat_map(&:news_items).sort_by { |i| -(i.absolute_score || 0) }.uniq(&:id)
           @total_count = all_news_items.count
           filtered_news_items = all_news_items.take(@subscription.limit || 100)
           s.each do |section|
-            section.news_items = section.news_items.select{|ni| filtered_news_items.include?(ni) }
+            section.news_items = section.news_items.select { |ni| filtered_news_items.include?(ni) }
           end
 
           # uniq filtern
           already_checked = []
-          s.sort_by{|i| i.news_items.count }.each do |section|
+          s.sort_by { |i| i.news_items.count }.each do |section|
             section.news_items = section.news_items - already_checked
             already_checked += section.news_items
           end
-          s.reject!{|i| i.news_items.count == 0 }
+          s.reject! { |i| i.news_items.count == 0 }
           @new_categories = Category.where('created_at between ? and ?', *interval) - categories
           if @subscription.extended_member?
             section = ExtendedMemberSection.new(self)
@@ -106,7 +105,7 @@ module Newsletter
     end
 
     def count
-      sections.map{|i| i.respond_to?(:news_items) ? i.news_items.count : 0}.sum
+      sections.map { |i| i.respond_to?(:news_items) ? i.news_items.count : 0 }.sum
     end
 
     def total_count
@@ -119,10 +118,9 @@ module Newsletter
 
     def interval
       to = from + subscription.interval_from
-      [ from, to ]
+      [from, to]
     end
 
     private
-
   end
 end

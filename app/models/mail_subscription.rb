@@ -16,7 +16,7 @@ class MailSubscription < ActiveRecord::Base
 
   has_many :impressions, foreign_key: 'user_id'
 
-  enum status: [:unconfirmed, :confirmed, :unsubscribed ]
+  enum status: [:unconfirmed, :confirmed, :unsubscribed]
 
   def confirm!
     update_column :status, MailSubscription.statuses[:confirmed]
@@ -37,7 +37,7 @@ class MailSubscription < ActiveRecord::Base
 
   def salutation
     if gender? and last_name?
-      [ male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].reject(&:blank?).join(' ')
+      [male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].reject(&:blank?).join(' ')
     else
       'Hallo'
     end

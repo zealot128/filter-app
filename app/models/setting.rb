@@ -2,7 +2,7 @@ class Setting < ActiveRecord::Base
   serialize :value, JSON
   class << self
     def get(name, force: false)
-      keys = [ name ]
+      keys = [name]
       if I18n.locale == :en
         keys.prepend(name.to_s + '_en')
       end
@@ -42,7 +42,7 @@ class Setting < ActiveRecord::Base
     def to_h
       begin
         pairs = all.map do |setting|
-          [ setting.key, setting.value]
+          [setting.key, setting.value]
         end
         Hash[pairs]
       end
@@ -62,8 +62,8 @@ class Setting < ActiveRecord::Base
         rescue RuntimeError
           Rails.application.config_for('application.hrfilter')
         end
-      configuration.each do |k,v|
-        set k,v
+      configuration.each do |k, v|
+        set k, v
       end
     rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
     end

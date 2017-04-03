@@ -11,5 +11,4 @@ class SourcePreviewSerializer < ApplicationSerializer
       nil
     end
   end
-
 end

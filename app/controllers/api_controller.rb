@@ -1,7 +1,6 @@
 # :nocov:
 # Legacy API
 class ApiController < ApplicationController
-
   def news_items
     category = params["category"] || 0
     order = params["order"] || "recent"
@@ -23,10 +22,10 @@ class ApiController < ApplicationController
 
   def categories
     if params[:id]
-      if category = grouped_categories.select{|cat| cat["id"] == params[:id].to_i}.first
+      if category = grouped_categories.select { |cat| cat["id"] == params[:id].to_i }.first
         render json: category.to_json, status: 200
       else
-        render json: {status: :error, message: 'Not found'}, status: 404
+        render json: { status: :error, message: 'Not found' }, status: 404
       end
     else
       render json: grouped_categories, status: 200
@@ -39,7 +38,7 @@ class ApiController < ApplicationController
     grouped_categories ||= Category.joins(:categories_news_items).group("categories_news_items.category_id").count
     grouped_categories = grouped_categories.map do |id, count|
       category = Category.find(id)
-      category.attributes.merge({"news_items_count" => count})
+      category.attributes.merge("news_items_count" => count)
     end
     grouped_categories
   end

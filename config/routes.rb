@@ -14,7 +14,6 @@ Baseapp::Application.routes.draw do
     resources :settings
     get 'twitter' => 'twitter#index'
     post 'twitter/follow' => 'twitter#follow'
-
   end
   get 'admin' => redirect('/admin/sources')
 

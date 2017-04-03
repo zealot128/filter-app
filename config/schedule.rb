@@ -30,7 +30,6 @@ every 1.day, at: '5:00 am' do
   rake "-s sitemap:refresh"
 end
 
-
 %w[09 10 12 14 16 18].each do |h|
   minute = rand(0..59)
   every 1.day, at: "#{h}:#{sprintf("%02d", minute)}" do

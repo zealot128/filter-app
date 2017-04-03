@@ -16,5 +16,4 @@ describe FacebookSource do
       expect(source.logo).to be_present
     end
   end
-
 end

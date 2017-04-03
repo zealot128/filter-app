@@ -63,7 +63,7 @@ class MailSubscriptionsController < ApplicationController
 
   def preview(subscription, from: 1.week.ago.at_beginning_of_week)
     @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from))
-    ActionMailer::Base.preview_interceptors.each {|i| i.previewing_email(@mail) }
+    ActionMailer::Base.preview_interceptors.each { |i| i.previewing_email(@mail) }
     @body = @mail.html_part.body.to_s
     render 'preview', layout: false
   end

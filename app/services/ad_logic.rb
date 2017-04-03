@@ -5,7 +5,7 @@ class AdLogic
     end
 
     def events
-      (EmpfehlungsbundApiClient.community_events + EmpfehlungsbundApiClient.partner_events).sort_by{|i| i.from }
+      (EmpfehlungsbundApiClient.community_events + EmpfehlungsbundApiClient.partner_events).sort_by { |i| i.from }
     end
 
     def third_party_news
@@ -24,6 +24,5 @@ class AdLogic
         order('absolute_score desc').
         limit(4)
     end
-
   end
 end

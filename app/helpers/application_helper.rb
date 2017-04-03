@@ -1,10 +1,10 @@
 module ApplicationHelper
   def page_title
-    [ @title, Setting.site_name].reject(&:blank?).join(' | ')
+    [@title, Setting.site_name].reject(&:blank?).join(' | ')
   end
 
   def homepage(url)
-    URI.parse(url).tap{|o| o.path = '/'; o.query =nil}.to_s
+    URI.parse(url).tap { |o| o.path = '/'; o.query = nil }.to_s
   end
 
   def day_path(day)

@@ -1,6 +1,5 @@
 # :nocov:
 class AutoAssignTwitter < Processor
-
   def self.run_all
     FeedSource.where(twitter_account: nil).find_each do |a|
       AutoAssignTwitter.new(a).run
@@ -16,7 +15,7 @@ class AutoAssignTwitter < Processor
     return if count > 3
     return if !news_item
     if count == 0
-      base_url = URI.parse(news_item.url).tap{|q| q.path = '/'}.to_s
+      base_url = URI.parse(news_item.url).tap { |q| q.path = '/' }.to_s
       page = get base_url
       find_link_on_page(page)
     end
@@ -32,10 +31,10 @@ class AutoAssignTwitter < Processor
   end
 
   def find_link_on_page(page)
-    if intent = page.links.select{|i| i.href.to_s['https://twitter.com/intent/follow']}.first
-      assign_account  CGI.parse(URI.parse(intent.href).query)['screen_name'].first
+    if intent = page.links.select { |i| i.href.to_s['https://twitter.com/intent/follow'] }.first
+      assign_account CGI.parse(URI.parse(intent.href).query)['screen_name'].first
     end
-    if intent = page.links.select{|i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}] && !i.href[/share/]}.first
+    if intent = page.links.select { |i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}] && !i.href[/share/] }.first
       acc = intent.href.split('/').last
       assign_account acc
     end
@@ -53,4 +52,3 @@ class AutoAssignTwitter < Processor
   end
 end
 # :nocov:
-

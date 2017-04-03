@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 
   before_save do
     if !hash_tag?
-      self.hash_tag = name.gsub(' ','')
+      self.hash_tag = name.gsub(' ', '')
     end
   end
 

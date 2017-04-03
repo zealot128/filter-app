@@ -1,5 +1,4 @@
 class FacebookProcessor < Processor
-
   def run_all(source)
     get source.remote_url
     @m.page.search('._52c6').each do |item|
@@ -8,7 +7,6 @@ class FacebookProcessor < Processor
       rescue Mechanize::ResponseCodeError
       end
     end
-
   end
 
   def process_dom_item(parent, source)
@@ -34,5 +32,4 @@ class FacebookProcessor < Processor
       NewsItem::FullTextFetcher.new(news_item, unknown_selector: true).run
     end
   end
-
 end

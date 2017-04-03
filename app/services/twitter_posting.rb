@@ -3,7 +3,7 @@ class TwitterPosting
     return if !Setting.get('twitter_access_token')
     candidates = AdLogic.twitter_news(from, to)
 
-    candidates.select{|i| i.tweet_id.blank? }.take(1).each do |ni|
+    candidates.select { |i| i.tweet_id.blank? }.take(1).each do |ni|
       new(ni).run
     end
   end
@@ -27,7 +27,7 @@ class TwitterPosting
   end
 
   def maybe_hashtags
-    c = @news_item.categories.take(1).map{|i| "##{i.hash_tag}" }.join(' ')
+    c = @news_item.categories.take(1).map { |i| "##{i.hash_tag}" }.join(' ')
     if c.present?
       c.prepend(" ")
     else
