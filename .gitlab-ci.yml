@@ -1,5 +1,5 @@
 ---
-image: pludoni/rails-base:v7
+image: pludoni/rails-base:v6
 
 stages:
   - test
