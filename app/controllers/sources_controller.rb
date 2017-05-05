@@ -1,4 +1,6 @@
 class SourcesController < ApplicationController
+  before_action :stop_bad_crawler!, only: :search
+
   def index
     @sources = Source.order('lower(name)')
   end
