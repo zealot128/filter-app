@@ -74,7 +74,7 @@ class FeedProcessor < Processor
     @item.title = title if title.present?
     @item.teaser = teaser(text) if text.present?
     @item.save!
-    if @entry.image.present? and @item.image.blank?
+    if defined?(@entry.image) and @entry.image.present? and @item.image.blank?
       begin
         image = download_url(@entry.image)
         @item.update_attributes image: image
