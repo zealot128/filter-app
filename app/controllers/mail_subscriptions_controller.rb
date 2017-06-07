@@ -33,6 +33,7 @@ class MailSubscriptionsController < ApplicationController
   def confirm
     subscription.confirm!
     render text: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
+    NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription)).deliver_now 
   end
 
   def edit

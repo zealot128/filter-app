@@ -51,7 +51,7 @@ It is possible to subscribe via E-Mail. Then, once per week on sunday, you will 
 
 # Development
 
-As it is a fully functioning Rails app, you can try to run it yourself. First make sure to have Ruby at least 2.0 installed and bundler, then:
+As it is a fully functioning Rails app, you can try to run it yourself. First make sure to have Ruby at least 2.1.9 installed and bundler, then:
 
 ```
 git clone ...
@@ -59,6 +59,7 @@ cd ...
 bundle install
 rake environment db:create
 rake db:migrate
+rake db:schema:load
 rails server
 ```
 
