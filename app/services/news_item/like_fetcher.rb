@@ -65,12 +65,30 @@ class NewsItem::LikeFetcher
 
   def reddit
     response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}")
-    json = JSON.load response.body
+    json = JSON.parse(response.body)
     json['data']['children'].map { |i| i['data']['score'] }.sum
   end
 
   def gplus
-    Nokogiri.parse(Fetcher.fetch_url("https://plusone.google.com/u/0/_/+1/fastbutton?url=#{eurl}").body).at("#aggregateCount").text.to_i
+    data = {
+      method: "pos.plusones.get",
+      id: url,
+      params: {
+        nolog: true,
+        id: url,
+        source: "widget",
+        userId: "@viewer",
+        groupId: "@self"
+      },
+      jsonrpc: "2.0",
+      key: "p",
+      apiVersion: "v1"
+    }
+    response = HTTParty.post("https://clients6.google.com/rpc", body: data.to_json, headers: { 'Content-Type' => 'application/json' })
+    return nil unless response.success?
+    response.to_h.dig('result', 'metadata', 'globalCounts', 'count').try(:to_i)
+  rescue SocketError, HTTParty::Error, Timeout::Error
+    nil
   end
 
   private
