@@ -22,7 +22,7 @@ gem "lograge"
 gem "open_uri_redirections"
 gem "angularjs-rails"
 
-gem "impressionist"
+gem "impressionist", '= 1.5.1'
 gem "exception_notification"
 gem "paperclip"
 gem "paperclip-optimizer"

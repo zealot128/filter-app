@@ -3,6 +3,7 @@ Fabricator(:source) do
   type 'FeedSource'
   url { sequence(:url) { |i| "http://www.pludoni.de/#{i}/news.rss" } }
   value 1
+  language 'german'
   multiplicator 1
 end
 
