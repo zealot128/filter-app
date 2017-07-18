@@ -1,13 +1,14 @@
 class NewsItemsController < ApplicationController
+  before_action :stop_bad_crawler!, only: [:index, :homepage]
+
   def index
     minscore = 0.5
     if params[:q].present?
       @feed_url = search_url(q: params[:q], sort: params[:sort], format: :rss)
-      @news_items = NewsItem.
-                    where('published_at > ?', 2.years.ago).
-                    includes(:source, :categories).
-                    search_full_text(params[:q]).
-                    with_pg_search_rank.where('rank > ?', minscore)
+      @news_items = NewsItem.where('published_at > ?', 2.years.ago).
+                             includes(:source, :categories).
+                             search_full_text(params[:q]).
+                             with_pg_search_rank.where('rank > ?', minscore)
       case params[:order]
       when 'recent'
         @news_items = @news_items.reorder('published_at desc')
@@ -40,14 +41,14 @@ class NewsItemsController < ApplicationController
   def homepage
     @news_items = NewsItem.home_page.limit(36).page(page)
     if params[:category].present?
-      case params[:category].to_i
-      when 0
-        @news_items = @news_items.uncategorized
-      when -1
-        @news_items = @news_items
-      else
-        @news_items = @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
-      end
+      @news_items = case params[:category].to_i
+                    when 0
+                      @news_items.uncategorized
+                    when -1
+                      @news_items
+                    else
+                      @news_items.joins(:categories).where(categories: { id: params[:category] }).group('news_items.id')
+                    end
     end
     case params[:order]
     when 'recent'
