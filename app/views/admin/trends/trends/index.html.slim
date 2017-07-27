@@ -1,0 +1,20 @@
+ul.nav.nav-pills
+  li.nav.nav-item
+    a.nav-link(href='/admin/trends') Neue Trends finden
+  li.nav.nav-item.active
+    a.nav-link(href='/admin/trends/trends') Trends verwalten
+hr
+
+h2 Angelegte Trends
+
+table.table
+  - @trends.each do |trend|
+    tr
+      td
+        .text-capitalize = trend.name
+        br
+        small.text-muted = trend.words.map(&:word).join(', ')
+      td
+        = link_to [:edit, :admin, trend] do
+          |bearbeiten
+

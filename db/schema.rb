@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_083542) do
+ActiveRecord::Schema.define(version: 2019_10_14_205447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -75,10 +75,10 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.text "keywords"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "hash_tag"
     t.string "slug"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
     t.integer "category_id"
     t.integer "news_item_id"
     t.index ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true
+  end
+
+  create_table "categories_trends_words", id: false, force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "trends_word_id"
+    t.index ["category_id", "trends_word_id"], name: "categories_trends_words_index", unique: true
+    t.index ["category_id"], name: "index_categories_trends_words_on_category_id"
+    t.index ["trends_word_id"], name: "index_categories_trends_words_on_trends_word_id"
   end
 
   create_table "impressions", id: :serial, force: :cascade do |t|
@@ -160,18 +168,18 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
   end
 
   create_table "news_items", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255
+    t.string "title"
     t.text "teaser"
-    t.string "url", limit: 255
+    t.string "url"
     t.integer "source_id"
     t.datetime "published_at"
     t.integer "value"
     t.integer "fb_likes"
     t.integer "retweets"
-    t.string "guid", limit: 255
+    t.string "guid"
     t.integer "xing"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text "full_text"
     t.integer "word_length"
     t.text "plaintext"
@@ -217,17 +225,17 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
-    t.string "type", limit: 255
-    t.string "url", limit: 255
-    t.string "name", limit: 255
+    t.string "type"
+    t.string "url"
+    t.string "name"
     t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "logo_file_name"
+    t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "full_text_selector", limit: 255
+    t.string "full_text_selector"
     t.boolean "error"
     t.float "multiplicator", default: 1.0
     t.boolean "lsr_active", default: false
@@ -245,6 +253,32 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
     t.text "error_message"
     t.text "url_rules"
     t.index ["type"], name: "index_sources_on_type"
+  end
+
+  create_table "trends_trends", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "trends_usages", force: :cascade do |t|
+    t.integer "word_id"
+    t.bigint "news_item_id"
+    t.bigint "source_id"
+    t.string "calendar_week"
+    t.date "date"
+    t.index ["news_item_id"], name: "index_trends_usages_on_news_item_id"
+    t.index ["source_id"], name: "index_trends_usages_on_source_id"
+    t.index ["word_id"], name: "index_trends_usages_on_word_id"
+  end
+
+  create_table "trends_words", force: :cascade do |t|
+    t.string "word"
+    t.integer "parent_id"
+    t.boolean "ignore"
+    t.integer "word_type", default: 0
+    t.integer "trend_id"
+    t.index ["trend_id"], name: "index_trends_words_on_trend_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -271,4 +305,6 @@ ActiveRecord::Schema.define(version: 2019_10_14_083542) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "mail_subscription_histories", "mail_subscriptions"
+  add_foreign_key "trends_usages", "news_items"
+  add_foreign_key "trends_usages", "sources"
 end

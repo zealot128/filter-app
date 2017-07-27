@@ -15,9 +15,15 @@ class Ability
       can :manage, Setting
       can :manage, :twitter
       can :manage, User
+      can :manage, :trends
+      can :manage, Trends::Word
+      can :manage, Trends::Trend
     elsif user.sources_admin?
       can :manage, Source
       can :manage, Category
+      can :manage, :trends
+      can :manage, Trends::Word
+      can :manage, Trends::Trend
     end
   end
 end

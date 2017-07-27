@@ -14,6 +14,16 @@ Rails.application.routes.draw do
   get "/app", to: "app#index"
 
   namespace :admin do
+    get 'trends' => 'trends/words#index'
+    namespace :trends do
+      resources :trends
+      resources :words do
+        member do
+          patch :ignore
+        end
+      end
+    end
+
     get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do
       member do

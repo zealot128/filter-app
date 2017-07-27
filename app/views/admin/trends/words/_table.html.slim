@@ -1,0 +1,15 @@
+table.table
+  - items.each do |word|
+    tr(data-id='#{word.id}')
+      th = word.word
+      td = word.count
+      td
+        - if trend = @trends.find { |t| t.words.include?(word) }
+          = link_to [:edit, :admin, trend], class: 'btn btn-xs btn-primary' do
+            = trend.name
+        - else
+          = link_to [:ignore, :admin, word], data: { method: :patch, remote: true }, class: 'btn btn-xs btn-default' do
+            |ignore
+          = link_to new_admin_trends_trend_path(word: word), class: 'btn btn-xs btn-default' do
+            |trend!
+
