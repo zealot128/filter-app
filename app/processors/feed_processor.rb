@@ -59,6 +59,14 @@ class FeedProcessor < Processor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
+    if !url and entry.entry_id and entry.entry_id.starts_with?('http')
+      url = entry.entry_id
+    end
+    if !url and defined? entry.enclosure_url
+      url = entry.enclosure_url
+    end
+    return unless url
+    # next unless url
     if url.starts_with?('//')
       url = "http:#{url}"
     end
