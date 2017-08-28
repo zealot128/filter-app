@@ -13,9 +13,9 @@ class EmpfehlungsbundApiClient
   end
 
   def self.community_events
-    response = Rails.cache.fetch('events', expires_in: 1.hour) do
-      events = get('/community_trainings.json')
-      events.select { |i| Time.zone.parse(i['start']) <= 4.months.from_now }
+    response = Rails.cache.fetch('events', expires_in: 1.minute) do
+      events = get('https://crm.pludoni.com/api/community_workshops.json')
+      events.select { |i| i['visible'] && i['start'] >= Time.zone.now.to_s && i['start'] <= 3.months.from_now.to_s }
     end
     response.map do |hash|
       CommunityEvent.new(hash)
@@ -26,7 +26,7 @@ class EmpfehlungsbundApiClient
     attr_accessor :id, :title, :body, :link, :from, :to, :address, :event_type, :image
     def initialize(args)
       args.each do |k, v|
-        self.instance_variable_set("@#{k}", v)
+        instance_variable_set("@#{k}", v)
       end
     end
 
@@ -45,7 +45,23 @@ class EmpfehlungsbundApiClient
     end
 
     def url
-      "https://login.empfehlungsbund.de/events/#{id}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
+      "#{@show_url}?utm_medium=email&utm_source=hrfilter&utm_campaign=hrfilter_newsletter"
+    end
+
+    def to
+      Time.zone.parse(@finish)
+    end
+
+    def link
+      url
+    end
+
+    def body
+      @teaser_hrfilter || @teaser
+    end
+
+    def image
+      @banner_hrfilter || @banner
     end
   end
 end

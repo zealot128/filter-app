@@ -26,7 +26,18 @@ table.row: tr
     - if AdLogic.enabled?
       = render "ad_section_right", mailing: @mailing
 
-
+- if AdLogic.enabled? && AdLogic.promoted_events.any?
+  table.row: tr: td.wrapper.last
+    - event = AdLogic.promoted_events.first
+    / strong Empfohlene Events
+    - if event.image.present?
+      = image_tag event.image, class: "float-center", algin: "center", alt: "#{event.title}"
+    p
+      = event.body
+    p
+      table.button: tr: td
+        = link_to event.url do
+          | Eventdetails
 
 - @mailing.sections.each_with_index do |s,i|
   = render s, index: i

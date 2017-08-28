@@ -1326,4 +1326,65 @@ http_interactions:
         null, "before": null}}'
     http_version: 
   recorded_at: Sun, 02 Apr 2017 21:09:04 GMT
-recorded_with: VCR 3.0.1
+- request:
+    method: post
+    uri: https://clients6.google.com/rpc
+    body:
+      encoding: UTF-8
+      string: '{"method":"pos.plusones.get","id":"http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben","params":{"nolog":true,"id":"http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 24 Aug 2017 09:31:12 GMT
+      Vary:
+      - Origin,Accept-Encoding
+      - X-Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="39,38,37,35"
+      Accept-Ranges:
+      - none
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+         "id": "http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben",
+         "result": {
+          "kind": "pos#plusones",
+          "id": "http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben",
+          "isSetByViewer": false,
+          "metadata": {
+           "type": "URL",
+           "globalCounts": {
+            "count": 0.0
+           }
+          },
+          "abtk": "AEIZW7SQ6JkCGgNNoQSP+lebuKZcGaEU+i/3dZfeXulvcQoHVr2DS20CkxcCDFF33vD3FHaj67Fh"
+         }
+        }
+    http_version: 
+  recorded_at: Thu, 24 Aug 2017 09:31:12 GMT
+recorded_with: VCR 3.0.3
