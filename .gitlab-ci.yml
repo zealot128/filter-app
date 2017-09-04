@@ -1,5 +1,5 @@
 ---
-image: pludoni/rails-base:v6
+image: registry.pludoni.com/administrators/docker-images/rails-base:v6
 
 stages:
   - test
@@ -8,6 +8,7 @@ stages:
 
 rspec:
   script:
+    - ssh-keygen -f "/root/.ssh/known_hosts" -R git.pludoni.com && ssh-keyscan git.pludoni.com >> ~/.ssh/known_hosts
     - gem install bundler
     - bundle install --jobs $(nproc) --path=/cache/bundler --without production
     - cp config/application.hrfilter.yml config/application.yml
@@ -19,7 +20,7 @@ rspec:
   stage: test
 
 pronto:
-  image: pludoni/code-quality:v1
+  image: registry.pludoni.com/administrators/docker-images/code-quality:v1
   stage: test
   script: 'run'
 
@@ -31,7 +32,7 @@ bundle_audit:
     bundle-audit check
 
 deploy:
-  image: pludoni/deploy:v2
+  image: registry.pludoni.com/administrators/docker-images/deploy:v4
   script: deploy_products hrfilter
   stage: deploy
   environment: production
