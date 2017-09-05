@@ -1,5 +1,5 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v6
+image: registry.pludoni.com/administrators/docker-images/rails-base:v9
 
 stages:
   - test
@@ -8,7 +8,9 @@ stages:
 
 rspec:
   script:
-    - ssh-keygen -f "/root/.ssh/known_hosts" -R git.pludoni.com && ssh-keyscan git.pludoni.com >> ~/.ssh/known_hosts
+    - source /usr/local/rvm/scripts/rvm
+    - rvm use `cat .ruby-version`
+    - ruby --version
     - gem install bundler
     - bundle install --jobs $(nproc) --path=/cache/bundler --without production
     - cp config/application.hrfilter.yml config/application.yml
