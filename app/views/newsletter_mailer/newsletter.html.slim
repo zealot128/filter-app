@@ -27,20 +27,19 @@ table.row: tr
       = render "ad_section_right", mailing: @mailing
 
 - if AdLogic.enabled? && AdLogic.promoted_events.any?
-  table.row: tr
-    td.wrapper: table.twelve.columns: tr: td
+  table.row: tr: td.wrapper.last
+    td
       - event = AdLogic.promoted_events.first
       / strong Empfohlene Events
       - if event.image.present?
         = image_tag event.image, algin: "center", alt: "#{event.title}", width: "580", style: "width: 580px"
-  table.row: tr
-    td.wrapper: table.twelve.columns: tr: td
+      br
       p
         = event.body
       p
         table.button: tr: td
           = link_to event.url do
-            | Eventdetails
+            | Zu den Eventdetails
 
 - @mailing.sections.each_with_index do |s,i|
   = render s, index: i
