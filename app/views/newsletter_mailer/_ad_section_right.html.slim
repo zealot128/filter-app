@@ -4,7 +4,7 @@
     br
     - events.each do |event|
       p
-        = link_to event.url
+        = link_to event.link
           = event.title
         = " "
         small = l event.from.to_date
