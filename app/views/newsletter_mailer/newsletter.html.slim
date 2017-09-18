@@ -33,6 +33,8 @@ table.row: tr
       / strong Empfohlene Events
       - if event.image.present?
         = image_tag event.image, algin: "center", alt: "#{event.title}", width: "580", style: "width: 580px"
+  table.row: tr
+    td.wrapper: table.twelve.columns: tr: td
       p
         = event.body
       p
