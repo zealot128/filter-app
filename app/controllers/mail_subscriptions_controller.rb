@@ -33,6 +33,10 @@ class MailSubscriptionsController < ApplicationController
   def confirm
     subscription.confirm!
     render text: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
+    time_now = Time.zone.now
+    cronjob_time = '09:00'
+    return if time_now.monday? and cronjob_time > time_now.strftime('%H:%M')
+    NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)).deliver_now
   end
 
   def edit
