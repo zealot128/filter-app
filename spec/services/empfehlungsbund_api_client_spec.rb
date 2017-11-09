@@ -12,7 +12,7 @@ describe EmpfehlungsbundApiClient do
   end
 
   specify 'Community Events' do
-    # TODO Test durchführen wenn, ein Commutiy Event ansteht
+    # TODO: Test durchführen wenn, ein Commutiy Event ansteht
     skip "Keine kommenden Events aufgezeichnet" do
       VCR.use_cassette 'eb_api_client/community_events', record: :new_episodes do
         events = EmpfehlungsbundApiClient.community_events
