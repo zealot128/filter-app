@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe EmpfehlungsbundApiClient do
+  before do
+    Rails.cache.clear
+  end
+
   specify 'Partner Events' do
     VCR.use_cassette 'eb_api_client/partner_events' do
       events = EmpfehlungsbundApiClient.partner_events
