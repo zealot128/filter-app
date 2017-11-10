@@ -42,6 +42,16 @@ module Newsletter
       end
     end
 
+    def outro
+      Setting.mail_outro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
+        case Regexp.last_match(1).strip
+        when 'person_email' then Setting.get_value("person_email")
+        when 'person' then Setting.get_value("person")
+        else "missing_token #{pattern}"
+        end
+      end
+    end
+
     def send!
       mail.deliver_now!
     rescue StandardError => e
