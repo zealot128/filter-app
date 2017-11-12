@@ -1,7 +1,4 @@
 class MailSubscriptionsController < ApplicationController
-
-  include WheneverHelper
-
   def index
     @subscription = MailSubscription.new
     @subscription.interval = 'weekly'
@@ -37,7 +34,7 @@ class MailSubscriptionsController < ApplicationController
     subscription.confirm!
     render text: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
     time_now = Time.zone.now
-    job = filter_jobs_by_task("Newsletter::Mailing.cronjob")
+    job = filter_jobs
     cronjob_time = Time.zone.parse(job[0].at).strftime('%H:%M')
     return if time_now.monday? and cronjob_time > time_now.strftime('%H:%M')
     NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)).deliver_now
@@ -90,6 +87,13 @@ class MailSubscriptionsController < ApplicationController
       :extended_member,
       :limit,
       categories: [])
+  end
+  require "whenever"
+  def filter_jobs
+    jobs = Whenever::JobList.new(file: Rails.root.join("config", "schedule.rb").to_s).instance_variable_get("@jobs")
+    jobs.values.flatten.select do |job|
+      job.instance_variable_get("@options")[:task] == "Newsletter::Mailing.cronjob"
+    end
   end
 
   def subscription

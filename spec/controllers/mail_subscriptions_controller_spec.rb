@@ -14,16 +14,20 @@ describe MailSubscriptionsController do
   }
 
   specify 'newsletter after subscription after 9am Monday' do
-    ms = MailSubscription.create!(subscription)
-    post :confirm, id: ms.token
-    expect(ActionMailer::Base.deliveries.count).to eq(1)
+    VCR.use_cassette 'subscription' do
+      ms = MailSubscription.create!(subscription)
+      post :confirm, id: ms.token
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
   end
 
   specify 'no newsletter after subscription on Monday before 9am' do
-    Timecop.travel(Time.zone.local(2017, 11, 6, 8, 0, 0)) do
-      ms = MailSubscription.create!(subscription)
-      post :confirm, id: ms.token
-      expect(ActionMailer::Base.deliveries.count).to eq(0)
+    VCR.use_cassette 'subscription' do
+      Timecop.travel(Time.zone.local(2017, 11, 6, 8, 0, 0)) do
+        ms = MailSubscription.create!(subscription)
+        post :confirm, id: ms.token
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
+      end
     end
   end
 end
