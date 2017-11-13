@@ -12,3 +12,6 @@ test:
   template: template0
   pool: 5
 
+production:
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
