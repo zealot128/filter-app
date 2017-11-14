@@ -3,8 +3,8 @@ class NewsItemsController < ApplicationController
 
   def index
     minscore = 0.5
+    @feed_url = search_url(q: params[:q], sort: params[:sort], format: :rss)
     if params[:q].present?
-      @feed_url = search_url(q: params[:q], sort: params[:sort], format: :rss)
       @news_items = NewsItem.where('published_at > ?', 2.years.ago).
                              includes(:source, :categories).
                              search_full_text(params[:q]).
@@ -22,6 +22,13 @@ class NewsItemsController < ApplicationController
         }
         f.rss {
           @news_items = @news_items.limit(50)
+        }
+      end
+    else
+      respond_to do |f|
+        f.html
+        f.rss {
+          @news_items = NewsItem.home_page.limit(100)
         }
       end
     end
