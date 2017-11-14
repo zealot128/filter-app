@@ -17,6 +17,8 @@ default: &default
     Ein Aggregator für News rund um das Thema Personal + HR. Dabei werden die News nach Aktualität und Viralität bewertet und sortiert. Außerdem wird eine Klassifizierung vorgenommen.
   mail_intro: |
     hier die Top {{top}} von insgesamt {{total_count}} der relevantesten News aus letzter Woche aus den abonnierten Themenbereichen <strong>{{categories}}</strong>.
+  mail_outro: |
+    Die Newsletter Einstellungen können <a href='/newsletter'>hier</a> vorgenommen werden.<br/><br/>Haben Sie Anregungen, dann kontaktieren Sie mich unter {{person_email}}.<br/><br/>Viele Grüße<br/><br/>{{person}}
   credits: |
     Dies ist ein privates Projekt von <a href='http://www.stefanwienert.de'>mir</a>. Ich habe das Projekt ins Leben gerufen, um mich, als fachfremder Softwareentwickler, effektiv und schnell über alle News aus dem Fachbereich auf dem Laufenden zu halten.
   tracking_code: |
