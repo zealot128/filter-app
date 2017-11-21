@@ -1,4 +1,27 @@
+
 = simple_form_for [:admin, @setting] do |f|
   |Setting: #{@setting.key}
   = f.input :value
+  - if @setting.key =~ /^(mail_outro|mail_intro|intro|credits)$/
+	a.btn.btn-info.pull-right data={ toggle:"modal", target:"#placeholder"}
+		span.glyphicon.glyphicon-info-sign>
+		| Verfügbare Platzhalter
+	.clearfix
+	= render "placeholder", setting: @setting
+	h4 Vorschau:
+	div.well
+		samp#preview
+	javascript:
+		$(document).ready(function(){
+			previewHTML();
+			$("#setting_value").keyup(function() {
+				previewHTML();
+				return false;
+			});
+			function previewHTML(){
+				$("#preview").html($("#setting_value").val());
+			}
+		});
   = f.submit class: "btn btn-primary"
+  p
+
