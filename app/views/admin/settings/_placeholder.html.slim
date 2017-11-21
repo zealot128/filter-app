@@ -1,0 +1,21 @@
+.modal.fade#placeholder role="dialog" tabindex="-1" 
+  .modal-dialog role="document" 
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  &times;
+        h4.modal-title Verfügbare Platzhalter
+      .modal-body
+        - unless @setting.key =~ /^(intro|credits)$/
+          table.table
+            thead
+              tr
+                th Key
+                th Wert
+            - placeholder(setting.key).each do |key, value|
+              tr
+                td
+                  code= key
+                td= value
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button"  Schließen

@@ -56,4 +56,6 @@ class Admin::SourcesController < AdminController
     @source.destroy
     redirect_to [:admin, :sources], notice: 'Done'
   end
+
+  
 end
