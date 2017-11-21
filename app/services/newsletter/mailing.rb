@@ -57,7 +57,7 @@ module Newsletter
     rescue StandardError => e
       puts "[NewsletterMailing] #{e.inspect}"
     ensure
-      subscription.update_column :last_send_date, Date.today
+      subscription.update_column :last_send_date, Time.zone.today
     end
 
     def mail

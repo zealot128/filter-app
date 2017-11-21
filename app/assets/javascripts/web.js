@@ -3,6 +3,7 @@
 //= require jquery.timeago
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
+//= require bootstrap/modal
 //= require_tree ./web
 //= require highcharts
 //= require_tree ./charts
