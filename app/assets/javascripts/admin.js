@@ -4,6 +4,8 @@
 
 $(document).ready(function() {
   $('.js-tablesorter').each(function() {
-    $(this).tablesorter();
+    $(this).tablesorter({
+    	dateFormat : "ddmmyyyy"
+    });
   });
 });
