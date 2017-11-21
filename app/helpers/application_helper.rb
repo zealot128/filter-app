@@ -16,6 +16,7 @@ module ApplicationHelper
       content_tag(:i, nil, class: bool ? 'fa fa-check-square-o' : 'fa fa-square-o')
   end
 
+  # rubocop:disable LineLength
   def placeholder(setting)
     case setting
     when 'mail_intro'
@@ -32,4 +33,5 @@ module ApplicationHelper
       }
     end
   end
+  # rubocop:enable LineLength
 end
