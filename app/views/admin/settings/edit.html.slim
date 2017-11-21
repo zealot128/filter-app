@@ -11,17 +11,17 @@
 	h4 Vorschau:
 	div.well
 		samp#preview
+	javascript:
+		$(document).ready(function(){
+			previewHTML();
+			$("#setting_value").keyup(function() {
+				previewHTML();
+				return false;
+			});
+			function previewHTML(){
+				$("#preview").html($("#setting_value").val());
+			}
+		});
   = f.submit class: "btn btn-primary"
   p
 
-javascript:
-	$(document).ready(function(){
-		previewHTML();
-		$("#setting_value").keyup(function() {
-			previewHTML();
-			return false;
-		});
-		function previewHTML(){
-			$("#preview").html($("#setting_value").val());
-		}
-	});
