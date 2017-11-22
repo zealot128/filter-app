@@ -12,7 +12,7 @@ xml.rss(version: "2.0",
         xml.link ni.url
         xml.guid ni.guid
         xml.description do
-          xml.cdata! ni.teaser
+          xml.cdata! ni.teaser.to_s
         end
       end
     end
