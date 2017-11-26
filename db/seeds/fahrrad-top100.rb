@@ -1,4 +1,3 @@
-
 class Analyser
   attr_reader :m, :url, :feed_url
   def initialize(url)
