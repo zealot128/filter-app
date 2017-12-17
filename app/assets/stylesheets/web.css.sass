@@ -60,10 +60,27 @@ $twitter-panel-offset: 30px
 .panel-twitter
   .panel-heading
     height:  73px - $twitter-panel-offset
+    .source a
+      display: inline-block
+      line-height: 1
+      margin-top: -6px
+    img
+      vertical-align: top
+      margin-top: -5px
+
   .panel-body
     height: $panel-body-height + $twitter-panel-offset
   .fog-fade
     top: $panel-body-height + $twitter-panel-offset - 43px - 30px
+  .date
+    color: #aaa
+  .twitter-name
+    color: #666
+
+mark.hashtag
+  color: #44b
+  background-color: initial
+  hyphens: none
 
 .panel-footer .categories
   display: block

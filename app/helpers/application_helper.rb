@@ -16,6 +16,10 @@ module ApplicationHelper
       content_tag(:i, nil, class: bool ? 'fa fa-check-square-o' : 'fa fa-square-o')
   end
 
+  def hashtags(string)
+    string.gsub(/#(\w*[0-9a-zA-Z\p{L}]+\w*[0-9a-zA-Z\p{L}])/, '<mark class="hashtag">#\1</mark>')
+  end
+
   # rubocop:disable LineLength
   def placeholder(setting)
     case setting
