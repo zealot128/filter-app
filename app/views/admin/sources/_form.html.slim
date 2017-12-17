@@ -13,6 +13,7 @@
     = image_tag @source.logo.url(:small)
   = f.input :lsr_active
   = f.input :lsr_confirmation
+  = f.input :filter_rules
   = f.input :comment
   = f.input :language, as: :select, collection: ['german', 'english', 'other']
   = f.input :deactivated

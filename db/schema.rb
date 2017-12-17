@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109130659) do
+ActiveRecord::Schema.define(version: 20171217132009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20171109130659) do
     t.string   "twitter_account"
     t.string   "language"
     t.text     "comment"
+    t.text     "filter_rules"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree

@@ -12,12 +12,14 @@ de:
         value: Standardvertrauen / Bias
         full_text_selector: (nur bei Feeds) CSS-Selektor für den Hauptcontent. Falls befüllt wird Links im Feed gefolgt und Content aus der Seite extrahiert.
         url: "Bei Twitterquellen: Nutzername mit oder ohne @<br/>Bei Feedquellen: URL zum RSS/Atom Feed<br/>Bei Redditsourcen: Kann irgendwas rein, wird generiert"
+        filter_rules: Je Zeile eine Whitelist (+) oder Blacklist (-) Regel. Eine Regel beginnt mit '+' oder '-'. Artikel, deren vollstaendiger Text einer '-' -Regeln matcht, werden nicht importiert. Artikel, die min. eine Positiv Regel definiert haben, muessen mindestens einen + Match schaffen um importiert zu werden.
     labels:
       source:
         url: Feed-URL
         lsr_active: Leistungsschutzrecht aktivieren (kein Bild + Anreisstext angezeigt)
         deactivated: "Quelle deaktiviert"
         default_category_id: Standardkategorie
+        filter_rules: Filter-Regeln
       submit_source:
         email: 'E-Mail'
         comment: 'Kommentar'

@@ -5,7 +5,6 @@ class FeedProcessor < Processor
     feed = parse_feed(source.url)
     if !feed.respond_to?(:entries)
       source.update_column :error, true
-      # TODO: Error reporting
     else
       source.update_column :error, false
       feed.entries.each do |entry|
@@ -81,6 +80,10 @@ class FeedProcessor < Processor
     end
     @item.title = title if title.present?
     @item.teaser = teaser(text) if text.present?
+    if NewsItem::CheckFilterList.new(@source).skip_import?(title, text)
+      @item.destroy if @item.persisted?
+      return nil
+    end
     @item.save!
     if defined?(@entry.image) and @entry.image.present? and @item.image.blank?
       begin
@@ -89,7 +92,6 @@ class FeedProcessor < Processor
       rescue SocketError, StandardError => e
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end
-
     end
     @item
   end

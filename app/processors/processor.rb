@@ -1,28 +1,28 @@
 class Processor
   RULES = %w[
-      .entry-content
-      .post-content
-      #main-content
-      #main\ .content
-      #articleContent
-      .node-content
-      .transcript
-      #articleContent
-      #content
-      [itemprop=articleBody]
-      .articleBody
-      .postContent
-      .hcf-content
-      .entryContent
-      .post-entry
-      .content
-      .post
-      .entry
-      article
-      .article
-      main
-      section
-  ]
+    .entry-content
+    .post-content
+    #main-content
+    #main\ .content
+    #articleContent
+    .node-content
+    .transcript
+    #articleContent
+    #content
+    [itemprop=articleBody]
+    .articleBody
+    .postContent
+    .hcf-content
+    .entryContent
+    .post-entry
+    .content
+    .post
+    .entry
+    article
+    .article
+    main
+    section
+  ].freeze
   class << self
     attr_accessor :host, :full_text_selector
   end

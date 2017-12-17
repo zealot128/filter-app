@@ -47,6 +47,10 @@ class RedditProcessor < Processor
         ni.image = download_url(image)
       end
     end
+    if NewsItem::CheckFilterList.new(@source).skip_import?(ni.title, ni.teaser)
+      ni.destroy if ni.persisted?
+      return nil
+    end
     ni.save
     NewsItem::ImageFetcher.new(ni, mechanize.page).run if mechanize
   end

@@ -30,7 +30,7 @@
 #
 
 require "download_url"
-class Source < ActiveRecord::Base
+class Source < ApplicationRecord
   has_many :news_items, dependent: :destroy
   validates_presence_of :url, :name
 
@@ -50,7 +50,7 @@ class Source < ActiveRecord::Base
   # do_not_validate_attachment_file_type :logo
 
   def self.[](search)
-    where('url ilike ?', '%' + search + '%').first
+    find_by('url ilike ?', '%' + search + '%')
   end
 
   def to_param

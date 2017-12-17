@@ -19,6 +19,10 @@ class TweetProcessor < Processor
       # Tweets ohne Link sind doof
       return
     end
+    if NewsItem::CheckFilterList.new(source).skip_import?(tweet.text)
+      item.destroy if item.persisted?
+      return nil
+    end
     item.xing ||= 0
     item.linkedin ||= 0
     item.fb_likes ||= 0
