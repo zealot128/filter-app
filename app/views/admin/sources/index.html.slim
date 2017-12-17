@@ -1,5 +1,5 @@
 p
-  = link_to [:new, :admin, :source], class: 'btn btn-primary'  do
+  = link_to [:new, :admin, :source], class: 'btn btn-primary' do
     |Neu
 
 table.table.table-striped.table-bordered.js-tablesorter
@@ -42,13 +42,13 @@ table.table.table-striped.table-bordered.js-tablesorter
             = link_to source.lsr_confirmation.url do
               | pdf
       td = bool_checkmark source.deactivated?
-      td = (s =source.news_items.recent.average(:absolute_score)) && s.round(1)
+      td = (s = source.news_items.recent.average(:absolute_score)) && s.round(1)
       td = source.value
       td = source.multiplicator
       td
         = source.news_items.sum(:impression_count)
         span<> = '/'
-        = (s =source.news_items.average(:impression_count)) && s.round
+        = (s = source.news_items.average(:impression_count)) && s.round
 
       td = source.twitter_account
       td

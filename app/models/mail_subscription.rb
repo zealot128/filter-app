@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: mail_subscriptions
+#
+#  id              :integer          not null, primary key
+#  email           :text
+#  preferences     :json
+#  token           :string
+#  last_send_date  :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  limit           :integer
+#  gender          :integer
+#  first_name      :string
+#  last_name       :string
+#  academic_title  :string
+#  company         :string
+#  position        :string
+#  extended_member :boolean          default(FALSE)
+#  deleted_at      :datetime
+#  status          :integer          default(0)
+#
+
 class MailSubscription < ActiveRecord::Base
   store_accessor :preferences, :categories
   store_accessor :preferences, :interval

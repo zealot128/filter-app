@@ -1,3 +1,39 @@
+# == Schema Information
+#
+# Table name: news_items
+#
+#  id                          :integer          not null, primary key
+#  title                       :string(255)
+#  teaser                      :text
+#  url                         :string(255)
+#  source_id                   :integer
+#  published_at                :datetime
+#  value                       :integer
+#  fb_likes                    :integer
+#  retweets                    :integer
+#  guid                        :string(255)
+#  linkedin                    :integer
+#  xing                        :integer
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  gplus                       :integer
+#  full_text                   :text
+#  word_length                 :integer
+#  plaintext                   :text
+#  search_vector               :tsvector
+#  incoming_link_count         :integer
+#  absolute_score              :float
+#  blacklisted                 :boolean          default(FALSE)
+#  reddit                      :integer
+#  image_file_name             :string
+#  image_content_type          :string
+#  image_file_size             :integer
+#  image_updated_at            :datetime
+#  impression_count            :integer          default(0)
+#  tweet_id                    :string
+#  absolute_score_per_halflife :integer
+#
+
 require "fetcher"
 
 # rubocop:disable Style/GuardClause

@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: settings
+#
+#  id    :integer          not null, primary key
+#  key   :string
+#  value :text
+#
+
 class Setting < ActiveRecord::Base
   serialize :value, JSON
   class << self
