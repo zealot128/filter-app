@@ -32,7 +32,7 @@ module Newsletter
         when 'total_count' then total_count.to_s
         when 'from_interval', 'interval_from'
           case subscription.interval
-          when 'weekly' then 'aus letzter Woche'
+          when 'weekly' then 'der letzten Woche'
           when 'monthly' then 'des letzten Monats'
           when 'biweekly' then 'der letzten zwei Wochen'
           end

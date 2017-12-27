@@ -27,7 +27,7 @@ module ApplicationHelper
       {
         "{{top}}": "Anzahl der Neuigkeiten, deren Halbwertszeit von 12.5 Std noch nicht abgelaufen ist und deren Kategorie ausgewählt wurde",
         "{{total_count}}": "Gesamtanzahl der Neuigkeiten, deren Kategorie gewählt wurde",
-        "{{from_interval}}": "Je nach Einstellung der Sendungshäufigkeit folgende Zeichenfolgen: 'aus letzter Woche', 'der letzten zwei Wochen' oder 'des letzten Monats'",
+        "{{from_interval}}": "Je nach Einstellung der Sendungshäufigkeit folgende Zeichenfolgen: 'der letzten Woche', 'der letzten zwei Wochen' oder 'des letzten Monats'",
         "{{categories}}": "Kommagetrennte Liste mit den abonnierten Themen"
       }
     when 'mail_outro'
