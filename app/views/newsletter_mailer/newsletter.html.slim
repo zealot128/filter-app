@@ -49,7 +49,4 @@ br
 - if profile_url
   table.row: tr: td.wrapper.last
     p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
-p Haben Sie Anregungen? Dann kontaktieren Sie mich unter #{Setting.person_email}.
-p Viele Grüße
-
-p = Setting.person
+p = raw @mailing.outro
