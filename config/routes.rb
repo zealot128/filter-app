@@ -49,6 +49,7 @@ Baseapp::Application.routes.draw do
   get 'categories' => 'static_pages#categories'
 
   get '/auth/:provider/callback', to: 'admin/twitter#create'
+  get '_bsc' => 'bsc#show'
   mount API => '/api/v1'
   root to: "days#index"
 end
