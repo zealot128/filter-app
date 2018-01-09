@@ -21,7 +21,8 @@
 #  status          :integer          default(0)
 #
 
-class MailSubscription < ActiveRecord::Base
+class MailSubscription < ApplicationRecord
+  has_many :histories, class_name: "MailSubscription::History", dependent: :destroy
   store_accessor :preferences, :categories
   store_accessor :preferences, :interval
   enum gender: [:female, :male]
@@ -37,7 +38,7 @@ class MailSubscription < ActiveRecord::Base
   scope :confirmed, -> { where status: 1 }
   scope :deleted, -> { where 'deleted_at is not null' }
 
-  has_many :impressions, foreign_key: 'user_id'
+  has_many :impressions, foreign_key: 'user_id', dependent: :destroy
 
   enum status: [:unconfirmed, :confirmed, :unsubscribed]
 

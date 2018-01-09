@@ -25,6 +25,7 @@ module Newsletter
       @subscription.salutation
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity
     def intro
       Setting.mail_intro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
         case $1.strip
@@ -53,15 +54,23 @@ module Newsletter
     end
 
     def send!
-      mail.deliver_now!
+      history = create_mailing_history!
+      mail(history.open_token).deliver_now!
     rescue StandardError => e
-      puts "[NewsletterMailing] #{e.inspect}"
+      history.try(:delete)
+      raise e if Rails.env.test?
+      Airbrake.notify(e) if defined?(Airbrake)
+      Rails.logger.error "[NewsletterMailing] #{e.inspect}"
     ensure
       subscription.update_column :last_send_date, Time.zone.today
     end
 
-    def mail
-      NewsletterMailer.newsletter(self)
+    def mail(history_token)
+      @mail ||= NewsletterMailer.newsletter(self, history_token)
+    end
+
+    def create_mailing_history!
+      @subscription.histories.create(news_items_in_mail: count)
     end
 
     def full_email
@@ -130,7 +139,5 @@ module Newsletter
       to = from + subscription.interval_from
       [from, to]
     end
-
-    private
   end
 end

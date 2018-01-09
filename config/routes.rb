@@ -37,6 +37,7 @@ Baseapp::Application.routes.draw do
   end
 
   get 'ni/:id' => 'news_items#show', as: :click_proxy
+  get "mt/gif/:token", to: "mail_subscriptions#track_open", as: :mail_trackings_open
 
   get 'search' => 'news_items#index'
   get 'api/news_items/homepage' => 'news_items#homepage'

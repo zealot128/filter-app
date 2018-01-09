@@ -37,7 +37,9 @@ class MailSubscriptionsController < ApplicationController
     job = filter_jobs
     cronjob_time = Time.zone.parse(job[0].at).strftime('%H:%M')
     return if time_now.monday? and cronjob_time > time_now.strftime('%H:%M')
-    NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)).deliver_now
+    mailing = Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)
+    mailing.send!
+    subscription.update(last_send_date: nil)
   end
 
   def edit
@@ -64,6 +66,22 @@ class MailSubscriptionsController < ApplicationController
              Time.zone.now - subscription.interval_from
            end
     preview(subscription, from: from)
+  end
+
+  def track_open
+    ignore = (request.ip == '217.92.174.98') || IPCat.datacenter?(request.ip)
+    unless ignore
+      history = MailSubscription::History.find_by(open_token: params[:token])
+      history.update(opened_at: Time.zone.now) if history && history.opened_at.nil?
+    end
+    respond_to do |format|
+      format.png {
+        send_file File.open("app/assets/images/#{Setting.key}/logo-large.png"), disposition: 'inline', type: 'image/png'
+      }
+      format.gif {
+        send_data(Base64.decode64("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="), type: "image/gif", disposition: "inline")
+      }
+    end
   end
 
   private

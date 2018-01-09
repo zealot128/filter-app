@@ -3,7 +3,11 @@ hr
 table.row: tr
   td.wrapper: table.six.columns: tr
     td
-      = image_tag image_url("#{key}/logo-large.png"), width: 280, height: 68, alt: "HRfilter.de-Logo"
+
+      - if @tracking_token
+        img(src='#{image_url("/mt/gif/#{@tracking_token}.png")}' width='280' height='68' alt="HRfilter.de-Logo")
+      - else
+        = image_tag image_url("#{key}/logo-large.png"), width: 280, height: 68, alt: "HRfilter.de-Logo"
     td.expander
   td.wrapper.last: table.six.columns: tr
     td

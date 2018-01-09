@@ -105,5 +105,7 @@ Style/SymbolArray:
 
 Style/AsciiComments:
   Enabled: false
+Style/SafeNavigation:
+  Enabled: false
 
 

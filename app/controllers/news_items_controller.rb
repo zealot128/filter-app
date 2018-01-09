@@ -36,10 +36,12 @@ class NewsItemsController < ApplicationController
 
   def show
     news_item = NewsItem.find(params[:id])
+    if params[:sid]
+      @current_user = MailSubscription.find_by(id: params[:sid])
+      last_mail = @current_user.histories.order('created_at desc').first
+      last_mail && last_mail.click!
+    end
     unless bot?
-      if params[:sid]
-        @current_user = MailSubscription.find(params[:sid])
-      end
       impressionist(news_item)
     end
     redirect_to news_item.url

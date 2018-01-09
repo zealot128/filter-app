@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171217132009) do
+ActiveRecord::Schema.define(version: 20180109090342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,18 @@ ActiveRecord::Schema.define(version: 20171217132009) do
 
   add_index "linkages", ["from_id"], name: "index_linkages_on_from_id", using: :btree
   add_index "linkages", ["to_id"], name: "index_linkages_on_to_id", using: :btree
+
+  create_table "mail_subscription_histories", force: :cascade do |t|
+    t.integer  "mail_subscription_id"
+    t.integer  "news_items_in_mail"
+    t.datetime "opened_at"
+    t.string   "open_token"
+    t.integer  "click_count",          default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "mail_subscription_histories", ["mail_subscription_id"], name: "index_mail_subscription_histories_on_mail_subscription_id", using: :btree
 
   create_table "mail_subscriptions", force: :cascade do |t|
     t.text     "email"
@@ -166,4 +178,5 @@ ActiveRecord::Schema.define(version: 20171217132009) do
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
 
+  add_foreign_key "mail_subscription_histories", "mail_subscriptions"
 end
