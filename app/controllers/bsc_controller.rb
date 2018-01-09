@@ -67,6 +67,17 @@ class BscController < ApplicationController
             value: Source.visible.where('extract(year from created_at) = ?', year).count,
             percentage_of: :sources_total
           }
+        },
+        "Newsletter" => {
+          newsletter_sent: {
+            title: "Newsletter in #{year} versendet (Tracking seit 09.01.2018)",
+            value: MailSubscription::History.where('extract(year from created_at) = ?', year).count
+          },
+          newsletter_opened: {
+            title: "Newsletter in #{year} geöffnet/geklickt",
+            value: MailSubscription::History.opened.where('extract(year from created_at) = ?', year).count,
+            percentage_of: :newsletter_sent
+          }
         }
       },
       users: {}
