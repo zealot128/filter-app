@@ -57,7 +57,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    angularjs-rails (1.6.2)
+    angularjs-rails (1.2.18)
     arel (6.0.4)
     ast (2.3.0)
     autoprefixer-rails (7.1.6)
@@ -455,7 +455,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10)
-  angularjs-rails
+  angularjs-rails (= 1.2.18)
   bcrypt-ruby
   bootstrap-sass (~> 3.1)
   bootswatch-rails
