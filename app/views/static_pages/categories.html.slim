@@ -15,8 +15,9 @@ div ng-app='frontpage'
       - Category.all.each do |category|
         li ng-class='{ active: state.currentCategory == #{category.id} }'
           a ng-href='#/{{state.sort}}/Category/{{#{category.id}}}' = category.name
-      li ng-class='{ active: state.currentCategory == 0 }'
-        a ng-href='#/{{state.sort}}/Category/0' Unkategorisiert
+      /
+        li ng-class='{ active: state.currentCategory == 0 }'
+          a ng-href='#/{{state.sort}}/Category/0' Unkategorisiert
 
       /* li.pull-right.dropdown */
         a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
@@ -30,7 +31,6 @@ div ng-app='frontpage'
 
   div[ng-view]
   script type="text/ng-template" id="index.html"
-
 
   #items
     .row.js-grid
