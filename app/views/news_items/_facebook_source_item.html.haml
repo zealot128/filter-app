@@ -14,7 +14,8 @@
     .background-text
       %p.source
         = render "news_items/source", source: facebook_source_item.source, size: '16x16'
-        &ndash;
+       
+        %br
         %span.date(data-time="#{facebook_source_item.published_at.to_i}" title="#{l facebook_source_item.published_at}")
           = l facebook_source_item.published_at, format: :short
 
