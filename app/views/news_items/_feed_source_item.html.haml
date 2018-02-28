@@ -12,7 +12,6 @@
     .background-text
       %p.source
         = render "news_items/source", source: feed_source_item.source, size: '16x16'
-        
         %br
         %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
           = l feed_source_item.published_at, format: :short
