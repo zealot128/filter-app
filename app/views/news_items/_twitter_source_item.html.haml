@@ -16,6 +16,8 @@
       = hashtags(auto_link(twitter_source_item.title.html_safe, link: :all, html: { target: "_blank", rel: "nofollow"})).html_safe
 
     = link_to twitter_source_item.url, data: { proxy: click_proxy_path(twitter_source_item) } do
+      //nicht sicher, auch kein - gesetzt
+      %br
       %span.date(data-time="#{twitter_source_item.published_at.to_i}" title="#{l twitter_source_item.published_at}")
         = l twitter_source_item.published_at, format: :short
 

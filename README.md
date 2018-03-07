@@ -70,3 +70,15 @@ If you'd like, you can try to import some of the HRfilter sources for an initial
 rails r 'Setting.read_yaml'
 rake db:seed
 ```
+
+
+If you have issues to get the data with db:seed you can also try:
+
+```
+rails runner 'Source.cronjob'
+rails runner 'NewsItem.cronjob'
+```
+
+The necessary tasks are at:  config/schedule.rb
+
+
