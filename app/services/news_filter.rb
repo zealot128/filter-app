@@ -8,7 +8,7 @@ class NewsFilter
   attr_accessor :order
 
   def news_items
-    @news_items = NewsItem.sorted.includes(:categories, :source).limit(@limit).page(@page)
+    @news_items = NewsItem.sorted.includes(:categories, :source).limit(@per_page).page(@page)
     apply_filter!
     apply_order!
     @news_items
