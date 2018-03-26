@@ -266,8 +266,11 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg_search (2.1.1)
     pg (0.20.0)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      arel (>= 6)
+    pg_search (2.1.2)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
       arel (>= 6)
@@ -516,4 +519,4 @@ DEPENDENCIES
   zurb-ink
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
