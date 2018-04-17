@@ -100,7 +100,7 @@ GEM
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    crass (1.0.2)
+    crass (1.0.3)
     css_parser (1.6.0)
       addressable
     daemons (1.2.5)
@@ -204,7 +204,7 @@ GEM
       activesupport (>= 4, < 5.2)
       railties (>= 4, < 5.2)
       request_store (~> 1.0)
-    loofah (2.1.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -266,8 +266,11 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg (0.21.0)
-    pg_search (2.1.1)
+    pg (0.20.0)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      arel (>= 6)
+    pg_search (2.1.2)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
       arel (>= 6)
@@ -312,8 +315,8 @@ GEM
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -483,7 +486,7 @@ DEPENDENCIES
   open_uri_redirections
   paperclip
   paperclip-optimizer
-  pg
+  pg (~> 0.20.0)
   pg_search
   premailer-rails
   pry-rails
@@ -516,4 +519,4 @@ DEPENDENCIES
   zurb-ink
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
