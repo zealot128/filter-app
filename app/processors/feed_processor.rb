@@ -85,7 +85,7 @@ class FeedProcessor < Processor
       return nil
     end
     @item.save!
-    if defined?(@entry.image) and @entry.image.present? and @item.image.blank?
+    if defined?(@entry.image) and @entry.image.present? and @item.image.blank? and !@entry.image[/(mp3|aac|ogg|mp4|m4a|mov)$/i]
       begin
         image = download_url(@entry.image)
         @item.update_attributes image: image

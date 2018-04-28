@@ -28,4 +28,13 @@ describe Source do
       expect(source.news_items.first.url).to start_with 'http'
     end
   end
+	specify 'Fahrradio Podcast "image"' do
+    VCR.use_cassette 'podcast' do
+      source = PodcastSource.new(
+        url: "http://fahrrad.io/feed/",
+        name: "Fahrradio")
+      source.save
+      source.refresh
+    end
+  end
 end
