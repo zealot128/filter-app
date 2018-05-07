@@ -87,7 +87,8 @@ class MailSubscriptionsController < ApplicationController
   private
 
   def preview(subscription, from: 1.week.ago.at_beginning_of_week)
-    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from))
+    open_token = subscription.histories.order('created_at desc').first.try(:open_token)
+    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from), open_token)
     ActionMailer::Base.preview_interceptors.each { |i| i.previewing_email(@mail) }
     @body = @mail.html_part.body.to_s
     render 'preview', layout: false

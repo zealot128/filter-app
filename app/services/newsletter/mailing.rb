@@ -85,7 +85,7 @@ module Newsletter
             s << CategorySection.new(cat, self)
           end
 
-          all_news_items = s.flat_map(&:news_items).sort_by { |i| -(i.absolute_score || 0) }.uniq(&:id)
+          all_news_items = s.flat_map(&:news_items).sort_by { |i| -(i.absolute_score || 0) }.uniq(&:title)
           @total_count = all_news_items.count
           filtered_news_items = all_news_items.take(@subscription.limit || 100)
           s.each do |section|
