@@ -60,7 +60,7 @@ class MailSubscription < ApplicationRecord
   end
 
   def salutation
-    if gender? and last_name?
+    if gender.present? and last_name?
       [male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].reject(&:blank?).join(' ')
     else
       'Hallo'
