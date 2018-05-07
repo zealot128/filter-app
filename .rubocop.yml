@@ -50,7 +50,7 @@ Style/BlockDelimiters:
   Enabled: false
 Style/AndOr:
   Enabled: false
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 Rails/ActionFilter:
   Enabled: false
@@ -94,7 +94,7 @@ Bundler/OrderedGems:
 Rails/SkipsModelValidations:
   Enabled: false
 # set_ und get_ verbote
-Style/AccessorMethodName:
+Layout/AccessorMethodName:
   Enabled: false
 Style/TrailingCommaInLiteral:
   Enabled: false

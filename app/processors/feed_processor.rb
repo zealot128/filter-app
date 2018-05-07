@@ -43,11 +43,12 @@ class FeedProcessor < Processor
     log "Download fehlgeschlagen: #{feed_url} -> #{response.status}"
   end
 
-  def find_news_item(guid, url)
+  def find_news_item(guid, url, title)
     guid = guid[0..230]
     old = @source.news_items.where(guid: guid).first
     old || @source.news_items.where(url: url).first ||
       @source.news_items.where("regexp_replace(news_items.url, '^https?:', '') = regexp_replace(:url, '^https?:', '')", url: url).first ||
+      (title && @source.news_items.where('created_at > ?', 3.months.ago).where(title: title).first) ||
       @source.news_items.build(guid: guid, url: url)
   end
 
@@ -72,7 +73,7 @@ class FeedProcessor < Processor
     unless url[%r{^http|^/}]
       url = URI.join(@source.url, url).to_s
     end
-    @item = find_news_item(guid, url)
+    @item = find_news_item(guid, url, title)
     @item.url = url
     if @item.new_record?
       @item.source = @source
