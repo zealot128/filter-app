@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'scripts/**/*'
+    - 'scripts/*'
     - 'script/**/*'
     - 'one-time/**/*'
     - 'one-timer/**/*'
@@ -12,10 +13,14 @@ AllCops:
     - 'Rakefile'
     - 'lib/templates/**/*'
     - 'vender/**/*'
+    - 'spec/spec_helper.rb'
+    - 'node_modules/**/*'
+    - 'spec/rails_helper.rb'
 Rails:
   Enabled: true
 Style/GuardClause:
   MinBodyLength: 1
+  Enabled: false
 Style/AndOr:
   EnforcedStyle: conditionals
 Style/PercentLiteralDelimiters:
@@ -44,7 +49,7 @@ Metrics/AbcSize:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 Style/BlockDelimiters:
   Enabled: false
@@ -54,7 +59,7 @@ Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 Rails/ActionFilter:
   Enabled: false
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -87,25 +92,42 @@ Style/WordArray:
   Enabled: false
 # RSpec nervt
 Metrics/BlockLength:
-  ExcludedMethods: ['task', 'namespace', 'get', 'post', 'describe', 'context', 'specify', 'it', 'route_param', 'draw', 'register', 'register_page', 'controller', 'included', 'params']
+  ExcludedMethods: ['task', 'namespace', 'get', 'post', 'describe', 'context', 'specify', 'it', 'route_param', 'draw', 'register', 'register_page', 'controller', 'included', 'params', 'resource', 'with_options', 'use_cassette', 'configure']
 Bundler/OrderedGems:
   Enabled: false
 # update_all, update_column
 Rails/SkipsModelValidations:
   Enabled: false
 # set_ und get_ verbote
-Layout/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
   Enabled: false
-  # EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
 
 Style/SymbolArray:
   Enabled: false
 
 Style/AsciiComments:
   Enabled: false
-Style/SafeNavigation:
+Style/FormatString:
+  Enabled: false
+Style/FormatStringToken:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/DoubleNegation:
   Enabled: false
 
+Rails/ApplicationRecord:
+  Enabled: false
+Style/ZeroLengthPredicate:
+  Enabled: false
 
+Style/SafeNavigation:
+  Enabled: false
+Lint/MissingCopEnableDirective:
+  Enabled: false
+Rails/InverseOf:
+  Enabled: false
