@@ -4,8 +4,15 @@ class StaticPagesController < ApplicationController
     @news_items = NewsItem.home_page.limit(48)
   end
 
-  def about
+  def impressum
     @impressum = I18n.t("impressum.#{Setting.key}")
+  end
+
+  def datenschutz
+    @datenschutz = I18n.t("datenschutz.#{Setting.key}")
+  end
+
+  def faq
   end
 
   def sources

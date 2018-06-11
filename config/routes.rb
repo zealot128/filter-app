@@ -1,5 +1,8 @@
 Baseapp::Application.routes.draw do
-  get "about", to: "static_pages#about"
+  get "impressum", to: "static_pages#impressum"
+  get 'about' => redirect("/impressum")
+  get "datenschutz", to: "static_pages#datenschutz"
+  get "faq", to: "static_pages#faq"
 
   namespace :admin do
     resources :sources do
