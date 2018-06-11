@@ -8,9 +8,23 @@ describe StaticPagesController do
     end
   end
 
-  describe "GET 'about'" do
+  describe "GET 'impressum'" do
     it "returns http success" do
-      get :about
+      get :impressum
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET 'datenschutz'" do
+    it "returns http success" do
+      get :datenschutz
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET 'faq'" do
+    it "returns http success" do
+      get :faq
       expect(response).to be_success
     end
   end

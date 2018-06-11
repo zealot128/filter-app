@@ -1,6 +1,5 @@
 Baseapp::Application.routes.draw do
   get "impressum", to: "static_pages#impressum"
-  get 'about' => redirect("/impressum")
   get "datenschutz", to: "static_pages#datenschutz"
   get "faq", to: "static_pages#faq"
 
