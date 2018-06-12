@@ -105,6 +105,7 @@ class MailSubscriptionsController < ApplicationController
       :company,
       :extended_member,
       :limit,
+      :privacy,
       categories: [])
   end
   require "whenever"

@@ -1,5 +1,3 @@
-
-
 .row
   .col-sm-8
     = simple_form_for @subscription do |f|
@@ -7,6 +5,8 @@
         .panel-body
           = f.input :email, as: :string
           = render "form", f: f
+          - if f.object.new_record?
+            = f.input :privacy, as: :boolean, label: I18n.t('simple_form.labels.mail_subscription.privacy', site_name: Setting.site_name, email: Setting.email).html_safe
           = f.submit 'Vorschau', class: 'btn btn-default'
           = ' '
           = f.submit 'Abonnieren', class: 'btn btn-primary'

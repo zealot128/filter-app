@@ -38,6 +38,8 @@ class MailSubscription < ApplicationRecord
   scope :confirmed, -> { where status: 1 }
   scope :deleted, -> { where 'deleted_at is not null' }
 
+  validates :privacy, acceptance: true
+
   has_many :impressions, foreign_key: 'user_id', dependent: :destroy
 
   enum status: [:unconfirmed, :confirmed, :unsubscribed]
