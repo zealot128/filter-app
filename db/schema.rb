@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109090342) do
+ActiveRecord::Schema.define(version: 20180814073045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,9 +174,31 @@ ActiveRecord::Schema.define(version: 20180109090342) do
     t.string   "language"
     t.text     "comment"
     t.text     "filter_rules"
+    t.json     "statistics"
   end
 
   add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
 
+  create_table "trends_usages", force: :cascade do |t|
+    t.integer "word_id"
+    t.integer "news_item_id"
+    t.integer "source_id"
+    t.string  "calendar_week"
+  end
+
+  add_index "trends_usages", ["news_item_id"], name: "index_trends_usages_on_news_item_id", using: :btree
+  add_index "trends_usages", ["source_id"], name: "index_trends_usages_on_source_id", using: :btree
+  add_index "trends_usages", ["word_id"], name: "index_trends_usages_on_word_id", using: :btree
+
+  create_table "trends_words", force: :cascade do |t|
+    t.string   "word"
+    t.integer  "parent_id"
+    t.boolean  "ignore"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "mail_subscription_histories", "mail_subscriptions"
+  add_foreign_key "trends_usages", "news_items"
+  add_foreign_key "trends_usages", "sources"
 end

@@ -119,6 +119,7 @@ class Source < ApplicationRecord
         t.update_column :error, true
         Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
       end
+      t.update_statistics!
     end
     Rails.logger.info "Finished Source.cronjob"
   end
@@ -133,5 +134,18 @@ class Source < ApplicationRecord
 
   def refresh
     raise "NotImplementedError"
+  end
+
+  def update_statistics!
+    update statistics: {
+      top_categories: news_items.
+        joins(:categories).
+        group('categories.name').
+        order('count_all desc').limit(3).count.map { |k, c| { name: k, count: c } },
+      total_news_count: news_items.count,
+      current_news_count: news_items.current.count,
+      current_top_score: (news_items.current.maximum(:absolute_score) || 0).round,
+      current_impression_count:  news_items.current.sum(:impression_count)
+    }
   end
 end
