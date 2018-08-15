@@ -102,8 +102,4 @@ class MailSubscription < ApplicationRecord
   def categories=(vals)
     super(vals.reject(&:blank?).map(&:to_i))
   end
-
-  # def self.cleanup
-  #   where('confirmed = ? and deleted_at is null', false).where('created_at < ?', 14.day.ago).delete_all
-  # end
 end
