@@ -15,9 +15,13 @@ class NewsFilter
   end
 
   def apply_order!
-    if order == 'best'
+    if order == 'all_best'
+      @news_items = @news_items.visible.reorder!('absolute_score desc')
+    elsif order == 'best'
       @news_items = @news_items.visible.top_percent_per_day(4.weeks.ago, 0.3334, 8).reorder!('published_at::date desc, absolute_score desc')
-    else #hot_score
+    elsif order == 'newest'
+      @news_items = @news_items.visible.reorder!('published_at')
+    else # hot_score
       ranking = "news_items.absolute_score_per_halflife + (log(news_items.absolute_score) *  #{boost}) "
       @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
       @news_items = @news_items.reorder!('current_score desc')
