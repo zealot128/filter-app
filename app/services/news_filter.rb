@@ -24,9 +24,9 @@ class NewsFilter
     elsif order == 'oldest'
       @news_items = @news_items.visible.reorder!('published_at asc')
     elsif order == 'week_best'
-      @news_items = @news_items.visible.top_percent_per_week(8.weeks.ago, 0.3334, 15).reorder!('published_at::date desc, absolute_score desc')
+      @news_items = @news_items.visible.top_percent_per_week(8.weeks.ago, 0.3334, 15).reorder!("to_char(published_at, 'IW/IYYY') desc, absolute_score desc")
     elsif order == 'month_best'
-      @news_items = @news_items.visible.top_percent_per_month(6.months.ago, 0.3334, 30).reorder!('published_at::date desc, absolute_score desc')
+      @news_items = @news_items.visible.top_percent_per_month(6.months.ago, 0.3334, 30).reorder!("to_char(published_at, 'MM/YYYY') desc, absolute_score desc")
     else # hot_score
       ranking = "news_items.absolute_score_per_halflife + (log(news_items.absolute_score) *  #{boost}) "
       @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")

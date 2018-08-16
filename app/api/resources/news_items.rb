@@ -9,7 +9,7 @@ class Resources::NewsItems < Grape::API
       optional :preferred, String
       optional :blacklisted, String
       optional :categories, String
-      optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage)"
+      optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
     end
     get '/' do
       filter = NewsFilter.new(
