@@ -84,6 +84,41 @@ class NewsItem < ApplicationRecord
     )
   }
 
+  scope :top_percent_per_week, ->(min_date, percentile, min_news_per_day) {
+    NewsItem.where(
+      %{ news_items.id in (
+          SELECT id from (
+            SELECT count(*) over(PARTITION BY to_char(published_at, 'IW/IYYY') ) AS total_count,
+            ROW_NUMBER() OVER (PARTITION BY to_char(published_at, 'IW/IYYY') ORDER BY absolute_score DESC) as rank,
+            published_at::date as date,
+            id
+            FROM news_items
+            WHERE published_at > '#{min_date.to_date}'
+          ) sub
+          WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
+          ORDER BY date DESC, rank DESC
+      )
+      }
+    )
+  }
+  scope :top_percent_per_month, ->(min_date, percentile, min_news_per_day) {
+    NewsItem.where(
+      %{ news_items.id in (
+          SELECT id from (
+            SELECT count(*) over(PARTITION BY to_char(published_at, 'MM/YYYY') ) AS total_count,
+            ROW_NUMBER() OVER (PARTITION BY to_char(published_at, 'MM/YYYY') ORDER BY absolute_score DESC) as rank,
+            published_at::date as date,
+            id
+            FROM news_items
+            WHERE published_at > '#{min_date.to_date}'
+          ) sub
+          WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
+          ORDER BY date DESC, rank DESC
+      )
+      }
+    )
+  }
+
   scope :uncategorized, -> {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
       where('news_item_id is null').
