@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 4.2.0"
+gem 'backport_new_renderer'
 gem "sprockets-es6"
 gem "pg", '~> 0.20.0'
 gem "mail_form"

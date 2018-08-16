@@ -31,7 +31,7 @@
   .panel-heading
     %h3.panel-title Eine Quelle fehlt, wie kann ich diese aufnehmen lassen?
   .panel-body
-    Nutzen Sie dazu dieses kurze <a href='//quelle_einreichen'>Formular</a> oder schreiben Sie uns eine #{mail_to "eMail", Setting.email, subject: "#{Setting.short_name}: Neue Quelle"}.
+    Nutzen Sie dazu dieses kurze <a href='https://#{Setting.host}/quelle_einreichen'>Formular</a> oder schreiben Sie uns eine #{mail_to Setting.email, "eMail", subject: "#{Setting.short_name}: Neue Quelle"}.
 
 .panel.panel-primary
   .panel-heading
