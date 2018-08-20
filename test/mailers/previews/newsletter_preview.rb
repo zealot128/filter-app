@@ -4,7 +4,9 @@ class NewsletterPreview < ActionMailer::Preview
   end
 
   def newsletter
-    NewsletterMailer.newsletter(Newsletter::Mailing.new(MailSubscription.last))
+    subscription = MailSubscription.joins(:histories).group('mail_subscriptions.id').first
+    history = subscription.histories.last
+    NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription), history)
   end
 
   def initial_mail

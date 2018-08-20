@@ -48,6 +48,12 @@ module Newsletter
         case Regexp.last_match(1).strip
         when 'person_email' then Setting.get_value("person_email")
         when 'person' then Setting.get_value("person")
+        when 'abmelde_link'
+          if subscription.persisted?
+            Rails.application.routes.url_helpers.edit_mail_subscription_url subscription, host: Setting.host, protocol: 'https'
+          else
+            "https://#{Setting.host}/newsletter/"
+          end
         else "missing_token #{pattern}"
         end
       end

@@ -33,7 +33,8 @@ module ApplicationHelper
     when 'mail_outro'
       {
         "{{person_email}}": "'#{Setting.get_value('person_email')}'",
-        "{{person}}": "'#{Setting.get_value('person')}'",
+        "{{abmelde_link}}": "Abmeldelink",
+        "{{person}}": "'#{Setting.get_value('person')}'"
       }
     end
   end
