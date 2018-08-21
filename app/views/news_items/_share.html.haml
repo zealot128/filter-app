@@ -1,6 +1,6 @@
 .categories
-  - if item.fb_likes
-    - if item.fb_likes > 0
+  - if item.fb_likes || item.youtube_views
+    - if item.fb_likes.to_i > 0
       %span.label.label-default(title='Facebook likes')
         %i.fa.fa-facebook
         = item.fb_likes
@@ -8,7 +8,7 @@
       %span.label.label-default(title='Twitter favs + retweets')
         %i.fa.fa-twitter
         = item.retweets
-    - if item.linkedin > 0
+    - if item.linkedin.to_i > 0
       %span.label.label-default(title='LinkedIn shares')
         %i.fa.fa-linkedin
         = item.linkedin
@@ -24,6 +24,10 @@
       %span.label.label-default(title='Reddit score (kum.)')
         %i.fa.fa-reddit-square
         = item.reddit
+    - if item.youtube_views.to_i > 0
+      %span.label.label-default(title="#{item.youtube_views} Youtube Views")
+        %i.fa.fa-youtube
+        = number_to_human item.youtube_views, units: { thousand: "K", million: "M", unit: '' }, precision: 2, format: "%n%u"
     - if item.word_length > 0
       %span.label.label-default(title='Anzahl Worte (ca.)')
         %i.fa.fa-file-text-o

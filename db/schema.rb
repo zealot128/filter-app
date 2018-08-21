@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180814073045) do
+ActiveRecord::Schema.define(version: 20180821213923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,8 @@ ActiveRecord::Schema.define(version: 20180814073045) do
     t.integer  "impression_count",                        default: 0
     t.string   "tweet_id"
     t.integer  "absolute_score_per_halflife"
+    t.integer  "youtube_likes",                           default: 0
+    t.integer  "youtube_views",                           default: 0
   end
 
   add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree

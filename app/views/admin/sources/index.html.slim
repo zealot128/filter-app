@@ -2,7 +2,7 @@ p
   = link_to [:new, :admin, :source], class: 'btn btn-primary' do
     |Neu
 
-table.table.table-striped.table-bordered.js-tablesorter
+table.table.table-striped.table-bordered.js-table
   thead
     tr
       th Quelle
@@ -22,45 +22,75 @@ table.table.table-striped.table-bordered.js-tablesorter
       th Sum / Avg Klicks Beiträge
       th Twitter
       th
-  - @sources.each do |source|
-    tr class='#{source.error ? 'danger' : ''}'
-      td = render 'news_items/source', source: source, size: '16x16'
-      td = source.type
-      td
-        = source.news_items.home_page.count
-        span<> = '/'
-        = source.news_items.recent.count
-        span<> = '/'
-        = source.news_items.count
-      td = source.average_word_length
-      td = bool_checkmark !!source.full_text_selector
-      td
-        = bool_checkmark source.lsr_active?
-        - if source.lsr_confirmation.present?
-          br
-          small
-            = link_to source.lsr_confirmation.url do
-              | pdf
-      td = bool_checkmark source.deactivated?
-      td = (s = source.news_items.recent.average(:absolute_score)) && s.round(1)
-      td = source.value
-      td = source.multiplicator
-      td
-        = source.news_items.sum(:impression_count)
-        span<> = '/'
-        = (s = source.news_items.average(:impression_count)) && s.round
+  tbody
+    - @sources.each do |source|
+      tr class='#{source.error ? 'danger' : ''}'
+        td = render 'news_items/source', source: source, size: '16x16'
+        td = source.type
+        td
+          = source.news_items.home_page.count
+          span<> = '/'
+          = source.news_items.recent.count
+          span<> = '/'
+          = source.news_items.count
+        td = source.average_word_length
+        td = bool_checkmark !!source.full_text_selector
+        td
+          = bool_checkmark source.lsr_active?
+          - if source.lsr_confirmation.present?
+            br
+            small
+              = link_to source.lsr_confirmation.url do
+                | pdf
+        td = bool_checkmark source.deactivated?
+        td = (s = source.news_items.recent.average(:absolute_score)) && s.round(1)
+        td = source.value
+        td = source.multiplicator
+        td
+          = source.news_items.sum(:impression_count)
+          span<> = '/'
+          = (s = source.news_items.average(:impression_count)) && s.round
 
-      td = source.twitter_account
-      td
-        = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
-          |bearbeiten
-        = ' '
-        = link_to [:admin, source.becomes(Source)], class: 'btn btn-default btn-xs', data: { method: :delete, confirm: 'really?'} do
-          |löschen
-        = ' '
-        = link_to source.url, class: 'btn btn-xs' do
-          |feed-url
-        = ' '
-        = link_to [:refresh, :admin, source.becomes(Source)], data: { method: :post}, class: 'btn btn-xs btn-primary' do
-          |refresh
+        td = source.twitter_account
+        td
+          = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
+            |bearbeiten
+          = ' '
+          = link_to [:admin, source.becomes(Source)], class: 'btn btn-default btn-xs', data: { method: :delete, confirm: 'really?'} do
+            |löschen
+          = ' '
+          = link_to source.url, class: 'btn btn-xs' do
+            |feed-url
+          = ' '
+          = link_to [:refresh, :admin, source.becomes(Source)], data: { method: :post}, class: 'btn btn-xs btn-primary' do
+            |refresh
+
+link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"
+script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"
+
+javascript:
+  $('.js-table').DataTable({paging: false,
+      initComplete: function () {
+            this.api().columns().every(function (i) {
+                var column = this;
+                if (i != 1 && i != 4) {
+                return;
+                }
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.header()) )
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                          $(this).val()
+                        );
+                        column
+                          .search( val ? '^'+val+'$' : '', true, false )
+                          .draw();
+                    } );
+
+                column.data().unique().sort().each(function (d,j) {
+                    select.append('<option value="'+d+'">'+d+'</option>')
+                });
+            });
+      },
+  });
 

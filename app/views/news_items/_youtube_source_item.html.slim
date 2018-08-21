@@ -1,0 +1,28 @@
+- feed_source_item = youtube_source_item
+- background = feed_source_item.image
+.panel.panel-default.youtube-item
+  = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item)} do
+    .panel-body(class=(background.present? ? 'with-background' : ''))
+      - if background.present?
+        .background-frame
+          img.background(src=(background.url))
+      .background-text
+        p.source
+          .pull-right
+            i.fa.fa-fw.fa-youtube.fa-2x<>
+          = render "news_items/source", source: feed_source_item.source, size: '16x16'
+          br
+          span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
+            = l feed_source_item.published_at, format: :short
+
+        div
+          = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item)} do
+            strong = truncate(feed_source_item.title, length: 60)
+            - unless feed_source_item.source.lsr_active?
+              br
+              = feed_source_item.teaser
+      .fog-fade
+  .panel-footer
+    small.categories
+      = feed_source_item.categories.pluck(:name).to_sentence
+    = render "news_items/share", item: feed_source_item

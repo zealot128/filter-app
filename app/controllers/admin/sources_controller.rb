@@ -3,8 +3,16 @@ class Admin::SourcesController < AdminController
     @sources = Source.order(:name)
   end
 
+  def select
+  end
+
   def new
-    @source = Source.new
+    if params[:source_type]
+      @source = params[:source_type].constantize.new
+    else
+      @source_types = Source::SOURCE_TYPES
+      render 'select'
+    end
   end
 
   def create
@@ -57,5 +65,5 @@ class Admin::SourcesController < AdminController
     redirect_to [:admin, :sources], notice: 'Done'
   end
 
-  
+
 end

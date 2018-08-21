@@ -34,6 +34,8 @@ class Source < ApplicationRecord
   has_many :news_items, dependent: :destroy
   validates_presence_of :url, :name
 
+  SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource']
+
   belongs_to :default_category, class_name: 'Category'
   after_create :download_thumb, if: -> { !Rails.env.test? }
   scope :visible, -> { where(deactivated: false) }

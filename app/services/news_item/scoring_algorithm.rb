@@ -20,7 +20,9 @@ class NewsItem::ScoringAlgorithm
       smooth(data(:reddit)) +
       smooth(data(:facebook)) / 2 +
       smooth(data(:incoming_link_count)) * 2 +
-      smooth(data(:impression_count)) / 5.0 +
+      smooth(data(:impression_count)) / 3.0 +
+      smooth(data(:youtube_likes) / 100) +
+      smooth(data(:youtube_views) / 1000) / 5.0 +
       data(:word_length)**0.3 # Lange beitrage leicht nach oben, z.B.
     # 1000 Worte -> 30pkt
     # (data(:parallel_news_count) ** 1.2 + 2)
