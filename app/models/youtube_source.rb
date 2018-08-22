@@ -1,5 +1,5 @@
 class YoutubeSource < Source
-  validates :url, presence: true, format: { with: %r{\Ahttps://www.youtube.com/user/[^ ]+\z} }
+  validates :url, presence: true, format: { with: %r{\Ahttps://www.youtube.com/(user|channel)/[^ ]+\z} }
 
   def download_thumb
     doc = Nokogiri.parse(open(url))
