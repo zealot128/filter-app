@@ -13,6 +13,27 @@
           = link_to "https://twitter.com/#{Setting.get('twitter_account')}", class: 'btn btn-default' do
             i.fa.fa-fw.fa-twitter>
             |Twitter
+            
+br
+br
+.text-center
+  h3.job-title Stellenanzeigen
+  br
+
+- i = 0
+- jobhash = HTTParty.get('https://login.empfehlungsbund.de/api/v2/jobs/search.json?q=personal%20human%20resource&fair=false&min_score=0.5&portal_types=office&per=10')
+.container
+  - jobhash["jobs"].each do |job|
+    - i += 1 
+    .col-md-6.job-col
+      .panel.panel-primary
+        .panel-heading
+          img src=job["company_logo_big"]
+        - job["variants"].each do |variants|
+          .panel-body
+            a href= variants["url"] = variants["title"]     
+    - if i % 2 == 0
+      .row.job-row    
 
 - @container_class = ''
 .container
