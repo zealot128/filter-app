@@ -30,6 +30,7 @@ gem 'airbrake', '~> 7.0.0'
 gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'
+gem 'mini_magick'
 
 # TODO: > 5.0.7
 gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'

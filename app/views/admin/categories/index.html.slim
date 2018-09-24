@@ -6,6 +6,9 @@ table.table
   tbody
     - @categories.each do |category|
       tr
+        td
+          - if category.logo.attached?
+            = image_tag category.logo.variant(resize: '50x50>')
         td = category.name
         td = category.keywords.gsub(',', ', ')
         td = link_to [:edit, :admin, category], class: 'btn btn-default btn-xs' do

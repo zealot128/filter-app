@@ -21,3 +21,4 @@ config/secrets.yml
 .rspec.failed.txt
 coverage
 env
+storage
