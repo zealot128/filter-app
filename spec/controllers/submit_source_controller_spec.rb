@@ -5,7 +5,7 @@ describe SubmitSourceController do
 
   specify 'form works' do
     get :new
-    expect(response).to be_success
+    expect(response).to be_successful
   end
 
   specify 'successful form post delivers mail' do

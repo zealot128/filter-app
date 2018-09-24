@@ -14,7 +14,7 @@ describe NewsItemsController do
     specify 'uncategorized + recent' do
       _ni = Fabricate(:news_item)
       get :homepage, params: { order: :recent, category: -1 }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -22,7 +22,7 @@ describe NewsItemsController do
     specify '#1' do
       _ni = Fabricate(:news_item, title: 'FILTER')
       get :index, params: { q: 'FILTER' }
-      expect(response).to be_success
+      expect(response).to be_successful
       # TODO: Doesn't work in Test - no trigger/stored procs
       expect(assigns(:news_items)).to be == []
     end

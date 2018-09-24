@@ -59,7 +59,7 @@ describe 'MailSubscriptionsController' do
 
         tracking_url = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.first.html_part.decoded).search('img').last['src']
         get tracking_url
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(response.content_type).to be == 'image/png'
         expect(MailSubscription::History.opened.count).to be == 1
 
