@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe SourcesController do
   render_views
 

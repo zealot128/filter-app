@@ -61,11 +61,11 @@ gem "voight_kampff"
 group :test do
   gem 'rails-controller-testing'
   gem "timecop"
-  gem "rspec-rails", "~> 3.1"
+  gem 'pludoni_rspec'
+  gem "rspec-rails", ">= 3.1"
   gem "vcr"
   gem "webmock"
   gem "fabrication"
-  gem "simplecov"
 end
 
 group :development do

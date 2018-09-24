@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MailSubscriptionsController' do
   specify 'Anlegen' do
     VCR.use_cassette 'events' do

@@ -1,4 +1,3 @@
-require "spec_helper"
 describe NewsItem::CheckFilterList do
   let(:service) { NewsItem::CheckFilterList.new(source) }
   let(:source) { Source.new(filter_rules: '') }

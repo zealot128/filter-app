@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe TwitterPosting do
   specify 'run' do
     Setting.set('twitter_access_token', '123')

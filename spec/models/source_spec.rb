@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Source do
   specify 'download thumb' do
     VCR.use_cassette 'persoblogger', record: :new_episodes do

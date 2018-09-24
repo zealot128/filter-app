@@ -1,4 +1,3 @@
-require "spec_helper"
 describe Resources::NewsItems, type: :request do
   describe '/api/v1/news_items' do
     specify 'filter' do

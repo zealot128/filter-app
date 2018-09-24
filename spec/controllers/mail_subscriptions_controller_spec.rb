@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MailSubscriptionsController do
   before do
     Rails.cache.clear

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe NewsItem::LinkageCalculator do
   let(:source1) { Source.create! url: 'http://www.pludoni.de/xml', name: '1' }
   let(:source2) { Source.create! url: 'http://www.empfehlungsbund.de/xml', name: '2' }

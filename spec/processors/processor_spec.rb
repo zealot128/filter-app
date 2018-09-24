@@ -1,4 +1,3 @@
-require "spec_helper"
 describe Processor, type: :model do
   let(:feed_source) { FeedSource.new(url: "...", name: "..") }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe SubmitSourceController do
   render_views
 

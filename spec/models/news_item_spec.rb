@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe NewsItem do
   describe "Like-Fetcher" do
     let(:like_fetcher) { NewsItem::LikeFetcher.new("http://stefanwienert.net/blog/2013/02/08/faster-rails-tests-with-spring-faster-than-spork-und-easier-to-setup/") }

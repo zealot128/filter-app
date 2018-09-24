@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module Charts
   describe SourceTimeChart do
     specify "doesnt blow up" do

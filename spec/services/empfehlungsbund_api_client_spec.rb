@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe EmpfehlungsbundApiClient do
   before do
     Rails.cache.clear

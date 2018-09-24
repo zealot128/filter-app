@@ -1,4 +1,3 @@
-require "spec_helper"
 describe FacebookSource do
   specify 'Full test' do
     VCR.use_cassette 'source/facebook-personalw', record: :new_episodes do
