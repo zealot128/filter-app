@@ -22,7 +22,7 @@ rspec:
   stage: test
 
 pronto:
-  image: registry.pludoni.com/administrators/docker-images/code-quality:v1
+  image: registry.pludoni.com/administrators/docker-images/code-quality:v2
   stage: test
   script: 'run'
 
