@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 5.2.0"
-gem "sprockets-es6"
+gem 'babel-transpiler'
 gem "pg"
 gem "mail_form"
 gem "simple_form"
@@ -31,7 +31,8 @@ gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'
 
-gem "sass-rails"
+# TODO: > 5.0.7
+gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
 gem "coffee-rails"
 gem "bootstrap-sass", "~> 3.1"
 gem "bootswatch-rails"
@@ -53,7 +54,7 @@ gem "twitter", "~> 5.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem "premailer-rails"
-gem "zurb-ink"
+gem "zurb-ink", path: '../../OpenSource/zurb-ink'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff"

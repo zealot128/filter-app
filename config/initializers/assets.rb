@@ -13,6 +13,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-Rails.application.config.assets.precompile += %w(font-awesome-ie7.min.css web.css web.js IE9.js admin.js app.js mailer.css)
-Rails.application.config.assets.enabled = true
+Rails.application.config.assets.precompile = ['manifest.js']
 Rails.application.config.assets.image_optim = false
