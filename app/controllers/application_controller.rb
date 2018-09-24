@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_action do
+    prepend_view_path Rails.root.join('app', 'views', Setting.key)
+  end
 
   before_action do
     if request.host == Setting.host.remove('www.', '') and Rails.env.production?

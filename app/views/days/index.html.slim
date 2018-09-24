@@ -13,6 +13,8 @@
           = link_to "https://twitter.com/#{Setting.get('twitter_account')}", class: 'btn btn-default' do
             i.fa.fa-fw.fa-twitter>
             |Twitter
+- if browser.platform.ios? || browser.platform.android? || Rails.env.development?
+  = render 'layouts/mobile_notice'
 
 - @container_class = ''
 .container
