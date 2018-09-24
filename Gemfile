@@ -70,6 +70,7 @@ end
 
 group :development do
   gem "habtm_generator"
+  gem "listen"
 end
 
 group :development, :test do
