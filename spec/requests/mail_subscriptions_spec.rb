@@ -4,7 +4,7 @@ describe 'MailSubscriptionsController' do
   specify 'Anlegen' do
     VCR.use_cassette 'events' do
       get '/newsletter'
-      assert(response.success?)
+      assert(response.successful?)
       c = Category.create!(name: 'Recruiting', keywords: 'Headhunter')
 
       post '/newsletter', params: {
@@ -15,13 +15,13 @@ describe 'MailSubscriptionsController' do
           categories: [c.id]
         }
       }
-      assert(response.success?)
+      assert(response.successful?)
       expect(ActionMailer::Base.deliveries.count).to be == 1
       body = ActionMailer::Base.deliveries.first.html_part.body.to_s
       url = Nokogiri::HTML.fragment(body).at('a')['href']
 
       get URI.parse(url).path
-      assert(response.success?)
+      assert(response.successful?)
 
       MailSubscription.first.tap do |s|
         expect(s.email).to be == 'stwienert@gmail.com'

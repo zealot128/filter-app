@@ -3,7 +3,7 @@ class SourcesController < ApplicationController
   before_action :allow_iframe_requests
 
   def index
-    @sources = Source.order('lower(name)')
+    @sources = Source.order(Arel.sql 'lower(name)')
   end
 
   def show
