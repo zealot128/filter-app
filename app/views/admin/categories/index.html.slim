@@ -7,7 +7,7 @@ table.table
     - @categories.each do |category|
       tr
         td = category.name
-        td = category.keywords
+        td = category.keywords.gsub(',', ', ')
         td = link_to [:edit, :admin, category], class: 'btn btn-default btn-xs' do
           | edit
 

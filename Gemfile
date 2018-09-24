@@ -54,7 +54,8 @@ gem "twitter", "~> 5.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem "premailer-rails"
-gem "zurb-ink", path: '../../OpenSource/zurb-ink'
+# TODO: https://github.com/johnkoht/zurb-ink/pull/1
+gem "zurb-ink", git: 'https://github.com/pludoni/zurb-ink.git'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff"
