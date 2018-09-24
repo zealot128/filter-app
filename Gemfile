@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 5.0.0"
 # gem 'backport_new_renderer'
 gem "sprockets-es6"
-gem "pg", '~> 0.20.0'
+gem "pg"
 gem "mail_form"
 gem "simple_form"
 gem "simple-navigation"
@@ -25,6 +25,8 @@ gem "angularjs-rails", "1.2.18"
 
 gem "impressionist", '~> 1.6.1'
 gem "exception_notification"
+gem 'airbrake-ruby', '~> 2.4.0'
+gem 'airbrake', '~> 7.0.0'
 gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'

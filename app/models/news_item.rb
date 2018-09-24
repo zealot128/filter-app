@@ -41,7 +41,7 @@ class NewsItem < ApplicationRecord
   # half life of items is 12.5 hours; all items within the same batch get the same base time score
   HALF_LIFE = 45_000
 
-  is_impressionable counter_cache: true, column_name: :impression_count, unique: [:impressionable_type, :impressionable_id, :session_hash]
+  is_impressionable counter_cache: true, column_name: :impression_count, unique: :session_hash
 
   def self.max_age
     Setting.max_age.to_i.days
