@@ -14,11 +14,13 @@ class NewsletterMailer < ActionMailer::Base
             else
               "zum Thema " + names.to_sentence
             end
+    headers['X-Auto-Response-Suppress'] = "OOF"
     mail to: mailing.full_email, subject: "[#{Setting.site_name}] #{@mailing.count} Beiträge #{names}"
   end
 
   def initial_mail(subscription)
     @subscription = subscription
+    headers['X-Auto-Response-Suppress'] = "OOF"
     mail to: subscription.full_email, subject: "Mit dem neuen Empfehlungsbund-Newsletter alle HR-News auf einen Blick"
   end
 end
