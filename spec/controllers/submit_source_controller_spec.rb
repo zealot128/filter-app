@@ -9,10 +9,12 @@ describe SubmitSourceController do
   end
 
   specify 'successful form post delivers mail' do
-    post :create, submit_source: {
-      url: 'http://www.example.com/url',
-      email: 'info@example.com',
-      comment: 'bla'
+    post :create, params: {
+      submit_source: {
+        url: 'http://www.example.com/url',
+        email: 'info@example.com',
+        comment: 'bla'
+      }
     }
 
     expect(ActionMailer::Base.deliveries.count).to eq(1)

@@ -11,7 +11,7 @@ describe DaysController do
 
   specify '#show' do
     ni = Fabricate(:news_item)
-    get :show, year: ni.published_at.year, month: ni.published_at.month, day: ni.published_at.day
+    get :show, params: { year: ni.published_at.year, month: ni.published_at.month, day: ni.published_at.day }
     expect(response).to be_success
     expect(assigns(:news).count).to be == 1
   end

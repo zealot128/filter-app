@@ -13,7 +13,7 @@ describe Resources::NewsItems, type: :request do
       n2  = Fabricate(:news_item, absolute_score: 1)
       expect(n1.source).to_not eq n2.source
 
-      get '/api/v1/news_items.json', blacklisted: n2.source.id
+      get '/api/v1/news_items.json', params: { blacklisted: n2.source.id }
       expect(json.news_items.length).to be == 1
     end
 
@@ -22,7 +22,7 @@ describe Resources::NewsItems, type: :request do
       n2  = Fabricate(:news_item, absolute_score: 11)
       expect(n1.source).to_not eq n2.source
 
-      get '/api/v1/news_items.json', preferred: n1.source_id
+      get '/api/v1/news_items.json', params: { preferred: n1.source_id }
       expect(json.news_items.length).to be == 2
       expect(json.news_items.first.id).to be == n1.id
     end
@@ -36,7 +36,7 @@ describe Resources::NewsItems, type: :request do
       n2 = Fabricate(:news_item, absolute_score: 11)
       n2.categories << c1
 
-      get '/api/v1/news_items.json', categories: c2.id
+      get '/api/v1/news_items.json', params: { categories: c2.id }
       expect(json.news_items.length).to be == 1
     end
 
@@ -51,7 +51,7 @@ describe Resources::NewsItems, type: :request do
     specify 'order by top score per day (Smoke test)' do
       Fabricate(:news_item, absolute_score: 10, value: 10, published_at: 1.day.ago)
 
-      get '/api/v1/news_items.json', order: 'best'
+      get '/api/v1/news_items.json', params: { order: 'best' }
       expect(json.news_items.length).to be == 1
     end
   end

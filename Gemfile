@@ -23,7 +23,7 @@ gem "lograge"
 gem "open_uri_redirections"
 gem "angularjs-rails", "1.2.18"
 
-gem "impressionist", '= 1.5.1'
+gem "impressionist", '~> 1.6.1'
 gem "exception_notification"
 gem "paperclip"
 gem "paperclip-optimizer"
@@ -57,6 +57,7 @@ gem "ipcat"
 gem "voight_kampff"
 
 group :test do
+  gem 'rails-controller-testing'
   gem "timecop"
   gem "rspec-rails", "~> 3.1"
   gem "vcr"

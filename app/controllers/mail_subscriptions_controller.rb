@@ -21,7 +21,7 @@ class MailSubscriptionsController < ApplicationController
       else
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-        render text: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
+        render html: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
                'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>',
                layout: true
       end
@@ -32,7 +32,7 @@ class MailSubscriptionsController < ApplicationController
 
   def confirm
     subscription.confirm!
-    render text: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
+    render html: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
     time_now = Time.zone.now
     job = filter_jobs
     cronjob_time = Time.zone.parse(job[0].at).strftime('%H:%M')
@@ -48,7 +48,7 @@ class MailSubscriptionsController < ApplicationController
 
   def update
     if subscription.update(permitted_params)
-      render text: '<div class="alert alert-success">Änderungen gespeichert.</div>', layout: true
+      render html: '<div class="alert alert-success">Änderungen gespeichert.</div>', layout: true
     else
       render :edit
     end
@@ -56,7 +56,7 @@ class MailSubscriptionsController < ApplicationController
 
   def destroy
     subscription.destroy
-    render text: '<div class="alert alert-success">Newsletter abbestellt!</div>', layout: true
+    render html: '<div class="alert alert-success">Newsletter abbestellt!</div>', layout: true
   end
 
   def show

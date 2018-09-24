@@ -20,7 +20,7 @@ describe MailSubscriptionsController do
   specify 'newsletter after subscription after 9am Monday' do
     VCR.use_cassette 'events' do
       ms = MailSubscription.create!(subscription)
-      post :confirm, id: ms.token
+      post :confirm, params: { id: ms.token }
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
   end
@@ -28,7 +28,7 @@ describe MailSubscriptionsController do
   specify 'no newsletter after subscription on Monday before 9am', freeze_time: "2017-11-06 8:00" do
     VCR.use_cassette 'events' do
       ms = MailSubscription.create!(subscription)
-      post :confirm, id: ms.token
+      post :confirm, params: { id: ms.token }
       expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
   end

@@ -25,6 +25,6 @@ class DaysController < ApplicationController
     end
     @yesterday = @day - 1
   rescue ArgumentError
-    render text: "<h3>Ungültiges Datum</h3>", layout: true, status: 400
+    render html: "<h3>Ungültiges Datum</h3>", layout: true, status: 400
   end
 end

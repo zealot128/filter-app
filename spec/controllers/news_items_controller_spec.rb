@@ -5,7 +5,7 @@ describe NewsItemsController do
 
   specify 'show redirects to original url and increments counter' do
     ni = Fabricate(:news_item)
-    get :show, id: ni.id
+    get :show, params: { id: ni.id }
     expect(response.location).to be == ni.url
     expect(Impression.count).to be == 1
   end
@@ -13,7 +13,7 @@ describe NewsItemsController do
   describe 'Old API: #homepage' do
     specify 'uncategorized + recent' do
       _ni = Fabricate(:news_item)
-      get :homepage, order: :recent, category: -1
+      get :homepage, params: { order: :recent, category: -1 }
       expect(response).to be_success
     end
   end
@@ -21,7 +21,7 @@ describe NewsItemsController do
   describe 'Old Homepage/now Search' do
     specify '#1' do
       _ni = Fabricate(:news_item, title: 'FILTER')
-      get :index, q: 'FILTER'
+      get :index, params: { q: 'FILTER' }
       expect(response).to be_success
       # TODO: Doesn't work in Test - no trigger/stored procs
       expect(assigns(:news_items)).to be == []

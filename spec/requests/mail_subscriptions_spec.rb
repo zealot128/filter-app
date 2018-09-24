@@ -7,11 +7,13 @@ describe 'MailSubscriptionsController' do
       assert(response.success?)
       c = Category.create!(name: 'Recruiting', keywords: 'Headhunter')
 
-      post '/newsletter', mail_subscription: {
-        email: 'stwienert@gmail.com',
-        interval: 'weekly',
-        limit: 50,
-        categories: [c.id]
+      post '/newsletter', params: {
+        mail_subscription: {
+          email: 'stwienert@gmail.com',
+          interval: 'weekly',
+          limit: 50,
+          categories: [c.id]
+        }
       }
       assert(response.success?)
       expect(ActionMailer::Base.deliveries.count).to be == 1

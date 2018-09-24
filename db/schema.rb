@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180821213923) do
+ActiveRecord::Schema.define(version: 20180924123850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +28,8 @@ ActiveRecord::Schema.define(version: 20180821213923) do
   create_table "categories_news_items", id: false, force: :cascade do |t|
     t.integer "category_id"
     t.integer "news_item_id"
+    t.index ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true, using: :btree
   end
-
-  add_index "categories_news_items", ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true, using: :btree
 
   create_table "impressions", force: :cascade do |t|
     t.string   "impressionable_type"
@@ -47,16 +45,17 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.text     "referrer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "params"
+    t.index ["controller_name", "action_name", "ip_address"], name: "controlleraction_ip_index", using: :btree
+    t.index ["controller_name", "action_name", "request_hash"], name: "controlleraction_request_index", using: :btree
+    t.index ["controller_name", "action_name", "session_hash"], name: "controlleraction_session_index", using: :btree
+    t.index ["impressionable_type", "impressionable_id", "ip_address"], name: "poly_ip_index", using: :btree
+    t.index ["impressionable_type", "impressionable_id", "params"], name: "poly_params_request_index", using: :btree
+    t.index ["impressionable_type", "impressionable_id", "request_hash"], name: "poly_request_index", using: :btree
+    t.index ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
+    t.index ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
+    t.index ["user_id"], name: "index_impressions_on_user_id", using: :btree
   end
-
-  add_index "impressions", ["controller_name", "action_name", "ip_address"], name: "controlleraction_ip_index", using: :btree
-  add_index "impressions", ["controller_name", "action_name", "request_hash"], name: "controlleraction_request_index", using: :btree
-  add_index "impressions", ["controller_name", "action_name", "session_hash"], name: "controlleraction_session_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], name: "poly_ip_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], name: "poly_request_index", using: :btree
-  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
-  add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
-  add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
 
   create_table "linkages", force: :cascade do |t|
     t.integer  "from_id"
@@ -64,10 +63,9 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "different",  default: false
+    t.index ["from_id"], name: "index_linkages_on_from_id", using: :btree
+    t.index ["to_id"], name: "index_linkages_on_to_id", using: :btree
   end
-
-  add_index "linkages", ["from_id"], name: "index_linkages_on_from_id", using: :btree
-  add_index "linkages", ["to_id"], name: "index_linkages_on_to_id", using: :btree
 
   create_table "mail_subscription_histories", force: :cascade do |t|
     t.integer  "mail_subscription_id"
@@ -77,9 +75,8 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.integer  "click_count",          default: 0
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.index ["mail_subscription_id"], name: "index_mail_subscription_histories_on_mail_subscription_id", using: :btree
   end
-
-  add_index "mail_subscription_histories", ["mail_subscription_id"], name: "index_mail_subscription_histories_on_mail_subscription_id", using: :btree
 
   create_table "mail_subscriptions", force: :cascade do |t|
     t.text     "email"
@@ -98,9 +95,8 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.boolean  "extended_member", default: false
     t.datetime "deleted_at"
     t.integer  "status",          default: 0
+    t.index ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree
   end
-
-  add_index "mail_subscriptions", ["token"], name: "index_mail_subscriptions_on_token", unique: true, using: :btree
 
   create_table "news_items", force: :cascade do |t|
     t.string   "title",                       limit: 255
@@ -134,22 +130,20 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.integer  "absolute_score_per_halflife"
     t.integer  "youtube_likes",                           default: 0
     t.integer  "youtube_views",                           default: 0
+    t.index ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
+    t.index ["absolute_score"], name: "index_news_items_on_absolute_score", using: :btree
+    t.index ["guid"], name: "index_news_items_on_guid", using: :btree
+    t.index ["published_at"], name: "index_news_items_on_published_at", using: :btree
+    t.index ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
+    t.index ["source_id"], name: "index_news_items_on_source_id", using: :btree
+    t.index ["value"], name: "index_news_items_on_value", using: :btree
   end
-
-  add_index "news_items", ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at", using: :btree
-  add_index "news_items", ["absolute_score"], name: "index_news_items_on_absolute_score", using: :btree
-  add_index "news_items", ["guid"], name: "index_news_items_on_guid", using: :btree
-  add_index "news_items", ["published_at"], name: "index_news_items_on_published_at", using: :btree
-  add_index "news_items", ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
-  add_index "news_items", ["source_id"], name: "index_news_items_on_source_id", using: :btree
-  add_index "news_items", ["value"], name: "index_news_items_on_value", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string "key"
     t.text   "value"
+    t.index ["key"], name: "index_settings_on_key", unique: true, using: :btree
   end
-
-  add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
   create_table "sources", force: :cascade do |t|
     t.string   "type",                          limit: 255
@@ -177,30 +171,8 @@ ActiveRecord::Schema.define(version: 20180821213923) do
     t.text     "comment"
     t.text     "filter_rules"
     t.json     "statistics"
-  end
-
-  add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
-
-  create_table "trends_usages", force: :cascade do |t|
-    t.integer "word_id"
-    t.integer "news_item_id"
-    t.integer "source_id"
-    t.string  "calendar_week"
-  end
-
-  add_index "trends_usages", ["news_item_id"], name: "index_trends_usages_on_news_item_id", using: :btree
-  add_index "trends_usages", ["source_id"], name: "index_trends_usages_on_source_id", using: :btree
-  add_index "trends_usages", ["word_id"], name: "index_trends_usages_on_word_id", using: :btree
-
-  create_table "trends_words", force: :cascade do |t|
-    t.string   "word"
-    t.integer  "parent_id"
-    t.boolean  "ignore"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_sources_on_type", using: :btree
   end
 
   add_foreign_key "mail_subscription_histories", "mail_subscriptions"
-  add_foreign_key "trends_usages", "news_items"
-  add_foreign_key "trends_usages", "sources"
 end

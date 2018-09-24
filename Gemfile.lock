@@ -177,7 +177,6 @@ GEM
     http_parser.rb (0.6.0)
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
-    httpclient (2.8.3)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -191,9 +190,8 @@ GEM
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
     image_size (1.5.0)
-    impressionist (1.5.1)
-      httpclient (~> 2.2)
-      nokogiri (~> 1.5)
+    impressionist (1.6.1)
+      nokogiri (~> 1)
     in_threads (1.4.0)
     ipcat (2.0.11)
     jquery-rails (4.3.1)
@@ -312,6 +310,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.0.7)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.2)
+      actionpack (~> 5.x, >= 5.0.1)
+      actionview (~> 5.x, >= 5.0.1)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -479,7 +481,7 @@ DEPENDENCIES
   highcharts-rails
   httparty
   image_optim_pack
-  impressionist (= 1.5.1)
+  impressionist (~> 1.6.1)
   ipcat
   jquery-rails
   lograge
@@ -496,6 +498,7 @@ DEPENDENCIES
   pry-rails
   rack-attack
   rails (~> 5.0.0)
+  rails-controller-testing
   rinku
   rspec-rails (~> 3.1)
   rubocop
