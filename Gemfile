@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 5.1.0"
+gem "rails", "~> 5.2.0"
 gem "sprockets-es6"
 gem "pg"
 gem "mail_form"
