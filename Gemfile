@@ -1,13 +1,13 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 5.0.0"
-# gem 'backport_new_renderer'
+gem "rails", "~> 5.1.0"
 gem "sprockets-es6"
 gem "pg"
 gem "mail_form"
 gem "simple_form"
 gem "simple-navigation"
 gem "simple-navigation-bootstrap", git: "https://github.com/pzgz/simple-navigation-bootstrap.git"
+gem 'bootsnap'
 
 gem "browser"
 gem "bcrypt-ruby"
