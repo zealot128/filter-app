@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 4.2.0"
-gem 'backport_new_renderer'
+gem "rails", "~> 5.0.0"
+# gem 'backport_new_renderer'
 gem "sprockets-es6"
 gem "pg", '~> 0.20.0'
 gem "mail_form"
@@ -66,7 +66,6 @@ group :test do
 end
 
 group :development do
-  gem "quiet_assets"
   gem "habtm_generator"
 end
 
