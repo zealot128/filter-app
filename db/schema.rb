@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_24_144918) do
+ActiveRecord::Schema.define(version: 2018_10_09_073030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -158,6 +158,17 @@ ActiveRecord::Schema.define(version: 2018_09_24_144918) do
     t.index ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
     t.index ["source_id"], name: "index_news_items_on_source_id"
     t.index ["value"], name: "index_news_items_on_value"
+  end
+
+  create_table "push_notifications", force: :cascade do |t|
+    t.string "device_hash"
+    t.integer "response", default: 0
+    t.text "error_response"
+    t.json "push_payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "os"
+    t.string "app_version"
   end
 
   create_table "settings", id: :serial, force: :cascade do |t|
