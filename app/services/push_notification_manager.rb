@@ -37,14 +37,6 @@ class PushNotificationManager
     @user_snapshot[:fcm_token].nil? || throttled? || gone?
   end
 
-  def throttled?
-    previous_pushes_query.success.where('created_at > ?', 1.hour.ago).any?
-  end
-
-  def gone?
-    previous_pushes_query.device_unregistered.any?
-  end
-
   def run
     return if skip?
 
@@ -56,6 +48,14 @@ class PushNotificationManager
   end
 
   private
+
+  def throttled?
+    previous_pushes_query.success.where('created_at > ?', 1.hour.ago).any?
+  end
+
+  def gone?
+    previous_pushes_query.device_unregistered.any?
+  end
 
   def build_payload_for_news_item(news_item)
     unread_count = new_entries.count
@@ -113,6 +113,6 @@ class PushNotificationManager
   end
 
   def device_hash
-    Digest::MD5.hexdigest(@user_snapshot[:fcm_token])
+    @_device_hash ||= Digest::MD5.hexdigest(@user_snapshot[:fcm_token])
   end
 end
