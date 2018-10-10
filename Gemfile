@@ -32,6 +32,9 @@ gem "paperclip-optimizer"
 gem 'image_optim_pack'
 gem 'mini_magick'
 
+gem 'google-cloud-firestore', require: false
+gem 'fcm', require: false
+
 # TODO: > 5.0.7
 gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
 gem "coffee-rails"
@@ -51,7 +54,7 @@ gem "migration_data"
 gem 'grape'
 gem 'active_model_serializers', '~> 0.10'
 
-gem "twitter", "~> 5.0"
+gem "twitter", "~> 6.2.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem "premailer-rails"
