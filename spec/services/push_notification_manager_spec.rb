@@ -1,3 +1,5 @@
+require 'fcm'
+
 RSpec.describe PushNotificationManager, type: :service do
   specify 'pushes new notification' do
     source = Fabricate(:source)
