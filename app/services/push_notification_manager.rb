@@ -50,7 +50,11 @@ class PushNotificationManager
   private
 
   def last_update
-    @last_update = Time.zone.parse(@user_snapshot[:last_update])
+    @last_update ||= if @user_snapshot[:last_update]
+                       Time.zone.parse(@user_snapshot[:last_update])
+                     else
+                       14.days.ago
+                     end
   end
 
   def throttled?
