@@ -26,7 +26,7 @@ class PushNotificationManager
 
     already_posted = previous_pushes_query.success.pluck(Arel.sql("push_payload->'news_item_id'"))
 
-    sql = NewsItem.where(source_id: sources).order('created_at desc')
+    sql = NewsItem.where(source_id: sources).where('created_at > ?', last_update).order('created_at desc')
     if already_posted.any?
       sql = sql.where.not(id: already_posted)
     end
@@ -49,6 +49,10 @@ class PushNotificationManager
 
   private
 
+  def last_update
+    @last_update = Time.zone.parse(@user_snapshot[:last_update])
+  end
+
   def throttled?
     previous_pushes_query.success.where('created_at > ?', 1.hour.ago).any?
   end
@@ -60,6 +64,7 @@ class PushNotificationManager
   def build_payload_for_news_item(news_item)
     unread_count = new_entries.count
     {
+      collapse_key: "sources_#{news_item.source_id}",
       notification: {
         title: news_item.title.strip,
         badge: unread_count,
