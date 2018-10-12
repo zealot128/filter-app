@@ -64,7 +64,7 @@ class NewsItem::LikeFetcher
   end
 
   def reddit
-    response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}")
+    response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}", false, [0])
     json = JSON.parse(response.body)
     json['data']['children'].map { |i| i['data']['score'] }.sum
   rescue JSON::ParserError

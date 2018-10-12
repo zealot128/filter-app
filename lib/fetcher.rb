@@ -19,10 +19,10 @@ module Fetcher
   #
   # Wir probieren 4x mit groesser werdenden Abstand
   #
-  def fetch_url(url, check_link = false)
+  def fetch_url(url, check_link = false, retries = [0, 5])
     options = HTTP_OPTIONS.merge(base_uri: URI.parse(url).base_url)
     response = nil
-    [0, 5].each do |seconds|
+    retries.each do |seconds|
       response = HTTParty.get url, options
       if response.code != 200
         puts "Error with #{url}"
