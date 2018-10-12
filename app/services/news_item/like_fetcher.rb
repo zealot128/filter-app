@@ -67,6 +67,8 @@ class NewsItem::LikeFetcher
     response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}")
     json = JSON.parse(response.body)
     json['data']['children'].map { |i| i['data']['score'] }.sum
+  rescue JSON::ParserError
+    nil
   end
 
   def gplus
