@@ -9,6 +9,10 @@ every 1.hour do
   runner "Source.cronjob"
 end
 
+every '0 9-17 * * *' do
+  runner "PushNotificationManager.run"
+end
+
 every 1.day, at: '03:15' do
   runner 'NewsItem::LinkageCalculator.run()'
 end
