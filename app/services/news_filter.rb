@@ -16,21 +16,21 @@ class NewsFilter
 
   def apply_order!
     if order == 'all_best'
-      @news_items = @news_items.visible.reorder!(Arel.sql 'absolute_score desc')
+      @news_items = @news_items.visible.reorder!(Arel.sql('absolute_score desc, published_at desc, news_items.id'))
     elsif order == 'best'
-      @news_items = @news_items.visible.top_percent_per_day(4.weeks.ago, 0.3334, 8).reorder!(Arel.sql 'published_at::date desc, absolute_score desc')
+      @news_items = @news_items.visible.top_percent_per_day(4.weeks.ago, 0.3334, 8).reorder!(Arel.sql('published_at::date desc, absolute_score desc, published_at desc, news_items.id'))
     elsif order == 'newest'
-      @news_items = @news_items.visible.reorder!('published_at desc')
+      @news_items = @news_items.visible.reorder!('published_at desc, id desc')
     elsif order == 'oldest'
-      @news_items = @news_items.visible.reorder!('published_at asc')
+      @news_items = @news_items.visible.reorder!('published_at asc, id desc')
     elsif order == 'week_best'
-      @news_items = @news_items.visible.top_percent_per_week(8.weeks.ago, 0.3334, 15).reorder!(Arel.sql "to_char(published_at, 'IW/IYYY') desc, absolute_score desc")
+      @news_items = @news_items.visible.top_percent_per_week(8.weeks.ago, 0.3334, 15).reorder!(Arel.sql("to_char(published_at, 'IW/IYYY') desc, absolute_score desc, news_items.id"))
     elsif order == 'month_best'
-      @news_items = @news_items.visible.top_percent_per_month(6.months.ago, 0.3334, 30).reorder!(Arel.sql "to_char(published_at, 'MM/YYYY') desc, absolute_score desc")
+      @news_items = @news_items.visible.top_percent_per_month(6.months.ago, 0.3334, 30).reorder!(Arel.sql("to_char(published_at, 'MM/YYYY') desc, absolute_score desc, news_items.id"))
     else # hot_score
       ranking = "news_items.absolute_score_per_halflife + (log(news_items.absolute_score) *  #{boost}) "
       @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
-      @news_items = @news_items.reorder!('current_score desc')
+      @news_items = @news_items.reorder!('current_score desc, id desc')
     end
   end
 
