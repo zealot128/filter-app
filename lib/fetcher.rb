@@ -12,6 +12,7 @@ module Fetcher
       "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       # "Accept" => "text/html,application/xhtml+xml,application/xml"
     },
+    timeout: 5,
     format: :text
   }.freeze
   # Ruft eine URL auf, probiert es mehrmals

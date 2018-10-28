@@ -17,7 +17,7 @@ class NewsItem::LikeFetcher
     end
     news_item.linkedin = fetcher.linkedin
     news_item.xing   = fetcher.xing
-    news_item.gplus  = fetcher.gplus
+    news_item.gplus  = 0
     news_item.reddit = fetcher.reddit
   end
 
