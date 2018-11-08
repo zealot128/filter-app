@@ -113,7 +113,7 @@ class Source < ApplicationRecord
   def self.cronjob
     Rails.logger.info "Starting Source.cronjob"
 
-    Parallel.each(Source.visible, in_threads: 5) do |t|
+    Parallel.each(Source.visible, in_threads: 7) do |t|
       begin
         t.refresh
         t.update_column :error, false
