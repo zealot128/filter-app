@@ -7,12 +7,12 @@ module Fetcher
 
   HTTP_OPTIONS = {
     headers: {
-      "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",
+      "User-Agent" => "User-Agent"=>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:64.0) Gecko/20100101 Firefox/64.0",
+      "Accept"=>"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       "Accept-Language" => "de-de,de,en-us,en",
-      "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       # "Accept" => "text/html,application/xhtml+xml,application/xml"
     },
-    timeout: 5,
+    timeout: 8,
     format: :text
   }.freeze
   # Ruft eine URL auf, probiert es mehrmals

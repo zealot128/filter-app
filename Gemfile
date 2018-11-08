@@ -22,6 +22,7 @@ gem "email_verifier", git: "https://github.com/zealot128-os/email_verifier.git"
 gem "lograge"
 gem "open_uri_redirections"
 gem "angularjs-rails", "1.2.18"
+gem 'parallel'
 
 gem "impressionist", '~> 1.6.1'
 gem "exception_notification"

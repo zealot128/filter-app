@@ -16,9 +16,9 @@ class NewsItem::LikeFetcher
       news_item.fb_likes ||= 0
     end
     news_item.linkedin = fetcher.linkedin
-    news_item.xing   = fetcher.xing
+    news_item.xing   = fetcher.xing || 0
     news_item.gplus  = 0
-    news_item.reddit = fetcher.reddit
+    news_item.reddit ||= 0
   end
 
   def maybe_update_tweets(news_item)
@@ -50,7 +50,7 @@ class NewsItem::LikeFetcher
   end
 
   def linkedin
-    body = Fetcher.fetch_url("http://www.linkedin.com/countserv/count/share?url=#{eurl}&lang=en_US").body
+    body = Fetcher.fetch_url("https://www.linkedin.com/countserv/count/share?url=#{eurl}&lang=en_US").body
     body[/.count.:(\d+)/, 1].to_i
   end
 
@@ -61,36 +61,6 @@ class NewsItem::LikeFetcher
     doc = Nokogiri.parse(response.body)
     element = doc.at(".xing-count")
     element.text.to_i if element
-  end
-
-  def reddit
-    response = Fetcher.fetch_url("http://buttons.reddit.com/button_info.json?url=#{eurl}", false, [0])
-    json = JSON.parse(response.body)
-    json['data']['children'].map { |i| i['data']['score'] }.sum
-  rescue JSON::ParserError
-    nil
-  end
-
-  def gplus
-    data = {
-      method: "pos.plusones.get",
-      id: url,
-      params: {
-        nolog: true,
-        id: url,
-        source: "widget",
-        userId: "@viewer",
-        groupId: "@self"
-      },
-      jsonrpc: "2.0",
-      key: "p",
-      apiVersion: "v1"
-    }
-    response = HTTParty.post("https://clients6.google.com/rpc", body: data.to_json, headers: { 'Content-Type' => 'application/json' })
-    return nil unless response.success?
-    response.to_h.dig('result', 'metadata', 'globalCounts', 'count').try(:to_i)
-  rescue SocketError, HTTParty::Error, Timeout::Error
-    nil
   end
 
   private
