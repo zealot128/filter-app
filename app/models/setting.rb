@@ -67,10 +67,10 @@ class Setting < ActiveRecord::Base
 
     def read_yaml
       configuration = begin
-          Rails.application.config_for(:application)
-        rescue RuntimeError
-          Rails.application.config_for('application.hrfilter')
-        end
+                        Rails.application.config_for(:application)
+                      rescue RuntimeError
+                        Rails.application.config_for('application.hrfilter')
+                      end
       configuration.each do |k, v|
         set k, v
       end

@@ -9,6 +9,9 @@ class NewsFilter
 
   def news_items
     @news_items = NewsItem.sorted.visible.includes(:categories, :source).limit(@per_page).page(@page)
+    if (id = Setting.get('promoted_feed_id')).present?
+      @news_items = @news_items.where.not(source_id: id)
+    end
     apply_filter!
     apply_order!
     @news_items
