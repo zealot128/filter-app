@@ -42,9 +42,9 @@ class Admin::SourcesController < AdminController
   def update
     @source = Source.find(params[:id])
     if @source.update(params[:source].permit!)
-      @source.refresh
-      @source.download_thumb if @source.logo.blank?
-      @source.news_items.current.map(&:rescore!)
+      # @source.refresh
+      # @source.download_thumb if @source.logo.blank?
+      # @source.news_items.current.map(&:rescore!)
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :edit
