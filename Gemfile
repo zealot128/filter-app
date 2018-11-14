@@ -32,6 +32,7 @@ gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'
 gem 'mini_magick'
+gem 'datagrid'
 
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false

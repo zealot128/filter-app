@@ -215,7 +215,9 @@ class NewsItem < ApplicationRecord
   end
 
   def get_full_text
-    NewsItem::FullTextFetcher.new(self).run
+    if full_text.blank? || updated_at < 1.day.ago
+      NewsItem::FullTextFetcher.new(self).run
+    end
   end
 
   def refresh

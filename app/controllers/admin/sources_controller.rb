@@ -1,6 +1,8 @@
 class Admin::SourcesController < AdminController
   def index
-    @sources = Source.order(:name)
+    @grid = SourcesGrid.new(grid_params) do |scope|
+      scope.page(params[:page])
+    end
   end
 
   def select
@@ -49,12 +51,13 @@ class Admin::SourcesController < AdminController
   def refresh
     @source = Source.find(params[:id])
     begin
-      @source.refresh
-      @count = @source.news_items.current.map(&:refresh).count
-      @stale_count = @source.news_items.where(absolute_score: nil).each(&:refresh)
-      @source.update_column :error, false
+      if params[:type] == 'source'
+        @source.wrapped_refresh!
+      end
+      if params[:type] == 'news_items'
+        @source.news_items.order('published_at desc').limit(10).each(&:refresh)
+      end
     rescue Exception => e
-      @source.update_column :error, true
       @error = e.inspect
     end
   end
@@ -65,5 +68,9 @@ class Admin::SourcesController < AdminController
     redirect_to [:admin, :sources], notice: 'Done'
   end
 
+  protected
 
+  def grid_params
+    params.fetch(:sources_grid, {}).permit!
+  end
 end

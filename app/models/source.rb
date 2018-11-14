@@ -114,16 +114,20 @@ class Source < ApplicationRecord
     Rails.logger.info "Starting Source.cronjob"
 
     Parallel.each(Source.visible, in_threads: 7) do |t|
-      begin
-        t.refresh
-        t.update_column :error, false
-      rescue StandardError => e
-        t.update_column :error, true
-        Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
-      end
-      t.update_statistics!
+      t.wrapped_refresh!
     end
     Rails.logger.info "Finished Source.cronjob"
+  end
+
+  def wrapped_refresh!
+    begin
+      refresh
+      update_column :error, false
+    rescue StandardError => e
+      update_column :error, true
+      Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
+    end
+    update_statistics!
   end
 
   def average_word_length
