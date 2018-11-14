@@ -8,7 +8,7 @@ class SourcesGrid < BaseGrid
       'deactivated active'
     elsif source.error
       'danger'
-    elsif source.statistics['current_news_count'] == 0
+    elsif source.statistics && source.statistics['current_news_count'] == 0
       'warning'
     else
       ''
