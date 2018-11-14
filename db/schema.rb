@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_09_073030) do
+ActiveRecord::Schema.define(version: 2018_11_14_210633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2018_10_09_073030) do
     t.text "comment"
     t.text "filter_rules"
     t.json "statistics"
+    t.text "error_message"
     t.index ["type"], name: "index_sources_on_type"
   end
 

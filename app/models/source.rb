@@ -127,8 +127,7 @@ class Source < ApplicationRecord
       refresh
       update_column :error, false
     rescue StandardError => e
-      update_column :error, true
-      Rails.logger.error "Fehler bei #{t.url} (#{t.id}) #{e.inspect}"
+      update error: true, error_message: e.inspect
     end
     update_statistics!
   end

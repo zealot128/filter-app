@@ -8,6 +8,8 @@
           tr
             td = link_to edit_admin_source_path(source) do
               = truncate source.name
+            td
+              = source.error_message
             td = link_to source.url do
               = source.host
     .panel.panel-default
