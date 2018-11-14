@@ -5,6 +5,7 @@ Baseapp::Application.routes.draw do
   get "faq", to: "static_pages#faq"
 
   namespace :admin do
+    get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do
       member do
         post :refresh

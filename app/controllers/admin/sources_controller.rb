@@ -1,4 +1,7 @@
 class Admin::SourcesController < AdminController
+  def dashboard
+  end
+
   def index
     @grid = SourcesGrid.new(grid_params) do |scope|
       scope.page(params[:page])

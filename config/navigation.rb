@@ -11,6 +11,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     if controller_path.to_s['admin']
       primary.item :key_2, 'Admin', '#', {} do |sub_nav|
+        sub_nav.item :key_2_0, 'Dashboard', admin_dashboard_path
         sub_nav.item :key_2_1, 'Twitter', admin_twitter_path
         sub_nav.item :key_2_1, 'Settings', admin_settings_path
         sub_nav.item :key_2_1, 'Quellen', admin_sources_path

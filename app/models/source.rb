@@ -39,6 +39,9 @@ class Source < ApplicationRecord
   belongs_to :default_category, class_name: 'Category'
   after_create :download_thumb, if: -> { !Rails.env.test? }
   scope :visible, -> { where(deactivated: false) }
+  scope :antiquated, -> {
+    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 6.months.ago)
+  }
 
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],
