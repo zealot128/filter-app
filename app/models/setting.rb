@@ -8,6 +8,42 @@
 #
 
 class Setting < ActiveRecord::Base
+  GROUPS = {
+    basis: [
+      :database,
+      :key,
+      :tracking_code,
+      :google_site_verification,
+      :person,
+      :person_email,
+      :email,
+      :site_name,
+      :short_name,
+      :host,
+      :max_age,
+    ],
+    newsletter: [
+      :promoted_feed_id,
+      :mail_outro,
+      :mail_intro,
+      :mail_impressum,
+      :from,
+    ],
+    texte: [
+      :credits,
+      :impressum,
+      :datenschutz,
+      :intro,
+      :explanation
+    ],
+    twitter: [
+      :twitter_account,
+      :twitter_access_token,
+      :twitter_access_secret,
+    ]
+  }.freeze
+
+
   serialize :value, JSON
   class << self
     def get(name, force: false)

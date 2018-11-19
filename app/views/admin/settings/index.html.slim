@@ -1,10 +1,14 @@
 h2 Einstellungen
 
-table.table
-  - @settings.each do |setting|
-    tr
-      td = setting.key
-      td = truncate(setting.value.to_s)
-      td
-        = link_to [:edit, :admin, setting], class: 'btn btn-default btn-xs' do
-          |bearbeiten
+- Setting::GROUPS.each do |group, keys|
+  .panel.panel-default
+    .panel-heading: h3.panel-title = group
+    .list-group
+      - Setting.where(key: keys).each do |setting|
+        .list-group-item
+          .pull-right
+            = link_to [:edit, :admin, setting], class: 'btn btn-default btn-xs' do
+              |bearbeiten
+          small.text-muted = setting.key
+          br
+          = truncate(setting.value.to_s, length: 200)
