@@ -3,7 +3,6 @@ class NewsItemSerializer < ApplicationSerializer
   attribute :score
   attribute :image
   attribute :categories
-  attribute :type
   attribute :original_url
   has_one :source, serializer: SourcePreviewSerializer
 
