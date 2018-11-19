@@ -5,11 +5,11 @@ class StaticPagesController < ApplicationController
   end
 
   def impressum
-    @impressum = I18n.t("impressum.#{Setting.key}")
+    @impressum = Setting.get('impressum')
   end
 
   def datenschutz
-    @datenschutz = I18n.t("datenschutz.#{Setting.key}")
+    @datenschutz = Setting.get('datenschutz')
   end
 
   def faq
