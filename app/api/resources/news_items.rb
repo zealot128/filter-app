@@ -35,6 +35,9 @@ class Resources::NewsItems < Grape::API
     end
     get '/' do
       base = Source.visible.includes(:default_category).order('name')
+      if Setting.get('promoted_feed_id').present?
+        base.where.not(id: Setting.promoted_feed_id)
+      end
       if params[:category_id]
         base = base.where(default_category_id: params[:category_id])
       end

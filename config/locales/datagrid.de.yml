@@ -1,0 +1,23 @@
+de:
+  datagrid:
+    no_results:
+      "――"
+    table:
+      order:
+        asc: "↑"
+        desc: "↓"
+      no_columns: "No columns selected"
+    form:
+      search: "Search"
+      reset: "Reset"
+    filters:
+      xboolean:
+        "yes": "Yes"
+        "no": "No"
+
+      dynamic:
+        operations:
+          ">=": "≥"
+          "<=": "≤"
+          "=": "="
+          "=~": "≈"

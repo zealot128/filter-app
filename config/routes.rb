@@ -1,9 +1,11 @@
 Baseapp::Application.routes.draw do
+  resources :sources
   get "impressum", to: "static_pages#impressum"
   get "datenschutz", to: "static_pages#datenschutz"
   get "faq", to: "static_pages#faq"
 
   namespace :admin do
+    get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do
       member do
         post :refresh

@@ -1,0 +1,57 @@
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        .panel-title Quellen mit Fehlern
+      table.table
+        - Source.with_error.each do |source|
+          tr
+            td = link_to edit_admin_source_path(source) do
+              = truncate source.name
+            td
+              = source.error_message
+            td = link_to source.url do
+              = source.host
+    .panel.panel-default
+      .panel-heading
+        .pull-right
+          span.badge
+            = MailSubscription.confirmed.count
+          small<> insg
+        .panel-title
+          = link_to '/admin/mail_subscriptions'
+            |Neuste Abonnenten
+      table.table
+        - MailSubscription.order('created_at desc').limit(10).each do |ms|
+          tr
+            td = ms.status
+            td = ms.email
+            td = l ms.created_at.to_date
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          = link_to '/admin/mail_subscriptions'
+            |Öffnungsraten
+      table.table
+        thead
+          tr
+            th Woche
+            th Versdt./Geöffnet
+            th Rate
+        - MailSubscription::History.open_history(frame: 4.months.ago.at_beginning_of_week).each do |week|
+          tr
+            td = "#{week[:year]} KW #{week[:week]}"
+            td
+              |#{week[:sent]} / #{week[:open]}
+            td = number_to_percentage week[:open_ratio]
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        .panel-title Quellen ohne NewsItems seit 6 Monaten
+      table.table
+        - Source.antiquated.each do |source|
+          tr
+            td = link_to edit_admin_source_path(source) do
+              = truncate source.name
+            td = link_to source.url do
+              = source.host

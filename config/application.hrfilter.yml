@@ -11,6 +11,9 @@ default: &default
   person: Stefan Wienert
   person_email: 'info@example.com'
   promoted_feed_id: 0
+  impressum: ''
+  mail_impressum: ''
+  datenschutz: ''
   intro: |
     HRfilter.de ist ein Aggregator für Nachrichten aus dem Personalwesen / HR-Bereich. Zusammengefasst werden News aus <a href='/quellen'>bekannten deutsch- und englischsprachigen Blogs und Newsquellen</a> &ndash; Gebündelt und sortiert nach Relevanz und Beliebtheit in Social Media.
   explanation: |

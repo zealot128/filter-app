@@ -16,6 +16,28 @@ class MailSubscription::History < ApplicationRecord
   belongs_to :mail_subscription
   scope :opened, -> { where.not(opened_at: nil) }
 
+  def self.open_history(frame: 1.year.ago)
+    MailSubscription::History.
+      where('created_at > ?', frame.at_beginning_of_week).
+      group('year', 'weekly').
+      order('year desc, weekly desc').
+      pluck(Arel.sql([
+        "date_part('year', created_at::date) as year",
+        "date_part('week', created_at::date) AS weekly",
+        "count(*) as sent_count",
+        "sum(case when opened_at is null then 0 else 1 end) as open_count"
+      ].join(','))).
+      map { |year, week, count, open|
+      {
+        year: year.to_i,
+        week: week.to_i,
+        sent: count,
+        open: open,
+        open_ratio: (open / count.to_f * 100).round(1)
+      }
+    }
+  end
+
   before_save do
     self.open_token ||= SecureRandom.hex(32)
   end

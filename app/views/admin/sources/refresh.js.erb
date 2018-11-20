@@ -1,0 +1,18 @@
+var id ="#<%= dom_id(@source) %>";
+
+var col = $(id)
+col.find('.last_posting').html("<%=j @source.news_items.maximum(:published_at)&.strftime("%d.%m.%Y") %>");
+col.find('.recent').html("<%= @source.news_items.recent.count %>");
+col.find('.total').html("<%= @source.news_items.count %>");
+col.find('.average_word_length').html("<%= @source.average_word_length %>");
+<% if @source.error %>
+col.addClass('error')
+<% else %>
+col.removeClass('error')
+<% end %>
+
+<% if @source.news_items.recent.any? %>
+col.removeClass('warning')
+<% else %>
+col.addClass('warning')
+<% end %>

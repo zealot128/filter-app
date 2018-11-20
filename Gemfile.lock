@@ -138,7 +138,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.0.5)
+    concurrent-ruby (1.1.3)
     connection_pool (2.2.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -146,6 +146,8 @@ GEM
     css_parser (1.6.0)
       addressable
     daemons (1.2.6)
+    datagrid (1.5.8)
+      rails (>= 4.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
@@ -259,7 +261,7 @@ GEM
     http_parser.rb (0.6.0)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     image_optim (0.26.2)
@@ -294,10 +296,10 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
     mail_form (1.7.1)
       actionmailer (>= 3.2, < 6)
@@ -398,7 +400,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.3)
     puma (3.12.0)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-attack (5.4.1)
@@ -587,6 +589,7 @@ DEPENDENCIES
   bootswatch-rails
   browser
   coffee-rails
+  datagrid
   email_verifier!
   exception_notification
   fabrication
@@ -647,4 +650,4 @@ DEPENDENCIES
   zurb-ink!
 
 BUNDLED WITH
-   1.16.2
+   1.16.4

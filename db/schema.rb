@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2018_11_20_135829) do
     t.text "comment"
     t.text "filter_rules"
     t.json "statistics"
+    t.text "error_message"
     t.index ["type"], name: "index_sources_on_type"
   end
 
