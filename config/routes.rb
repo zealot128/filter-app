@@ -19,6 +19,8 @@ Baseapp::Application.routes.draw do
   end
   get 'admin' => redirect('/admin/sources')
 
+  get 'jobs' => 'jobs#index'
+
   get "sources" => redirect('/quellen')
   resources :sources, path: 'quellen', only: [:index, :show] do
     member do

@@ -1,0 +1,24 @@
+.text-center
+  h3.job-title HR-Stellenanzeigen
+  br
+
+.js-lazy-load-jobs
+  .text-center: i.fa.fa-spinner.fa-spin.fa-3x
+
+javascript:
+  $(function() {
+    $('.js-lazy-load-jobs').load('/jobs')
+  })
+/ - jobhash = HTTParty.get('https://login.empfehlungsbund.de/api/v2/jobs/search.json?q=personal%20human%20resource&fair=false&min_score=0.5&portal_types=office&per=50')
+/ .owl-carousel.owl-theme style="display: flex;"
+/   - jobhash["jobs"].shuffle.each do |job|
+/     .item
+/       .panel.panel-default.job-panel
+/         .panel-heading
+/           a.panel-title(title="#{job["title"]}" href=(job["url"]))
+/             = job["title"]
+/         .background-frame
+/           img.job-img(src=job["company_logo_big"])
+/         .panel-body
+/           - job["tags"].first(5).each do |tag|
+/             span.label.label-primary.job-label =tag

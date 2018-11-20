@@ -1,0 +1,33 @@
+.owl-carousel.owl-theme style="display: flex;"
+  - @jobs.each do |job|
+    .item
+      .panel.panel-default.job-panel
+        .panel-heading
+          a.panel-title(title="#{job["title"]}" href=(job["url"]))
+            = job["title"]
+        .background-frame
+          img.job-img(src=(job["company_logo_big"]))
+        .panel-body
+          - job["tags"].first(5).each do |tag|
+            span.label.label-primary.job-label =tag
+
+javascript:
+  $( document ).ready(function() {
+    $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin:10,
+      nav:true,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:3
+        },
+        1000:{
+          items:5
+        }
+      }
+    })
+  });
+
