@@ -40,6 +40,9 @@ class Setting < ActiveRecord::Base
       :twitter_account,
       :twitter_access_token,
       :twitter_access_secret,
+    ],
+    jobs: [
+      :jobs_url
     ]
   }.freeze
 

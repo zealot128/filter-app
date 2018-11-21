@@ -4,19 +4,46 @@
       .panel.panel-default.job-panel
         .panel-heading
           a.panel-title(title="#{job["title"]}" href=(job["url"]))
-            = job["title"]
+            strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
         .panel-body
-          - job["tags"].first(5).each do |tag|
-            span.label.label-primary.job-label =tag
+          div
+            - job["tags"].first(5).each do |tag|
+              span.label.label-primary.job-label = tag
+          br
+          h4 Orte:
+          ul.list-inline
+            - job["variants"].each do |variant|
+              - variant["locations"].each do |location|
+                li.list-inline-item
+                  | &bull;
+                  | &nbsp;
+                  = location["ort"]
+
+  .item
+    .panel.panel-default.last-job-panel
+      .panel-heading
+        br
+        strong
+        |Nichts gefunden?
+      .panel-body
+        |Alle Stellen finden Sie aktuell auf
+        = ' '
+        br
+        br
+        br
+        br
+        = link_to 'https://www.empfehlungsbund.de/jobs/search?utf8=%E2%9C%93&q=HR+Personal&position=', class: 'btn btn-primary' do
+          |www.empfehlungsbund.de
 
 javascript:
   $( document ).ready(function() {
     $('.owl-carousel').owlCarousel({
       loop:true,
       margin:10,
-      nav:true,
+      navigation: true,
+      navigationText: ["Zurück","Weiter"],
       responsive:{
         0:{
           items:1
