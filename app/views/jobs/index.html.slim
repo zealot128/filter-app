@@ -8,23 +8,18 @@
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
         .panel-body
-          div
-            - job["tags"].first(5).each do |tag|
-              span.label.label-primary.job-label = tag
-          br
-          h4 Orte:
-          ul.list-inline
+          .wrapper(style='overflow: hidden; height: 62px;')
             - job["variants"].each do |variant|
               - variant["locations"].each do |location|
-                li.list-inline-item
-                  | &bull;
-                  | &nbsp;
+                span.label.label-default.job-label<>
                   = location["ort"]
+            - job["tags"].reject { |i| i.length > 22 || i['m/w'] }.first(5).each do |tag|
+              span.label.label-primary.job-label<>
+                = tag
 
   .item
     .panel.panel-default.last-job-panel
       .panel-heading
-        br
         strong
         |Nichts gefunden?
       .panel-body
@@ -39,11 +34,11 @@
 
 javascript:
   $( document ).ready(function() {
-    $('.owl-carousel').owlCarousel({
+    var owl = $('.owl-carousel').owlCarousel({
       loop:true,
       margin:10,
-      navigation: true,
-      navigationText: ["Zurück","Weiter"],
+      //navigation: true,
+      //navigationText: ["Zurück","Weiter"],
       responsive:{
         0:{
           items:1
@@ -55,6 +50,14 @@ javascript:
           items:5
         }
       }
+    })
+    $('.js-owl-prev').html("<a href='#'>Zurück</a>").find('a').click(function(e){
+      e.preventDefault()
+      owl.trigger('owl.prev');
+    })
+    $('.js-owl-next').html("<a href='#'> Weiter <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
+      e.preventDefault()
+      owl.trigger('owl.next');
     })
   });
 

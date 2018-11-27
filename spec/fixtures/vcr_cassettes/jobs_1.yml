@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://login.empfehlungsbund.de/api/v2/jobs/search.json?fair=false&min_score=1.2&per=1&portal_types=office&q=personal%20hr
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 27 Nov 2018 13:05:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"c029ee25ac159841980abb993a20554c"
+      Server:
+      - nginx
+      Front-End-Https:
+      - 'on'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0b3RhbF9wYWdlcyI6MzUsImxlbmd0aCI6MzUsImN1cnJlbnRfcGFnZSI6MSwiam9icyI6W3siaWQiOjExMzM4OCwidGl0bGUiOiJQcmFrdGlrYW50ICh3L20pIGltIEJlcmVpY2ggUGVyc29uYWwgaW4gQ2hlbW5pdHoiLCJsb2NhdGlvbiI6IkNoZW1uaXR6IiwiY29tcGFueV9pZCI6MTk3LCJjb21wYW55X25hbWUiOiJTdGFycmFnIEdtYkgsIFByb2R1a3RiZXJlaWNoIEhlY2tlcnQiLCJ1c2VyX25hbWUiOiJzdGFycmFnIiwiY29tcGFueV9sb2dvIjoiaHR0cHM6Ly9sb2dpbi5lbXBmZWhsdW5nc2J1bmQuZGUvc3lzdGVtL21lbWJlcnNoaXBzL2xvZ29zLzMxNC9hcHBfdGh1bWIvbG9nby5qcGc/MTUzMjI4NjI2OSIsImNvbXBhbnlfbG9nb19iaWciOiJodHRwczovL2xvZ2luLmVtcGZlaGx1bmdzYnVuZC5kZS9zeXN0ZW0vbWVtYmVyc2hpcHMvbG9nb3MvMzE0L3Jlc2l6ZWQvbG9nby5wbmc/MTUzMjI4NjI2OSIsImNvbXBhbnlfbG9nb19yZXRpbmEiOiJodHRwczovL2xvZ2luLmVtcGZlaGx1bmdzYnVuZC5kZS9zeXN0ZW0vbWVtYmVyc2hpcHMvbG9nb3MvMzE0L3Jlc2l6ZWRfcmV0aW5hL2xvZ28ucG5nPzE1MzIyODYyNjkiLCJwcmV2aWV3IjoiIFxuICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICBTdGVsbGVuYmVzY1x1MDAzY3N0cm9uZyBjbGFzcz1cImhpZ2hsaWdodFwiXHUwMDNlaHJcdTAwM2Mvc3Ryb25nXHUwMDNlZWlidW5nICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgV2lyIHN1Y2hlbiB6dXIgVW50ZXJzdMO8dHp1bmcgdW5zZXJlcyBcdTAwM2NzdHJvbmcgY2xhc3M9XCJoaWdobGlnaHRcIlx1MDAzZUhSXHUwMDNjL3N0cm9uZ1x1MDAzZS1UZWFtcyBhYiBGZWJydWFyIDIwMTkgZsO8ciBkaWUgRGF1ZXIgdm9uIDYgTW9uYXRlbiBlaW5lL24gUHJha3Rpa2FudC9pbiBpbSBCZXJlaWNoIFx1MDAzY3N0cm9uZyBjbGFzcz1cImhpZ2hsaWdodFwiXHUwMDNlUGVyc29uYWxcdTAwM2Mvc3Ryb25nXHUwMDNlIGRlciBTdGFycmFnIEdtYkgsIFByb2R1a3RiZXJlaWNoIEhlY2tlcnQgaW4gQ2hlbW5pdHouIFxuXG4gSW4gdW5zZXJlbSBtaXR0ZWxzdMOkbmRpc2NoZW4gVW50ZXJuZWhtZW4gYXJiZWl0ZW4gU2llIGFscyBQcmFrdGlrYW50L2luIGltIEJlcmVpY2ggSHVtYW4gUmVzb3VyY2VzIGluIHZpZWxmw6RsdGlnZW4gVGhlbWVuIGRlcyBcdTAwM2NzdHJvbmcgY2xhc3M9XCJoaWdobGlnaHRcIlx1MDAzZVBlcnNvbmFsXHUwMDNjL3N0cm9uZ1x1MDAzZWJlcmVpY2hlcyBtaXQuIERhYmVpIMO8YmVybmVobWVuIFNpZSB2ZXJzY2hpZWRlbnN0ZSBBdWZnYWJlbiBhdXMgZGVuIEJlcmVpY2hlbiBcdTAwM2NzdHJvbmcgY2xhc3M9XCJoaWdobGlnaHRcIlx1MDAzZVBlcnNvbmFsXHUwMDNjL3N0cm9uZ1x1MDAzZW1hcmtldGluZyB1bmQg4oCTYmUuLi4gICIsInNjb3JlIjo0LjAsImZrX3Njb3JlIjowLjAsImZpZCI6NSwidXJsIjoiaHR0cHM6Ly93d3cub2ZmaWNlc2F4LmRlL2pvYnMvMTEzMzg4L3ByYWt0aWthbnQtdy1zdHJpY2gtbS1pbS1iZXJlaWNoLXBlcnNvbmFsLWluLWNoZW1uaXR6Iiwib3JpZ2luYWxfdXJsIjoiaHR0cHM6Ly93d3cub2ZmaWNlc2F4LmRlL2pvYnMvMTEzMzg4L3ByYWt0aWthbnQtdy1zdHJpY2gtbS1pbS1iZXJlaWNoLXBlcnNvbmFsLWluLWNoZW1uaXR6IiwiZG9tYWluX25hbWUiOiJPRkZJQ0VzYXguZGUiLCJ0YWdzIjpbIkhlY2tlcnQiLCJTdGFycmFnIiwiSFIiLCJIdW1hbiBSZXNvdXJjZXMiLCJQZXJzb25hbCIsIkNoZW1uaXR6IiwiQmVzY2hhZmZ1bmciLCJCZXRyaWVic3dpcnRzY2hhZnRzbGVocmUiLCJQZXJzb25hbG1hcmtldGluZyIsIlBlcnNvbmFsYmVzY2hhZmZ1bmciLCJIUi1NYW5hZ2VyIiwiQWJzY2hsdXNzYXJiZWl0IiwiU3R1ZGl1bSIsIlNBUCIsIlNFTSIsIlBSIiwiUE0iXSwicHViRGF0ZSI6IjIwMTgtMTAtMTlUMDk6MDA6MzcuMDAwKzAyOjAwIiwidmFyaWFudHMiOlt7ImlkIjoxMTMzODgsInRpdGxlIjoiUHJha3Rpa2FudCAody9tKSBpbSBCZXJlaWNoIFBlcnNvbmFsIGluIENoZW1uaXR6IiwiZG9tYWluIjoiT0ZGSUNFc2F4LmRlIiwidXJsIjoiaHR0cHM6Ly93d3cub2ZmaWNlc2F4LmRlL2pvYnMvMTEzMzg4L3ByYWt0aWthbnQtdy1zdHJpY2gtbS1pbS1iZXJlaWNoLXBlcnNvbmFsLWluLWNoZW1uaXR6IiwibG9jYXRpb25zIjpbeyJpZCI6MTYzLCJzdHJhc3NlIjoiT3R0by1TY2htZXJiYWNoLVN0cmFzc2UgMTUvMTciLCJoaWRkZW4iOmZhbHNlLCJwbHoiOiIwOTExNyIsIm9ydCI6IkNoZW1uaXR6IiwicmVnaW9uIjpudWxsLCJidW5kZXNsYW5kIjoiU04iLCJ0ZWwiOiIwMzcxLzgzNiA0NjAwIiwibmFtZSI6bnVsbCwibG9uZ2l0dWRlIjoxMi45MjE0LCJsYXRpdHVkZSI6NTAuODI3OCwiZ2VvY29kaW5nIjp7ImFkbWluX2FyZWFfMSI6IlNhY2hzZW4iLCJhZG1pbl9hcmVhXzIiOiJDaGVtbml0eiIsImFkbWluX2FyZWFfMyI6bnVsbH0sImxhbmQiOiJERSJ9XX1dfV0sInNwZWxsY2hlY2siOiIifQ==
+    http_version: 
+  recorded_at: Tue, 27 Nov 2018 13:05:08 GMT
+recorded_with: VCR 4.0.0
