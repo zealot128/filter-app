@@ -3,10 +3,15 @@ class NewsItemSerializer < ApplicationSerializer
   attribute :score
   attribute :image
   attribute :categories
+  attribute :original_url
   has_one :source, serializer: SourcePreviewSerializer
 
   def url
     click_proxy_url(object, host: Setting.host, protocol: 'https')
+  end
+
+  def original_url
+    object.url
   end
 
   def categories

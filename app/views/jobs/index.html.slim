@@ -1,0 +1,85 @@
+.owl-carousel.owl-theme
+  - @jobs.each do |job|
+    .item
+      .panel.panel-default.job-panel
+        .panel-heading
+          a.panel-title(title="#{job["title"]}" href=(job["url"]))
+            strong = job["title"]
+        .background-frame
+          img.job-img(src=(job["company_logo_big"]))
+        .panel-body
+          .wrapper(style='overflow: hidden; height: 62px;')
+            - job["variants"].each do |variant|
+              - variant["locations"].each do |location|
+                span.label.label-default.job-label<>
+                  = location["ort"]
+            - job["tags"].reject { |i| i.length > 22 || i['m/w'] }.first(5).each do |tag|
+              span.label.label-primary.job-label<>
+                = tag
+
+  .item
+    .panel.panel-default.last-job-panel
+      .panel-heading
+        strong
+          |Nichts gefunden?
+      .panel-body.last-job-body
+        |Alle Stellen finden Sie aktuell auf
+        = ' '
+        br
+        br
+        = image_tag "Empfehlungsbund.png", class: "img-responsive center-block"
+        br
+        = link_to 'https://www.empfehlungsbund.de/jobs/search?utf8=%E2%9C%93&q=HR+Personal&position=', class: 'btn btn-primary' do
+          |www.empfehlungsbund.de
+
+javascript:
+  $( document ).ready(function() {
+    var currentItem = 2;
+    var owl = $('.owl-carousel')
+    owl.owlCarousel({
+      margin:10,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:3
+        },
+        1000:{
+          items:5
+        }
+      }
+    })
+    owl.on('changed.owl.carousel', function(event) {
+      const prev = $('.js-owl-prev')
+      const next = $('.js-owl-next')
+
+      if (event.page.index == 0) {
+        prev.addClass('disabled')
+      } else {
+        prev.removeClass('disabled')
+      }
+      if (event.page.index == event.page.count - 1) {
+        next.addClass('disabled')
+      } else {
+        next.removeClass('disabled')
+      }
+
+    })
+    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-o-left'></i> Zurück </a>").find('a').click(function(e){
+      e.preventDefault()
+      var dots = Array.from(document.getElementsByClassName('owl-dot'))
+      click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) - 1
+      if (click_that >= 0) {
+        $(dots[click_that]).trigger('click')
+      }
+    })
+    $('.js-owl-next').html("<a class='test' href='#'> Weiter <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
+      e.preventDefault()
+      var dots = Array.from(document.getElementsByClassName('owl-dot'))
+      click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) + 1
+      if (click_that < dots.length) {
+        $(dots[click_that]).trigger('click')
+      }
+    })
+  });

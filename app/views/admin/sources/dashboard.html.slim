@@ -4,7 +4,7 @@
       .panel-heading
         .panel-title Quellen mit Fehlern
       table.table
-        - Source.where(error: true).each do |source|
+        - Source.with_error.each do |source|
           tr
             td = link_to edit_admin_source_path(source) do
               = truncate source.name

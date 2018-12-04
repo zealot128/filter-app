@@ -259,7 +259,7 @@ class NewsItem < ApplicationRecord
   end
 
   def image_url_full
-    "https://www.hrfilter.de" + image.url
+    "https://#{Setting.host}#{image.url}"
   end
 
   def self.cleanup

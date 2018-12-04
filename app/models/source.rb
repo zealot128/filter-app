@@ -40,8 +40,9 @@ class Source < ApplicationRecord
   after_create :download_thumb, if: -> { !Rails.env.test? }
   scope :visible, -> { where(deactivated: false) }
   scope :antiquated, -> {
-    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 6.months.ago)
+    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 12.months.ago).where.not(deactivated: true).where.not(error: true)
   }
+  scope :with_error, -> { visible.where(error: true) }
 
   has_attached_file :logo, styles: {
     thumb: ["16x16", :png],

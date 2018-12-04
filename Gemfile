@@ -65,6 +65,7 @@ gem "zurb-ink", git: 'https://github.com/pludoni/zurb-ink.git'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff"
+gem "owlcarousel-rails", git: 'https://github.com/pludoni/owlcarousel-rails.git'
 
 group :test do
   gem 'rails-controller-testing'
