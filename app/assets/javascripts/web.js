@@ -7,5 +7,6 @@
 //= require bootstrap/modal
 //= require_tree ./web
 //= require highcharts
+//= require polyfill
 //= require_tree ./charts
 

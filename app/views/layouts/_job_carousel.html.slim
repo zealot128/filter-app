@@ -1,7 +1,7 @@
 .container-fluid: .text-center
   .row
-    .col-sm-4.text-left: .js-owl-prev
-    .col-sm-4: h3.job-title HR-Stellenanzeigen
+    .col-sm-4.text-left: .js-owl-prev.disabled
+    .col-sm-4: h3.job-title(style='margin-bottom: 0') HR-Stellenanzeigen
     .col-sm-4.text-right: .js-owl-next
   br
 
@@ -12,3 +12,15 @@ javascript:
   $(function() {
     $('.js-lazy-load-jobs').load('/jobs')
   })
+
+css:
+  .js-owl-prev, .js-owl-next {
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
+  }
+  .js-owl-prev.disabled, .js-owl-next.disabled {
+    opacity: 0.3;
+  }
+  .owl-carousel .owl-item img {
+    width: auto;
+    }
