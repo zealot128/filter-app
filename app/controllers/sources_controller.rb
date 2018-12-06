@@ -2,6 +2,10 @@ class SourcesController < ApplicationController
   before_action :stop_bad_crawler!, only: :search
   before_action :allow_iframe_requests
 
+  rescue_from ArgumentError do
+    head(:no_content)
+  end
+
   def index
     @sources = Source.order(Arel.sql 'lower(name)')
   end
