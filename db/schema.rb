@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_19_080756) do
+ActiveRecord::Schema.define(version: 2018_11_20_135829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -171,16 +171,6 @@ ActiveRecord::Schema.define(version: 2018_11_19_080756) do
     t.string "app_version"
   end
 
-  create_table "push_subscribers", id: :serial, force: :cascade do |t|
-    t.string "fcm_token"
-    t.string "device_model"
-    t.string "device_os"
-    t.string "app_version"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["fcm_token"], name: "index_push_subscribers_on_fcm_token", unique: true
-  end
-
   create_table "settings", id: :serial, force: :cascade do |t|
     t.string "key"
     t.text "value"
@@ -217,25 +207,5 @@ ActiveRecord::Schema.define(version: 2018_11_19_080756) do
     t.index ["type"], name: "index_sources_on_type"
   end
 
-  create_table "trends_usages", id: :serial, force: :cascade do |t|
-    t.integer "word_id"
-    t.integer "news_item_id"
-    t.integer "source_id"
-    t.string "calendar_week"
-    t.index ["news_item_id"], name: "index_trends_usages_on_news_item_id"
-    t.index ["source_id"], name: "index_trends_usages_on_source_id"
-    t.index ["word_id"], name: "index_trends_usages_on_word_id"
-  end
-
-  create_table "trends_words", id: :serial, force: :cascade do |t|
-    t.string "word"
-    t.integer "parent_id"
-    t.boolean "ignore"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_foreign_key "mail_subscription_histories", "mail_subscriptions"
-  add_foreign_key "trends_usages", "news_items"
-  add_foreign_key "trends_usages", "sources"
 end
