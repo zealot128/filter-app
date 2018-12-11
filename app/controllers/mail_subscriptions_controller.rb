@@ -19,6 +19,7 @@ class MailSubscriptionsController < ApplicationController
         preview(@subscription, from: from)
         return
       else
+        ahoy.track 'newsletter_subscribe'
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
         render html: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
@@ -31,6 +32,7 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def confirm
+    ahoy.track 'newsletter_confirm'
     subscription.confirm!
     render html: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
     time_now = Time.zone.now
@@ -48,6 +50,7 @@ class MailSubscriptionsController < ApplicationController
 
   def update
     if subscription.update(permitted_params)
+      ahoy.track 'newsletter_update'
       render html: '<div class="alert alert-success">Änderungen gespeichert.</div>', layout: true
     else
       render :edit
@@ -55,6 +58,7 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def destroy
+    ahoy.track 'newsletter_unsubscribe'
     subscription.destroy
     render html: '<div class="alert alert-success">Newsletter abbestellt!</div>', layout: true
   end
@@ -71,6 +75,7 @@ class MailSubscriptionsController < ApplicationController
   def track_open
     ignore = (request.ip == '217.92.174.98') || IPCat.datacenter?(request.ip)
     unless ignore
+      ahoy.track 'newsletter_open'
       history = MailSubscription::History.find_by(open_token: params[:token])
       history.update(opened_at: Time.zone.now) if history && history.opened_at.nil?
     end

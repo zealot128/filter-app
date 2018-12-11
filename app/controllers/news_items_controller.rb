@@ -42,6 +42,7 @@ class NewsItemsController < ApplicationController
       last_mail && last_mail.click!
     end
     unless bot?
+      ahoy.track 'news_item', id: news_item.id, source_id: news_item.source_id
       impressionist(news_item)
     end
     redirect_to news_item.url

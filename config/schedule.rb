@@ -30,6 +30,10 @@ every :monday, at: '9am' do
   runner 'Newsletter::Mailing.cronjob'
 end
 
+every 1.day, at: '04:12' do
+  runner 'ClicksSynchronization.run'
+end
+
 every 1.day, at: '5:00 am' do
   rake "-s sitemap:refresh"
 end

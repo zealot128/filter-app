@@ -43,6 +43,10 @@ class Setting < ActiveRecord::Base
     ],
     jobs: [
       :jobs_url
+    ],
+    clicks_sync: [
+      :clicks_api,
+      :clicks_api_token
     ]
   }.freeze
 

@@ -25,6 +25,7 @@ gem "angularjs-rails", "1.2.18"
 gem 'parallel'
 
 gem "impressionist", '~> 1.6.1'
+gem "ahoy_matey", "~> 2.1"
 gem "exception_notification"
 gem 'airbrake-ruby', '~> 2.4.0'
 gem 'airbrake', '~> 7.0.0'
