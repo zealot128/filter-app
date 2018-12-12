@@ -1,5 +1,5 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v10
+image: registry.pludoni.com/administrators/docker-images/rails-base:v12
 
 stages:
   - test
@@ -7,18 +7,7 @@ stages:
   - deploy
 
 rspec:
-  script:
-    - source /usr/local/rvm/scripts/rvm
-    - rvm use `cat .ruby-version`
-    - ruby --version
-    - gem install bundler
-    - bundle install --jobs $(nproc) --path=/cache/bundler --without production
-    - cp config/application.hrfilter.yml config/application.yml
-    - cp config/secrets.yml.example config/secrets.yml
-    - cp config/database.yml.gitlab config/database.yml
-    - bundle exec rake db:create RAILS_ENV=test
-    - bundle exec rake db:schema:load RAILS_ENV=test
-    - "bundle exec rspec -f d --color --tty"
+  script: bin/ci
   stage: test
 
 pronto:
@@ -34,7 +23,7 @@ bundle_audit:
     bundle-audit check
 
 deploy:
-  image: registry.pludoni.com/administrators/docker-images/deploy:v5
+  image: registry.pludoni.com/administrators/docker-images/deploy:v6
   script: deploy_app product02 hrfilter
   stage: deploy
   environment: production
