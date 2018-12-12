@@ -3,10 +3,10 @@ sudo: false
 cache: bundler
 
 addons:
-  postgresql: 9.3
+  postgresql: 9.6
 
 rvm:
-  - 2.3
+  - 2.5
 
 services: [ redis ]
 
