@@ -4,6 +4,7 @@ cache: bundler
 
 addons:
   postgresql: 9.6
+  firefox: "latest"
 
 rvm:
   - 2.5
