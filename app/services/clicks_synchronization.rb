@@ -16,7 +16,7 @@ class ClicksSynchronization
   def self.sync_visit(visit)
     return unless visit.events.any?
 
-    payload = { origin: Setting.host, visit: visit.as_json(include: :events), api_key: Setting.get('clicks_api_key') }
+    payload = { origin: Setting.host, visit: visit.as_json(include: :events), api_key: Setting.get('clicks_api_token') }
     HTTParty.post(Setting.get('clicks_api'), body: payload, basic_auth: { username: 'test', password: '1t5a#', timeout: 50 })
     visit.update_column(:synced, true)
   end
