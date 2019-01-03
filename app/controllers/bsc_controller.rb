@@ -6,7 +6,7 @@ class BscController < ApplicationController
     end
 
     our_sources = Source.where('url like ? or url like ? ', '%pludoni%', '%empfehlungsbund%')
-    time = 3.months.ago
+    time = 3.days.ago
     from = time.at_beginning_of_year
     to = time.at_end_of_year
     year = time.year
