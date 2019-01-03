@@ -4,7 +4,7 @@ class ClicksSynchronization
 
     Ahoy::Visit.
       where(synced: false).
-      where('started_at < ?', 4.hours.ago.ago).
+      where('started_at < ?', 4.hours.ago).
       joins(:events).
       group(:id).find_each do |visit|
       sync_visit(visit)
