@@ -6,34 +6,48 @@ class BscController < ApplicationController
     end
 
     our_sources = Source.where('url like ? or url like ? ', '%pludoni%', '%empfehlungsbund%')
-    time = 3.days.ago
-    from = time.at_beginning_of_year
-    to = time.at_end_of_year
-    year = time.year
+
+    year = (params[:year].presence || 3.days.ago.year).to_i
+    from = Date.new(year, 1, 1)
+    to = Date.new(year, 12, 31)
     subscriptions = MailSubscription.order('created_at desc')
     render json: {
       metrics: {
         "Klicks" => {
           clicks_total: {
-            title: "Klicks auf alle Beiträge im Kalenderjahr #{year}",
+            determinable_for_past: true,
+            title: "Klicks auf alle Beiträge im Kalenderjahr",
             value: Impression.where('created_at between ? and ?', from, to).count
           },
           clicks_pludoni: {
+            determinable_for_past: true,
             title: "Klicks auf pludoni Quellen",
             value: Impression.where('created_at between ? and ?', from, to).where(impressionable_id: NewsItem.where(source_id: our_sources).select('id')).count
           }
         },
         "Beiträge" => {
           news_items_total: {
-            title: "Newsbeiträge in #{year}",
+            title: "Newsbeiträge im Kalenderjahr",
+            determinable_for_past: true,
             value: NewsItem.where('extract(year from created_at) = ?', year).count
           },
           news_items_pludoni: {
             title: "Newsbeiträge von pludoni Quellen #{year}",
+            determinable_for_past: true,
             value: NewsItem.where(source_id: our_sources).where('extract(year from created_at) = ?', year).count
           },
         },
         "Abonnenten" => {
+          subscribers_new: {
+            title: "Neue Abonnenten im Jahr",
+            value: MailSubscription.where('extract(year from created_at) = ?', year).count,
+            determinable_for_past: true,
+          },
+          subscribers_lost: {
+            title: "Abonnenten abbestellt im Jahr",
+            value: MailSubscription.deleted.where('extract(year from deleted_at) = ?', year).count,
+            determinable_for_past: true,
+          },
           subscribers_total: {
             title: "Abonnenten insgesamt",
             value: subscriptions.count
@@ -44,7 +58,8 @@ class BscController < ApplicationController
             value: subscriptions.confirmed.count
           },
           subscribers_with_clicks: {
-            title: "Abonnenten mit min. 1 Klick in #{year}",
+            title: "Abonnenten mit min. 1 Klick im Jahr",
+            determinable_for_past: true,
             percentage_of: :subscribers_confirmed,
             value: subscriptions.
               joins(:impressions).
@@ -63,18 +78,19 @@ class BscController < ApplicationController
             percentage_of: :sources_total
           },
           sources_new: {
-            title: "Neue Quellen in #{year}",
+            title: "Neue Quellen im Jahr",
             value: Source.visible.where('extract(year from created_at) = ?', year).count,
+            determinable_for_past: true,
             percentage_of: :sources_total
           }
         },
         "Newsletter" => {
           newsletter_sent: {
-            title: "Newsletter in #{year} versendet (Tracking seit 09.01.2018)",
+            title: "Newsletter im Jahr versendet (Tracking seit 09.01.2018)",
             value: MailSubscription::History.where('extract(year from created_at) = ?', year).count
           },
           newsletter_opened: {
-            title: "Newsletter in #{year} geöffnet/geklickt",
+            title: "Newsletter im Jahr geöffnet/geklickt",
             value: MailSubscription::History.opened.where('extract(year from created_at) = ?', year).count,
             percentage_of: :newsletter_sent
           }
