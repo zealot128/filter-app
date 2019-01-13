@@ -58,5 +58,6 @@ Baseapp::Application.routes.draw do
   get '/auth/:provider/callback', to: 'admin/twitter#create'
   get '_bsc' => 'bsc#show'
   mount API => '/api/v1'
+  mount Sidekiq::Web => '/rails/sidekiq'
   root to: "days#index"
 end

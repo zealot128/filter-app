@@ -6,9 +6,10 @@ module Newsletter
     def self.cronjob
       MailSubscription.confirmed.each do |s|
         ms = new(s)
-        if ms.sendable?
-          ms.send!
-        end
+        next unless ms.sendable?
+
+        secs = rand(5..360)
+        NewsletterWorker.perform_in(secs, s.id)
       end
     end
 

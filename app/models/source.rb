@@ -32,15 +32,19 @@
 require "download_url"
 class Source < ApplicationRecord
   has_many :news_items, dependent: :destroy
-  validates_presence_of :url, :name
+  validates :url, :name, presence: true
 
-  SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource']
+  SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource'].freeze
 
   belongs_to :default_category, class_name: 'Category'
-  after_create :download_thumb, if: -> { !Rails.env.test? }
+  after_create_commit if: -> { !Rails.env.test? } do
+    Source::DownloadThumbWorker.perform_async(id)
+  end
   scope :visible, -> { where(deactivated: false) }
   scope :antiquated, -> {
-    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 12.months.ago).where.not(deactivated: true).where.not(error: true)
+    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 12.months.ago).
+      where.not(deactivated: true).
+      where.not(error: true)
   }
   scope :with_error, -> { visible.where(error: true) }
 
@@ -64,7 +68,10 @@ class Source < ApplicationRecord
   end
 
   def homepage_url
-    URI.parse(url).tap { |o| o.path = '/'; o.query = nil }.to_s
+    URI.parse(url).tap { |o|
+      o.path = '/'
+      o.query = nil
+    }.to_s
   end
 
   def host
@@ -100,13 +107,13 @@ class Source < ApplicationRecord
            end
     file = download_url(path)
 
-    unless update_attributes logo: file
+    unless update logo: file
       # imagemagick can't find file-type -> try renaming to ico
       file.rewind
       tf = Tempfile.new(["thumb", ".ico"])
       tf.binmode
       tf.write file.read
-      if update_attributes logo: tf
+      if update logo: tf
         logo.reprocess!
       end
     end
@@ -115,12 +122,9 @@ class Source < ApplicationRecord
   end
 
   def self.cronjob
-    Rails.logger.info "Starting Source.cronjob"
-
-    Parallel.each(Source.visible, in_threads: 7) do |t|
-      t.wrapped_refresh!
+    Source.visible.find_each do |s|
+      Source::FetchWorker.perform_async(s.id)
     end
-    Rails.logger.info "Finished Source.cronjob"
   end
 
   def wrapped_refresh!

@@ -24,11 +24,8 @@ class Admin::SourcesController < AdminController
     type = params[:source].delete :type
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
-      begin
-        @source.refresh
-        @source.news_items.current.map(&:rescore!)
-      rescue StandardError
-      end
+      Source::FetchWorker.perform_async(@source.id)
+
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :new
@@ -42,9 +39,7 @@ class Admin::SourcesController < AdminController
   def update
     @source = Source.find(params[:id])
     if @source.update(params[:source].permit!)
-      # @source.refresh
-      # @source.download_thumb if @source.logo.blank?
-      # @source.news_items.current.map(&:rescore!)
+      Source::FetchWorker.perform_async(@source.id)
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :edit
@@ -53,15 +48,13 @@ class Admin::SourcesController < AdminController
 
   def refresh
     @source = Source.find(params[:id])
-    begin
-      if params[:type] == 'source'
-        @source.wrapped_refresh!
+    if params[:type] == 'source'
+      Source::FetchWorker.perform_async(@source.id)
+    end
+    if params[:type] == 'news_items'
+      @source.news_items.order('published_at desc').limit(10).each do |ni|
+        NewsItem::RefreshLikesWorker.perform_async(ni.id)
       end
-      if params[:type] == 'news_items'
-        @source.news_items.order('published_at desc').limit(10).each(&:refresh)
-      end
-    rescue Exception => e
-      @error = e.inspect
     end
   end
 

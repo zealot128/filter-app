@@ -132,9 +132,9 @@ class NewsItem < ApplicationRecord
   has_many :referenced_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
   has_many :referencing_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
 
-  before_save :categorize
-  before_save :filter_plaintext
-  before_save :blacklist
+  # before_save :categorize
+  # before_save :filter_plaintext
+  # before_save :blacklist
 
   validates :guid, uniqueness: { scope: [:source_id] }
 
@@ -168,11 +168,13 @@ class NewsItem < ApplicationRecord
     # delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
     NewsItem.where.not(source_id: Source.select('id')).delete_all
     priority = NewsItem.recent.where(value: nil)
-    priority.each(&:refresh)
+    priority.each do |news_item|
+      NewsItem::RefreshLikesWorker.perform_async(news_item.id)
+    end
     NewsItem.recent.shuffle.each do |ni|
       next if priority.include?(ni)
 
-      ni.refresh
+      NewsItem::RefreshLikesWorker.perform_async(ni.id)
     end
     Rails.logger.info "Finished NewsItem refresh cronjob"
   end
