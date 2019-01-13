@@ -92,16 +92,14 @@ class Setting < ActiveRecord::Base
     end
 
     def to_h
-      begin
-        pairs = all.map do |setting|
-          [setting.key, setting.value]
-        end
-        Hash[pairs]
+      pairs = all.map do |setting|
+        [setting.key, setting.value]
       end
+      Hash[pairs]
     end
 
     def get_value(name)
-      Setting.select('value').find_by_key(name).try(:value)
+      Setting.select('value').find_by(key: name).try(:value)
     end
 
     def method_missing(m, *args, &block)

@@ -1,0 +1,10 @@
+---
+:verbose: false
+:pidfile: tmp/pids/sidekiq.pid
+:concurrency: 3
+:url: 'redis://localhost:6379/0'
+:queues:
+  - [important, 10]
+  - [mailers, 5]
+  - [default, 2]
+  - [low, 1]

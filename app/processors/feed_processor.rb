@@ -10,7 +10,6 @@ class FeedProcessor < Processor
       feed.entries.each do |entry|
         item = process_entry(entry)
         if item
-          item.get_full_text
           item.save
         end
       end
@@ -18,7 +17,7 @@ class FeedProcessor < Processor
   end
 
   def log(message)
-    puts message
+    warn message unless Rails.env.production?
   end
 
   def parse_feed(feed_url)
@@ -66,6 +65,7 @@ class FeedProcessor < Processor
       url = entry.enclosure_url
     end
     return unless url
+
     # next unless url
     if url.starts_with?('//')
       url = "http:#{url}"
@@ -89,11 +89,12 @@ class FeedProcessor < Processor
     if defined?(@entry.image) and @entry.image.present? and @item.image.blank? and !@entry.image[/(mp3|aac|ogg|mp4|m4a|mov)$/i]
       begin
         image = download_url(@entry.image)
-        @item.update_attributes image: image
+        @item.update image: image
       rescue SocketError, StandardError => e
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end
     end
+    NewsItem::RefreshStatsWorker.perform_async(@item.id)
     @item
   end
 end
