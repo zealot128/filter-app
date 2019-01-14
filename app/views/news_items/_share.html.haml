@@ -28,7 +28,7 @@
       %span.label.label-default(title="#{item.youtube_views} Youtube Views")
         %i.fa.fa-youtube
         = number_to_human item.youtube_views, units: { thousand: "K", million: "M", unit: '' }, precision: 2, format: "%n%u"
-    - if item.to_i.word_length > 0
+    - if item.word_length.to_i > 0
       %span.label.label-default(title='Anzahl Worte (ca.)')
         %i.fa.fa-file-text-o
         = item.word_length
