@@ -1,7 +1,8 @@
 class NewsItem::LinkageCalculator
   def self.run(scope: NewsItem.current)
     scope.find_each do |s|
-      next unless s.full_text.present?
+      next if s.full_text.blank?
+
       new(s).run
     end
   end
@@ -12,7 +13,7 @@ class NewsItem::LinkageCalculator
 
   def run
     links.each do |link|
-      if ref = NewsItem.where('url like ?', "%#{link}%").first
+      if (ref = NewsItem.find_by('url like ?', "%#{link}%"))
         if ref.incoming_links.where(from_id: @news_item.id).none?
           ref.incoming_links << Linkage.new(from_id: @news_item.id, different: @news_item.source_id != ref.source_id)
           ref.save
@@ -22,6 +23,8 @@ class NewsItem::LinkageCalculator
   end
 
   def links
+    return [] if @news_item.full_text.blank?
+
     doc = Nokogiri::HTML.fragment("<div>" + @news_item.full_text + "</div>")
     doc.search('a').map do |link|
       l = link['href']
@@ -38,10 +41,8 @@ class NewsItem::LinkageCalculator
   end
 
   def make_url_absolute(l)
-    begin
-      URI.join(@news_item.url, l).to_s
-    rescue URI::InvalidURIError
-      nil
-    end
+    URI.join(@news_item.url, l).to_s
+  rescue URI::InvalidURIError
+    nil
   end
 end

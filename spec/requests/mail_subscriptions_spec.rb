@@ -1,4 +1,8 @@
 describe 'MailSubscriptionsController' do
+  before(:each) do
+    Sidekiq::Testing.inline!
+  end
+
   specify 'Anlegen' do
     VCR.use_cassette 'events' do
       get '/newsletter'

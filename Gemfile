@@ -35,6 +35,9 @@ gem 'image_optim_pack'
 gem 'mini_magick'
 gem 'datagrid'
 
+gem 'sidekiq'
+gem 'redis-namespace', '~> 1.5.0'
+
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false
 

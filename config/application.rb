@@ -27,6 +27,7 @@ module Baseapp
 
     config.middleware.use Rack::Attack
     config.active_record.belongs_to_required_by_default = false
+    config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
       g.template_engine :haml
