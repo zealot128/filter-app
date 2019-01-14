@@ -36,6 +36,7 @@ gem 'mini_magick'
 gem 'datagrid'
 
 gem 'sidekiq'
+gem 'sidekiq-unique-jobs'
 gem 'redis-namespace', '~> 1.5.0'
 
 gem 'google-cloud-firestore', require: false
