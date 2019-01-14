@@ -1,3 +1,4 @@
+# rubocop:disable Rails/OutputSafety
 class MailSubscriptionsController < ApplicationController
   def index
     @subscription = MailSubscription.new
@@ -23,7 +24,7 @@ class MailSubscriptionsController < ApplicationController
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
         render html: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
-               'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>',
+                  'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>'.html_safe,
                layout: true
       end
     else
@@ -34,11 +35,12 @@ class MailSubscriptionsController < ApplicationController
   def confirm
     ahoy.track 'newsletter_confirm'
     subscription.confirm!
-    render html: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>', layout: true
+    render html: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>'.html_safe, layout: true
     time_now = Time.zone.now
     job = filter_jobs
     cronjob_time = Time.zone.parse(job[0].at).strftime('%H:%M')
     return if time_now.monday? and cronjob_time > time_now.strftime('%H:%M')
+
     mailing = Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)
     mailing.send!
     subscription.update(last_send_date: nil)
@@ -51,7 +53,7 @@ class MailSubscriptionsController < ApplicationController
   def update
     if subscription.update(permitted_params)
       ahoy.track 'newsletter_update'
-      render html: '<div class="alert alert-success">Änderungen gespeichert.</div>', layout: true
+      render html: '<div class="alert alert-success">Änderungen gespeichert.</div>'.html_safe, layout: true
     else
       render :edit
     end
@@ -60,7 +62,7 @@ class MailSubscriptionsController < ApplicationController
   def destroy
     ahoy.track 'newsletter_unsubscribe'
     subscription.destroy
-    render html: '<div class="alert alert-success">Newsletter abbestellt!</div>', layout: true
+    render html: '<div class="alert alert-success">Newsletter abbestellt!</div>'.html_safe, layout: true
   end
 
   def show
