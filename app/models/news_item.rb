@@ -170,14 +170,15 @@ class NewsItem < ApplicationRecord
 
     max = 250
     priority = NewsItem.recent.where(value: nil).limit(100).to_a
-    priority.each do |news_item|
-      NewsItem::RefreshLikesWorker.perform_async(news_item.id)
+    priority.each_with_index do |news_item, i|
+      NewsItem::RefreshLikesWorker.perform_in((i * 2).seconds, news_item.id)
       max -= 1
     end
-    NewsItem.recent.order('random()').limit(max).each do |ni|
+    NewsItem.recent.order('random()').limit(max).each_with_index do |ni, i|
       next if priority.include?(ni)
 
-      NewsItem::RefreshLikesWorker.perform_async(ni.id)
+      wait = 15.minutes + (i * 2).seconds
+      NewsItem::RefreshLikesWorker.perform_in(wait, ni.id)
     end
     Rails.logger.info "Finished NewsItem refresh cronjob"
   end
