@@ -94,7 +94,7 @@ class FeedProcessor < Processor
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end
     end
-    NewsItem::RefreshStatsWorker.perform_async(@item.id)
+    NewsItem::RefreshLikesWorker.perform_in(1.minute, @item.id)
     @item
   end
 end
