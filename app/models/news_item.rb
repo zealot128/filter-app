@@ -167,11 +167,14 @@ class NewsItem < ApplicationRecord
     Rails.logger.info "Starting NewsItem refresh cronjob"
     # delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
     NewsItem.where.not(source_id: Source.select('id')).delete_all
-    priority = NewsItem.recent.where(value: nil)
+
+    max = 250
+    priority = NewsItem.recent.where(value: nil).limit(100).to_a
     priority.each do |news_item|
       NewsItem::RefreshLikesWorker.perform_async(news_item.id)
+      max -= 1
     end
-    NewsItem.recent.shuffle.each do |ni|
+    NewsItem.recent.order('random()').limit(max).each do |ni|
       next if priority.include?(ni)
 
       NewsItem::RefreshLikesWorker.perform_async(ni.id)
@@ -217,9 +220,10 @@ class NewsItem < ApplicationRecord
   end
 
   def get_full_text
-    if full_text.blank? || updated_at < 1.day.ago
+    if full_text.blank? || updated_at < 7.days.ago
       NewsItem::FullTextFetcher.new(self).run
     end
+  rescue Net::HTTP::Persistent::Error
   end
 
   def refresh
