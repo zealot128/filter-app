@@ -52,6 +52,9 @@ class RedditProcessor < Processor
       return nil
     end
     ni.save
-    NewsItem::ImageFetcher.new(ni, mechanize.page).run if mechanize
+    if mechanize
+      NewsItem::ImageFetcher.new(ni, mechanize.page).run
+      mechanize.shutdown
+    end
   end
 end

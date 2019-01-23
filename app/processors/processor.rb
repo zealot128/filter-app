@@ -43,6 +43,7 @@ class Processor
 
   def teaser(text)
     return "" if text.blank?
+
     stripped = ActionController::Base.helpers.strip_tags(text).strip
     ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
   end
@@ -75,12 +76,13 @@ class Processor
     if (html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last)
       [clear(html.to_s), @m]
     else
+      clean_connection!
       [nil, nil]
     end
   rescue StandardError, Net::HTTPServiceUnavailable
+    clean_connection!
     ["", nil]
   ensure
-    clean_connection!
   end
 
   def clean_connection!
