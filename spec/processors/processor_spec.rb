@@ -28,6 +28,9 @@ describe Processor, type: :model do
       feed_source.url = 'http://crosswater-job-guide.com/feed'
       feed_source.full_text_selector = '.art-PostContent:nth-child(3)'
       feed_source.save
+
+      allow_any_instance_of(NewsItem).to receive(:refresh)
+
       Sidekiq::Testing.inline! do
         Processor.process(feed_source)
       end

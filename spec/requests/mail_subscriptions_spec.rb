@@ -105,6 +105,7 @@ describe 'MailSubscriptionsController' do
     end
 
     def import_stuff!
+      allow_any_instance_of(NewsItem).to receive(:refresh)
       VCR.use_cassette 'feed-pludoni.xml' do
         source = FeedSource.create!(url: 'http://www.pludoni.de/posts/feed.rss', name: 'pludoni')
         source.refresh
