@@ -32,6 +32,8 @@
 #  impression_count            :integer          default(0)
 #  tweet_id                    :string
 #  absolute_score_per_halflife :integer
+#  youtube_likes               :integer          default(0)
+#  youtube_views               :integer          default(0)
 #
 
 require "fetcher"

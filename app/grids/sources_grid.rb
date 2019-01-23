@@ -26,9 +26,9 @@ class SourcesGrid < BaseGrid
   end
   column(:type, header: "Typ", &:source_name)
   column(:value, header: "Bias")
-  column(:error, header: "Fehler") do |f|
+  column(:error, header: "Fehler", html: true) do |f|
     if f.error
-      "Ja"
+      "<abbr title='#{h(f.error_message)}'>Ja</a>".html_safe
     else
       ""
     end

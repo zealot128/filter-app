@@ -18,7 +18,7 @@
 #  position        :string
 #  extended_member :boolean          default(FALSE)
 #  deleted_at      :datetime
-#  status          :integer          default(0)
+#  status          :integer          default("unconfirmed")
 #
 
 class MailSubscription < ApplicationRecord

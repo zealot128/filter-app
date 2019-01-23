@@ -17,8 +17,6 @@
 #  browser              :string
 #  os                   :string
 #  device_type          :string
-#  country              :string
-#  city                 :string
 #  utm_source           :string
 #  utm_medium           :string
 #  utm_term             :string

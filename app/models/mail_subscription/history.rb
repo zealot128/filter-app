@@ -7,7 +7,7 @@
 #  news_items_in_mail   :integer
 #  opened_at            :datetime
 #  open_token           :string
-#  click_count          :integer
+#  click_count          :integer          default(0)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #

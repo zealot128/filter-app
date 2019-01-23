@@ -12,21 +12,22 @@
               = source.error_message
             td = link_to source.url do
               = source.host
-    .panel.panel-default
-      .panel-heading
-        .pull-right
-          span.badge
-            = MailSubscription.confirmed.count
-          small<> insg
-        .panel-title
-          = link_to '/admin/mail_subscriptions'
-            |Neuste Abonnenten
-      table.table
-        - MailSubscription.order('created_at desc').limit(10).each do |ms|
-          tr
-            td = ms.status
-            td = ms.email
-            td = l ms.created_at.to_date
+    - if false
+      .panel.panel-default
+        .panel-heading
+          .pull-right
+            span.badge
+              = MailSubscription.confirmed.count
+            small<> insg
+          .panel-title
+            = link_to '/admin/mail_subscriptions'
+              |Neuste Abonnenten
+        table.table
+          - MailSubscription.order('created_at desc').limit(10).each do |ms|
+            tr
+              td = ms.status
+              td = ms.email
+              td = l ms.created_at.to_date
     .panel.panel-default
       .panel-heading
         .panel-title

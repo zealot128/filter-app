@@ -27,6 +27,8 @@
 #  language                      :string
 #  comment                       :text
 #  filter_rules                  :text
+#  statistics                    :json
+#  error_message                 :text
 #
 
 require "download_url"
