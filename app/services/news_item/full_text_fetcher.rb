@@ -15,6 +15,7 @@ class NewsItem::FullTextFetcher
       begin
         page = @processor.get(@news_item.url)
         return unless page.respond_to?(:at)
+
         @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/, "")
         content = page.at(selector)
         if content
@@ -32,5 +33,7 @@ class NewsItem::FullTextFetcher
         Rails.logger.error "Error fetching #{@news_item.url} (#{@news_item.id}): #{e.inspect}"
       end
     end
+  ensure
+    @processor.clean_connection!
   end
 end

@@ -63,6 +63,8 @@ class Processor
     @m ||= Mechanize.new
     @m.verify_mode = OpenSSL::SSL::VERIFY_NONE
     @m.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:57.0 #{Setting.site_name}) Gecko/20100101 Firefox/57.0"
+    @m.open_timeout   = 15
+    @m.read_timeout   = 15
     @m.get(url)
   end
 
@@ -70,12 +72,19 @@ class Processor
     rules = RULES
     res = get(link.to_s)
 
-    if html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last
+    if (html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last)
       [clear(html.to_s), @m]
     else
       [nil, nil]
     end
   rescue StandardError, Net::HTTPServiceUnavailable
     ["", nil]
+  ensure
+    clean_connection!
+  end
+
+  def clean_connection!
+    @m.shutdown if @m
+    @m = nil
   end
 end

@@ -7,6 +7,9 @@ class FacebookProcessor < Processor
       rescue Mechanize::ResponseCodeError
       end
     end
+  ensure
+    @m.shutdown
+    @m = nil
   end
 
   def process_dom_item(parent, source)
@@ -21,6 +24,7 @@ class FacebookProcessor < Processor
       new_m = Mechanize.new
       new_m.get(url)
       news_item.url = new_m.page.uri.to_s
+      new_m.shutdown
     end
 
     text = parent.at('.userContent').text

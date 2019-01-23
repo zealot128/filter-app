@@ -25,9 +25,8 @@ class FeedProcessor < Processor
     # https://github.com/feedjira/feedjira/issues/294
     connection = Faraday.new do |conn|
       conn.use FaradayMiddleware::FollowRedirects, limit: 3
-      conn.adapter :net_http
-      conn.options.timeout = 2000
-      conn.options.open_timeout = 2000
+      conn.adapter :excon
+      conn.options.timeout = 60
     end
     response = connection.get(feed_url)
     xml = response.body
