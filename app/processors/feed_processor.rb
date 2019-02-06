@@ -24,9 +24,11 @@ class FeedProcessor < Processor
     # Import from Feedjra, because no Timeout support yet :(
     # https://github.com/feedjira/feedjira/issues/294
     connection = Faraday.new do |conn|
+      conn.headers['User-Agent'] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:57.0 #{Setting.site_name}) Gecko/20100101 Firefox/57.0"
+      conn.headers['Accept'] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       conn.use FaradayMiddleware::FollowRedirects, limit: 3
-      conn.adapter :excon
       conn.options.timeout = 60
+      conn.adapter :typhoeus
     end
     response = connection.get(feed_url)
     xml = response.body

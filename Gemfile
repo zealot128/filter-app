@@ -15,6 +15,7 @@ gem "sitemap_generator"
 gem "httparty"
 gem "feedjira"
 gem "excon"
+gem 'typhoeus'
 gem "mechanize"
 gem "pg_search"
 gem "will_paginate-bootstrap"

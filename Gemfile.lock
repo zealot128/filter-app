@@ -178,6 +178,8 @@ GEM
     errbase (0.1.1)
     erubi (1.8.0)
     erubis (2.7.0)
+    ethon (0.12.0)
+      ffi (>= 1.3.0)
     eventmachine (1.2.7)
     exception_notification (4.3.0)
       actionmailer (>= 4.0, < 6)
@@ -579,6 +581,8 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
+    typhoeus (1.3.1)
+      ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -684,6 +688,7 @@ DEPENDENCIES
   thin
   timecop
   twitter (~> 6.2.0)
+  typhoeus
   uglifier (>= 1.0.3)
   vcr
   voight_kampff
