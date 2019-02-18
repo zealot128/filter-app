@@ -38,7 +38,7 @@ class NewsItemsController < ApplicationController
     news_item = NewsItem.find(params[:id])
     if params[:sid]
       @current_user = MailSubscription.find_by(id: params[:sid])
-      last_mail = @current_user.histories.order('created_at desc').first
+      last_mail = @current_user.histories.order('created_at desc').first if @current_user
       last_mail && last_mail.click!
     end
     unless bot?

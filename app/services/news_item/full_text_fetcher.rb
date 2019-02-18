@@ -29,7 +29,7 @@ class NewsItem::FullTextFetcher
           @news_item.title = page.at('title').try(:text)
         end
         NewsItem::ImageFetcher.new(@news_item, page).run
-      rescue Mechanize::ResponseCodeError, SocketError, Mechanize::RedirectLimitReachedError, Nokogiri::CSS::SyntaxError => e
+      rescue Mechanize::ResponseCodeError, Timeout::Error, SocketError, Mechanize::RedirectLimitReachedError, Nokogiri::CSS::SyntaxError => e
         Rails.logger.error "Error fetching #{@news_item.url} (#{@news_item.id}): #{e.inspect}"
       end
     end
