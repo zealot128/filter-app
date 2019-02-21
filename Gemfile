@@ -44,6 +44,8 @@ gem 'redis-namespace', '~> 1.5.0'
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false
 
+gem 'rack-cors', require: 'rack/cors'
+
 # TODO: > 5.0.7
 gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
 gem "coffee-rails"
