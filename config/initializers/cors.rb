@@ -4,7 +4,7 @@ Rails.application.configure do
       if Rails.env.development?
         origins "pludoni.#{ENV['USER']}.pludoni.com"
       else
-        origins 'pludoni.de'
+        origins 'www.pludoni.de'
       end
       resource '/api/v1/categories.json', headers: :any, methods: :any, credentials: true
       resource '/api/v1/news_items.json?category_id=1&limit=10', headers: :any, methods: :any, credentials: true
