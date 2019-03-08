@@ -4,6 +4,8 @@ Baseapp::Application.routes.draw do
   get "datenschutz", to: "static_pages#datenschutz"
   get "faq", to: "static_pages#faq"
 
+  get "/app", to: "app#index"
+
   namespace :admin do
     get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do
