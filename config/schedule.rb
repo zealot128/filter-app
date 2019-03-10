@@ -2,32 +2,32 @@ set :output, "#{Dir.pwd}/log/cron.log"
 job_type :runner, "cd :path && bin/rails runner -e :environment ':task' :output"
 
 every 1.hour do
-  runner 'NewsItem.cronjob'
+  runner 'CATCH_ALL { NewsItem.cronjob }'
 end
 
 every 1.hour do
-  runner "Source.cronjob"
+  runner "CATCH_ALL { Source.cronjob }"
 end
 
 every '0 9-17 * * *' do
-  runner "PushNotificationManager.run"
+  runner "CATCH_ALL { PushNotificationManager.run }"
 end
 
 every 1.day, at: '03:15' do
-  runner 'NewsItem::LinkageCalculator.run()'
+  runner 'CATCH_ALL { NewsItem::LinkageCalculator.run() }'
 end
 
 every 1.day, at: '03:25' do
-  runner 'DuplicateFinder.run'
-  runner 'NewsItem.cleanup'
+  runner 'CATCH_ALL { DuplicateFinder.run }'
+  runner 'CATCH_ALL { NewsItem.cleanup }'
 end
 
 every :monday, at: '9am' do
-  runner 'Newsletter::Mailing.cronjob'
+  runner 'CATCH_ALL { Newsletter::Mailing.cronjob }'
 end
 
 every 1.day, at: '04:12' do
-  runner 'ClicksSynchronization.run'
+  runner 'CATCH_ALL { ClicksSynchronization.run }'
 end
 
 every 1.day, at: '5:00 am' do
@@ -36,7 +36,7 @@ end
 
 %w[09 10 12 14 16 18].each do |h|
   minute = rand(0..59)
-  every 1.day, at: "#{h}:#{sprintf("%02d", minute)}" do
-    runner "TwitterPosting.cronjob"
+  every 1.day, at: "#{h}:#{sprintf('%02d', minute)}" do
+    runner "CATCH_ALL { TwitterPosting.cronjob }"
   end
 end

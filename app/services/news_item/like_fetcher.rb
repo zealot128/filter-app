@@ -42,7 +42,7 @@ class NewsItem::LikeFetcher
     return nil if Rails.env.development? || Rails.env.test?
     raise e
   rescue Twitter::Error::Forbidden => e
-    Airbrake.notify(e)
+    NOTIFY_EXCEPTION(e)
   end
 
   def facebook

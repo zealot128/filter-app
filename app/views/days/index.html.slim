@@ -16,9 +16,10 @@
 - if browser.platform.ios? || browser.platform.android? || Rails.env.development?
   = render 'layouts/mobile_notice'
 
-br
-br
-= render "layouts/job_carousel"
+- if Setting.get('jobs_url').present?
+  br
+  br
+  = render "layouts/job_carousel"
 
 - @container_class = ''
 .container

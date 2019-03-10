@@ -67,6 +67,7 @@ module Newsletter
       history.try(:delete)
       raise e if Rails.env.test?
       Airbrake.notify(e) if defined?(Airbrake)
+      NOTIFY_EXCEPTION(e)
       Rails.logger.error "[NewsletterMailing] #{e.inspect}"
     ensure
       subscription.update_column :last_send_date, Time.zone.today

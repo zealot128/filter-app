@@ -21,7 +21,9 @@ Baseapp::Application.routes.draw do
   end
   get 'admin' => redirect('/admin/sources')
 
-  get 'jobs' => 'jobs#index'
+  if Setting.get('jobs_url').present?
+    get 'jobs' => 'jobs#index'
+  end
 
   get "sources" => redirect('/quellen')
   resources :sources, path: 'quellen', only: [:index, :show] do
