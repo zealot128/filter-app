@@ -18,7 +18,7 @@ class NewsItem::LikeFetcher
     news_item.linkedin = fetcher.linkedin
     news_item.xing   = fetcher.xing || 0
     news_item.gplus  = 0
-    news_item.reddit ||= 0
+    news_item.reddit ||= 3
   end
 
   def maybe_update_tweets(news_item)

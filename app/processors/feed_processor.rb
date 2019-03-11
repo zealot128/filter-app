@@ -9,9 +9,9 @@ class FeedProcessor < Processor
       source.update_column :error, false
       feed.entries.each do |entry|
         item = process_entry(entry)
-        if item
-          item.save
-        end
+        next unless item
+        was_new = item.new_record?
+        item.save
       end
     end
   end
@@ -75,6 +75,7 @@ class FeedProcessor < Processor
       url = URI.join(@source.url, url).to_s
     end
     @item = find_news_item(guid, url, title)
+    was_new = @item.new_record?
     @item.url = url
     if @item.new_record?
       @item.source = @source
@@ -95,7 +96,7 @@ class FeedProcessor < Processor
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end
     end
-    NewsItem::RefreshLikesWorker.perform_in(1.minute, @item.id)
+    NewsItem::RefreshLikesWorker.perform_in(1.minute, item.id) if was_new
     @item
   end
 end
