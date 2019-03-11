@@ -28,12 +28,14 @@ br
     .item
       .thumbnail
         = image_tag("app/5.png")  
+    .item
+      .thumbnail
+        = image_tag("app/6.png") 
 
   br
 
   strong Die HRfilter App hält Sie auf den aktuellsten Stand moderner Human Resources Strategien. HRfilter informiert über Best Practices, Studien, Branchen-News, HR-Stellenangebote und Informationen aus den folgenden HR-Schlüsselkategorien:
 
-  br
   br
 
   table.table.categorie-table
@@ -54,9 +56,11 @@ br
         td Controlling
         td und viele mehr...
 
+  br
+  br
+
   strong Die HRfilter App ist Ihr personalisierter Informationsdienst und HR-Stellenmarkt:
 
-  br
   br
 
   ul.rounded-arrow
@@ -100,7 +104,7 @@ javascript:
       }
 
     })
-    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-o-left'></i> Zurück </a>").find('a').click(function(e){
+    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-o-left'></i> Android </a>").find('a').click(function(e){
       e.preventDefault()
       var dots = Array.from(document.getElementsByClassName('owl-dot'))
       click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) - 1
@@ -108,7 +112,7 @@ javascript:
         $(dots[click_that]).trigger('click')
       }
     })
-    $('.js-owl-next').html("<a class='test' href='#'> Weiter <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
+    $('.js-owl-next').html("<a class='test' href='#'> iOS <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
       e.preventDefault()
       var dots = Array.from(document.getElementsByClassName('owl-dot'))
       click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) + 1
