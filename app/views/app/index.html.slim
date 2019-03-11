@@ -1,2 +1,130 @@
 - if browser.platform.ios? || browser.platform.android? || Rails.env.development?
   = render 'layouts/mobile_notice'
+
+br
+br
+
+.container
+  .row.app-row
+    .col-sm-4.text-left: .js-owl-prev.disabled
+    .col-sm-4
+    .col-sm-4.text-right: .js-owl-next
+
+  br
+
+  .owl-carousel.owl-theme.app-carousel
+    .item
+      .thumbnail
+        = image_tag("app/1.png")  
+    .item
+      .thumbnail
+        = image_tag("app/2.png")  
+    .item
+      .thumbnail
+        = image_tag("app/3.png")  
+    .item
+      .thumbnail
+        = image_tag("app/4.png")  
+    .item
+      .thumbnail
+        = image_tag("app/5.png")  
+
+  br
+  br
+
+  strong Die HRfilter App hält Sie auf den aktuellsten Stand moderner Human Resources Strategien. HRfilter informiert über Best Practices, Studien, Branchen-News, HR-Stellenangebote und Informationen aus den folgenden HR-Schlüsselkategorien:
+
+  br
+  br
+
+  table.table.categorie-table
+    tbody
+      tr
+        td Recruiting
+        td Personen
+        td Personalentwicklung
+        td Organisationsentwicklung
+      tr
+        td Arbeitsrecht
+        td Gehalt
+        td Führung
+        td Karriere
+      tr
+        td Employer-Branding
+        td Aktive Personalsuche
+        td Controlling
+        td und viele mehr...
+
+  strong Die HRfilter App ist Ihr personalisierter Informationsdienst und HR-Stellenmarkt:
+
+  br
+  br
+
+  ul
+    li Favorisieren oder blockieren Sie über 120 HR-Quellen oder abonnieren Sie ganze Schlüsselkategorien wie Gehalt, Arbeitsrecht oder Personalentwicklung.
+    li Entscheiden Sie, welche Push-Nachrichten für Sie relevant sind; mit HRfilter erstellen Sie Ihr individuelles HR-Nachrichtenprogramm.
+    li In der Rubrik HR-Jobs haben Sie Zugriff auf ausgewählte Jobangebote für Personalmanager.
+
+javascript:
+  $( document ).ready(function() {
+    var currentItem = 2;
+    var owl = $('.owl-carousel')
+    owl.owlCarousel({
+      margin: 10,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:2
+        },
+        1000:{
+          items:3
+        }
+      }
+    })
+    owl.on('changed.owl.carousel', function(event) {
+      const prev = $('.js-owl-prev')
+      const next = $('.js-owl-next')
+
+      if (event.page.index == 0) {
+        prev.addClass('disabled')
+      } else {
+        prev.removeClass('disabled')
+      }
+      if (event.page.index == event.page.count - 1) {
+        next.addClass('disabled')
+      } else {
+        next.removeClass('disabled')
+      }
+
+    })
+    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-o-left'></i> Zurück </a>").find('a').click(function(e){
+      e.preventDefault()
+      var dots = Array.from(document.getElementsByClassName('owl-dot'))
+      click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) - 1
+      if (click_that >= 0) {
+        $(dots[click_that]).trigger('click')
+      }
+    })
+    $('.js-owl-next').html("<a class='test' href='#'> Weiter <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
+      e.preventDefault()
+      var dots = Array.from(document.getElementsByClassName('owl-dot'))
+      click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) + 1
+      if (click_that < dots.length) {
+        $(dots[click_that]).trigger('click')
+      }
+    })
+  });
+
+css:
+  .js-owl-prev, .js-owl-next {
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
+  }
+  .js-owl-prev.disabled, .js-owl-next.disabled {
+    opacity: 0.3;
+  }
+  .owl-carousel .owl-item img {
+    width: auto;
+  }
