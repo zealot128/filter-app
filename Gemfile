@@ -28,9 +28,12 @@ gem 'parallel'
 
 gem "impressionist", '~> 1.6.1'
 gem "ahoy_matey", "~> 2.1"
-gem "exception_notification"
-gem 'airbrake-ruby', '~> 2.4.0'
-gem 'airbrake', '~> 7.0.0'
+
+gem 'airbrake-ruby', '~> 2.4.0', require: false
+gem 'airbrake', '~> 7.0.0', require: false
+gem "sentry-raven", require: false
+gem "exception_notification", require: false
+
 gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'

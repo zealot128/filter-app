@@ -94,7 +94,8 @@ class PushNotificationManager
   def process_response(response, news_item)
     if response[:status_code] != 200
       status!(:unknown, error: response)
-      Airbrake.notify(StandardError.new("Error sending FCM: #{response.inspect}"))
+      error = StandardError.new("Error sending FCM: #{response.inspect}")
+      NOTIFY_EXCEPTION(error)
       return
     end
     json = JSON.parse(response[:body])

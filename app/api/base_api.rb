@@ -19,8 +19,7 @@ module BaseApi
       trace = e.backtrace
       Rails.logger.error "#{e.message}\n\n#{trace.join("\n")}"
       if Rails.env.production?
-        Airbrake.notify(e) if defined?(Airbrake)
-        ExceptionNotifier.notify_exception(e) if defined?(ExceptionNotifier)
+        NOTIFY_EXCEPTION(e)
       end
       Rack::Response.new({ message: e.message, backtrace: trace }.to_json, 500, 'Content-type' => 'application/json').finish
     end

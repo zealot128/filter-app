@@ -169,7 +169,9 @@ class NewsItem < ApplicationRecord
     # delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
     NewsItem.where.not(source_id: Source.select('id')).delete_all
 
-    max = 250
+    return if Sidekiq::Queue.new('low').count > 200
+
+    max = 150
     priority = NewsItem.recent.where(value: nil).limit(100).to_a
     priority.each_with_index do |news_item, i|
       NewsItem::RefreshLikesWorker.perform_in((i * 2).seconds, news_item.id)

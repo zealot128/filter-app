@@ -517,6 +517,8 @@ GEM
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
+    sentry-raven (2.9.0)
+      faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.11.0)
     sidekiq (5.2.5)
       connection_pool (~> 2.2, >= 2.2.2)
@@ -679,6 +681,7 @@ DEPENDENCIES
   ruby-stemmer
   sass
   sass-rails!
+  sentry-raven
   sidekiq
   sidekiq-unique-jobs
   simple-navigation
