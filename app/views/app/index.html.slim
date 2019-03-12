@@ -1,5 +1,10 @@
-- if browser.platform.ios? || browser.platform.android? || Rails.env.development?
-  = render 'layouts/mobile_notice'
+.container: .content-header-secondary(style='margin-top: 30px; padding: 30px; font-size: 2rem; text-align: center;')
+  p Nutzen Sie die HRfilter-App direkt auf Ihrem Smartphone:
+  
+  a.btn.btn-primary(href='https://itunes.apple.com/us/app/hrfilter-news/id1435577499?ls=1&mt=8')
+    i.fa.fa-fw.fa-apple.fa-2x
+  a.btn.btn-primary(href='https://play.google.com/store/apps/details?id=com.pludoni.filterapp')
+    i.fa.fa-fw.fa-android.fa-2x
 
 br
 br
