@@ -37,6 +37,7 @@ html lang=(locale) class=(browser.to_s)
           li= link_to "FAQ", faq_path
           li= link_to "Quellen", '/quellen'
           li= link_to "Quelle einreichen", new_submit_source_path
+          li= link_to "Als App", app_path
           li= link_to "Newsletter", '/newsletter'
           - if Setting.get('twitter_account')
             li = link_to "https://twitter.com/#{Setting.get('twitter_account')}" do
