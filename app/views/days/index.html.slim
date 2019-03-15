@@ -17,7 +17,7 @@
         = link_to "/app", class: 'btn btn-default'
           i.fa.fa-fw.fa-mobile>
           |Als App
-- if browser.platform.ios? || browser.platform.android? || Rails.env.development?
+- if browser.device.mobile?
   = render 'layouts/mobile_notice'
 
 - if Setting.get('jobs_url').present?
