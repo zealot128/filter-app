@@ -119,9 +119,7 @@ class MailSubscriptionsController < ApplicationController
   require "whenever"
   def filter_jobs
     jobs = Whenever::JobList.new(file: Rails.root.join("config", "schedule.rb").to_s).instance_variable_get("@jobs")
-    jobs[:default_mailto].values.flatten.select do |job|
-      job.instance_variable_get("@options")[:task] == "Newsletter::Mailing.cronjob"
-    end
+    jobs[:default_mailto].values.flatten.select { |job| job.instance_variable_get("@options")[:task]&.include?("Newsletter::Mailing.cronjob") }
   end
 
   def subscription

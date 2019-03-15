@@ -23,7 +23,7 @@ Baseapp::Application.routes.draw do
   end
   get 'admin' => redirect('/admin/sources')
 
-  if Setting.get('jobs_url').present?
+  if Setting.get('jobs_url').present? || Rails.env.test?
     get 'jobs' => 'jobs#index'
   end
 
