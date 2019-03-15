@@ -47,7 +47,7 @@
         .clearfix
           .row.js-grid
             - news.each do |item|
-              .col-lg-12.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
+              .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
                 = render item
           .pull-right
             = link_to day_path(day), class: 'btn btn-default' do
