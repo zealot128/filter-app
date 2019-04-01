@@ -90,17 +90,6 @@ ActiveRecord::Schema.define(version: 2019_03_27_131743) do
     t.index ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true
   end
 
-  create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string "slug", null: false
-    t.integer "sluggable_id", null: false
-    t.string "sluggable_type", limit: 50
-    t.string "scope"
-    t.datetime "created_at"
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
-  end
-
   create_table "impressions", id: :serial, force: :cascade do |t|
     t.string "impressionable_type"
     t.integer "impressionable_id"
