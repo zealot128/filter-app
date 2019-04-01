@@ -1,0 +1,30 @@
+- content_for :content_header do
+  .content-header.hidden-xs
+    .container
+      .text-center
+        h2 Alle News zum Thema #{@category.name}
+br
+br
+
+.container
+  ul.nav.nav-pills.category-menu
+    li 
+      h3 Welche News möchten sie sehen?
+    li class='#{"active" if params[:sort].nil? || params[:sort] == "best"}'
+      a href="#{category_path(@category, sort: 'best')}" role="button"
+        |Die Besten
+    li class='#{"active" if params[:sort] == "recent"}'
+      a href="#{category_path(@category, sort: 'recent')}" role="button"
+        |Die Neusten
+
+  br
+
+  .row
+    = render partial: "news_item", collection: @news_items
+  = will_paginate @news_items, renderer: BootstrapPagination::Rails
+
+
+javascript:
+  $(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip()
+  });

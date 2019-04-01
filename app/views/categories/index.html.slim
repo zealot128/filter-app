@@ -1,0 +1,37 @@
+- content_for :content_header do
+  .content-header.hidden-xs
+    .container
+      .text-center
+        h2 Alle Kategorien auf HRfilter.de
+
+br
+br
+
+- @categories.each do |category|
+  .col-md-4.col-sm-6.col-xs-12
+    .panel.panel-default.category-panel
+      .panel-heading.category-panel-heading
+        = link_to category_path(category)
+          .row
+            .col-md-3.col-sm-3.col-xs-3
+              - if category.logo.attached?
+                = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
+              = " "
+            .col-md-9.col-sm-9.col-xs-
+              h3.category-name 
+                = category.name
+      .panel-body.category-panel-body
+        .row.category-news-row
+          strong Die letzten Top-News:
+        .row
+          - category.news_items.show_page.slice(0,3).each do |news_item|
+            ul.category-list
+              li.category-top-news(title='#{news_item.title}' data-toggle='tooltip' data-container='body')
+                i.fa.fa-fw.fa-arrow-right.category-arrow
+                = news_item.title
+
+javascript:
+  $(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip()
+  });
+

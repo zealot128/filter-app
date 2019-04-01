@@ -1,0 +1,24 @@
+.col-md-3.col-sm-6.col-xs-12
+  .post-module
+    .post-module--thumbnail
+      .post-module--date(title='#{l(news_item.published_at.to_date)}' data-toggle='tooltip' data-container='body')
+        .day
+          = news_item.published_at.day()
+        .month
+          = @month[news_item.published_at.month() - 1]
+      br
+      br
+      = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
+        - if news_item.image_file_size != nil
+          = image_tag news_item.image.url
+        - else
+          = image_tag("hrfilter/hrfilter-logo")
+      .post-module--source(title='#{news_item.source.name}' data-toggle='tooltip' data-container='body')
+        = news_item.source.name
+    .post-content
+      h3.title(title='#{news_item.title}' data-toggle='tooltip' data-container='body')
+        = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
+          = news_item.title
+      p.description
+        - unless news_item.source.lsr_active?
+          = news_item.teaser

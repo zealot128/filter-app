@@ -5,7 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
     primary.dom_class = 'nav navbar-nav'
     primary.item :key_1, 'Tage', '/', {}
-    primary.item :key_3, 'Kategorien', '/categories', {}
+    primary.item :key_3, 'Kategorien', '/kategorien', {}
     primary.item :key_4, 'Suche', '/search', {}
     primary.item :key_5, 'Newsletter', '/newsletter', {}
 

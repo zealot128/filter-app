@@ -22,6 +22,7 @@ class Category < ActiveRecord::Base
     end
   end
 
+  before_create :generate_slug
   before_save do
     if !hash_tag?
       self.hash_tag = name.gsub(' ', '')
@@ -30,5 +31,13 @@ class Category < ActiveRecord::Base
 
   def self.select_collection
     sorted.to_a.map { |i| [i.name, i.id] } + [['Unkategorisiert', 0]]
+  end
+
+  def to_param
+    slug
+  end
+
+  def generate_slug
+    self.slug = name.to_url
   end
 end

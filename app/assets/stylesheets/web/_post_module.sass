@@ -1,0 +1,117 @@
+.post-module
+  position: relative
+  z-index: 1
+  display: block
+  background: #FFFFFF
+  min-width: 235px
+  height: 440px
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15)
+  transition: all 0.3s linear 0s
+  margin-bottom: 30px
+
+  &:hover
+    box-shadow: 0px 1px 35px 0px rgba(0, 0, 0, 0.3)
+    .post-module--thumbnail img
+      transform: scale(1.1)
+      opacity: 0.6
+
+  .post-content
+    background: #FFFFFF
+    width: 100%
+    padding: 5px 15px
+    box-sizing: border-box
+    transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s
+
+    // post meta?
+    .post-meta
+      margin: 30px 0 0
+      color: #999999
+
+    .post-meta .timestamp
+      margin: 0 16px 0 0
+
+    .post-meta a
+        color: #999999
+        text-decoration: none
+
+.post-module--date
+  position: absolute
+  top: 20px
+  right: 20px
+  z-index: 1
+  background: #272e68
+  width: 55px
+  height: 55px
+  padding: 12.5px 0
+  border-radius: 100%
+  color: #FFFFFF
+  font-weight: 700
+  text-align: center
+  box-sizing: border-box
+  line-height: 1
+  .day
+    font-size: 18px
+  .month
+    font-size: 12px
+    text-transform: uppercase
+
+.post-module--thumbnail
+  position: relative
+  background: white
+  height: 210px
+  overflow: hidden
+  margin-bottom: 0px
+  img
+    display: block
+    width: 100%
+    transition: all 0.3s linear 0s
+
+.post-module--source
+  position: absolute
+  bottom: 10px
+  left: 0
+  background: #272e68
+  padding: 10px 15px
+  color: #FFFFFF
+  font-size: 14px
+  font-weight: 600
+  text-transform: uppercase
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  max-width: 200px
+
+.post-module .title
+  margin: 0
+  padding: 0 0 10px
+  color: #272e68
+  font-size: 26px
+  font-weight: 700
+  white-space: pre-wrap
+  overflow: hidden
+  text-overflow: ellipsis
+  display: -webkit-box
+  -webkit-box-orient: vertical
+  -webkit-line-clamp: 2
+  max-height: 29px*2
+  margin-bottom: 10px
+  a
+    color: #272e68
+
+.post-module .description
+  display: none
+  color: #666666
+  font-size: 14px
+  line-height: 1.5em
+  white-space: pre-wrap
+  overflow: hidden
+  text-overflow: ellipsis
+  display: -webkit-box
+  -webkit-box-orient: vertical
+  -webkit-line-clamp: 5
+  max-height: 32px * 4
+
+.hover .post-content .description
+  display: block !important
+  height: auto !important
+  opacity: 1 !important
