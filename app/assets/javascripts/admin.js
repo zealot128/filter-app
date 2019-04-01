@@ -3,7 +3,6 @@
 //
 
 $(document).ready(function() {
-  console.log( "ready!" );
   $('.js-tablesorter').each(function() {
     $(this).tablesorter({
     	dateFormat : "ddmmyyyy"
