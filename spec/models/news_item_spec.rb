@@ -36,5 +36,15 @@ describe NewsItem do
       ni.categorize
       expect(ni.categories).to eq([c1])
     end
+
+    specify "Reihenfolge der Kategorien bleiben erhalten" do
+      c1 = Fabricate(:category, keywords: 'gehalt,bwl')
+      c2 = Fabricate(:category, keywords: 'recruiting')
+      c3 = Fabricate(:category, keywords: 'studium')
+
+      ni = Fabricate(:news_item, title: 'studium studium  Gehalt Gehalt Gehalt Recruiting')
+      ni.categorize
+      expect(ni.reload.categories.map(&:keywords)).to eq([c1, c3, c2].map(&:keywords))
+    end
   end
 end

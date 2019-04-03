@@ -6,18 +6,15 @@ class NewsItem::Categorizer
   end
 
   def run
-    cats_with_matches =
-      Category.all.map do |category|
-        matches = category.keywords.split(',').select do |kw|
-          text.downcase[/(^|\W)#{Regexp.escape(kw.downcase)}($|\W)/]
-        end
-        [category, matches.count]
-      end
+    cats_with_matches = Category.all.map { |category|
+      count = category.matching_keywords.map { |kw| words.grep(kw).count }.sum
+      [category, count]
+    }
     categories = cats_with_matches.select { |_, count| count > 0 }
 
     if default = @news_item.source.default_category
       unless categories.find { |cat, _| cat.id == default.id }
-        categories << [default, 100000]
+        categories << [default, 100_000]
       end
     end
 
@@ -27,6 +24,10 @@ class NewsItem::Categorizer
 
   def text
     @text ||= (@news_item.plaintext.to_s + ' ' + @news_item.title.to_s).downcase
+  end
+
+  def words
+    @words ||= text.split(/[^\p{Word}]/) - [""]
   end
 
   def self.run(ni)
