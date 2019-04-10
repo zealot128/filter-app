@@ -7,6 +7,9 @@ stages:
   - deploy
 
 rspec:
+  services:
+    - 'postgres:9.4'
+    - 'redis:3.0'
   script: bin/ci
   stage: test
 
