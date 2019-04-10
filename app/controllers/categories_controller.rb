@@ -3,6 +3,8 @@ class CategoriesController < ApplicationController
     @title = "Alle Kategorien auf HRfilter"
 
     @categories = Category.all.order('name')
+
+    @sources = Source.all.order('name')
   end
 
   def show

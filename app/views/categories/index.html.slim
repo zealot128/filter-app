@@ -29,6 +29,25 @@ br
               li.category-top-news(title='#{news_item.title}' data-toggle='tooltip' data-container='body')
                 i.fa.fa-fw.fa-arrow-right.category-arrow
                 = news_item.title
+        .row
+          .col-md-12
+            .text-center
+              button.btn.btn-default data-target="#myModal" data-toggle="modal" type="button" style="margin-top: 10px; background-color: #3C4692"
+                |Alle Quellen in dieser Kategorie
+
+  #myModal.modal.fade role="dialog" 
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close data-dismiss="modal" type="button"  &times;
+          h4.modal-title Alle Quellen in dieser Kategorie 
+        .modal-body
+          - category.sources.group("name").count.each do |name, anzahl|
+            .badge.tag-badge
+              = name
+        .modal-footer
+          button.btn.btn-default data-dismiss="modal" type="button" Close
+
 
 javascript:
   $(document).ready(function() {

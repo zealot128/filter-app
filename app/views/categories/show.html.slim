@@ -16,12 +16,12 @@ br
     li class='#{"active" if params[:sort] == "recent"}'
       a href="#{category_path(@category, sort: 'recent')}" role="button"
         |Die Neusten
-
   br
 
   .row
     = render partial: "news_item", collection: @news_items
-  = will_paginate @news_items, renderer: BootstrapPagination::Rails
+  .text-center
+    = will_paginate @news_items, renderer: BootstrapPagination::Rails
 
 
 javascript:

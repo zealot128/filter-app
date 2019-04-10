@@ -12,6 +12,7 @@
         - if news_item.image_file_size != nil
           = image_tag news_item.image.url
         - else
+          br
           = image_tag("hrfilter/hrfilter-logo")
       .post-module--source(title='#{news_item.source.name}' data-toggle='tooltip' data-container='body')
         = news_item.source.name
@@ -22,3 +23,17 @@
       p.description
         - unless news_item.source.lsr_active?
           = news_item.teaser
+      .post-meta
+        .text-center
+          span
+            i.fa.fa-fw.fa-twitter
+            = news_item.retweets
+          span
+            i.fa.fa-fw.fa-xing
+            = news_item.xing
+          span
+            i.fa.fa-fw.fa-reddit
+            = news_item.reddit
+          span
+            i.fa.fa-file-text-o
+            = news_item.word_length  
