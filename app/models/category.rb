@@ -17,6 +17,16 @@ class Category < ActiveRecord::Base
   scope :sorted, -> { order :name }
   validates :name, presence: true
 
+  def matching_keywords
+    category.keywords.split(',').map { |keyword|
+      if keyword.length > 4
+        /#{Regexp.escape(keyword)}/
+      else
+        /^#{i.downcase.strip}|#{i.downcase.strip}$/
+      end
+    }
+  end
+
   def matches?(text)
     keywords.split(',').any? do |keyword|
       text.downcase[/(^|\W)#{Regexp.escape(keyword.downcase)}($|\W)/]
