@@ -7,4 +7,3 @@
 //= require highcharts
 //= require polyfill
 //= require_tree ./charts
-

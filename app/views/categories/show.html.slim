@@ -20,9 +20,9 @@ br
 
   .row
     = render partial: "news_item", collection: @news_items
+
   .text-center
     = will_paginate @news_items, renderer: BootstrapPagination::Rails
-
 
 javascript:
   $(document).ready(function() {
