@@ -3,7 +3,7 @@
     .item
       .panel.panel-default.job-panel
         .panel-heading
-          a.panel-title(title="#{job["title"]}" href=(job["url"]))
+          a.panel-title(target="_blank" title="#{job["title"]}" href=(job["url"]))
             strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
