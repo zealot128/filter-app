@@ -24,7 +24,8 @@ class MailSubscriptionsController < ApplicationController
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
         render html: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
-                  'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet.</div>'.html_safe,
+                  'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet. <br>Sollten Sie keine ' \
+                  'E-Mail-Bestätigung erhalten haben, überprüfen Sie ggf. Ihren Spam-Ordner. </div>'.html_safe,
                layout: true
       end
     else
