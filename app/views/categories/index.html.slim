@@ -32,24 +32,42 @@ br
         .row
           .col-md-12
             .text-center
-              button.btn.btn-default data-target="#myModal" data-toggle="modal" type="button" style="margin-top: 10px; background-color: #3C4692"
+              button.btn.btn-default data-target="#SourceModal" data-toggle="modal" type="button" style="margin-top: 10px; background-color: #3C4692"
                 |Alle Quellen in dieser Kategorie
 
-  #myModal.modal.fade role="dialog" 
-    .modal-dialog
+  #SourceModal.modal.fade.bd-example-modal-lg role="dialog" 
+    .modal-dialog.modal-lg
       .modal-content
         .modal-header
-          button.close data-dismiss="modal" type="button"
           h4.modal-title Alle Quellen in dieser Kategorie 
         .modal-body
           - category.sources.all.uniq.each do |source|
-            .badge.tag-badge
-              = source.name
-        .modal-footer
-          button.btn.btn-default data-dismiss="modal" type="button" Schliessen
-
+            .col-md-6.col-sm-6
+              .panel.panel-default
+                .panel-heading
+                  - if source.logo.exists?
+                    = image_tag source.logo.url(:thumb)
+                    = ' '
+                  = link_to source.name, source_path(source)
+                .panel-body
+                  small
+                    | #{source.news_items.count} Beiträge insgesamt
+                    - if source.news_items.current.any?
+                      = ', Aktuell:'
+                  br
+                  ul
+                    - source.news_items.current.sorted.limit(5).each do |ni|
+                      li title="#{ni.title}"
+                        = truncate(ni.title, length: 60)
+          .text-right
+            button.btn.btn-default data-dismiss="modal" type="button" Schliessen
 
 javascript:
   $(document).ready(function() {
     $('[data-toggle=tooltip]').tooltip()
   });
+
+css:
+  .panel-body ul {
+    padding-left: 15px;
+  }

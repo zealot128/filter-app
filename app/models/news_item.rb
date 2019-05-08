@@ -171,6 +171,13 @@ class NewsItem < ApplicationRecord
     super
   end
 
+  def preferred_teaser_image
+    c = categories.first
+    if c.logo.attached?
+      return c.logo.variant(resize: '170x170')
+    end
+  end
+
   def categories
     c = super
     if category_order?

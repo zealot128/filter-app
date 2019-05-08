@@ -21,19 +21,24 @@
         = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
           = news_item.title
       p.description
-        - unless news_item.source.lsr_active?
+        - if news_item.source.lsr_active
           = news_item.teaser
+        = image_tag(news_item.preferred_teaser_image)
       .post-meta
         .text-center
           span
-            i.fa.fa-fw.fa-twitter
-            = news_item.retweets
+            - unless news_item.retweets.blank?
+              i.fa.fa-fw.fa-twitter
+              = news_item.retweets
           span
-            i.fa.fa-fw.fa-xing
-            = news_item.xing
+            - unless news_item.xing.blank?
+              i.fa.fa-fw.fa-xing
+              = news_item.xing
           span
-            i.fa.fa-fw.fa-reddit
-            = news_item.reddit
+            - unless news_item.reddit.blank?
+              i.fa.fa-fw.fa-reddit
+              = news_item.reddit
           span
-            i.fa.fa-file-text-o
-            = news_item.word_length  
+            - unless news_item.word_length.blank?
+              i.fa.fa-file-text-o
+              = news_item.word_length  
