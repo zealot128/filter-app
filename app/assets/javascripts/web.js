@@ -6,6 +6,7 @@
 //= require bootstrap/collapse
 //= require bootstrap/modal
 //= require bootstrap/transition
+//= require bootstrap/tooltip
 //= require_tree ./web
 //= require highcharts
 //= require polyfill

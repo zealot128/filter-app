@@ -3,7 +3,7 @@
     .item
       .panel.panel-default.job-panel
         .panel-heading
-          a.panel-title(target="_blank" title="#{job["title"]}" href=(job["url"]))
+          a.panel-title(target="_blank" title=strip_tags(job["preview"]).gsub("\n", "").truncate(200) data-container='body' data-toggle="tooltip" href=(job["url"]))
             strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
@@ -16,6 +16,10 @@
             - job["tags"].reject { |i| i.length > 22 || i['m/w'] }.first(5).each do |tag|
               span.label.label-primary.job-label<>
                 = tag
+        .panel-footer
+          .row.text-center
+            a.btn.btn-primary(href=job["url"] target="_blank")
+              |Zum Stellenangebot
 
   .item
     .panel.panel-default.last-job-panel
@@ -34,6 +38,8 @@
 
 javascript:
   $( document ).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     var currentItem = 2;
     var owl = $('.owl-carousel')
     owl.owlCarousel({
