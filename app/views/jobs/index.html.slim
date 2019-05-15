@@ -1,14 +1,32 @@
+.container
+  .row(style="display: flex; justify-content: center;")
+    .col-md-offset-1
+    .col-md-4
+      h4 Nach welchen Ort möchten sie filtern?
+    .col-md-3
+      .btn-group
+        button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+          | Ort
+          span.caret
+        ul.dropdown-menu
+          - @locations.each do |location|
+            li
+              a.prevent-jump href=""
+                = location
+
+br
+
 .owl-carousel.owl-theme
   - @jobs.each do |job|
     .item
       .panel.panel-default.job-panel
         .panel-heading
-          a.panel-title(target="_blank" title=strip_tags(job["preview"]).gsub("\n", "").truncate(200) data-container='body' data-toggle="tooltip" href=(job["url"]))
+          a.panel-title(target="_blank" href=(job["url"]))
             strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
         .panel-body
-          .wrapper(style='overflow: hidden; height: 62px;')
+          .wrapper.tag-wrapper(style='overflow: hidden; height: 62px;')
             - job["variants"].each do |variant|
               - variant["locations"].each do |location|
                 span.label.label-default.job-label<>
@@ -16,6 +34,7 @@
             - job["tags"].reject { |i| i.length > 22 || i['m/w'] }.first(5).each do |tag|
               span.label.label-primary.job-label<>
                 = tag
+            = strip_tags(job["preview"]).gsub("\n", "").truncate(130)
         .panel-footer
           .row.text-center
             a.btn.btn-primary(href=job["url"] target="_blank")
@@ -38,7 +57,15 @@
 
 javascript:
   $( document ).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip(); 
+    $('a.prevent-jump').click(function(e) {
+      e.preventDefault();
+      var location = $(this).text();
+      getLocation(location)
+    });
+
+    function getLocation (location) {
+      return location
+    }
 
     var currentItem = 2;
     var owl = $('.owl-carousel')
