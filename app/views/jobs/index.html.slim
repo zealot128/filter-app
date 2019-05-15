@@ -34,7 +34,6 @@ br
             - job["tags"].reject { |i| i.length > 22 || i['m/w'] }.first(5).each do |tag|
               span.label.label-primary.job-label<>
                 = tag
-            = strip_tags(job["preview"]).gsub("\n", "").truncate(130)
         .panel-footer
           .row.text-center
             a.btn.btn-primary(href=job["url"] target="_blank")
