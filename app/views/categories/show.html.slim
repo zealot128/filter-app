@@ -3,6 +3,8 @@
     .container
       .text-center
         h2 Alle News zum Thema #{@category.name}
+        - if @category.logo.attached?
+          = image_tag @category.logo.variant(resize: '50x50>'), class: "img-responsive"
 br
 br
 
@@ -16,6 +18,38 @@ br
     li class='#{"active" if params[:sort] == "recent"}'
       a href="#{category_path(@category, sort: 'recent')}" role="button"
         |Die Neusten
+    li style="float: right;"
+      a class="btn btn-primary" data-target="#SourceModal" data-toggle="modal" type="button"
+        |Alle Quellen in dieser Kategorie
+
+  #SourceModal.modal.fade.bd-example-modal-lg role="dialog"
+    .modal-dialog.modal-lg
+      .modal-content
+        .modal-header
+          h4.modal-title style="font-weight: bold;" Alle Quellen in dieser Kategorie
+        .modal-body
+          .row
+            - @category.sources.all.uniq.each do |source|
+              .col-md-6.col-sm-6
+                .panel.panel-default
+                  .panel-heading
+                    - if source.logo.exists?
+                      = image_tag source.logo.url(:thumb)
+                      = ' '
+                    = link_to source.name, source_path(source)
+                  .panel-body
+                    small
+                      | #{source.news_items.count} Beiträge insgesamt
+                      - if source.news_items.current.any?
+                        = ', Aktuell:'
+                    br
+                    ul
+                      - source.news_items.current.sorted.limit(5).each do |ni|
+                        li title="#{ni.title}"
+                          = truncate(ni.title, length: 60)
+          .text-right
+            button.btn.btn-default data-dismiss="modal" type="button" Schließen
+
   br
 
   .row
@@ -28,3 +62,4 @@ javascript:
   $(document).ready(function() {
     $('[data-toggle=tooltip]').tooltip()
   });
+

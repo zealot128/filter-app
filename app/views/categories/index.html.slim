@@ -9,65 +9,9 @@ br
 
 - @categories.each do |category|
   .col-md-4.col-sm-6.col-xs-12
-    .panel.panel-default.category-panel
-      .panel-heading.category-panel-heading
-        = link_to category_path(category)
-          .row
-            .col-md-3.col-sm-3.col-xs-3
-              - if category.logo.attached?
-                = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
-              = " "
-            .col-md-9.col-sm-9.col-xs-
-              h3.category-name 
-                = category.name
-      .panel-body.category-panel-body
-        .row.category-news-row
-          strong Die letzten Top-News:
-        .row
-          - category.news_items.show_page.first(3).each do |news_item|
-            ul.category-list
-              li.category-top-news(title=news_item.title data-toggle='tooltip' data-container='body')
-                i.fa.fa-fw.fa-arrow-right.category-arrow
-                = news_item.title
-        .row
-          .col-md-12
-            .text-center
-              button.btn.btn-default data-target="#SourceModal" data-toggle="modal" type="button" style="margin-top: 10px; background-color: #3C4692"
-                |Alle Quellen in dieser Kategorie
-
-  #SourceModal.modal.fade.bd-example-modal-lg role="dialog" 
-    .modal-dialog.modal-lg
-      .modal-content
-        .modal-header
-          h4.modal-title Alle Quellen in dieser Kategorie 
-        .modal-body
-          - category.sources.all.uniq.each do |source|
-            .col-md-6.col-sm-6
-              .panel.panel-default
-                .panel-heading
-                  - if source.logo.exists?
-                    = image_tag source.logo.url(:thumb)
-                    = ' '
-                  = link_to source.name, source_path(source)
-                .panel-body
-                  small
-                    | #{source.news_items.count} Beiträge insgesamt
-                    - if source.news_items.current.any?
-                      = ', Aktuell:'
-                  br
-                  ul
-                    - source.news_items.current.sorted.limit(5).each do |ni|
-                      li title="#{ni.title}"
-                        = truncate(ni.title, length: 60)
-          .text-right
-            button.btn.btn-default data-dismiss="modal" type="button" Schliessen
+    = render "category", category: category
 
 javascript:
   $(document).ready(function() {
     $('[data-toggle=tooltip]').tooltip()
   });
-
-css:
-  .panel-body ul {
-    padding-left: 15px;
-  }
