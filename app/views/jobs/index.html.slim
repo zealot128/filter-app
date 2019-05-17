@@ -1,21 +1,3 @@
-.container
-  .row(style="display: flex; justify-content: center;")
-    .col-md-offset-1
-    .col-md-4
-      h4 Nach welchen Ort möchten sie filtern?
-    .col-md-3
-      .btn-group
-        button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-          | Ort
-          span.caret
-        ul.dropdown-menu
-          - @locations.each do |location|
-            li
-              a.prevent-jump href=""
-                = location
-
-br
-
 .owl-carousel.owl-theme
   - @jobs.each do |job|
     .item
@@ -56,16 +38,6 @@ br
 
 javascript:
   $( document ).ready(function() {
-    $('a.prevent-jump').click(function(e) {
-      e.preventDefault();
-      var location = $(this).text();
-      getLocation(location)
-    });
-
-    function getLocation (location) {
-      return location
-    }
-
     var currentItem = 2;
     var owl = $('.owl-carousel')
     owl.owlCarousel({
