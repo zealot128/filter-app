@@ -2,6 +2,7 @@
 //= require owl.carousel
 //= require jquery_ujs
 //= require jquery.timeago
+//= require jquery.flip.min
 //= require bootstrap
 //= require_tree ./web
 //= require highcharts

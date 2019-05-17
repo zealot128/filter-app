@@ -88,6 +88,7 @@ mark.hashtag
   background-color: initial
   hyphens: none
 
+$category-background: #666
 .panel-footer .categories
   display: block
   text-overflow: ellipsis
@@ -95,20 +96,17 @@ mark.hashtag
   overflow: hidden
   width: 100%
   white-space: nowrap
-
-$category-background: #666
-div.categories
   background: $category-background
   text-align: center
-.categories .label
-  padding-right: 0
-  padding-left: 5px
-  background: $category-background
-  font-size: 11px
-  i.fa
-    font-size: 10px
-    color: #bbb
-  color: #eee
+  .label
+    padding-right: 0
+    padding-left: 5px
+    background: $category-background
+    font-size: 11px
+    i.fa
+      font-size: 10px
+      color: #bbb
+    color: #eee
 
 .panel-title, p, .panel-body
   hyphens: auto
@@ -308,7 +306,7 @@ blockquote
     color: white
 
 .category-panel-body
-  height: 195px !important
+  height: 140px !important
   margin-bottom: 5px
 
 

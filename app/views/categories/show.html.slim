@@ -1,16 +1,17 @@
 - content_for :content_header do
-  .content-header.hidden-xs
+  .content-header
     .container
       .text-center
-        h2 Alle News zum Thema #{@category.name}
-        - if @category.logo.attached?
-          = image_tag @category.logo.variant(resize: '50x50>'), class: "img-responsive"
+        div(style="display: flex; justify-content: center; align-items: center;")
+          h2(style='margin: 0') Alle News zum Thema #{@category.name}
+          - if @category.logo.attached?
+            = image_tag @category.logo.variant(resize: '66x66>'), style: "margin-left: 15px;", size: '66x66'
 br
 br
 
 .container
   ul.nav.nav-pills.category-menu
-    li 
+    li
       h3 Welche News möchten sie sehen?
     li class='#{"active" if params[:sort].nil? || params[:sort] == "best"}'
       a href="#{category_path(@category, sort: 'best')}" role="button"
@@ -19,7 +20,7 @@ br
       a href="#{category_path(@category, sort: 'recent')}" role="button"
         |Die Neusten
     li style="float: right;"
-      a class="btn btn-primary" data-target="#SourceModal" data-toggle="modal" type="button"
+      a class="btn btn-default" data-target="#SourceModal" data-toggle="modal" type="button"
         |Alle Quellen in dieser Kategorie
 
   #SourceModal.modal.fade.bd-example-modal-lg role="dialog"

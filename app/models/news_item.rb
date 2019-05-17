@@ -172,9 +172,13 @@ class NewsItem < ApplicationRecord
   end
 
   def preferred_teaser_image
-    c = categories.first
-    if c.logo.attached?
-      return c.logo.variant(resize: '170x170')
+    if image.present?
+      return image.url
+    else
+      c = categories.first
+      if c.logo.attached?
+        return c.logo.variant(resize: '130x130')
+      end
     end
   end
 
