@@ -2,10 +2,10 @@
   .content-header
     .container
       .text-center
-        div(style="display: flex; justify-content: center; align-items: center;")
-          h2(style='margin: 0') Alle News zum Thema #{@category.name}
+        div.category-headline
+          h2 Alle News zum Thema #{@category.name}
           - if @category.logo.attached?
-            = image_tag @category.logo.variant(resize: '66x66>'), style: "margin-left: 15px;", size: '66x66'
+            = image_tag @category.logo.variant(resize: '66x66>'), class: 'category-headline-img', size: '66x66'
 br
 br
 
@@ -19,15 +19,16 @@ br
     li class='#{"active" if params[:sort] == "recent"}'
       a href="#{category_path(@category, sort: 'recent')}" role="button"
         |Die Neusten
-    li style="float: right;"
-      a class="btn btn-default" data-target="#SourceModal" data-toggle="modal" type="button"
+    li.pull-right
+      a class="btn btn-default source-modal-btn" data-target="#SourceModal" data-toggle="modal" type="button"
         |Alle Quellen in dieser Kategorie
+
 
   #SourceModal.modal.fade.bd-example-modal-lg role="dialog"
     .modal-dialog.modal-lg
       .modal-content
         .modal-header
-          h4.modal-title style="font-weight: bold;" Alle Quellen in dieser Kategorie
+          h4.modal-title.source-modal-title Alle Quellen in dieser Kategorie
         .modal-body
           .row
             - @category.sources.all.uniq.each do |source|
@@ -50,7 +51,7 @@ br
                           = truncate(ni.title, length: 60)
           .text-right
             button.btn.btn-default data-dismiss="modal" type="button" Schließen
-
+            
   br
 
   .row
@@ -58,9 +59,3 @@ br
 
   .text-center
     = will_paginate @news_items, renderer: BootstrapPagination::Rails
-
-javascript:
-  $(document).ready(function() {
-    $('[data-toggle=tooltip]').tooltip()
-  });
-

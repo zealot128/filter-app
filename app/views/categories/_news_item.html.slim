@@ -3,34 +3,31 @@
     .post-module-front
       .post-module
         .post-module--thumbnail
-          .post-module--date(title='#{l(news_item.published_at.to_date)}' data-toggle='tooltip' data-container='body')
+          .post-module--date
             .day
               = news_item.published_at.day()
             .month
               = @month[news_item.published_at.month() - 1]
           br
           br
-          = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
-            = image_tag(news_item.preferred_teaser_image)
-          .post-module--source(title='#{news_item.source.name}' data-toggle='tooltip' data-container='body')
+          = image_tag(news_item.preferred_teaser_image)
+          .post-module--source
             = news_item.source.name
         .post-content
-          h3.title(title='#{news_item.title}' data-toggle='tooltip' data-container='body')
-            = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
-              = news_item.title
+          h3.title
+            = news_item.title
     .post-module-back
       .post-module
         .post-content
           .text-center
-            a.btn.btn-block.btn-primary(target="_blank" href=(news_item.url)) Zur News
-
+            = link_to news_item.url, target: '_blank', title: news_item.title, data: { proxy: click_proxy_path(news_item) } do
+              btn.btn.btn-block.btn-primary Zur News
           .description
             h4 = news_item.title
             div: small.text-muted = l news_item.published_at, format: :short
             - unless news_item.source.lsr_active?
               = news_item.teaser
-
-          .fog-fade(style='background-image: url(#{image_url("bg-trans.png")})')
+          .news-fog-fade(style='background-image: url(#{image_url("bg-trans.png")})')
           .post-meta
             .text-center
               = render 'news_items/share', item: news_item
@@ -47,26 +44,4 @@
   - @_flip_js_activated = true
 
 
-  css:
-    .post-module-back h4 {
-      margin-bottom: 0;
-      }
-    .fog-fade {
-      width: 100%;
-      height: 79px;
-      background-repeat: repeat-x;
-      background-position: bottom;
-      position: absolute;
-      bottom: 50px;
-    }
-    .post-content {
-      display: flex;
-      flex-flow: column;
-    }
-    .description {
-      flex-grow: 2;
-      overflow: hidden;
-      height: 200px;
-      position: relative;
-    }
 

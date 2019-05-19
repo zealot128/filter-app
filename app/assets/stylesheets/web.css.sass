@@ -305,10 +305,13 @@ blockquote
   a
     color: white
 
+.category-panel-heading
+  display: flex
+  justify-content: space-between
+
 .category-panel-body
   height: 140px !important
   margin-bottom: 5px
-
 
 .category-panel
   transition: box-shadow .4s
@@ -344,7 +347,10 @@ blockquote
 
 .category-list
   list-style-type: none
-  padding-left: 20px
+  padding-left: 0px
+  li
+    i 
+      padding-right: 10px
 
 .category-arrow
   color: #3C4692
@@ -355,3 +361,20 @@ blockquote
     padding-right: 10px
   li
     margin: 10px
+
+.category-headline
+  display: flex
+  justify-content: center
+  align-items: center
+  h2 
+    margin: 0px
+
+.category-headline-img 
+  margin-left: 15px
+
+.source-modal-btn
+  &:hover
+    color: black
+
+.source-modal-title
+  font-weight: bold

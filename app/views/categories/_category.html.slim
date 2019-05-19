@@ -1,6 +1,6 @@
 .panel.panel-default.category-panel
-  .panel-heading.category-panel-heading
-    = link_to category_path(category), style: 'display: flex; justify-content: space-between;' do
+  .panel-heading
+    = link_to category_path(category), class: 'category-panel-heading' do
       h3.category-name
         = category.name
       - if category.logo.attached?

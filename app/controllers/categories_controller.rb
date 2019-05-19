@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
       joins(:source).
       where(sources: { type: 'FeedSource' }).
       includes(:source).
-      paginate(page: page, per_page: 5)
+      paginate(page: page, per_page: 8)
 
     @news_items = case params[:sort]
                   when 'recent'

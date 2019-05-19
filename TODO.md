@@ -1,12 +1,3 @@
-* Proxy clicks
-* Pagination hochsetzen
-* index seite: padding der Pfeile
-* Tooltip kann raus
-* styleings aus Datei rausholen in deine scss datei rein
----
-
-
-
 Interne Verlinkungen besser
 
 sources seite
