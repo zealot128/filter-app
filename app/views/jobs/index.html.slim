@@ -7,8 +7,10 @@
             strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
+        .text-center
+          = job["company_name"]
         .panel-body
-          .wrapper.tag-wrapper(style='overflow: hidden; height: 62px;')
+          .wrapper.tag-wrapper
             - job["variants"].each do |variant|
               - variant["locations"].each do |location|
                 span.label.label-default.job-label<>
@@ -47,9 +49,12 @@ javascript:
           items:1
         },
         600:{
+          items:2
+        },
+        1000: {
           items:3
         },
-        1000:{
+        1400:{
           items:5
         }
       }
