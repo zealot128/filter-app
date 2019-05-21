@@ -8,6 +8,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_3, 'Kategorien', '/kategorien', highlights_on: :subpath
     primary.item :key_4, 'Suche', '/search', {}
     primary.item :key_5, 'Newsletter', '/newsletter', {}
+    primary.item :key_6, 'Als App', '/app', {}
 
     if controller_path.to_s['admin']
       primary.item :key_2, 'Admin', '#', {} do |sub_nav|

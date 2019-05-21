@@ -8,7 +8,7 @@ class NewsItemSerializer < ApplicationSerializer
   has_one :source, serializer: SourcePreviewSerializer
 
   def url
-    click_proxy_url(object, host: Setting.host, protocol: 'https')
+    click_proxy_url(object, host: Setting.host, protocol: 'https', utm_source: 'app', utm_medium: 'api')
   end
 
   def original_url

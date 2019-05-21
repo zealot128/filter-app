@@ -3,7 +3,10 @@
 //= require jquery_ujs
 //= require jquery.timeago
 //= require jquery.flip.min
-//= require bootstrap
+//= require bootstrap/dropdown
+//= require bootstrap/collapse
+//= require bootstrap/modal
+//= require bootstrap/transition
 //= require_tree ./web
 //= require highcharts
 //= require polyfill
