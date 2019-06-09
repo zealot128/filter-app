@@ -8,12 +8,16 @@ class Resources::NewsItems < Grape::API
       optional :source_id, Integer
       optional :preferred, String
       optional :blacklisted, String
+      optional :teaser_enabled, Boolean
+      optional :image_exists, Boolean
       optional :categories, String
       optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
     end
     get '/' do
       filter = NewsFilter.new(
-        preferred: params[:preferred], blacklisted: params[:blacklisted], per_page: params[:limit], page: params[:page], categories: params[:categories], order: params[:order]
+        preferred: params[:preferred], blacklisted: params[:blacklisted], teaser_enabled: params[:teaser_enabled],
+        image_exists: params[:image_exists], per_page: params[:limit], page: params[:page], categories: params[:categories],
+        order: params[:order]
       )
       @news_items = filter.news_items
       if params[:source_id]
