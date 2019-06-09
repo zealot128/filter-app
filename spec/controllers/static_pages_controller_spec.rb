@@ -1,11 +1,4 @@
 describe StaticPagesController do
-  describe "GET 'welcome'" do
-    it "returns http success" do
-      get :categories
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET 'impressum'" do
     it "returns http success" do
       get :impressum

@@ -25,7 +25,7 @@ describe NewsItem do
   describe "Categorizer" do
     specify "Default assigns keywords" do
       c1 = Fabricate(:category, keywords: 'gehalt,bwl')
-      c2 = Fabricate(:category, keywords: 'foobar')
+      c2 = Fabricate(:category, name: 'Bildung' ,keywords: 'foobar')
 
       ni = Fabricate.build(:news_item, title: 'Gehalt bla')
       ni.source.default_category = c2
@@ -38,8 +38,8 @@ describe NewsItem do
     end
 
     specify "Reihenfolge der Kategorien bleiben erhalten" do
-      c1 = Fabricate(:category, keywords: 'gehalt,bwl')
-      c2 = Fabricate(:category, keywords: 'recruiting')
+      c1 = Fabricate(:category, name: 'Bewerbung', keywords: 'gehalt,bwl')
+      c2 = Fabricate(:category, name: 'Recruiting', keywords: 'recruiting')
       c3 = Fabricate(:category, keywords: 'studium')
 
       ni = Fabricate(:news_item, title: 'studium studium  Gehalt Gehalt Gehalt Recruiting')

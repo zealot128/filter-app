@@ -18,11 +18,11 @@ class Category < ActiveRecord::Base
   validates :name, presence: true
 
   def matching_keywords
-    category.keywords.split(',').map { |keyword|
+    keywords.split(',').map { |keyword|
       if keyword.length > 4
         /#{Regexp.escape(keyword)}/
       else
-        /^#{i.downcase.strip}|#{i.downcase.strip}$/
+        /^#{keyword.downcase.strip}|#{keyword.downcase.strip}$/
       end
     }
   end
