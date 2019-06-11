@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_11_202453) do
+ActiveRecord::Schema.define(version: 2019_04_03_134409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 2018_12_11_202453) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hash_tag"
+    t.string "slug"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
   create_table "categories_news_items", id: false, force: :cascade do |t|
@@ -187,6 +189,7 @@ ActiveRecord::Schema.define(version: 2018_12_11_202453) do
     t.integer "absolute_score_per_halflife"
     t.integer "youtube_likes", default: 0
     t.integer "youtube_views", default: 0
+    t.integer "category_order", array: true
     t.index ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at"
     t.index ["absolute_score"], name: "index_news_items_on_absolute_score"
     t.index ["guid"], name: "index_news_items_on_guid"

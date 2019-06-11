@@ -34,6 +34,7 @@
 #  absolute_score_per_halflife :integer
 #  youtube_likes               :integer          default(0)
 #  youtube_views               :integer          default(0)
+#  category_order              :integer          is an Array
 #
 
 require "fetcher"
@@ -163,6 +164,32 @@ class NewsItem < ApplicationRecord
         tsvector_column: 'search_vector'
       }
     }
+
+  def categories=(other)
+    self.category_order = other.map(&:id)
+    save if persisted?
+    super
+  end
+
+  def preferred_teaser_image
+    if image.present?
+      return image.url
+    else
+      c = categories.first
+      if c.logo.attached?
+        return c.logo.variant(resize: '130x130')
+      end
+    end
+  end
+
+  def categories
+    c = super
+    if category_order?
+      c.sort_by { |i| category_order.index(i.id) || 1000 }
+    else
+      c
+    end
+  end
 
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"

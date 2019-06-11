@@ -2,6 +2,7 @@
 //= require owl.carousel
 //= require jquery_ujs
 //= require jquery.timeago
+//= require jquery.flip.min
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
 //= require bootstrap/modal

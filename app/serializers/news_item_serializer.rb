@@ -3,6 +3,7 @@ class NewsItemSerializer < ApplicationSerializer
   attribute :score
   attribute :image
   attribute :categories
+  attribute :category_objects
   attribute :original_url
   has_one :source, serializer: SourcePreviewSerializer
 
@@ -16,6 +17,12 @@ class NewsItemSerializer < ApplicationSerializer
 
   def categories
     object.categories.map(&:name)
+  end
+
+  def category_objects
+    object.categories.map { |c|
+      c.as_json.except('created_at', 'updated_at', 'keywords')
+    }
   end
 
   def score

@@ -21,6 +21,7 @@ $navbar-default-link-hover-bg: #f2f2f2
 // tablesorter
 // @import theme.bootstrap.min.css
 @import web/days
+@import web/post_module
 //@import "jquery.tablesorter/css/theme.default.scss"
 
 .navbar-default .navbar-brand
@@ -87,6 +88,7 @@ mark.hashtag
   background-color: initial
   hyphens: none
 
+$category-background: #666
 .panel-footer .categories
   display: block
   text-overflow: ellipsis
@@ -94,20 +96,17 @@ mark.hashtag
   overflow: hidden
   width: 100%
   white-space: nowrap
-
-$category-background: #666
-div.categories
   background: $category-background
   text-align: center
-.categories .label
-  padding-right: 0
-  padding-left: 5px
-  background: $category-background
-  font-size: 11px
-  i.fa
-    font-size: 10px
-    color: #bbb
-  color: #eee
+  .label
+    padding-right: 0
+    padding-left: 5px
+    background: $category-background
+    font-size: 11px
+    i.fa
+      font-size: 10px
+      color: #bbb
+    color: #eee
 
 .panel-title, p, .panel-body
   hyphens: auto
@@ -310,6 +309,79 @@ blockquote
     font-size: 25px
   a
     color: white
+
+.category-panel-heading
+  display: flex
+  justify-content: space-between
+
+.category-panel-body
+  height: 140px !important
+  margin-bottom: 5px
+
+.category-panel
+  transition: box-shadow .4s
+  .col-md-3
+    width: 23%
+  .col-sm-3
+    width: 23%
+  .col-xs-3
+    width: 23%
+
+.category-panel:hover
+  box-shadow: 0px 0px 2px 1px rgba(33,33,33,.2)
+
+.category-name
+  margin-top: 10.5px
+  color: #272e68
+
+.category-button
+  font-size: 30px
+  margin-bottom: 20px
+  background-color: #272e68
+
+.category-news-row
+  padding-bottom: 10px
+  margin-top: 5px
+
+.category-top-news
+  list-style-position: inside
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.category-list
+  list-style-type: none
+  padding-left: 0px
+  li
+    i 
+      padding-right: 10px
+
+.category-arrow
+  color: #3C4692
+
+.category-menu
+  h3
+    margin-top: 7px
+    padding-right: 10px
+  li
+    margin: 10px
+
+.category-headline
+  display: flex
+  justify-content: center
+  align-items: center
+  h2 
+    margin: 0px
+
+.category-headline-img 
+  margin-left: 15px
+
+.source-modal-btn
+  &:hover
+    color: black
+
+.source-modal-title
+  font-weight: bold
 
 .tag-wrapper 
   overflow: hidden

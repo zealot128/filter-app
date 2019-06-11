@@ -57,7 +57,8 @@ Baseapp::Application.routes.draw do
 
   get 'days' => redirect('/')
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
-  get 'categories' => 'static_pages#categories'
+
+  resources :categories, path: "kategorien", only: [:index, :show]
 
   get '/auth/:provider/callback', to: 'admin/twitter#create'
   get '_bsc' => 'bsc#show'

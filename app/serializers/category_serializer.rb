@@ -1,5 +1,5 @@
 class CategorySerializer < ApplicationSerializer
-  attributes :id, :name, :hash_tag
+  attributes :id, :name, :hash_tag, :slug
   attribute :logo
 
   def logo

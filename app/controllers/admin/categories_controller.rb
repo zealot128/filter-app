@@ -17,11 +17,11 @@ class Admin::CategoriesController < AdminController
   end
 
   def edit
-    @category = Category.find(params[:id])
+    @category = Category.find_by!(slug: params[:id])
   end
 
   def update
-    @category = Category.find(params[:id])
+    @category = Category.find_by!(slug: params[:id])
     if @category.update(params[:category].permit!)
       redirect_to [:admin, :categories], notice: 'Done!'
     else

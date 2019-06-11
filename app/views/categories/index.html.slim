@@ -1,0 +1,17 @@
+- content_for :content_header do
+  .content-header.hidden-xs
+    .container
+      .text-center
+        h2 Alle Kategorien auf HRfilter.de
+
+br
+br
+
+- @categories.each do |category|
+  .col-md-4.col-sm-6.col-xs-12
+    = render "category", category: category
+
+javascript:
+  $(document).ready(function() {
+    $('[data-toggle=tooltip]').tooltip()
+  });

@@ -28,7 +28,7 @@ describe Resources::NewsItems, type: :request do
 
     specify 'Category filter' do
       c1 = Fabricate(:category)
-      c2 = Fabricate(:category)
+      c2 = Fabricate(:category, name: "Bildung", keywords: "weiterbildung")
       n1 = Fabricate(:news_item, absolute_score: 10)
       n1.categories << c1
       n1.categories << c2
