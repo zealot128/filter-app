@@ -33,7 +33,7 @@
 
 class FeedSource < Source
   validates_uniqueness_of :url
-  validates :twitter_account, format: { with: %r{\A([a-zA-Z](_?[a-zA-Z0-9]+)*_?|_([a-zA-Z0-9]+_?)*)\z} }, if: :twitter_account?
+  validates :twitter_account, format: { with: /\A\w+\z/ }, if: :twitter_account?
 
   def should_fetch_stats?(ni)
     true
