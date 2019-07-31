@@ -20,6 +20,7 @@
   = f.input :language, as: :select, collection: ['german', 'english', 'other']
   = f.input :deactivated
   = f.input :default_category_id, as: :select, collection: Category.all
+  = f.input :ignore
 
   = f.submit class: 'btn btn-primary'
 

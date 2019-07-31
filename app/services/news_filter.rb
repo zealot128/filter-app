@@ -6,6 +6,7 @@ class NewsFilter
   attr_accessor :page
   attr_accessor :teaser_enabled
   attr_accessor :image_exists
+  attr_accessor :ignore
   attr_accessor :categories
   attr_accessor :order
 
@@ -56,6 +57,9 @@ class NewsFilter
     end
     if image_exists.present?
       @news_items = @news_items.where("image_file_name IS NOT NULL")
+    end
+    if ignore.present?
+      @news_items = @news_items.where(source_id: Source.not_ignored)
     end
     if @categories.present?
       @news_items = @news_items.where(%{news_items.id in (
