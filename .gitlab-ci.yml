@@ -23,7 +23,7 @@ bundle_audit:
   script: |
     gem install bundler-audit
     bundle-audit update
-    bundle-audit check
+    bundle-audit check -i CVE-2015-9284
 
 deploy:
   image: registry.pludoni.com/administrators/docker-images/deploy:v6

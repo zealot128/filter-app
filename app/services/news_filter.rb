@@ -59,7 +59,7 @@ class NewsFilter
       @news_items = @news_items.where("image_file_name IS NOT NULL")
     end
     if ignore.present?
-      @news_items = @news_items.where(source_id: Source.ignore)
+      @news_items = @news_items.where(source_id: Source.not_ignored)
     end
     if @categories.present?
       @news_items = @news_items.where(%{news_items.id in (

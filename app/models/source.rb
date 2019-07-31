@@ -44,7 +44,7 @@ class Source < ApplicationRecord
     Source::DownloadThumbWorker.perform_async(id)
   end
   scope :visible, -> { where(deactivated: false) }
-  scope :ignore, -> { where(ignore: false) }
+  scope :not_ignored, -> { where(ignore: false) }
   scope :lsr_allowed, -> { where(lsr_active: false) }
   scope :antiquated, -> {
     where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 12.months.ago).
