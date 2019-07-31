@@ -29,6 +29,7 @@
 #  filter_rules                  :text
 #  statistics                    :json
 #  error_message                 :text
+#  ignore                        :boolean         default(FALSE)
 #
 
 require "download_url"
