@@ -12,13 +12,13 @@ class CategoriesController < ApplicationController
       joins(:source).
       where(sources: { type: 'FeedSource' }).
       includes(:source).
-      paginate(page: page, per_page: 8)
+      paginate(page: page, per_page: 12)
 
     @news_items = case params[:sort]
                   when 'recent'
                     sql.show_page
                   else # best
-                    sql.top_percent_per_week(3.months.ago, 0.35, 50)
+                    sql.top_percent_per_week(6.months.ago, 0.35, 50)
                   end
 
     @title = "Alle News zum Thema #{@category.name}"
