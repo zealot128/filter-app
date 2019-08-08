@@ -64,5 +64,6 @@ Baseapp::Application.routes.draw do
   get '_bsc' => 'bsc#show'
   mount API => '/api/v1'
   mount Sidekiq::Web => '/rails/sidekiq'
+  mount Ahoy::Engine => "/stellenanzeigen"
   root to: "days#index"
 end
