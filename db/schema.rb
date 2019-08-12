@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_102053) do
+ActiveRecord::Schema.define(version: 2019_08_12_115951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -88,6 +88,17 @@ ActiveRecord::Schema.define(version: 2019_07_31_102053) do
     t.integer "category_id"
     t.integer "news_item_id"
     t.index ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
   create_table "impressions", id: :serial, force: :cascade do |t|
@@ -243,7 +254,6 @@ ActiveRecord::Schema.define(version: 2019_07_31_102053) do
     t.text "filter_rules"
     t.json "statistics"
     t.text "error_message"
-    t.boolean "ignore", default: false
     t.index ["type"], name: "index_sources_on_type"
   end
 
