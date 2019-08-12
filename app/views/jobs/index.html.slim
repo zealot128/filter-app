@@ -3,7 +3,7 @@
     .item
       .panel.panel-default.job-panel
         .panel-heading
-          a.panel-title(target="_blank" href=(job["url"]))
+          a.panel-title(target="_blank" href=(job["url"]) data-container="body" data-toggle="tooltip" data-placement="top" title=job["title"])
             strong = job["title"]
         .background-frame
           img.job-img(src=(job["company_logo_big"]))
@@ -40,6 +40,10 @@
 
 javascript:
   $( document ).ready(function() {
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
     var currentItem = 2;
     var owl = $('.owl-carousel')
     owl.owlCarousel({

@@ -6,6 +6,10 @@
       - if category.logo.attached?
         = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
   .panel-body.category-panel-body
+    strong #{category.sources.count} Quellen mit 
+      #{category.news_items.count} News in dieser Kategorie
+    br
+    br
     .category-news-row
       strong Die letzten Top-News:
     div
@@ -14,3 +18,4 @@
           li.category-top-news(title=news_item.title data-toggle='tooltip' data-container='body')
             i.fa.fa-fw.fa-arrow-right.category-arrow
             = news_item.title
+
