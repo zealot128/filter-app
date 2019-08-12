@@ -19,7 +19,6 @@ class SourcesGrid < BaseGrid
   filter(:error, :xboolean)
   filter(:created_at, :date, range: true)
   filter(:type, :enum, select: -> { Source.pluck('distinct(type)') }, checkboxes: true)
-  filter(:ignore, :xboolean)
 
   column(:id)
   column(:name) do |f|
@@ -34,7 +33,6 @@ class SourcesGrid < BaseGrid
       ""
     end
   end
-  column(:ignore, header: "Ignoriert?")
   column(:recent, 'statistics->\'current_news_count\'', header: "News Aktuell", order: '(statistics->>\'current_news_count\')::int')
   column(:total, 'statistics->\'total_news_count\'', header: "News Ingesamt", order: '(statistics->>\'total_news_count\')::int')
   date_column(:last_posting, '(select max(published_at) from news_items where news_items.source_id = sources.id)', order: 'last_posting')
