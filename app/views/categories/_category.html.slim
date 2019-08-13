@@ -6,8 +6,9 @@
       - if category.logo.attached?
         = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
   .panel-body.category-panel-body
-    strong #{category.sources.count} Quellen mit 
-      #{category.news_items.count} News in dieser Kategorie
+    strong 
+      = "#{category.sources.count} Quellen mit " 
+      = "#{category.news_items.count} News in dieser Kategorie"
     br
     br
     .category-news-row
