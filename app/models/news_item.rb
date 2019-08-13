@@ -66,6 +66,7 @@ class NewsItem < ApplicationRecord
   scope :home_page, -> { where('news_items.value > 0').visible.order("news_items.value desc").where("news_items.value is not null").current }
   scope :sorted, -> { visible.order("news_items.absolute_score desc") }
   scope :recent, -> { where("published_at > ?", max_age.ago) }
+  scope :in_last_months, -> (max_months) { where("published_at > ?", max_months) }
   scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
   scope :top_percent_per_day, ->(min_date, percentile, min_news_per_day) {

@@ -8,7 +8,7 @@
   .panel-body.category-panel-body
     strong 
       = "#{category.sources.count} Quellen mit " 
-      = "#{category.news_items.count} News in dieser Kategorie"
+      = "#{category.news_items.in_last_months(6.months.ago).count} in den letzten 6 Monaten"
     br
     br
     .category-news-row
@@ -19,4 +19,3 @@
           li.category-top-news(title=news_item.title data-toggle='tooltip' data-container='body')
             i.fa.fa-fw.fa-arrow-right.category-arrow
             = news_item.title
-
