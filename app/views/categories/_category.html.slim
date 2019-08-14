@@ -7,7 +7,7 @@
         = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
   .panel-body.category-panel-body
     strong
-      = t('categories.category.sources', count: category.sources.count, news_count: category.news_items.after(6.months.ago).count)
+      = t('categories.category.sources', count: category.sources.distinct.count, news_count: category.news_items.after(6.months.ago).count)
     br
     br
     .category-news-row
