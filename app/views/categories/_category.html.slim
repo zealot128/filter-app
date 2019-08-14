@@ -6,8 +6,12 @@
       - if category.logo.attached?
         = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
   .panel-body.category-panel-body
+    strong
+      = t('categories.category.sources', count: category.sources.count, news_count: category.news_items.after(6.months.ago).count)
+    br
+    br
     .category-news-row
-      strong Die letzten Top-News:
+      strong = t('categories.category.last_news')
     div
       - category.news_items.show_page.first(3).each do |news_item|
         ul.category-list

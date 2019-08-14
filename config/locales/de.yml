@@ -10,3 +10,10 @@ de:
       TwitterSource: 'Twitter'
       FacebookSource: 'Facebook'
 
+  categories:
+    category:
+      last_news: "Die letzten Top-News:"
+      sources:
+        one: "1 Quelle mit %{news_count} News in den letzten 6 Monaten"
+        other: "%{count} Quellen mit %{news_count} News in den letzten 6 Monaten"
+
