@@ -1,5 +1,5 @@
 class AppController < ApplicationController
   def index
-    @title = "HRfilter-App auf Ihrem Smartphone"
+    @title = "#{Setting.site_name}-App auf Ihrem Smartphone"
   end
 end
