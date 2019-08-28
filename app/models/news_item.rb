@@ -3,19 +3,19 @@
 # Table name: news_items
 #
 #  id                          :integer          not null, primary key
-#  title                       :string(255)
+#  title                       :string
 #  teaser                      :text
-#  url                         :string(255)
+#  url                         :string
 #  source_id                   :integer
 #  published_at                :datetime
 #  value                       :integer
 #  fb_likes                    :integer
 #  retweets                    :integer
-#  guid                        :string(255)
+#  guid                        :string
 #  linkedin                    :integer
 #  xing                        :integer
-#  created_at                  :datetime         not null
-#  updated_at                  :datetime         not null
+#  created_at                  :datetime
+#  updated_at                  :datetime
 #  gplus                       :integer
 #  full_text                   :text
 #  word_length                 :integer
@@ -35,6 +35,16 @@
 #  youtube_likes               :integer          default(0)
 #  youtube_views               :integer          default(0)
 #  category_order              :integer          is an Array
+#
+# Indexes
+#
+#  index_news_items_on_absolute_score                   (absolute_score)
+#  index_news_items_on_absolute_score_and_published_at  (absolute_score,published_at)
+#  index_news_items_on_guid                             (guid)
+#  index_news_items_on_published_at                     (published_at)
+#  index_news_items_on_search_vector                    (search_vector) USING gin
+#  index_news_items_on_source_id                        (source_id)
+#  index_news_items_on_value                            (value)
 #
 
 require "fetcher"

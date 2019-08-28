@@ -20,6 +20,10 @@
 #  deleted_at      :datetime
 #  status          :integer          default("unconfirmed")
 #
+# Indexes
+#
+#  index_mail_subscriptions_on_token  (token) UNIQUE
+#
 
 class MailSubscription < ApplicationRecord
   has_many :histories, class_name: "MailSubscription::History", dependent: :destroy

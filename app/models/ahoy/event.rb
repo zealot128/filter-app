@@ -8,6 +8,12 @@
 #  properties :jsonb
 #  time       :datetime
 #
+# Indexes
+#
+#  index_ahoy_events_on_name_and_time              (name,time)
+#  index_ahoy_events_on_properties_jsonb_path_ops  (properties) USING gin
+#  index_ahoy_events_on_visit_id                   (visit_id)
+#
 
 class Ahoy::Event < ApplicationRecord
   include Ahoy::QueryMethods

@@ -6,6 +6,10 @@
 #  key   :string
 #  value :text
 #
+# Indexes
+#
+#  index_settings_on_key  (key) UNIQUE
+#
 
 class Setting < ActiveRecord::Base
   GROUPS = {

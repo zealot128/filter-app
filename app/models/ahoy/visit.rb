@@ -26,6 +26,10 @@
 #  coworkr_code         :string
 #  synced               :boolean          default(FALSE)
 #
+# Indexes
+#
+#  index_ahoy_visits_on_visit_token  (visit_token) UNIQUE
+#
 
 class Ahoy::Visit < ApplicationRecord
   self.table_name = "ahoy_visits"

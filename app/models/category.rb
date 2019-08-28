@@ -3,11 +3,16 @@
 # Table name: categories
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :string
 #  keywords   :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #  hash_tag   :string
+#  slug       :string
+#
+# Indexes
+#
+#  index_categories_on_slug  (slug) UNIQUE
 #
 
 class Category < ActiveRecord::Base

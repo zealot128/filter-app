@@ -11,6 +11,14 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
+# Indexes
+#
+#  index_mail_subscription_histories_on_mail_subscription_id  (mail_subscription_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (mail_subscription_id => mail_subscriptions.id)
+#
 
 class MailSubscription::History < ApplicationRecord
   belongs_to :mail_subscription
