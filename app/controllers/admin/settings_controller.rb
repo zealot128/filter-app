@@ -1,4 +1,5 @@
 class Admin::SettingsController < AdminController
+  load_and_authorize_resource
   def index
     @settings = Setting.all
   end

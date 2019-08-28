@@ -1,4 +1,5 @@
 Baseapp::Application.routes.draw do
+  devise_for :users
   resources :sources
   get "impressum", to: "static_pages#impressum"
   get "datenschutz", to: "static_pages#datenschutz"

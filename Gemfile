@@ -28,6 +28,9 @@ gem 'parallel'
 
 gem "impressionist", '~> 1.6.1'
 gem "ahoy_matey", "~> 2.1"
+gem 'devise'
+gem 'cancancan'
+# gem 'devise-i18n'
 
 gem 'airbrake-ruby', '~> 2.4.0', require: false
 gem 'airbrake', '~> 7.0.0', require: false
@@ -90,6 +93,7 @@ group :test do
 end
 
 group :development do
+  gem 'annotate'
   gem "habtm_generator"
   gem "listen"
 end

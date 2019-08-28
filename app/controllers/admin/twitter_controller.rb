@@ -1,4 +1,6 @@
 class Admin::TwitterController < AdminController
+  authorize_resource class: false
+
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def index

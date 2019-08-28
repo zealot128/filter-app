@@ -34,7 +34,7 @@ module Baseapp
       g.test_framework = :rspec
       g.helper false
       g.view_specs false
-      g.form_builder :simple_form
+      # g.form_builder :simple_form
     end
   end
 end

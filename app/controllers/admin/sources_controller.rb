@@ -1,4 +1,6 @@
 class Admin::SourcesController < AdminController
+  load_and_authorize_resource
+
   def dashboard
   end
 

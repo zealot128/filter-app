@@ -45,7 +45,7 @@ class Source < ApplicationRecord
   scope :visible, -> { where(deactivated: false) }
   scope :lsr_allowed, -> { where(lsr_active: false) }
   scope :antiquated, -> {
-    where('(select max(published_at) from news_items where news_items.source_id = sources.id) < ?', 12.months.ago).
+    where(id: NewsItem.group(:source_id).having('max(published_at) < ?', 12.months.ago).select('source_id')).
       where.not(deactivated: true).
       where.not(error: true)
   }

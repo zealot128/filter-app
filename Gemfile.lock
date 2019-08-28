@@ -101,6 +101,9 @@ GEM
       airbrake-ruby (~> 2.4)
     airbrake-ruby (2.4.2)
     angularjs-rails (1.2.18)
+    annotate (2.7.5)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 13.0)
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -128,6 +131,7 @@ GEM
     browser (2.5.3)
     buftok (0.2.0)
     builder (3.2.3)
+    cancancan (3.0.1)
     capybara (3.12.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -168,6 +172,12 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     device_detector (1.0.1)
+    devise (4.7.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
     dnsruby (1.61.2)
       addressable (~> 2.5)
@@ -377,6 +387,7 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     open_uri_redirections (0.2.1)
+    orm_adapter (0.5.0)
     os (1.0.0)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
@@ -472,6 +483,9 @@ GEM
     regexp_parser (1.3.0)
     request_store (1.4.1)
       rack (>= 1.4)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     rinku (2.0.4)
     rly (0.2.3)
     rspec-core (3.8.0)
@@ -606,6 +620,8 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     voight_kampff (1.1.3)
       rack (>= 1.4, < 3.0)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -631,14 +647,17 @@ DEPENDENCIES
   airbrake (~> 7.0.0)
   airbrake-ruby (~> 2.4.0)
   angularjs-rails (= 1.2.18)
+  annotate
   babel-transpiler
   bcrypt-ruby
   bootsnap
   bootstrap-sass (~> 3.1)
   bootswatch-rails
   browser
+  cancancan
   coffee-rails
   datagrid
+  devise
   email_verifier!
   exception_notification
   excon
