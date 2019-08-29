@@ -35,10 +35,12 @@ SimpleNavigation::Configuration.run do |navigation|
           divider.call(sub_nav)
           sub_nav.item :key_2_3, 'Abonnenten', admin_mail_subscriptions_path
         end
+        divider.call(sub_nav)
         if can?(:manage, User)
-          divider.call(sub_nav)
           sub_nav.item :key_2_4, 'Admins', admin_users_path
         end
+        sub_nav.item :key_2_4, 'Login anpassen', edit_admin_user_path(current_user.id)
+        sub_nav.item :key_2_5, 'Logout', destroy_user_session_path, method: :delete
       end
     end
   end

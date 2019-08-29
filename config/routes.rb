@@ -19,6 +19,7 @@ Baseapp::Application.routes.draw do
       post :confirm, on: :member
     end
     resources :settings
+    resources :users
     get 'twitter' => 'twitter#index'
     post 'twitter/follow' => 'twitter#follow'
   end
