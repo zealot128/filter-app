@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 6.0.0"
 gem 'babel-transpiler'
 gem "pg"
 gem "mail_form"
@@ -35,7 +35,6 @@ gem 'cancancan'
 gem 'airbrake-ruby', '~> 2.4.0', require: false
 gem 'airbrake', '~> 7.0.0', require: false
 gem "sentry-raven", require: false
-gem "exception_notification", require: false
 
 gem "paperclip"
 gem "paperclip-optimizer"

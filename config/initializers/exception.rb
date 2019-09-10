@@ -37,17 +37,7 @@ elsif ENV['SENTRY_DSN']
   end
 
 elsif Rails.env.production?
-  require 'exception_notification'
-  Baseapp::Application.config.middleware.use ExceptionNotification::Rack,
-                                             email: {
-                                               email_prefix: "[#{Setting.get('short_name')}] ",
-                                               sender_address: %{"notifier" <#{Setting.get('from')}>},
-                                               exception_recipients: [Setting.get('email')],
-                                               ignore_exceptions: ['ActionController::BadRequest'] + ExceptionNotifier.ignored_exceptions + ignore_default_exceptions,
-                                               ignore_crawlers: true
-                                             }
   def NOTIFY_EXCEPTION(*args)
-    ExceptionNotifier.notify_exception(e)
   end
 end
 

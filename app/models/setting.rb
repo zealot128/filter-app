@@ -54,8 +54,8 @@ class Setting < ActiveRecord::Base
     ]
   }.freeze
 
-
   serialize :value, JSON
+
   class << self
     def get(name, force: false)
       keys = [name]
