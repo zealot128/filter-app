@@ -11,7 +11,7 @@ module BaseApi
         'attribute' => e.param
       }.to_json, e.status)
     end
-    rescue_from ArgumentError, NotImplementedError
+    # rescue_from ArgumentError, NotImplementedError do
     rescue_from :all do |e|
       if Rails.env.test?
         raise e

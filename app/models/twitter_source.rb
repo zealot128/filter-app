@@ -53,7 +53,7 @@ class TwitterSource < Source
 
   def download_thumb
     path = user.profile_image_url.to_s
-    update_attributes logo: download_url(path)
+    update logo: download_url(path)
   end
 
   def remote_url

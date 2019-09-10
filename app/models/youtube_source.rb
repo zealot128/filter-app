@@ -38,7 +38,7 @@ class YoutubeSource < Source
     doc = Nokogiri.parse(open(url))
     img = doc.at('img.channel-header-profile-image')
     return if img.blank? or img['src'].blank?
-    update_attributes logo: download_url(img['src'])
+    update logo: download_url(img['src'])
   end
 
   def refresh

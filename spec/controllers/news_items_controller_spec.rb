@@ -5,7 +5,7 @@ describe NewsItemsController do
     ni = Fabricate(:news_item)
     get :show, params: { id: ni.id }
     expect(response.location).to be == ni.url
-    expect(Impression.count).to be == 1
+    expect(Ahoy::Event.count).to be == 1
   end
 
   describe 'Old API: #homepage' do

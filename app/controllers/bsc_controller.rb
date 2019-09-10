@@ -13,18 +13,6 @@ class BscController < ApplicationController
     subscriptions = MailSubscription.order('created_at desc')
     render json: {
       metrics: {
-        "Klicks" => {
-          clicks_total: {
-            determinable_for_past: true,
-            title: "Klicks auf alle Beiträge im Kalenderjahr",
-            value: Impression.where('created_at between ? and ?', from, to).count
-          },
-          clicks_pludoni: {
-            determinable_for_past: true,
-            title: "Klicks auf pludoni Quellen",
-            value: Impression.where('created_at between ? and ?', from, to).where(impressionable_id: NewsItem.where(source_id: our_sources).select('id')).count
-          }
-        },
         "Beiträge" => {
           news_items_total: {
             title: "Newsbeiträge im Kalenderjahr",

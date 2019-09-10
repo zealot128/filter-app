@@ -26,7 +26,6 @@ gem "open_uri_redirections"
 gem "angularjs-rails", "1.2.18"
 gem 'parallel'
 
-gem "impressionist", '~> 1.6.1'
 gem "ahoy_matey", "~> 2.1"
 gem 'devise'
 gem 'cancancan'
@@ -85,7 +84,7 @@ group :test do
   gem 'rails-controller-testing'
   gem "timecop"
   gem 'pludoni_rspec'
-  gem "rspec-rails", ">= 3.1"
+  gem "rspec-rails", ">= 4.0.0.beta2"
   gem "vcr"
   gem "webmock"
   gem "fabrication"

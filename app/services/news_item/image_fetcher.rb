@@ -13,7 +13,7 @@ class NewsItem::ImageFetcher
       url = image['content'] || image['href']
       begin
         image = download_url(url)
-        news_item.update_attributes image: image
+        news_item.update image: image
       rescue SocketError, StandardError => e
         Rails.logger.error "OG image download fehlgeschlagen #{url} #{e.inspect}"
       end

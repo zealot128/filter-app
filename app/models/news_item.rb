@@ -53,8 +53,6 @@ class NewsItem < ApplicationRecord
   # half life of items is 12.5 hours; all items within the same batch get the same base time score
   HALF_LIFE = 45_000
 
-  is_impressionable counter_cache: true, column_name: :impression_count, unique: :session_hash
-
   def self.max_age
     Setting.max_age.to_i.days
   end
@@ -80,7 +78,7 @@ class NewsItem < ApplicationRecord
   scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
   scope :top_percent_per_day, ->(min_date, percentile, min_news_per_day) {
-    NewsItem.where(
+    where(
       %{ news_items.id in (
           SELECT id from (
             SELECT count(*) over(PARTITION BY published_at::date ) AS total_count,
@@ -98,7 +96,7 @@ class NewsItem < ApplicationRecord
   }
 
   scope :top_percent_per_week, ->(min_date, percentile, min_news_per_day) {
-    NewsItem.where(
+    where(
       %{ news_items.id in (
           SELECT id from (
             SELECT count(*) over(PARTITION BY to_char(published_at, 'IW/IYYY') ) AS total_count,
@@ -115,7 +113,7 @@ class NewsItem < ApplicationRecord
     )
   }
   scope :top_percent_per_month, ->(min_date, percentile, min_news_per_day) {
-    NewsItem.where(
+    where(
       %{ news_items.id in (
           SELECT id from (
             SELECT count(*) over(PARTITION BY to_char(published_at, 'MM/YYYY') ) AS total_count,
@@ -163,7 +161,7 @@ class NewsItem < ApplicationRecord
     }
   do_not_validate_attachment_file_type :image
 
-  include PgSearch
+  include PgSearch::Model
   pg_search_scope :search_full_text,
     order_within_rank: "news_items.published_at DESC",
     against: :search_vector,

@@ -62,7 +62,7 @@ describe 'MailSubscriptionsController' do
         tracking_url = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.first.html_part.decoded).search('img').last['src']
         get tracking_url
         expect(response).to be_successful
-        expect(response.content_type).to be == 'image/png'
+        expect(response.media_type).to be == 'image/png'
         expect(MailSubscription::History.opened.count).to be == 1
 
         # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
