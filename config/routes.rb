@@ -1,4 +1,4 @@
-Baseapp::Application.routes.draw do
+Rails.application.routes.draw do
   devise_for :users
   resources :sources
   get "impressum", to: "static_pages#impressum"
