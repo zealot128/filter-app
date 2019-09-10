@@ -19,6 +19,7 @@
 #  extended_member :boolean          default(FALSE)
 #  deleted_at      :datetime
 #  status          :integer          default("unconfirmed")
+#  remembered_at   :datetime
 #
 # Indexes
 #
@@ -40,6 +41,7 @@ class MailSubscription < ApplicationRecord
     self.token = SecureRandom.hex(32)
   end
   scope :deleted, -> { where 'deleted_at is not null' }
+  scope :inactive_for, -> { where('last_send_date > ?', (Setting.inactive_months.to_i).months) }
 
   validates :privacy, acceptance: true
 

@@ -38,3 +38,18 @@ Fabricator(:admin, from: :user) do
   role 'admin'
   email 'admin@filter.de'
 end
+
+Fabricator(:mail_subscription) do
+  gender 'male'
+  interval 'weekly'
+  categories {
+    [Fabricate(:category).id]
+  }
+  extended_member true
+  email 'info@example.com'
+  status 'confirmed'
+  first_name 'John'
+  last_name 'M'
+  company 'FOOBAR'
+  limit 50
+end

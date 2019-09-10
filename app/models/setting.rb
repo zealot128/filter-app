@@ -32,6 +32,7 @@ class Setting < ActiveRecord::Base
       :mail_intro,
       :mail_impressum,
       :from,
+      :inactive_months,
     ],
     texte: [
       :credits,
