@@ -1,0 +1,49 @@
+- @title = "FAQ"
+
+h1 FAQ
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Was ist #{Setting.short_name}
+  .panel-body
+    == Setting.explanation
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Wie funktioniert das Ranking?
+  .panel-body
+    p Regelmäßig wird überprüft, wie oft der Beitrag im Social-Media geteilt wurde. Außerdem hat jede Quelle einen Standard-Bias der auf der Anzahl der veröffentlichten News basiert (Quellen mit sehr vielen Publikationen oder sehr großer Reichweite erhalten einen Malus, vertrauenswürdige fokussierte Blogs einen Bonus)
+    pre
+      |Punkte = Bias<br/> + 3.0 * s(Xing)<br/> + 2.0 * s(Linkedin)<br/> + 1.0 * s(TwitterRetweets)<br/> + 1.0 * s(RedditUpvotes)<br/> + 0.5 * s(FacebookLikes)<br/> + 1.0 * s(GooglePlus)<br/> + AnzahlWorte^0.3<br/> + 0.2 * s(ClicksAufHrfilter)<br/> + 2.0 * s(VerlinkungenVonAnderenQuellenAufHrFilter)
+    p Wobei <code>s(x)</code> eine Smoothing-Funktion ist, um Ausreißer nach oben auszugleichen:
+    pre
+      |s(x) = log((x + 1) * 2)^2.2 - 1
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Wie ermittelst du die Like/Share Zahlen aus den sozialen Netzwerken?
+  .panel-body
+    p Bei Facebook, Linkedin, Reddit, und XING werden die entsprechenden Widgets befragt, die die Anzahl der Likes zu einer URL ausgeben.
+    p Bei Twitter wird die API zu Rate gezogen, in der nach der URL des Artikels gesucht wird und die resultierende Anzahl an Ergebnissen gezählt. Andere Methoden der Zählung wurden von Twitter in 2015 eingestellt.
+
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Eine Quelle fehlt, wie kann ich diese aufnehmen lassen?
+  .panel-body
+    |Nutzen Sie dazu dieses kurze <a href='https://#{Setting.host}/quelle_einreichen'>Formular</a> oder schreiben Sie uns eine #{mail_to Setting.email, "eMail", subject: "#{Setting.short_name}: Neue Quelle"}.
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Ist das transparent?
+  .panel-body
+    |Der Quelltext von #{Setting.name} ist auf Github verfügbar:
+    a(href="https://github.com/zealot128/filter-app")
+      i.fa.fa-fw.fa-github<>
+      |zealot128/filter-app
+
+.panel.panel-primary
+  .panel-heading
+    h3.panel-title Wer steckt dahinter?
+  .panel-body
+    == Setting.credits

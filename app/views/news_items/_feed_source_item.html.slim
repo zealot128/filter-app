@@ -2,24 +2,24 @@
 - background = feed_source_item.image
 .panel.panel-default
   .panel-heading
-    %h3.panel-title
+    h3.panel-title
       = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item) } do
         = truncate(feed_source_item.title, length: length)
-  .panel-body{class: background.present? ? 'with-background' : ''}
+  .panel-body(class=(background.present? ? 'with-background' : ''))
     - if background.present?
       .background-frame
-        %img.background{src: background.url }
+        img.background(src=(background.url))
     .background-text
-      %p.source
+      p.source
         = render "news_items/source", source: feed_source_item.source, size: '16x16'
-        %br
-        %span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
+        br
+        span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
           = l feed_source_item.published_at, format: :short
 
       - unless feed_source_item.source.lsr_active?
         = feed_source_item.teaser
 
   .panel-footer
-    %small.categories
+    small.categories
       = feed_source_item.categories.map(&:name).to_sentence
     = render 'news_items/share', item: feed_source_item

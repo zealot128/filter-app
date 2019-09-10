@@ -15,7 +15,13 @@ class Resources::NewsItems < Grape::API
     end
     get '/' do
       filter = NewsFilter.new(
-        preferred: params[:preferred], blacklisted: params[:blacklisted], teaser_enabled: params[:teaser_enabled], image_exists: params[:image_exists], per_page: params[:limit],         page: params[:page], categories: params[:categories],
+        preferred: params[:preferred],
+        blacklisted: params[:blacklisted],
+        teaser_enabled: params[:teaser_enabled],
+        image_exists: params[:image_exists],
+        per_page: params[:limit],
+        page: params[:page],
+        categories: params[:categories],
         order: params[:order]
       )
       @news_items = filter.news_items

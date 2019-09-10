@@ -33,25 +33,7 @@
     h3 Top-News der letzten Tage
 
 - @days.each do |day, total_count, news|
-  .day-row
-    h3.day-title.js-follow-me
-      = link_to day_path(day) do
-        - if day == Date.today
-          |Heute
-        - else
-          = l day, format: '%A, %d. %b'
-    .container
-      - if not news.any?
-        p Keine News an diesem Tag.
-      - if news.any?
-        .clearfix
-          .row.js-grid
-            - news.each do |item|
-              .col-lg-3.col-sm-6.js-grid-item data-item=(item.to_data.to_json)
-                = render item
-          .pull-right
-            = link_to day_path(day), class: 'btn btn-default' do
-              |Alle News dieses Tages (#{total_count})
+  = render "day", day: day, total_count: total_count, news: news
 
 .container
   .clearfix

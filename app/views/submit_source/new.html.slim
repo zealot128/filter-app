@@ -1,6 +1,6 @@
-%h1 Quelle einreichen
+h1 Quelle einreichen
 
-%p Fehlt eine Quelle? Dann nehmen wir diese gerne auf.
+p Fehlt eine Quelle? Dann nehmen wir diese gerne auf.
 
 = simple_form_for @submit_source, url: '', :html => {:class => 'form-horizontal' } do |f|
   = f.input :url, :required => true, label: 'URL zum RSS- oder Atom-Feed', hint: 'Bitte geben Sie hier die URL zu dem XML-Feed mit allen News Ihrer Quelle an. Ohne einen solchen Feed ist eine automatisierte Indizierung nicht möglich. In der Regel bieten alle Content-Management-Systeme eine solche Funktion an.'
@@ -10,4 +10,5 @@
   .form-actions
     = f.button :submit, 'Absenden', :class=> "btn btn-primary"
 
-%p
+br
+br

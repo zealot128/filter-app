@@ -2,27 +2,26 @@
   .panel-heading
     .pull-right
       = link_to twitter_source_item.url, data: { proxy: click_proxy_path(twitter_source_item) } do
-        %i.fa.fa-twitter.fa-lg
-    %span.source
+        i.fa.fa-twitter.fa-lg
+    span.source
       - if twitter_source_item.source.logo.exists?
         = image_tag twitter_source_item.source.logo.url(:small), size: '30x30'
-      %a{title: twitter_source_item.source.name, href: source_path(twitter_source_item.source), style: 'display: inline-block'}
-        %span.truncate.twitter-name= truncate twitter_source_item.source.name, length: 50
-        %br
-        %small.twitter-username= "@" + twitter_source_item.source.user_name
+      a(title=(twitter_source_item.source.name) href=(source_path(twitter_source_item.source)) style='display: inline-block')
+        span.truncate.twitter-name= truncate twitter_source_item.source.name, length: 50
+        br
+        small.twitter-username= "@" + twitter_source_item.source.user_name
 
   .panel-body
     .twitter-tweet
       = hashtags(auto_link(twitter_source_item.title.html_safe, link: :all, html: { target: "_blank", rel: "nofollow"})).html_safe
 
     = link_to twitter_source_item.url, data: { proxy: click_proxy_path(twitter_source_item) } do
-      //nicht sicher, auch kein - gesetzt
-      %br
-      %span.date(data-time="#{twitter_source_item.published_at.to_i}" title="#{l twitter_source_item.published_at}")
+      br
+      span.date(data-time="#{twitter_source_item.published_at.to_i}" title="#{l twitter_source_item.published_at}")
         = l twitter_source_item.published_at, format: :short
 
 
   .panel-footer
-    %small.categories
+    small.categories
       = twitter_source_item.categories.pluck(:name).to_sentence
     = render 'news_items/share', item: twitter_source_item
