@@ -1,4 +1,4 @@
-.panel.panel-default.panel-twitter
+.panel.panel-default.panel-twitter.news-item-panel
   .panel-heading
     .pull-right
       = link_to twitter_source_item.url, data: { proxy: click_proxy_path(twitter_source_item) } do
@@ -22,6 +22,4 @@
 
 
   .panel-footer
-    small.categories
-      = twitter_source_item.categories.pluck(:name).to_sentence
     = render 'news_items/share', item: twitter_source_item

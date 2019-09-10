@@ -1,7 +1,7 @@
 - feed_source_item = reddit_source_item
 - length ||= 60
 - background = feed_source_item.image
-.panel.panel-default
+.panel.panel-default.news-item-panel
   .panel-heading
     h3.panel-title
       .pull-right
@@ -24,6 +24,4 @@
     .fog-fade
 
   .panel-footer
-    small.categories
-      = feed_source_item.categories.map(&:name).to_sentence
     = render 'news_items/share', item: feed_source_item

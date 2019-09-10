@@ -88,25 +88,49 @@ mark.hashtag
   background-color: initial
   hyphens: none
 
-$category-background: #666
-.panel-footer .categories
-  display: block
-  text-overflow: ellipsis
-  height: 1.5em
-  overflow: hidden
-  width: 100%
-  white-space: nowrap
-  background: $category-background
-  text-align: center
-  .label
-    padding-right: 0
-    padding-left: 5px
+$category-background: lighten(#666, 10%)
+
+.news-item-grid
+  display: grid
+  grid-template-columns: repeat(auto-fill, 220px)
+  grid-gap: 1rem
+  justify-content: space-between
+  &:after
+    content: ""
+    flex: auto
+  .news-item-panel
+    width: 220px
+    display: flex
+    position: relative
+    flex-direction: column
+    .panel-body
+      flex-grow: 2
+  .fog-fade
+    bottom: 0
+    top: inherit
+
+
+.news-item-panel
+  .panel-footer
+    padding: 0
+  .panel-footer .categories
+    display: block
+    text-overflow: ellipsis
+    height: 1.5em
+    overflow: hidden
+    width: 100%
+    white-space: nowrap
     background: $category-background
-    font-size: 11px
-    i.fa
-      font-size: 10px
-      color: #bbb
-    color: #eee
+    text-align: center
+    .label
+      padding-right: 0
+      padding-left: 5px
+      background: $category-background
+      font-size: 11px
+      i.fa
+        font-size: 10px
+        color: #bbb
+      color: #eee
 
 .panel-title, p, .panel-body
   hyphens: auto
@@ -353,7 +377,7 @@ blockquote
   list-style-type: none
   padding-left: 0px
   li
-    i 
+    i
       padding-right: 10px
 
 .category-arrow
@@ -370,10 +394,10 @@ blockquote
   display: flex
   justify-content: center
   align-items: center
-  h2 
+  h2
     margin: 0px
 
-.category-headline-img 
+.category-headline-img
   margin-left: 15px
 
 .source-modal-btn
@@ -383,7 +407,7 @@ blockquote
 .source-modal-title
   font-weight: bold
 
-.tag-wrapper 
+.tag-wrapper
   overflow: hidden
   height: 62px
 

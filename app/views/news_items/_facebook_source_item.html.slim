@@ -1,6 +1,6 @@
 - length ||= 60
 - background = facebook_source_item.image
-.panel.panel-default
+.panel.panel-default.news-item-panel
   .panel-heading
     h3.panel-title
       .pull-right
@@ -23,6 +23,4 @@
     .fog-fade
 
   .panel-footer
-    small.categories
-      = facebook_source_item.categories.map(&:name).to_sentence
     = render 'news_items/share', item: facebook_source_item

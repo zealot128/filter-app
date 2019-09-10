@@ -1,6 +1,6 @@
 - feed_source_item = podcast_source_item
 - background = feed_source_item.image
-.panel.panel-default
+.panel.panel-default.news-item-panel
   .panel-heading
     h3.panel-title
       .pull-right
@@ -22,6 +22,4 @@
         = feed_source_item.teaser
     .fog-fade
   .panel-footer
-    small.categories
-      = feed_source_item.categories.pluck(:name).to_sentence
     = render "news_items/share", item: feed_source_item

@@ -1,6 +1,6 @@
 - feed_source_item = youtube_source_item
 - background = feed_source_item.image
-.panel.panel-default.youtube-item
+.panel.panel-default.youtube-item.news-item-panel
   = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item)} do
     .panel-body(class=(background.present? ? 'with-background' : ''))
       - if background.present?
@@ -23,6 +23,4 @@
               = feed_source_item.teaser
       .fog-fade
   .panel-footer
-    small.categories
-      = feed_source_item.categories.pluck(:name).to_sentence
     = render "news_items/share", item: feed_source_item
