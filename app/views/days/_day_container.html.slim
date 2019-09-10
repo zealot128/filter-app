@@ -1,0 +1,5 @@
+div: .day-container
+  - @days.each do |day, total_count, news|
+    = render "day", day: day, total_count: total_count, news: news
+  a.jscroll-next.btn.btn-default(href='/?date=#{@days.last[0] - 1}')
+    = l @days.last[0] - 1

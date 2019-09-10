@@ -32,12 +32,4 @@
   .text-center
     h3 Top-News der letzten Tage
 
-- @days.each do |day, total_count, news|
-  = render "day", day: day, total_count: total_count, news: news
-
-.container
-  .clearfix
-    .pull-right
-      = link_to "/?to=#{@days.last[0].to_s}", class: 'btn btn-default', rel: 'nofollow' do
-        |Vorherige Woche
-  br
+= render "day_container"

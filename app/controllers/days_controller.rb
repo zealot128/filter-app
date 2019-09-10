@@ -1,17 +1,22 @@
 class DaysController < ApplicationController
   def index
     reference = Date.today
-    if params[:to] && params[:to].to_s[/^(\d\-)$/]
-      reference = Date.parse(params[:to]) - 1
+    if params[:date] && params[:date].to_s[/^\d{4}/]
+      reference = Date.parse(params[:date])
+      days = [reference]
+    else
+      days = 2.times.map { |i| reference - i }
     end
-    @days = 7.times.map { |i|
-      date = reference - i
+    @days = days.map { |date|
       all =  NewsItem.top_of_day(date)
       count = all.count
       take = [(count * 0.33).ceil, 8].max
       news = all.limit(take)
       [date, count, news]
     }
+    if request.xhr?
+      render partial: 'day_container', layout: false
+    end
   end
 
   def show
