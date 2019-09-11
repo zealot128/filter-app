@@ -9,7 +9,7 @@ h3.day-title = l @day, format: '%A, %d. %b %Y'
   - if @news.any?
     .clearfix
       .news-item-grid
-        = render collection: @news
+        = render @news
 
 .day-title.clearfix
   .pull-left
