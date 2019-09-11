@@ -9,8 +9,8 @@
     - if not news.any?
       p Keine News an diesem Tag.
     - if news.any?
-      .news-item-grid
+      .news-item-grid(data-day='#{day.to_s}')
         = render news
       .pull-right
-        = link_to day_path(day), class: 'btn btn-default' do
+        = link_to day_path(day), class: 'btn btn-default', data: { remote: true } do
           |Alle News dieses Tages (#{total_count})

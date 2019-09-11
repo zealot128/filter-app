@@ -30,6 +30,10 @@ class DaysController < ApplicationController
       @tomorrow = nil
     end
     @yesterday = @day - 1
+    respond_to do |f|
+      f.html
+      f.js
+    end
   rescue ArgumentError
     render html: "<h3>Ungültiges Datum</h3>", layout: true, status: 400
   end

@@ -46,6 +46,7 @@ jQuery(function() {
   var el = $('.js-follow-me');
   if (el.length > 0) {
     stickyHeaders.load(el);
+    el.removeClass('js-follow-me').addClass('follow-me')
   }
 });
 

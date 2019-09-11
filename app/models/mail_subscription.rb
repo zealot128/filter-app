@@ -39,7 +39,6 @@ class MailSubscription < ApplicationRecord
   before_create do
     self.token = SecureRandom.hex(32)
   end
-  scope :confirmed, -> { where status: 1 }
   scope :deleted, -> { where 'deleted_at is not null' }
 
   validates :privacy, acceptance: true
