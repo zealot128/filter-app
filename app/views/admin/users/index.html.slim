@@ -1,0 +1,24 @@
+h2 Admins/Nutzer
+
+p
+  = link_to [:new, :admin, :user], class: 'btn btn-primary' do
+    |Neuen Nutzer anlegen/einladen
+
+table.table
+  thead
+    tr
+      th E-Mail
+      th Rolle
+      th Letzter Login
+      th
+
+  - @users.each do |user|
+    tr
+      td = user.email
+      td = user.role
+      td = l(user.current_sign_in_at, format: :short) if user.current_sign_in_at
+      td
+        = link_to [:edit, :admin, user] do
+          |Bearbeiten
+
+

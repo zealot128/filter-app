@@ -14,9 +14,11 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(permitted_params)
+    @user.skip_password_validation = true
     if @user.save
+      @user.send_reset_password_instructions
       flash[:notice] = 'User was successfully created.'
-      redirect_to @user
+      redirect_to '/admin/users'
     else
       render :new
     end
@@ -25,7 +27,7 @@ class Admin::UsersController < ApplicationController
   def update
     if @user.update(permitted_params)
       flash[:notice] = 'User was successfully updated.'
-      redirect_to @user
+      redirect_to '/admin/users'
     else
       render :edit
     end
@@ -34,7 +36,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user.destroy
     flash[:notice] = 'User was successfully deleted.'
-    redirect_to users_path
+    redirect_to '/admin/users'
   end
 
   private
@@ -45,9 +47,9 @@ class Admin::UsersController < ApplicationController
 
   def permitted_params
     if current_user.admin?
-      params.require(:user).permit(:email, :password, :password_confirmation)
-    else
       params.require(:user).permit!
+    else
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
   end
 end

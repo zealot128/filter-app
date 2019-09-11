@@ -1,10 +1,7 @@
-h2 Bearbeiten
+h2 Neuen Nutzer einladen
 
 = simple_form_for [:admin, @user] do |f|
   = f.input :email
-  small Zum Passwort ändern:
-  = f.input :password
-  = f.input :password_confirmation
   - if current_user.admin?
     = f.input :role, as: :radio_buttons, collection: User.roles.keys
   = f.submit class: 'btn btn-primary'

@@ -26,3 +26,15 @@ Fabricator(:category) do
   name 'Studie'
   keywords 'Survey,studien,studie,umfrage,empirisch,forschungsbericht'
 end
+
+Fabricator(:user) do
+  email { 'info@filter.de' }
+  password { 'password123' }
+  password_confirmation { |a| a[:password] }
+  role 'sources_admin'
+end
+
+Fabricator(:admin, from: :user) do
+  role 'admin'
+  email 'admin@filter.de'
+end
