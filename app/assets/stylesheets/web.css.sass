@@ -55,10 +55,11 @@ $panel-body-height: 200px
   .fog-fade
     background-image: image-url('bg-trans.png')
     position: absolute
-    top: $panel-body-height - 43px - 30px
     left: 0
     width: 100%
     height: 79px
+    bottom: 0
+    top: inherit
     background-repeat: repeat-x
     background-position: bottom
 
@@ -105,9 +106,6 @@ $category-background: lighten(#666, 10%)
     flex-direction: column
     .panel-body
       flex-grow: 2
-  .fog-fade
-    bottom: 0
-    top: inherit
 
 
 .news-item-panel
@@ -413,3 +411,9 @@ blockquote
 
 .btn-job-offer
   padding: 7px 17px
+
+.day-title
+  position: sticky
+  top: -2px
+  z-index: 10
+  opacity: 0.9

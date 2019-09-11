@@ -1,0 +1,3 @@
+var el = $('.news-item-grid[data-day=<%=@day %>]')
+el.html("<%= j @news_item_template %>")
+el.parent().find('a.btn[href*=days]').remove()

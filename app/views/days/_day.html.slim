@@ -1,5 +1,5 @@
 .day-row
-  h3.day-title.js-follow-me
+  h3.day-title
     = link_to day_path(day) do
       - if day == (@today ||= Date.today)
         |Heute
@@ -12,5 +12,5 @@
       .news-item-grid(data-day='#{day.to_s}')
         = render news
       .pull-right
-        = link_to day_path(day), class: 'btn btn-default', data: { remote: true } do
-          |Alle News dieses Tages (#{total_count})
+        = link_to day_path(day), class: 'btn btn-default', data: { remote: true, disable_with: "...wird geladen" } do
+          |Alle News dieses Tages anzeigen (#{total_count})

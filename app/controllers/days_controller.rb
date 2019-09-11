@@ -24,7 +24,7 @@ class DaysController < ApplicationController
     if @day > Date.today
       raise ArgumentError
     end
-    @news = NewsItem.top_of_day(@day)
+    @news = NewsItem.includes(:source).top_of_day(@day)
     @tomorrow = @day + 1
     if @tomorrow > Date.today
       @tomorrow = nil
@@ -32,7 +32,9 @@ class DaysController < ApplicationController
     @yesterday = @day - 1
     respond_to do |f|
       f.html
-      f.js
+      f.js {
+        @news_item_template = render_to_string(@news)
+      }
     end
   rescue ArgumentError
     render html: "<h3>Ungültiges Datum</h3>", layout: true, status: 400
