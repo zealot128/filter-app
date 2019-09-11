@@ -2,6 +2,7 @@ table.table
   thead
     tr
       th Name
+      th Twitter-Hash-Tag
       th Keywords
   tbody
     - @categories.each do |category|
@@ -9,7 +10,8 @@ table.table
         td
           - if category.logo.attached?
             = image_tag category.logo.variant(resize: '50x50>')
-        td = category.name
+          = category.name
+        td = category.hash_tag
         td = category.keywords.gsub(',', ', ')
         td = link_to [:edit, :admin, category], class: 'btn btn-default btn-xs' do
           | edit

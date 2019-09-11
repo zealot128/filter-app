@@ -32,6 +32,9 @@
 #
 
 class YoutubeSource < Source
+  self.description = <<~DOC
+    Youtube-Kanal-URL.
+  DOC
   validates :url, presence: true, format: { with: %r{\Ahttps://www.youtube.com/(user|channel)/[^ ]+\z} }
 
   def download_thumb

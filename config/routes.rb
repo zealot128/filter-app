@@ -13,6 +13,9 @@ Rails.application.routes.draw do
       member do
         post :refresh
       end
+      collection do
+        post :autofetch
+      end
     end
     resources :categories
     resources :mail_subscriptions, only: [:index, :show, :destroy] do

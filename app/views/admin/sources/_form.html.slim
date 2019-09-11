@@ -1,25 +1,95 @@
 = simple_form_for [:admin, @source.becomes(Source)] do |f|
-  - unless @source.is_a?(RedditSource)
-    = f.input :url
-  = f.input :name
-  - if @source.is_a?(FeedSource)
-    = f.input :full_text_selector
-  = f.input :value, label: "Standard-Bias - Anzahl Likes mit dem jeder Eintrag startet"
-  = f.input :multiplicator, label: "Multiplikator für Likes etc. - Wachstumsrate"
   - if @source.new_record?
     = f.input :type, as: :hidden
-  - if @source.new_record? || @source.is_a?(FeedSource)
-    = f.input :twitter_account
-  = f.input :logo
-  - if @source.logo.present?
-    = image_tag @source.logo.url(:small)
-  = f.input :lsr_active
-  = f.input :lsr_confirmation
-  = f.input :filter_rules
-  = f.input :comment
-  = f.input :language, as: :select, collection: ['german', 'english', 'other']
-  = f.input :deactivated
-  = f.input :default_category_id, as: :select, collection: Category.all
+  .panel.panel-default
+    .panel-heading: h3.panel-title Abruf
+    .panel-body
+      - unless @source.is_a?(RedditSource)
+        .row
+          .col-sm-6
+            = f.input :url
+          .col-sm-6
+            .pull-right
+              a.js-auto-fetch.btn.btn-primary
+                |Auto-Fetch Name/Settings
+      = f.input :name
+      - if @source.is_a?(FeedSource)
+        = f.input :full_text_selector, placeholder: '.entry-content'
+      .js-auto-fetch-response
+      = f.input :filter_rules
+      = f.input :deactivated
+
+  .panel.panel-default
+    .panel-heading: h3.panel-title Bias
+    .panel-body
+      - scores = NewsItem.where('created_at > ?', 1.year.ago).where('absolute_score > 0').pluck(:absolute_score).sort
+      p Damit eine News erscheint muss sie mindestens Score von 0 haben. Negativen Bias verwenden um Noisy Quellen zu bremsen und nur "das Beste" durchzulassen
+      p Folgende Bias-Werte sind aktuell in Benutzung:
+      pre: code = Source.pluck(:value).compact.sort.group_by {|i|i}.transform_values(&:count)
+      = f.input :value, label: "Standard-Bias - Anzahl Likes mit dem jeder Eintrag startet"
+
+      p Der Gesamtscore wird berechnet und mit dem Multiplikator multipliziert:
+      pre: code
+        |score =
+        br
+        |Bias +
+        br
+        |Smooth(xing) +
+        br
+        |smooth(twitter) +
+        br
+        |smooth(facebook) / 2 +
+        br
+        |smooth(clicks) / 3 +
+        br
+        |smooth(youtube_likes / 100) +
+        br
+        |smooth(youtube_views) / 1000) / 5.0 +
+        br
+        |sqrt3(wortlänge)
+      pre: code
+        |gesamtscore = score * Multiplikator
+        br
+
+      p Aktuell verwendete Multiplikatoren:
+      pre: code = Source.order(:multiplicator).group(:multiplicator).count
+      = f.input :multiplicator, label: "Multiplikator für Likes etc. - Wachstumsrate"
+
+
+  .panel.panel-default
+    .panel-heading: h3.panel-title Darstellung
+    .panel-body
+      - if @source.new_record? || @source.is_a?(FeedSource)
+        = f.input :twitter_account, hint: "Falls ein Twitter Account hinterlegt wird, wird die Quelle beim Tweeten gementioned"
+      = f.input :logo
+      - if @source.logo.present?
+        = image_tag @source.logo.url(:small)
+      = f.input :lsr_active, hint: "Falls es eine journalistische Quelle ist, dann hier immer erst anhakten, nicht dass die uns verklagen. Das deaktiviert Teaser + Bild."
+      = f.input :lsr_confirmation, hint: "Leistungsschutzrecht Beweis, z.B. ausgedruckte PDF E-Mail der Einwilligung"
+
+  .panel.panel-default
+    .panel-heading: h3.panel-title Kategorisierung
+    .panel-body
+      = f.input :comment, label: "Interner Kommentar"
+      = f.input :language, as: :select, collection: ['german', 'english', 'other'], hint: "Hauptsprache der News in dieser Quelle, nur deutsche News werden im Twitterkanal veröffentlicht."
+      = f.input :default_category_id, as: :select, collection: Category.sorted.all, label: 'Standardkategorie', hint: "Alle News aus der Quelle IMMER auch dieser Kategorie zuordnen"
 
   = f.submit class: 'btn btn-primary'
 
+javascript:
+  $(document).on('click', '.js-auto-fetch', function(e) {
+    e.preventDefault()
+    $('.js-auto-fetch-response').html("")
+    var url = $('input[name*=url]').val()
+    var fts = $('input[name*=full_text_selector]').val()
+    $.post("/admin/sources/autofetch", { url: url, full_text_selector: fts }, function(response) {
+      $('input[name*=name]').val(response.title)
+      $('input[name*=full_text_selector]').val(response.found_selector)
+      $('.js-auto-fetch-response').html("<div class='alert alert-success'><strong>AutoFetch erfolgreich. <br>Titel der ersten News: " +
+        response.first_news.title +
+        "<br>URL: <a href='" + response.first_news.url + "'>" + response.first_news.url + "</a>" +
+        "</strong><br>Beschreibung der ersten News:<br> " +
+        response.first_news.full_text +
+        "</div>")
+    })
+  })

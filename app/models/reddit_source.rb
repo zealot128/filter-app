@@ -32,6 +32,9 @@
 #
 
 class RedditSource < Source
+  self.description = <<~DOC
+    Name muss ein Subreddit sein, dass eingebunden wird
+  DOC
   before_validation :set_url
 
   def refresh

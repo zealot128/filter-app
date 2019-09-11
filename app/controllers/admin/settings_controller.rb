@@ -17,4 +17,10 @@ class Admin::SettingsController < AdminController
       render :edit
     end
   end
+
+  private
+
+  def resource_params
+    params[:setting].permit!
+  end
 end

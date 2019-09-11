@@ -2,9 +2,13 @@
 <% @container_class = 'container-fluid' %>
 <%= datagrid_form_for @grid, method: :get, url: request.path %>
 
-<%= will_paginate(@grid.assets) %>
+<div class='text-center'>
+<%= will_paginate(@grid.assets, renderer: BootstrapPagination::Rails ) %>
+</div>
 <%= datagrid_table @grid, html: { class: 'table' } %>
-<%= will_paginate(@grid.assets) %>
+<div class='text-center'>
+<%= will_paginate(@grid.assets, renderer: BootstrapPagination::Rails ) %>
+</div>
 
 <style>
 

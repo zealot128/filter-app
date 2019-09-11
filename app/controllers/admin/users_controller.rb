@@ -1,4 +1,5 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
+  authorize_resource
   before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -25,9 +26,15 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    should_sign_in = current_user == @user
     if @user.update(permitted_params)
       flash[:notice] = 'User was successfully updated.'
-      redirect_to '/admin/users'
+      bypass_sign_in(@user) if should_sign_in
+      if current_user.admin?
+        redirect_to '/admin/users'
+      else
+        redirect_to '/admin'
+      end
     else
       render :edit
     end
@@ -51,5 +58,9 @@ class Admin::UsersController < ApplicationController
     else
       params.require(:user).permit(:email, :password, :password_confirmation)
     end
+  end
+
+  def resource_params
+    permitted_params
   end
 end

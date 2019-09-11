@@ -29,4 +29,10 @@ class Admin::CategoriesController < AdminController
       render :edit
     end
   end
+
+  private
+
+  def resource_params
+    params[:category].permit!
+  end
 end

@@ -37,13 +37,17 @@
 
 require "download_url"
 class Source < ApplicationRecord
+  class << self
+    attr_accessor :description
+  end
+
   has_many :news_items, dependent: :destroy
   validates :url, :name, presence: true
 
   SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource'].freeze
 
   belongs_to :default_category, class_name: 'Category'
-  after_create_commit if: -> { !Rails.env.test? } do
+  after_create_commit if: -> { !Rails.env.test? and !logo.present? } do
     Source::DownloadThumbWorker.perform_async(id)
   end
   scope :visible, -> { where(deactivated: false) }
@@ -163,8 +167,10 @@ class Source < ApplicationRecord
         group('categories.name').
         order('count_all desc').limit(3).count.map { |k, c| { name: k, count: c } },
       total_news_count: news_items.count,
+      average_word_length: average_word_length,
       current_news_count: news_items.current.count,
       current_top_score: (news_items.current.maximum(:absolute_score) || 0).round,
+      last_posting: news_items.maximum(:published_at),
       current_impression_count:  news_items.current.sum(:impression_count)
     }
   end

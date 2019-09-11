@@ -32,6 +32,10 @@
 #
 
 class TwitterSource < Source
+  self.description = <<~DOC
+    Alle News eines Twitter Accounts
+  DOC
+
   def refresh(take: 50)
     self.class.client.user_timeline(user_name).take(take).each do |tweet|
       TweetProcessor.new.process_tweet(self, tweet)

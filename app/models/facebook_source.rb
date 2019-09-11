@@ -32,6 +32,10 @@
 #
 
 class FacebookSource < Source
+  self.description = <<~DOC
+    URL zu einer Facebook Fanpage.
+  DOC
+
   def refresh
     FacebookProcessor.new.run_all(self)
   end

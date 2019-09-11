@@ -32,4 +32,7 @@
 #
 
 class PodcastSource < FeedSource
+  self.description = <<~DOC
+    Funktioniert genau wie eine FeedSource, aber wird anders dargestellt.
+  DOC
 end
