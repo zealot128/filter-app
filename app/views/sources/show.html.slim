@@ -43,6 +43,9 @@ br
 - if @chart.show?
   .js-chart data-hc=(@chart.to_highcharts.to_json) style='height: 200px'
 
+- if can?(:edit, @source)
+  .js-chart data-hc=(Charts::SourceScoreChart.new(@source).to_highcharts.to_json) style='height: 200px'
+
 - if @news_items.any?
   h3 Beiträge
   .row

@@ -69,6 +69,9 @@ class Admin::SourcesController < AdminController
     @source = Source.find(params[:id])
     if @source.update(params[:source].permit!)
       Source::FetchWorker.perform_async(@source.id)
+      if @source.previous_changes.slice('value', 'multiplicator').present?
+        Source::RescoreAllWorker.perform_async(@source.id)
+      end
       redirect_to [:admin, :sources], notice: 'Done'
     else
       render :edit

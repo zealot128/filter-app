@@ -9,6 +9,7 @@ gem "simple-navigation"
 gem "simple-navigation-bootstrap", git: "https://github.com/pzgz/simple-navigation-bootstrap.git"
 gem 'bootsnap'
 
+gem "groupdate"
 gem "browser"
 gem "bcrypt-ruby"
 gem "sitemap_generator"
