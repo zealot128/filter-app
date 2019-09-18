@@ -75,10 +75,10 @@ ActiveRecord::Schema.define(version: 2019_09_10_194823) do
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 255
     t.text "keywords"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "hash_tag"
     t.string "slug"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
@@ -158,19 +158,19 @@ ActiveRecord::Schema.define(version: 2019_09_10_194823) do
   end
 
   create_table "news_items", id: :serial, force: :cascade do |t|
-    t.string "title"
+    t.string "title", limit: 255
     t.text "teaser"
-    t.string "url"
+    t.string "url", limit: 255
     t.integer "source_id"
     t.datetime "published_at"
     t.integer "value"
     t.integer "fb_likes"
     t.integer "retweets"
-    t.string "guid"
+    t.string "guid", limit: 255
     t.integer "linkedin"
     t.integer "xing"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "gplus"
     t.text "full_text"
     t.integer "word_length"
@@ -217,17 +217,17 @@ ActiveRecord::Schema.define(version: 2019_09_10_194823) do
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
-    t.string "type"
-    t.string "url"
-    t.string "name"
+    t.string "type", limit: 255
+    t.string "url", limit: 255
+    t.string "name", limit: 255
     t.integer "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "logo_file_name"
-    t.string "logo_content_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "logo_file_name", limit: 255
+    t.string "logo_content_type", limit: 255
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "full_text_selector"
+    t.string "full_text_selector", limit: 255
     t.boolean "error"
     t.float "multiplicator", default: 1.0
     t.boolean "lsr_active", default: false

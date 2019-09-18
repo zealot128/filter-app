@@ -1,7 +1,7 @@
 # :nocov:
 # rubocop:disable Rails/Output,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/GuardClause
 module MassImport
-  class AutoAssignTwitter < Processor
+  class AutoAssignTwitter < BaseProcessor
     def self.run_all
       FeedSource.where(twitter_account: nil).find_each do |a|
         AutoAssignTwitter.new(a).run

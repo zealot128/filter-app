@@ -1,6 +1,6 @@
 require 'fetcher'
 require 'download_url'
-class RedditProcessor < Processor
+class RedditProcessor < BaseProcessor
   def process(source)
     @source = source
     url = source.url + '/.json'
@@ -37,7 +37,9 @@ class RedditProcessor < Processor
     ni.teaser = data['selftext']
     mechanize = nil
     if ni.full_text.blank? and data['domain'] != "self.#{@source.name}"
-      ni.full_text, mechanize = get_full_text_and_image_from_random_link(url)
+      r = get_full_text_from_random_link(url)
+      mechanize = r.mechanize
+      ni.full_text = r.full_text
     end
     if ni.teaser.blank? and ni.full_text.present?
       ni.teaser = teaser(ni.full_text)

@@ -37,10 +37,16 @@ class TwitterSource < Source
   DOC
 
   def refresh(take: 50)
-    self.class.client.user_timeline(user_name).take(take).each do |tweet|
-      TweetProcessor.new.process_tweet(self, tweet)
-    end
+    TwitterProcessor.process(self)
     update_column :error, false
+  rescue StandardError => e
+    if Rails.env.test?
+      raise e
+    else
+      NOTIFY_EXCEPTION(e)
+      update_column :error, true
+      update_column :error_message, e.inspect
+    end
   end
 
   def to_param

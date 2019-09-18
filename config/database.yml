@@ -8,7 +8,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: "hrfilter_test"
+  database: "hrfilter_<%= ENV['LOGNAME'] %>_test"
   template: template0
   pool: 5
 

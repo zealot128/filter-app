@@ -1,4 +1,4 @@
-describe Processor, type: :model do
+describe BaseProcessor, type: :model do
   let(:feed_source) { FeedSource.new(url: "...", name: "..") }
   include_context 'active_job_inline'
 
@@ -8,7 +8,7 @@ describe Processor, type: :model do
       feed_source.full_text_selector = '.entry-content'
       feed_source.save
       Sidekiq::Testing.inline! do
-        Processor.process(feed_source)
+        BaseProcessor.process(feed_source)
       end
       NewsItem.first.tap do |i|
         expect(i).to be_present
@@ -20,7 +20,7 @@ describe Processor, type: :model do
 
   specify 'teaser respects html entities' do
     text = "I can't believe I missed this a few years ago."
-    expect(Processor.new.teaser(text)).to eq("I can't believe I missed this a few years ago.")
+    expect(BaseProcessor.new.teaser(text)).to eq("I can't believe I missed this a few years ago.")
   end
 
   specify 'Crosswater', freeze_time: '2013-11-02 12:00' do
@@ -32,7 +32,7 @@ describe Processor, type: :model do
       allow_any_instance_of(NewsItem).to receive(:refresh)
 
       Sidekiq::Testing.inline! do
-        Processor.process(feed_source)
+        BaseProcessor.process(feed_source)
       end
       expect(NewsItem.first.full_text.length).to be > 200
     end

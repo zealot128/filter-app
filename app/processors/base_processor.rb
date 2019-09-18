@@ -1,4 +1,4 @@
-class Processor
+class BaseProcessor
   RULES = %w[
     .entry-content
     .post-content
@@ -67,22 +67,6 @@ class Processor
     @m.open_timeout   = 15
     @m.read_timeout   = 15
     @m.get(url)
-  end
-
-  def get_full_text_and_image_from_random_link(link)
-    rules = RULES
-    res = get(link.to_s)
-
-    if (html = res.search(rules.join(', ')).sort_by { |f| f.text.gsub(/\s+/, ' ').strip.length }.last)
-      [clear(html.to_s), @m]
-    else
-      clean_connection!
-      [nil, nil]
-    end
-  rescue StandardError, Net::HTTPServiceUnavailable
-    clean_connection!
-    ["", nil]
-  ensure
   end
 
   def clean_connection!

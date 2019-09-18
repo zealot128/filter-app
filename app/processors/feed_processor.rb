@@ -1,4 +1,4 @@
-class FeedProcessor < Processor
+class FeedProcessor < BaseProcessor
   def process(source)
     @source = source
 

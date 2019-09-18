@@ -45,7 +45,7 @@ class FeedSource < Source
   end
 
   def refresh
-    Processor.process(self)
+    FeedProcessor.process(self)
     # old.map{|i|NewsItem.find(i).destroy}
     true
   end
