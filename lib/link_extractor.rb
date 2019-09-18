@@ -27,7 +27,7 @@ class LinkExtractor
   def self.run(url, close_connection: true)
     rf = new(site_name: Setting.site_name)
 
-    if rf.run(close_connection: close_connection)
+    if rf.run(url, close_connection: close_connection)
       rf
     end
   end
@@ -52,12 +52,13 @@ class LinkExtractor
   end
 
   def successful?
-    binding.pry
+    @m.page.code.to_i == 200 && !clean_url['/404(.html)?']
   end
 
   def image_url
     @image_url ||= begin
-                     image = page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first || page.parser.xpath('//link[@rel="image_src"]').first
+                     image = @m.page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first
+                     image ||= @m.page.parser.xpath('//link[@rel="image_src"]').first
                      image['content'] || image['href'] if image
                    end
   end
@@ -65,16 +66,17 @@ class LinkExtractor
   def image_blob
     return nil unless image_url
 
-    @image_blob ||= download_url(url)
+    @image_blob ||= download_url(image_url)
   rescue SocketError, StandardError => e
-    Rails.logger.error "image download failed: #{url}: #{e.inspect}"
+    Rails.logger.error "image download failed: #{image_url}: #{e.inspect}"
     nil
   end
 
   def full_text
     return @full_text if @full_text
+    return unless @m.page.respond_to?(:search)
 
-    if (html = page.search(RULES.join(', ')).max_by { |f| f.text.gsub(/\s+/, ' ').strip.length })
+    if (html = @m.page.search(RULES.join(', ')).max_by { |f| f.text.gsub(/\s+/, ' ').strip.length })
       @full_text = clear(html.to_s)
     end
   end
@@ -84,7 +86,7 @@ class LinkExtractor
   end
 
   def clean_url
-    @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source)=[^&]+/, '')
+    @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source)=[^&]+/, '').remove(/\?$/)
   end
 
   private

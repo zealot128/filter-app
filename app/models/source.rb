@@ -29,6 +29,7 @@
 #  filter_rules                  :text
 #  statistics                    :json
 #  error_message                 :text
+#  url_rules                     :text
 #
 # Indexes
 #

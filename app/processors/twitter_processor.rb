@@ -10,7 +10,8 @@ class TwitterProcessor < BaseProcessor
   end
 
   def process
-    timeline = @source.class.client.user_timeline(@source.user_name, count: 200)
+    count = @source.created_at > 1.day.ago ? 200 : 20
+    timeline = @source.class.client.user_timeline(@source.user_name, count: count, tweet_mode: "extended")
     timeline.each do |tweet|
       process_tweet(tweet)
     end
@@ -39,30 +40,35 @@ class TwitterProcessor < BaseProcessor
     end
 
     response = LinkExtractor.run(first_url, close_connection: false)
-    unless response
+    if !response || !allowed_url?(response.clean_url)
       item.destroy if item.persisted?
       return nil
     end
     item.url = response.clean_url
     item.full_text = response.full_text
-    item.title = response.title || tweet.text
+    item.title = response.title || tweet.attrs[:full_text] || tweet.text
     item.rescore!
 
     if response && (img = response.image_blob)
-      news_item.update image: img
+      item.update image: img
     end
   ensure
-    response.shutdown if response
+    response&.shutdown!
   end
 
   private
 
   def allowed_url?(url)
-    !url['https://twitter.com/i']
+    return false if url.blank?
+    return false if url['https://twitter.com/']
+    if @source.url_rules?
+      return @source.url_rules.split.reject(&:blank?).any? { |i| url.downcase.include?(i.downcase) }
+    end
+    true
   end
 
   def blacklist_filter?(tweet)
-    NewsItem::CheckFilterList.new(@source).skip_import?(tweet.text)
+    NewsItem::CheckFilterList.new(@source).skip_import?(tweet.attrs[:full_text])
   end
 
   def news_item_for_tweet(tweet)
@@ -72,7 +78,6 @@ class TwitterProcessor < BaseProcessor
       item.destroy if item.persisted?
       return nil
     end
-    item.title = tweet.text
     item.published_at = tweet.created_at
     item.retweets = tweet.retweet_count + tweet.favorite_count
     if tweet.retweeted_status.present?

@@ -36,7 +36,7 @@ class TwitterSource < Source
     Alle News eines Twitter Accounts
   DOC
 
-  def refresh(take: 50)
+  def refresh
     TwitterProcessor.process(self)
     update_column :error, false
   rescue StandardError => e

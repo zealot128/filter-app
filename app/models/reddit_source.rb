@@ -38,7 +38,7 @@ class RedditSource < Source
   before_validation :set_url
 
   def refresh
-    RedditProcessor.new.process(self)
+    RedditProcessor.process(self)
   end
 
   def set_url
