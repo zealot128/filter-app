@@ -39,6 +39,10 @@ elsif ENV['SENTRY_DSN']
 elsif Rails.env.production?
   def NOTIFY_EXCEPTION(*args)
   end
+
+else
+  def NOTIFY_EXCEPTION(*args)
+  end
 end
 
 def CATCH_ALL(&block)

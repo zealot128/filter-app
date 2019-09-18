@@ -33,7 +33,7 @@
 
 class TwitterSource < Source
   self.description = <<~DOC
-    Alle News eines Twitter Accounts
+    Alle **LINKS** eines Twitter Accounts werden gefolgt und die Inhalte verarbeitet. Nutzt eine eigene URL Whitelist falls notwendig um keine Fremdinhalte einzutragen.
   DOC
 
   def refresh

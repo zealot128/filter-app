@@ -47,6 +47,7 @@ class TwitterProcessor < BaseProcessor
     item.url = response.clean_url
     item.full_text = response.full_text
     item.title = response.title || tweet.attrs[:full_text] || tweet.text
+    item.teaser = tweet.attrs[:full_text].gsub(%r{https?://[^ ]+}, '')
     item.rescore!
 
     if response && (img = response.image_blob)
@@ -84,7 +85,6 @@ class TwitterProcessor < BaseProcessor
       item.retweets += tweet.retweeted_status.retweet_count
     end
     item.xing ||= 0
-    item.linkedin ||= 0
     item.fb_likes ||= 0
     item
   end

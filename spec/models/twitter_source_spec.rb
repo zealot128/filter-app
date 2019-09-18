@@ -18,6 +18,8 @@ RSpec.describe TwitterSource do
       expect(source.news_items.count).to be > 0
       urls = source.news_items.map(&:url)
       expect(urls).to include "https://www.personalwirtschaft.de/arbeitsrecht/artikel/remote-work-im-arbeitsrecht.html"
+      expect(source.news_items.first.teaser).to be_present
+      expect(source.news_items.first.full_text).to be_present
     end
   end
 end

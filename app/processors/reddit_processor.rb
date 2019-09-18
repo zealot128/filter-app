@@ -40,7 +40,6 @@ class RedditProcessor < BaseProcessor
     ni.reddit = data['score']
     ni.published_at = Time.zone.at data['created_utc']
     ni.xing ||= 0
-    ni.linkedin ||= 0
     ni.fb_likes ||= 0
     ni.retweets ||= 0
     ni.teaser = data['selftext']
