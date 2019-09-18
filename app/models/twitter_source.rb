@@ -33,14 +33,20 @@
 
 class TwitterSource < Source
   self.description = <<~DOC
-    Alle News eines Twitter Accounts
+    Alle **LINKS** eines Twitter Accounts werden gefolgt und die Inhalte verarbeitet. Nutzt eine eigene URL Whitelist falls notwendig um keine Fremdinhalte einzutragen.
   DOC
 
-  def refresh(take: 50)
-    self.class.client.user_timeline(user_name).take(take).each do |tweet|
-      TweetProcessor.new.process_tweet(self, tweet)
-    end
+  def refresh
+    TwitterProcessor.process(self)
     update_column :error, false
+  rescue StandardError => e
+    if Rails.env.test?
+      raise e
+    else
+      NOTIFY_EXCEPTION(e)
+      update_column :error, true
+      update_column :error_message, e.inspect
+    end
   end
 
   def to_param

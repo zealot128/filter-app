@@ -131,3 +131,7 @@ Lint/MissingCopEnableDirective:
   Enabled: false
 Rails/InverseOf:
   Enabled: false
+Style/NegatedIf:
+  Enabled: false
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false

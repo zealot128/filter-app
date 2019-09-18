@@ -28,6 +28,8 @@ module Baseapp
     config.middleware.use Rack::Attack
     config.active_record.belongs_to_required_by_default = false
     config.active_job.queue_adapter = :sidekiq
+    # Disable host whitelisting... braucht man nicht da wir das immer selbst machen
+    config.hosts.clear
 
     config.generators do |g|
       g.template_engine :haml

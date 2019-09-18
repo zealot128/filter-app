@@ -109,7 +109,7 @@ module MassImport
       link = (node.inner_html.presence || node['href']).to_s.strip
       m.get(link)
       if defined?(m.page.at)
-        Processor::RULES.find do |rule|
+        BaseProcessor::RULES.find do |rule|
           if m.page.at(rule)
             return rule
           end

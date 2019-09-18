@@ -7,7 +7,7 @@ class NewsItem::FullTextFetcher
   end
 
   def selector
-    @source.full_text_selector.presence || (@unknown_selector ? Processor::RULES.join(',') : false)
+    @source.full_text_selector.presence || (@unknown_selector ? BaseProcessor::RULES.join(',') : false)
   end
 
   attr_reader :page

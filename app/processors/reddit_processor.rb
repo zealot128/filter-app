@@ -1,28 +1,38 @@
 require 'fetcher'
 require 'download_url'
-class RedditProcessor < Processor
-  def process(source)
+require 'link_extractor'
+
+class RedditProcessor < BaseProcessor
+  class InvalidItemDelete < StandardError
+  end
+
+  def self.process(source)
+    new(source).process
+  end
+
+  def initialize(source)
     @source = source
-    url = source.url + '/.json'
+  end
+
+  def process
+    url = @source.url + '/.json'
     json = JSON.load Fetcher.fetch_url(url).body
     json['data']['children'].each do |child|
-      process_child(child['data'])
+      process_item(child['data'])
     end
   end
 
-  def process_child(data)
+  def process_item(data)
     url = data['url']
     id = data['id']
-    return if data['over_18']
-    return if data['hidden']
-    return if data['thumbnail'] == 'nsfw'
-
     ni = @source.news_items.where(guid: id).first_or_initialize
+    if data['over_18'] || data['hidden'] || data['thumbnail'] == 'nsfw'
+      raise InvalidItemDelete
+    end
 
     # Check if item with same url already exists
     if url.present? and @source.news_items.where(url: url).where('guid != ?', id).any?
-      ni.destroy unless ni.new_record?
-      return
+      raise InvalidItemDelete
     end
 
     ni.title = data['title'].truncate(255)
@@ -30,31 +40,36 @@ class RedditProcessor < Processor
     ni.reddit = data['score']
     ni.published_at = Time.zone.at data['created_utc']
     ni.xing ||= 0
-    ni.linkedin ||= 0
     ni.fb_likes ||= 0
     ni.retweets ||= 0
-    ni.gplus ||= 0
     ni.teaser = data['selftext']
-    mechanize = nil
+    response = nil
     if ni.full_text.blank? and data['domain'] != "self.#{@source.name}"
-      ni.full_text, mechanize = get_full_text_and_image_from_random_link(url)
+      response = LinkExtractor.run(url, close_connection: false)
+      if !response
+        raise InvalidItemDelete
+      end
+      ni.url = response.clean_url
+      ni.full_text = response.full_text
     end
     if ni.teaser.blank? and ni.full_text.present?
       ni.teaser = teaser(ni.full_text)
+    end
+    if NewsItem::CheckFilterList.new(@source).skip_import?(ni.title, ni.teaser)
+      raise InvalidItemDelete
     end
     if data['preview'] and ni.image.blank?
       if (i = data['preview']['images']) and (image = i.first['source']['url'])
         ni.image = download_url(image)
       end
     end
-    if NewsItem::CheckFilterList.new(@source).skip_import?(ni.title, ni.teaser)
-      ni.destroy if ni.persisted?
-      return nil
-    end
     ni.save
-    if mechanize
-      NewsItem::ImageFetcher.new(ni, mechanize.page).run
-      mechanize.shutdown
+
+    if response && ni.image.blank? && (img = response.image_blob)
+      ni.update image: img
     end
+  rescue InvalidItemDelete
+    ni.destroy if ni.persisted?
+    nil
   end
 end

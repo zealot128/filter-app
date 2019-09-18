@@ -23,7 +23,7 @@ class Admin::SourcesController < AdminController
       ft = NewsItem::FullTextFetcher.new(ni, unknown_selector: true)
       ft.run
       if params[:full_text_selector].blank? and ni.full_text
-        selector = Processor::RULES.find { |i| ft.page.at(i) }
+        selector = BaseProcessor::RULES.find { |i| ft.page.at(i) }
       end
     end
 

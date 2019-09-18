@@ -68,7 +68,9 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'admin/twitter#create'
   get '_bsc' => 'bsc#show'
   mount API => '/api/v1'
-  mount Sidekiq::Web => '/rails/sidekiq'
+  authenticate :user, ->(u) { u.admin? } do
+    mount Sidekiq::Web, at: '/rails/sidekiq'
+  end
   mount Ahoy::Engine => "/stellenanzeigen"
   root to: "days#index"
 end

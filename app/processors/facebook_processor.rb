@@ -1,4 +1,4 @@
-class FacebookProcessor < Processor
+class FacebookProcessor < BaseProcessor
   def run_all(source)
     get source.remote_url
     @m.page.search('._52c6').each do |item|

@@ -13,7 +13,7 @@ class NewsItem::ScoringAlgorithm
     base =
       data(:bias) +
       smooth(data(:xing)) * 3 +
-      smooth(data(:retweets)) + # TODO: maybe old?
+      smooth(data(:retweets)) +
       smooth(data(:twitter)) +
       smooth(data(:reddit)) +
       smooth(data(:facebook)) / 2 +

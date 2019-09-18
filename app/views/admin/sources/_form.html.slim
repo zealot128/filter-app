@@ -9,15 +9,18 @@
           .col-sm-6
             = f.input :url
           .col-sm-6
-            .pull-right
-              a.js-auto-fetch.btn.btn-primary
-                |Auto-Fetch Name/Settings
+            - if @source.is_a?(FeedSource)
+              .pull-right
+                a.js-auto-fetch.btn.btn-primary
+                  |Auto-Fetch Name/Settings
       = f.input :name
       - if @source.is_a?(FeedSource)
         = f.input :full_text_selector, placeholder: '.entry-content'
       .js-auto-fetch-response
       = f.input :filter_rules
       = f.input :deactivated
+      - if @source.is_a?(TwitterSource)
+        = f.input :url_rules, label: "URL-Whitelist", hint: "Zeilengetrennt hostnamen/URL bestandteile. Falls eine davon matcht, wird ein Link in einem Tweet verarbeitet"
 
   .panel.panel-default
     .panel-heading: h3.panel-title Bias
@@ -61,7 +64,7 @@
     .panel-body
       - if @source.new_record? || @source.is_a?(FeedSource)
         = f.input :twitter_account, hint: "Falls ein Twitter Account hinterlegt wird, wird die Quelle beim Tweeten gementioned"
-      = f.input :logo
+      = f.input :logo, hint: "Falls leer, wird versucht das Favicon zu ziehen. Das sieht aber normalerweise klein und scheiße aus, deshalb bitte hier ein hochauflösenderes Logo der Quelle."
       - if @source.logo.present?
         = image_tag @source.logo.url(:small)
       = f.input :lsr_active, hint: "Falls es eine journalistische Quelle ist, dann hier immer erst anhakten, nicht dass die uns verklagen. Das deaktiviert Teaser + Bild."

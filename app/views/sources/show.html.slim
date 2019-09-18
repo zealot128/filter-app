@@ -7,6 +7,13 @@
         = ' '
         = @source.name
   .col-sm-6
+    - if can?(:edit, @source)
+      .panel.panel-danger
+        .panel-heading
+          h3.panel-title Admin
+        .panel-body
+          = link_to edit_admin_source_path(@source), class: 'btn btn-primary' do
+            |Bearbeiten
     .panel.panel-default
       .panel-body style='height: auto'
         dl
