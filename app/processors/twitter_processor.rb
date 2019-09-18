@@ -35,7 +35,12 @@ class TwitterProcessor < BaseProcessor
 
     item = news_item_for_tweet(tweet)
     if item.full_text
-      item.rescore!
+      if blacklist_filter?(item.title + " " + item.teaser.to_s)
+        item.destroy if item.persisted?
+        return nil
+      else
+        item.rescore!
+      end
       return
     end
 
@@ -68,14 +73,14 @@ class TwitterProcessor < BaseProcessor
     true
   end
 
-  def blacklist_filter?(tweet)
-    NewsItem::CheckFilterList.new(@source).skip_import?(tweet.attrs[:full_text])
+  def blacklist_filter?(text)
+    NewsItem::CheckFilterList.new(@source).skip_import?(text)
   end
 
   def news_item_for_tweet(tweet)
     guid = tweet.url.to_s
     item = @source.news_items.where(guid: guid).first_or_initialize
-    if blacklist_filter?(tweet)
+    if blacklist_filter?(tweet.attrs[:full_text])
       item.destroy if item.persisted?
       return nil
     end
