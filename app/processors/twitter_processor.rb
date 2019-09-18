@@ -86,7 +86,6 @@ class TwitterProcessor < BaseProcessor
     item.xing ||= 0
     item.linkedin ||= 0
     item.fb_likes ||= 0
-    item.gplus ||= 0
     item
   end
 end

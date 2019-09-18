@@ -14,7 +14,7 @@ h1 FAQ
   .panel-body
     p Regelmäßig wird überprüft, wie oft der Beitrag im Social-Media geteilt wurde. Außerdem hat jede Quelle einen Standard-Bias der auf der Anzahl der veröffentlichten News basiert (Quellen mit sehr vielen Publikationen oder sehr großer Reichweite erhalten einen Malus, vertrauenswürdige fokussierte Blogs einen Bonus)
     pre
-      |Punkte = Bias<br/> + 3.0 * s(Xing)<br/> + 2.0 * s(Linkedin)<br/> + 1.0 * s(TwitterRetweets)<br/> + 1.0 * s(RedditUpvotes)<br/> + 0.5 * s(FacebookLikes)<br/> + 1.0 * s(GooglePlus)<br/> + AnzahlWorte^0.3<br/> + 0.2 * s(ClicksAufHrfilter)<br/> + 2.0 * s(VerlinkungenVonAnderenQuellenAufHrFilter)
+      |Punkte = Bias<br/> + 3.0 * s(Xing)<br/> + 1.0 * s(TwitterRetweets)<br/> + 1.0 * s(RedditUpvotes)<br/> + 0.5 * s(FacebookLikes)<br/> + AnzahlWorte^0.3<br/> + 0.2 * s(ClicksAufHrfilter)<br/> + 2.0 * s(VerlinkungenVonAnderenQuellenAufHrFilter)
     p Wobei <code>s(x)</code> eine Smoothing-Funktion ist, um Ausreißer nach oben auszugleichen:
     pre
       |s(x) = log((x + 1) * 2)^2.2 - 1
@@ -23,7 +23,7 @@ h1 FAQ
   .panel-heading
     h3.panel-title Wie ermittelst du die Like/Share Zahlen aus den sozialen Netzwerken?
   .panel-body
-    p Bei Facebook, Linkedin, Reddit, und XING werden die entsprechenden Widgets befragt, die die Anzahl der Likes zu einer URL ausgeben.
+    p Bei Facebook, Reddit, und XING werden die entsprechenden Widgets befragt, die die Anzahl der Likes zu einer URL ausgeben.
     p Bei Twitter wird die API zu Rate gezogen, in der nach der URL des Artikels gesucht wird und die resultierende Anzahl an Ergebnissen gezählt. Andere Methoden der Zählung wurden von Twitter in 2015 eingestellt.
 
 

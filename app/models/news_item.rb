@@ -12,11 +12,9 @@
 #  fb_likes                    :integer
 #  retweets                    :integer
 #  guid                        :string(255)
-#  linkedin                    :integer
 #  xing                        :integer
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
-#  gplus                       :integer
 #  full_text                   :text
 #  word_length                 :integer
 #  plaintext                   :text
@@ -227,9 +225,9 @@ class NewsItem < ApplicationRecord
     {
       facebook: fb_likes,
       twitter: retweets,
-      linkedin: linkedin,
+      gplus: 0,
+      linkedin: 0,
       xing: xing,
-      gplus: gplus,
       youtube_views: youtube_views,
       youtube_likes: youtube_likes,
       reddit: reddit || 0,
@@ -301,7 +299,7 @@ class NewsItem < ApplicationRecord
   end
 
   def as_json(options)
-    super(methods: :image_url_full)
+    super(methods: :image_url_full).merge(gplus: 0, linkedin: 0)
   end
 
   def image_url_full

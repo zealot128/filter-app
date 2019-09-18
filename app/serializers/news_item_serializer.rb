@@ -29,8 +29,7 @@ class NewsItemSerializer < ApplicationSerializer
     {
       current_score: object.value,
       absolute_score: object.absolute_score.round(1),
-      googleplus: object.gplus,
-      linkedin: object.linkedin,
+      linkedin: 0,
       xing: object.xing,
       facebook: object.fb_likes,
       twitter: object.retweets,

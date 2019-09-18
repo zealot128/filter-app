@@ -43,7 +43,6 @@ class RedditProcessor < BaseProcessor
     ni.linkedin ||= 0
     ni.fb_likes ||= 0
     ni.retweets ||= 0
-    ni.gplus ||= 0
     ni.teaser = data['selftext']
     response = nil
     if ni.full_text.blank? and data['domain'] != "self.#{@source.name}"

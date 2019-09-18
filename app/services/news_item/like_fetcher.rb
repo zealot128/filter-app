@@ -15,8 +15,7 @@ class NewsItem::LikeFetcher
     else
       news_item.fb_likes ||= 0
     end
-    news_item.xing   = fetcher.xing || 0
-    news_item.gplus  = 0
+    news_item.xing = fetcher.xing || 0
     news_item.reddit ||= 3
   end
 

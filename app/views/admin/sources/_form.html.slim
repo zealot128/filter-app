@@ -4,7 +4,7 @@
   .panel.panel-default
     .panel-heading: h3.panel-title Abruf
     .panel-body
-      - unless @source.is_a?(RedditSource)
+      - if @source.is_a?(FeedSource)
         .row
           .col-sm-6
             = f.input :url

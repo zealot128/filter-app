@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_18_142410) do
+ActiveRecord::Schema.define(version: 2019_09_18_145509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -167,11 +167,9 @@ ActiveRecord::Schema.define(version: 2019_09_18_142410) do
     t.integer "fb_likes"
     t.integer "retweets"
     t.string "guid", limit: 255
-    t.integer "linkedin"
     t.integer "xing"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "gplus"
     t.text "full_text"
     t.integer "word_length"
     t.text "plaintext"
