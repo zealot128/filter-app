@@ -82,11 +82,12 @@ gem "owlcarousel-rails", git: 'https://github.com/pludoni/owlcarousel-rails.git'
 group :test do
   gem 'rails-controller-testing'
   gem "timecop"
-  gem 'pludoni_rspec'
+  gem 'pludoni_rspec', git: 'https://github.com/pludoni/pludoni_rspec.git'
   gem "rspec-rails", ">= 4.0.0.beta2"
   gem "vcr"
   gem "webmock"
   gem "fabrication"
+  gem "apparition"
 end
 
 group :development do
