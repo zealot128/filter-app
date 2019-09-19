@@ -17,6 +17,10 @@
         = link_to "/app", class: 'btn btn-default'
           i.fa.fa-fw.fa-mobile>
           |Als App
+        = ' '
+        = link_to "/rss", class: 'btn btn-default'
+          i.fa.fa-fw.fa-rss>
+          |Als Feed
 - if browser.device.mobile?
   = render 'layouts/mobile_notice'
 

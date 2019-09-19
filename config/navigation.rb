@@ -1,4 +1,4 @@
-# Configures your navigation
+# rubocop:disable Metrics/BlockLength
 SimpleNavigation::Configuration.run do |navigation|
   navigation.consider_item_names_as_safe = true
 
@@ -12,6 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_3, 'Kategorien', '/kategorien', highlights_on: :subpath
     primary.item :key_4, 'Suche', '/search', {}
     primary.item :key_5, 'Newsletter', '/newsletter', {}
+    primary.item :key_7, 'Feeds', '/rss', {}
     primary.item :key_6, 'Als App', '/app', {}
 
     if current_user

@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   get "datenschutz", to: "static_pages#datenschutz"
   get "faq", to: "static_pages#faq"
 
+  get "rss", to: 'rss#index'
+  get "rss/daily-top-10", to: 'rss#daily_top_10', as: :daily_top_10_rss
+  get "rss/daily-top-50", to: 'rss#daily_top_50', as: :daily_top_50_rss
+  get "rss/weekly-top-50", to: 'rss#weekly_top_50', as: :weekly_top_50_rss
+  get "rss/newest", to: 'rss#newest', as: :newest_rss
+
   get "/app", to: "app#index"
 
   namespace :admin do
