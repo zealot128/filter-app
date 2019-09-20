@@ -11,12 +11,18 @@ class SubscriptionMailer < ActionMailer::Base
   def reconfirm_mail(subscription, subject:, body:, from: Setting.get('from'))
     @subscription = subscription
     @body = body
-    mail to: subscription.full_email, subject: subject, from: from
+    mail to: subscription.full_email, subject: subject, from: from, bcc: bccs
   end
 
   def unsubscribe_mail(subscription, subject:, body:, from: Setting.get('from'))
     @subscription = subscription
     @body = body
-    mail to: subscription.full_email, subject: subject, from: from
+    mail to: subscription.full_email, subject: subject, from: from, bcc: bccs
+  end
+
+  private
+
+  def bccs
+    User.admin.pluck(:email)
   end
 end

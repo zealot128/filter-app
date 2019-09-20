@@ -2,24 +2,26 @@
 #
 # Table name: mail_subscriptions
 #
-#  id              :integer          not null, primary key
-#  email           :text
-#  preferences     :json
-#  token           :string
-#  last_send_date  :datetime
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  limit           :integer
-#  gender          :integer
-#  first_name      :string
-#  last_name       :string
-#  academic_title  :string
-#  company         :string
-#  position        :string
-#  extended_member :boolean          default(FALSE)
-#  deleted_at      :datetime
-#  status          :integer          default("unconfirmed")
-#  remembered_at   :datetime
+#  id                      :integer          not null, primary key
+#  email                   :text
+#  preferences             :json
+#  token                   :string
+#  last_send_date          :datetime
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  limit                   :integer
+#  gender                  :integer
+#  first_name              :string
+#  last_name               :string
+#  academic_title          :string
+#  company                 :string
+#  position                :string
+#  extended_member         :boolean          default(FALSE)
+#  deleted_at              :datetime
+#  status                  :integer          default("unconfirmed")
+#  remembered_at           :datetime
+#  last_reminder_sent_at   :date
+#  number_of_reminder_sent :integer          default(0)
 #
 # Indexes
 #
