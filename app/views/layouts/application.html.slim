@@ -15,16 +15,17 @@ html lang=(locale) class=(browser.to_s)
   body
     = render "layouts/navbar"
 
-    = yield :content_header if content_for?(:content_header)
-    - @container_class ||= 'container'
-    .page-container
-      div class='#{@container_class}'
-        section.content
-          = content_tag(:p, flash[:alert], :id => "alert", :class => "alert alert-danger fade in alert-auto-dismiss") if flash[:alert]
-          = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
-          = yield
+    main
+      = yield :content_header if content_for?(:content_header)
+      - @container_class ||= 'container'
+      .page-container
+        div class='#{@container_class}'
+          section.content
+            = content_tag(:p, flash[:alert], :id => "alert", :class => "alert alert-danger fade in alert-auto-dismiss") if flash[:alert]
+            = content_tag(:p, flash[:notice], :id => "success", :class => "alert fade alert-success in alert-auto-dismiss") if flash[:notice]
+            = yield
 
-    = yield :content_footer if content_for?(:content_footer)
+      = yield :content_footer if content_for?(:content_footer)
     footer.footer
       .container
         ul.list-inline

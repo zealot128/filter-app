@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     member do
       get :confirm
       get :reconfirm
+      get :created
     end
     collection do
       get :embed
