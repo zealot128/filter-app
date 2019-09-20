@@ -1,2 +1,42 @@
-
+div(style='text-align: center')
+  h2 Vorschau Ihres Abonnenments
+  p Zum Anpassen gehen nutzen Sie einfach den Zurück-Knopf Ihres Browser. Falls Ihnen die Einstellungen zusagen können Sie jetzt abonnieren:
+div.sticky-form
+  = simple_form_for @subscription do |f|
+    - [:email, :gender, :academic_title, :first_name, :last_name, :company, :position, :extended_member, :interval, :limit].each do |k|
+      = f.input k, as: :hidden
+    div(style='display: none')
+      = f.input :categories, as: :check_boxes, collection: Category.select_collection
+    button(type='submit') Newsletter abonnieren
+  hr
 = raw @body
+
+css:
+  .sticky-form {
+    position: sticky;
+    background: white;
+    padding-top: 15px;
+    text-align: center;
+    top: 0;
+    opacity: 0.9;
+    z-index: 10
+  }
+  button[type=submit] {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 15px;
+    line-height: 1.428571429;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #2780E3;
+    border-color: #2780E3;
+  }
