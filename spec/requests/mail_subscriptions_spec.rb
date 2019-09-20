@@ -17,7 +17,7 @@ describe 'MailSubscriptionsController' do
           categories: [c.id]
         }
       }
-      assert(response.successful?)
+      expect(response.redirect?).to be == true
       expect(ActionMailer::Base.deliveries.count).to be == 1
       body = ActionMailer::Base.deliveries.first.html_part.body.to_s
       url = Nokogiri::HTML.fragment(body).at('a')['href']

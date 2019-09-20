@@ -6,7 +6,7 @@ dl
     | #{@subscriptions.confirmed.count} / #{@subscriptions.count}
   dt Abonnenten aktiv (min. 1 Klick im letzten Monat):
   dd
-    = MailSubscription.joins(:impressions).where('impressions.created_at > ?', 1.month.ago).count('distinct(mail_subscriptions.id)')
+    = MailSubscription.joins(:histories).where('opened_at > ?', 1.month.ago).count('distinct(mail_subscriptions.id)')
 
 table.table.table-bordered.js-tablesorter
   thead
@@ -30,12 +30,15 @@ table.table.table-bordered.js-tablesorter
         td = s.interval
         td = s.status
         td = (d=s.last_send_date) && d.to_date
-        td = s.impressions.count
-        td = s.impressions.where('created_at > ?', 1.month.ago).count
+        td = s.histories.sum('click_count')
+        td = s.histories.where('opened_at > ?', 1.month.ago).sum('click_count')
         td
           - if s.unconfirmed?
-            = link_to [:confirm, :admin, s], data: {method: :post} do
+            = link_to [:confirm, :admin, s], data: {method: :post}, class: 'btn btn-default btn-sm' do
               | Confirm-Mail erneut senden
+            - if s.created_at < 7.days.ago
+              = link_to [:admin, s], data: {method: :delete}, class: 'btn btn-danger btn-sm' do
+                | Löschen
           - if s.confirmed?
             = link_to edit_mail_subscription_path(s) do
               | bearbeiten/löschen

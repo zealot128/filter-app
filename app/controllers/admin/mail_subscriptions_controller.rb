@@ -1,5 +1,5 @@
 class Admin::MailSubscriptionsController < AdminController
-  load_and_authorize_resource
+  authorize_resource
   def index
     @subscriptions = MailSubscription.order('created_at desc')
     respond_to do |f|
@@ -13,6 +13,12 @@ class Admin::MailSubscriptionsController < AdminController
   def confirm
     @subscription = MailSubscription.find_by!(token: params[:id])
     SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-    redirect_to '/admin/sources', notice: 'Mailversand'
+    redirect_to '/admin/mail_subscriptions', notice: 'Bestätigungsmail erneut versendet.'
+  end
+
+  def destroy
+    @subscription = MailSubscription.find_by!(token: params[:id])
+    @subscription.destroy
+    redirect_to '/admin/mail_subscriptions', notice: 'Gelöscht.'
   end
 end

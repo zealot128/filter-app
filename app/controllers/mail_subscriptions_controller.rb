@@ -23,14 +23,15 @@ class MailSubscriptionsController < ApplicationController
         ahoy.track 'newsletter_subscribe'
         @subscription.save
         SubscriptionMailer.confirmation_mail(@subscription).deliver_now
-        render html: '<div class="alert alert-success">Abonnement erfolgreich. Sie erhalten nun eine Bestätigungsmail, ' \
-                  'in der Sie den enthaltenen Link anklicken müssen, damit das Abo startet. <br>Sollten Sie keine ' \
-                  'E-Mail-Bestätigung erhalten haben, überprüfen Sie ggf. Ihren Spam-Ordner. </div>'.html_safe,
-               layout: true
+        redirect_to created_mail_subscription_path(@subscription)
       end
     else
       render :index
     end
+  end
+
+  def created
+    @subscription = subscription
   end
 
   def reconfirm
