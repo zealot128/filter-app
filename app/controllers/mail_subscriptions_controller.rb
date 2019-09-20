@@ -33,6 +33,11 @@ class MailSubscriptionsController < ApplicationController
     end
   end
 
+  def reconfirm
+    subscription.update(number_of_reminder_sent: 0, last_reminder_sent_at: nil, created_at: Time.zone.now)
+    redirect_to edit_mail_subscription_path, notice: "Vielen Dank! Ihr Abonnement wurde erneut bestätigt."
+  end
+
   def confirm
     ahoy.track 'newsletter_confirm'
     subscription.confirm!
@@ -103,7 +108,8 @@ class MailSubscriptionsController < ApplicationController
   end
 
   def permitted_params
-    params.require(:mail_subscription).permit(:interval,
+    params.require(:mail_subscription).permit(
+      :interval,
       :email,
       :first_name,
       :last_name,
@@ -114,7 +120,8 @@ class MailSubscriptionsController < ApplicationController
       :extended_member,
       :limit,
       :privacy,
-      categories: [])
+      categories: []
+    )
   end
 
   require "whenever"

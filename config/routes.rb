@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :mail_subscriptions, path: 'newsletter' do
     member do
       get :confirm
+      get :reconfirm
     end
     collection do
       get :embed

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_18_145509) do
+ActiveRecord::Schema.define(version: 2019_09_20_085058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -154,6 +154,9 @@ ActiveRecord::Schema.define(version: 2019_09_18_145509) do
     t.boolean "extended_member", default: false
     t.datetime "deleted_at"
     t.integer "status", default: 0
+    t.datetime "remembered_at"
+    t.date "last_reminder_sent_at"
+    t.integer "number_of_reminder_sent", default: 0
     t.index ["token"], name: "index_mail_subscriptions_on_token", unique: true
   end
 

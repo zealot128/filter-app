@@ -32,6 +32,7 @@ class Setting < ActiveRecord::Base
       :mail_intro,
       :mail_impressum,
       :from,
+      :inactive_months,
     ],
     texte: [
       :credits,
@@ -39,6 +40,17 @@ class Setting < ActiveRecord::Base
       :datenschutz,
       :intro,
       :explanation
+    ],
+    newsletter_erinnerung: [
+      :inactive_months,
+      :reminder_mail_14_days_subject,
+      :reminder_mail_14_days_body,
+      :reminder_mail_3_days_subject,
+      :reminder_mail_3_days_body,
+      :reminder_mail_1_day_subject,
+      :reminder_mail_1_day_body,
+      :reminder_unsubscribe_notice_subject,
+      :reminder_unsubscribe_notice_body,
     ],
     twitter: [
       :twitter_account,

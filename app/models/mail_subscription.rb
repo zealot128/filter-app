@@ -2,23 +2,26 @@
 #
 # Table name: mail_subscriptions
 #
-#  id              :integer          not null, primary key
-#  email           :text
-#  preferences     :json
-#  token           :string
-#  last_send_date  :datetime
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  limit           :integer
-#  gender          :integer
-#  first_name      :string
-#  last_name       :string
-#  academic_title  :string
-#  company         :string
-#  position        :string
-#  extended_member :boolean          default(FALSE)
-#  deleted_at      :datetime
-#  status          :integer          default("unconfirmed")
+#  id                      :integer          not null, primary key
+#  email                   :text
+#  preferences             :json
+#  token                   :string
+#  last_send_date          :datetime
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  limit                   :integer
+#  gender                  :integer
+#  first_name              :string
+#  last_name               :string
+#  academic_title          :string
+#  company                 :string
+#  position                :string
+#  extended_member         :boolean          default(FALSE)
+#  deleted_at              :datetime
+#  status                  :integer          default("unconfirmed")
+#  remembered_at           :datetime
+#  last_reminder_sent_at   :date
+#  number_of_reminder_sent :integer          default(0)
 #
 # Indexes
 #
@@ -40,6 +43,7 @@ class MailSubscription < ApplicationRecord
     self.token = SecureRandom.hex(32)
   end
   scope :deleted, -> { where 'deleted_at is not null' }
+  scope :inactive_for, -> { where('last_send_date > ?', (Setting.inactive_months.to_i).months) }
 
   validates :privacy, acceptance: true
 
