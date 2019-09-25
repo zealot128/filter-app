@@ -42,7 +42,7 @@ class NewsItemsController < ApplicationController
       last_mail && last_mail.click!
     end
     unless bot?
-      ahoy.track 'news_item', id: news_item.id, source_id: news_item.source_id
+      ahoy.track 'news_item', id: news_item.id, source_id: news_item.source_id, mail_subscription_id: @current_user&.id
     end
     redirect_to news_item.url
   end
@@ -77,7 +77,7 @@ class NewsItemsController < ApplicationController
   private
 
   def bot?
-    IPCat.datacenter?(request.ip) || request.bot?
+    IPCat.datacenter?(request.ip) || request.bot? || request.referer.to_s["socialmediascanner.eset.com"]
   end
 
   def page

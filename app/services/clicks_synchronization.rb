@@ -26,6 +26,6 @@ class ClicksSynchronization
     if no_events_at_all.present?
       Ahoy::Visit.where(id: no_events_at_all).destroy_all
     end
-    Ahoy::Visit.where('started_at < ?', 3.months.ago).destroy_all
+    Ahoy::Visit.where('started_at < ?', 6.months.ago).destroy_all
   end
 end
