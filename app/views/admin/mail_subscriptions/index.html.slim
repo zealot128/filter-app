@@ -18,8 +18,7 @@ table.table.table-bordered.js-tablesorter
       th Status
       th.sorter-shortDate.dateFormat-ddmmyyyy Letzte empfangene Mail
       th.sorter-shortDate.dateFormat-ddmmyyyy Letzte Öffnung
-      th ∑ Klicks
-      th ∑ Klicks aktuell<abbr title='letzter Monat'>*</abbr>
+      th
   tbody
     - @subscriptions.each do |s|
       tr
@@ -32,8 +31,6 @@ table.table.table-bordered.js-tablesorter
         td = s.status
         td = (d=s.last_send_date) && d.to_date
         td = s.histories.max('opened_at')&.to_date
-        td = s.histories.sum('click_count')
-        td = s.histories.where('opened_at > ?', 1.month.ago).sum('click_count')
         td
           - if s.unconfirmed?
             = link_to [:confirm, :admin, s], data: {method: :post}, class: 'btn btn-default btn-sm' do
