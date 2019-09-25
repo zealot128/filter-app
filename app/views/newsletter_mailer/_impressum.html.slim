@@ -5,9 +5,9 @@ table.row: tr
     td
 
       - if @tracking_token
-        img(src='#{image_url("/mt/gif/#{@tracking_token}.png")}' width='280' height='68' alt="HRfilter.de-Logo")
+        img(src='#{image_url("/mt/gif/#{@tracking_token}.png")}' width='280' height='68' alt="#{Setting.site_name}-Logo")
       - else
-        = image_tag image_url("#{key}/logo-large.png"), width: 280, height: 68, alt: "HRfilter.de-Logo"
+        = image_tag image_url("#{key}/logo-large.png"), width: 280, height: 68, alt: "#{Setting.site_name}-Logo"
     td.expander
   td.wrapper.last: table.six.columns: tr
     td

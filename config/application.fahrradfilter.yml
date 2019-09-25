@@ -1,6 +1,7 @@
 default: &default
   site_name: 'Fahrrad-filter.de'
   short_name: 'Fahrrad-filter'
+  topic_short: Fahrrad
   from: 'noreply@fahrrad-filter.de'
   key: 'fahrrad-filter'
   email: 'info@example.com'

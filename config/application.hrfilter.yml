@@ -1,6 +1,7 @@
 default: &default
   site_name: 'HRfilter.de'
   short_name: 'HRfilter'
+  topic_short: HR
   from: 'noreply@hrfilter.de'
   key: 'hrfilter'
   email: 'info@example.com'
