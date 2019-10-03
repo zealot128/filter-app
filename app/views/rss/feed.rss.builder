@@ -6,6 +6,7 @@ xml.rss(version: "2.0",
     xml.lastBuildDate Time.zone.now
     xml.tag!('atom:link', rel: 'self', type: 'application/rss+xml', href: request.path)
     @news_items.each do |ni|
+      next if ni.title.nil?
       xml.item do
         xml.title ni.title + " (#{ni.source.name})"
         xml.link click_proxy_url(ni)
