@@ -53,6 +53,10 @@ class LinkExtractor
 
   def run(url, close_connection: true, &block)
     @m.get(url.to_s)
+    if @m.page.is_a?(Mechanize::Image)
+      @image_url = url
+      return false
+    end
     if successful?
       if block_given?
         block.call(result)
@@ -78,7 +82,10 @@ class LinkExtractor
     @teaser ||=
       @m.page.parser.xpath('//meta[@property="og:description"]').first&.[]('content') ||
       @m.page.parser.xpath('//meta[@name="description"]').first&.[]('content') ||
-      ActionController::Base.helpers.truncate( ActionController::Base.helpers.truncate.strip_tags(full_text), length: 400, separator: ' ', escape: false)
+      begin
+        stripped = ActionController::Base.helpers.strip_tags(full_text)
+        ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
+      end
   end
 
   def successful?
@@ -114,7 +121,9 @@ class LinkExtractor
   end
 
   def title
-    @title ||= @m.page.title
+    @title ||=
+      @m.page.parser.xpath('//meta[@property="og:title"]').first&.[]('content') ||
+      @m.page.title
   end
 
   def clean_url

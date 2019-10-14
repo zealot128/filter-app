@@ -1,7 +1,7 @@
 class AdLogic
   class << self
     def enabled?
-      Setting.key == 'hrfilter'
+      Setting.key == 'hrfilter' && Setting.get('promoted_feed_id')
     end
 
     def events
@@ -13,7 +13,7 @@ class AdLogic
     end
 
     def third_party_news
-      Source.find(Setting.promoted_feed_id).news_items
+      Source.find(Setting.get('promoted_feed_id')).news_items
     end
 
     def toc_title

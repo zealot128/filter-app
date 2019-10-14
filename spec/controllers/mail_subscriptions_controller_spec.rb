@@ -15,10 +15,11 @@ describe MailSubscriptionsController do
     Category.create!(name: 'Recruiting', keywords: 'Headhunter')
   }
 
-  specify 'newsletter after subscription after 9am Monday' do
+  specify 'newsletter after subscription after 9am Monday', freeze_time: '2019-10-18 12:00' do
     VCR.use_cassette 'events' do
       ms = MailSubscription.create!(subscription)
       post :confirm, params: { id: ms.token }
+      expect(ms.reload.confirmed?).to be == true
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
   end
