@@ -52,7 +52,7 @@ class TwitterProcessor < BaseProcessor
     item.url = response.clean_url
     item.full_text = response.full_text
     item.title = response.title || tweet.attrs[:full_text] || tweet.text
-    item.teaser = tweet.attrs[:full_text].gsub(%r{https?://[^ ]+}, '')
+    item.teaser = response.teaser.presence || tweet.attrs[:full_text].gsub(%r{https?://[^ ]+}, '')
     item.rescore!
 
     if response && (img = response.image_blob)

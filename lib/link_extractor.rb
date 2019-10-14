@@ -1,5 +1,7 @@
+require 'premailer/html_to_plain_text'
 class LinkExtractor
-  RULES = %w[
+  include HtmlToPlainText
+  ARTICLE_RULES = %w[
     .entry-content
     .post-content
     #main-content
@@ -8,7 +10,6 @@ class LinkExtractor
     .node-content
     .transcript
     #articleContent
-    #content
     [itemprop=articleBody]
     .articleBody
     .postContent
@@ -18,10 +19,16 @@ class LinkExtractor
     .content
     .post
     .entry
-    article
+    .article-content
     .article
+  ].freeze
+
+  RULES = %w[
     main
     section
+    article
+    #content
+    .content
   ].freeze
 
   def self.run(url, close_connection: true)
@@ -44,11 +51,34 @@ class LinkExtractor
     @m.shutdown
   end
 
-  def run(url, close_connection: true)
+  def run(url, close_connection: true, &block)
     @m.get(url.to_s)
-
+    if successful?
+      if block_given?
+        block.call(result)
+      else
+        result
+      end
+    end
+  ensure
     shutdown! if close_connection
-    successful?
+  end
+
+  def result
+    {
+      title: title,
+      teaser: teaser,
+      image_url: image_url,
+      full_text: full_text,
+      clean_url: clean_url
+    }
+  end
+
+  def teaser
+    @teaser ||=
+      @m.page.parser.xpath('//meta[@property="og:description"]').first&.[]('content') ||
+      @m.page.parser.xpath('//meta[@name="description"]').first&.[]('content') ||
+      ActionController::Base.helpers.truncate( ActionController::Base.helpers.truncate.strip_tags(full_text), length: 400, separator: ' ', escape: false)
   end
 
   def successful?
@@ -76,24 +106,26 @@ class LinkExtractor
     return @full_text if @full_text
     return unless @m.page.respond_to?(:search)
 
-    if (html = @m.page.search(RULES.join(', ')).max_by { |f| f.text.gsub(/\s+/, ' ').strip.length })
+    if (html = @m.page.search(ARTICLE_RULES.join(', ')).max_by { |f| f.text.gsub(/\s+/, ' ').strip.length })
+      @full_text = clear(html.to_s)
+    elsif (html = @m.page.search(RULES.join(', ')).max_by { |f| f.text.gsub(/\s+/, ' ').strip.length })
       @full_text = clear(html.to_s)
     end
   end
 
   def title
-    @m.page.title
+    @title ||= @m.page.title
   end
 
   def clean_url
-    @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source)=[^&]+/, '').remove(/\?$/)
+    @clean_url ||= @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source)=[^&]+/, '').remove(/\?$/)
   end
 
   private
 
   def clear(text)
     doc = Nokogiri::HTML.fragment(text)
-    doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer').each(&:remove)
+    doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer, .sr-only, .share-buttons').each(&:remove)
     doc.search('a[href*="facebook.com/shar"], a[href*="twitter.com/intent"]').each(&:remove)
     s = doc.to_s.gsub(/\s+/, ' ')
     sanitize s, attributes: %w(href src), tags: %w[li ul strong b i em ol br p a img]
