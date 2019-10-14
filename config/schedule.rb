@@ -26,6 +26,10 @@ every :monday, at: '9am' do
   runner 'CATCH_ALL { Newsletter::Mailing.cronjob }'
 end
 
+every :day, at: '9am' do
+  runner 'CATCH_ALL { Newsletter::Inactivity.cronjob }'
+end
+
 every 1.day, at: '04:12' do
   runner 'CATCH_ALL { ClicksSynchronization.run }'
 end

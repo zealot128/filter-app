@@ -1,6 +1,5 @@
 module Newsletter
   class Inactivity
-
     REMINDERS = [
       { time: 14.days, key: 'reminder_mail_14_days_' },
       { time: 3.days, key: 'reminder_mail_3_days_' },
