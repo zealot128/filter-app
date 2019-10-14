@@ -33,6 +33,8 @@ module Newsletter
       return if clicked_in_time_frame?
 
       if shall_unsubscribe_now?
+        # nicht an 2 aufeinanderfolgenden Tagen
+        return if @mail_subscription.last_reminder_sent_at >= 1.day.ago.to_date
         email = SubscriptionMailer.unsubscribe_mail(@mail_subscription,
                                                     subject: replace_tokens(Setting.get('reminder_unsubscribe_notice_subject')),
                                                     body: replace_tokens(Setting.get('reminder_unsubscribe_notice_body')))

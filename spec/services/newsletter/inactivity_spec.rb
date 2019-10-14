@@ -8,6 +8,31 @@ RSpec.describe Newsletter::Inactivity do
   let(:delete_date) { Time.zone.now }
   let!(:mail_subscription) { Fabricate(:mail_subscription, created_at: delete_date - 12.months) }
 
+  specify 'Integration in bestehendes System. Lange abgemeldete Nutzer neu erinnern' do
+    mail_subscription.update(created_at: 2.years.ago)
+    Newsletter::Inactivity.cronjob
+    Newsletter::Inactivity.cronjob
+    expect(ActionMailer::Base.deliveries.count).to be == 1
+    expect(mail_subscription.reload).to_not be_unsubscribed
+    Timecop.travel 2.weeks.from_now do
+      Newsletter::Inactivity.cronjob
+      Newsletter::Inactivity.cronjob
+      expect(ActionMailer::Base.deliveries.count).to be == 2
+      expect(mail_subscription.reload).to_not be_unsubscribed
+    end
+    Timecop.travel 3.weeks.from_now do
+      Newsletter::Inactivity.cronjob
+      Newsletter::Inactivity.cronjob
+      expect(ActionMailer::Base.deliveries.count).to be == 3
+      expect(mail_subscription.reload).to_not be_unsubscribed
+    end
+    Timecop.travel 4.weeks.from_now do
+      Newsletter::Inactivity.cronjob
+      expect(ActionMailer::Base.deliveries.count).to be == 4
+      expect(mail_subscription.reload).to be_unsubscribed
+    end
+  end
+
   specify 'integrationstest - Neue Nutzer fruehestens nach 6 Monaten - 14 Tage erinnern', type: :request do
     Timecop.travel 14.days.ago do
       Newsletter::Inactivity.cronjob
@@ -60,7 +85,9 @@ RSpec.describe Newsletter::Inactivity do
       Newsletter::Inactivity.cronjob
       expect(ActionMailer::Base.deliveries.count).to be == 3
     end
-    Newsletter::Inactivity.cronjob
+    Timecop.travel 1.day.from_now do
+      Newsletter::Inactivity.cronjob
+    end
     expect(ActionMailer::Base.deliveries.count).to be == 4
     expect(mail_subscription.reload).to be_unsubscribed
   end
