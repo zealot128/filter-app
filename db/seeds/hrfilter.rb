@@ -12,8 +12,8 @@ FeedSource.create url: "http://www.online-recruiting.net/feed/", name: "Online-R
   FeedSource.create url: "http://www.secretsites.de/joblog/feed/", name: "JOBlog - Der Jobbörsen- und Karriere-Blog", value: 3
   FeedSource.create url: "http://crosswater-job-guide.com/feed", name: "Crosswater Job Guide", value: 4
   FeedSource.create url: "http://www.experteer-blog.de/feed/", name: "Experteer Blog - Karrieren für Deutschlands beste Köpfe", value: 5
-  FeedSource.create url: "http://blog.recrutainment.de/category/erecruiting/feed", name: "eAssessment, SelfAssessment & Employer Branding Blog - Kategorie eRecruiting", value: 6
-  FeedSource.create url: "http://blog.recrutainment.de/category/fachartikel-eassessment/feed", name: "eAssessment, SelfAssessment & Employer Branding Blog - Kategorie Fachartikel", value: 6
+  FeedSource.create url: "http://blog.recrutainment.de/category/erecruiting/feed", name: "eAssessment, SelfAssessment & Employer Branding Blog - Thema eRecruiting", value: 6
+  FeedSource.create url: "http://blog.recrutainment.de/category/fachartikel-eassessment/feed", name: "eAssessment, SelfAssessment & Employer Branding Blog - Thema Fachartikel", value: 6
   FeedSource.create url: "http://www.personalmarketingblog.de/feed", name: "Personalmarketingblog", value: 5
   FeedSource.create url: "http://personalmarketing2null.de/feed", name: "personalmarkting2null", value: 5
   FeedSource.create url: "http://www.der-hr-blog.de/feed/", name: "Der HR Blog", value: 5

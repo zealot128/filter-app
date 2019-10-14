@@ -75,7 +75,7 @@
     .panel-body
       = f.input :comment, label: "Interner Kommentar"
       = f.input :language, as: :select, collection: ['german', 'english', 'other'], hint: "Hauptsprache der News in dieser Quelle, nur deutsche News werden im Twitterkanal veröffentlicht."
-      = f.input :default_category_id, as: :select, collection: Category.sorted.all, label: 'Standardkategorie', hint: "Alle News aus der Quelle IMMER auch dieser Kategorie zuordnen"
+      = f.input :default_category_id, as: :select, collection: Category.sorted.all, label: 'Standard-Thema', hint: "Alle News aus der Quelle IMMER auch diesem Thema zuordnen"
 
   = f.submit class: 'btn btn-primary'
 

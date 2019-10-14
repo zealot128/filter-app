@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @title = "Alle Kategorien auf #{Setting.site_name}"
+    @title = "Alle Themen auf #{Setting.site_name}"
 
     @categories = Category.all.order('name')
   end

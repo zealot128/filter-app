@@ -1,7 +1,7 @@
 div(style='text-align: center')
   h2 Vorschau Ihres Abonnenments
   p Zum Anpassen gehen nutzen Sie einfach den Zurück-Knopf Ihres Browser. Falls Ihnen die Einstellungen zusagen können Sie jetzt abonnieren:
-  p Hier sehen Sie eine mögliche Version des #{Setting.site_name} unter Rücksicht Ihrer getätigten Einstellungen. Mit Klick auf Newsletter abonnieren, erhalten Sie tagaktuelle #{Setting.topic_short}-News aus Ihren ausgewählten #{Setting.topic_short}-Kategorien in Ihr E-Mail-Postfach. Mit Klick auf Zurück können Sie ihre Einstellungen erneut bearbeiten.
+  p Hier sehen Sie eine mögliche Version des #{Setting.site_name} unter Rücksicht Ihrer getätigten Einstellungen. Mit Klick auf Newsletter abonnieren, erhalten Sie tagaktuelle #{Setting.topic_short}-News aus Ihren ausgewählten #{Setting.topic_short}-Themen in Ihr E-Mail-Postfach. Mit Klick auf Zurück können Sie ihre Einstellungen erneut bearbeiten.
 div.sticky-form
   = simple_form_for @subscription do |f|
     - [:email, :gender, :academic_title, :first_name, :last_name, :company, :position, :extended_member, :interval, :limit].each do |k|

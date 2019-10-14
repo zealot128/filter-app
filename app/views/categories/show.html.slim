@@ -21,14 +21,14 @@ br
         |Die Neusten
     li.pull-right
       a class="btn btn-default source-modal-btn" data-target="#SourceModal" data-toggle="modal" type="button"
-        |Alle Quellen in dieser Kategorie
+        |Alle Quellen zu diesem Thema
 
 
   #SourceModal.modal.fade.bd-example-modal-lg role="dialog"
     .modal-dialog.modal-lg
       .modal-content
         .modal-header
-          h4.modal-title.source-modal-title Alle Quellen in dieser Kategorie
+          h4.modal-title.source-modal-title Alle Quellen zu diesem Thema
         .modal-body
           .row
             - @category.sources.all.uniq.each do |source|
@@ -51,7 +51,7 @@ br
                           = truncate(ni.title, length: 60)
           .text-right
             button.btn.btn-default data-dismiss="modal" type="button" Schließen
-            
+
   br
 
   .row

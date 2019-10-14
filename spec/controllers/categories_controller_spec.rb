@@ -4,7 +4,7 @@ describe CategoriesController do
   specify '#index' do
     get :index
     expect(response).to be_successful
-    expect(response.body).to include "Alle Kategorien auf"
+    expect(response.body).to include "Alle Themen auf"
   end
 
   specify '#show' do

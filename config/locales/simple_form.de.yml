@@ -7,7 +7,7 @@ de:
         comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden?'
       source:
         deactivated: Import deaktiviert, nicht in Newsletter anzeigen. Quelle und vorhandene News bleiben aufrufbar und durchsuchbar
-        default_category: News aus dieser Quelle kriegen immer mindestens diese Kategorie
+        default_category: News aus dieser Quelle kriegen immer mindestens dieses Thema
         multiplicator: Alle Likes etc. werden damit multipliziert
         value: Standardvertrauen / Bias
         full_text_selector: (nur bei Feeds) CSS-Selektor für den Hauptcontent. Falls befüllt wird Links im Feed gefolgt und Content aus der Seite extrahiert.
