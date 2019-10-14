@@ -8,7 +8,6 @@ class InitialImport
     ms.first_name ||= @data[:vorname]
     ms.last_name ||= @data[:nachname]
     ms.gender ||= @data[:anrede] == 'Herr' ? 'male' : 'female'
-    ms.extended_member = true
     ms.confirmed ||= true
     ms.limit ||= 50
     if ms.persisted?

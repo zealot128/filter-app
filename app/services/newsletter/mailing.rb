@@ -108,7 +108,8 @@ module Newsletter
           end
           s.reject! { |i| i.news_items.count == 0 }
           @new_categories = Category.where('created_at between ? and ?', *interval) - categories
-          if @subscription.extended_member?
+          # Werbeblock
+          if AdLogic.enabled?
             section = ExtendedMemberSection.new(self)
             if section.news_items.any?
               s.prepend(section)

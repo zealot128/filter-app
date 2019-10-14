@@ -16,7 +16,6 @@
 #  academic_title          :string
 #  company                 :string
 #  position                :string
-#  extended_member         :boolean          default(FALSE)
 #  deleted_at              :datetime
 #  status                  :integer          default("unconfirmed")
 #  remembered_at           :datetime
@@ -93,7 +92,6 @@ class MailSubscription < ApplicationRecord
   def destroy
     self.email = "deleted_#{id}_#{email}"
     self.gender = nil
-    self.extended_member = false
     self.status = 'unsubscribed'
     self.first_name = nil
     self.last_name = nil

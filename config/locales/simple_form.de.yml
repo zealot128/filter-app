@@ -1,8 +1,6 @@
 de:
   simple_form:
     hints:
-      mail_subscription:
-        extended_member: "Als Mitglied oder Interessent des <a href='https://www.empfehlungsbund.de'>Empfehlungsbunds</a> erhalten Sie exklusive Informationen für Mitglieder."
       submit_source:
         comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden?'
       source:
@@ -28,7 +26,6 @@ de:
         categories: Themen
         company: Firma/Organisation
         email: E-Mail
-        extended_member: Empfehlungsbund-Mitglied
         first_name: Vorname
         gender: Geschlecht/Anrede
         interval: Sendungshäufigkeit
@@ -38,9 +35,6 @@ de:
         privacy: Die <a href='/datenschutz' target='_blank'>Datenschutzerklärung</a> habe ich zur Kenntnis genommen und erkläre hierzu mein Einverständnis. Ich bin mit der Speicherung meiner personenbezogenen Daten zur Nutzung von %{site_name} einverstanden. Ich kann diese Einwilligung jederzeit per E-Mail an %{email} widerrufen.
     options:
       mail_subscription:
-        extended_member:
-          true: Ja
-          false: Nein
         interval:
           weekly: Wöchentlich
           biweekly: Alle 2 Wochen

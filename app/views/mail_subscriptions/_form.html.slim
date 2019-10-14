@@ -16,8 +16,6 @@ h4 Angaben zum Inhalt
 .row
   .col-sm-6
     = f.input :categories, collection: Category.select_collection, as: :check_boxes
-    - if AdLogic.enabled?
-      = f.input :extended_member, as: :boolean
   .col-sm-6
     = f.input :interval, as: :radio_buttons, collection: [:weekly, :biweekly, :monthly]
     = f.input :limit, as: :radio_buttons, collection: %w[10 25 50 100]

@@ -45,7 +45,6 @@ Fabricator(:mail_subscription) do
   categories {
     [Fabricate(:category).id]
   }
-  extended_member true
   email 'info@example.com'
   status 'confirmed'
   first_name 'John'
