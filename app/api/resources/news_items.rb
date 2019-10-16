@@ -2,6 +2,7 @@ class Resources::NewsItems < Grape::API
   include BaseApi
   namespace :news_items do
     params do
+      optional :from, Date
       optional :to, Date
       optional :page, Integer, default: 1
       optional :limit, Integer, default: 30
@@ -11,10 +12,15 @@ class Resources::NewsItems < Grape::API
       optional :teaser_enabled, Boolean
       optional :image_exists, Boolean
       optional :categories, String
+      optional :topic, String
       optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
+      optional :query, String, desc: "Search Termin"
     end
     get '/' do
       filter = NewsFilter.new(
+        to: params[:to],
+        query: params[:query],
+        from: params[:from],
         preferred: params[:preferred],
         blacklisted: params[:blacklisted],
         teaser_enabled: params[:teaser_enabled],
@@ -22,6 +28,7 @@ class Resources::NewsItems < Grape::API
         per_page: params[:limit],
         page: params[:page],
         categories: params[:categories],
+        trend: params[:trend],
         order: params[:order]
       )
       @news_items = filter.news_items

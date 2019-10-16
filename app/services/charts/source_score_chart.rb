@@ -21,6 +21,11 @@ module Charts
         chart: {
           zoomType: 'x'
         },
+        plotOptions: {
+          series: {
+            animation: false,
+          }
+        },
         yAxis: {
           title: { text: nil },
           visible: false

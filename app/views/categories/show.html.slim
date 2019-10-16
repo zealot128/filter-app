@@ -1,3 +1,4 @@
+- @container_class = 'container-fluid'
 - content_for :content_header do
   .content-header
     .container
@@ -9,53 +10,8 @@
 br
 br
 
-.container
-  ul.nav.nav-pills.category-menu
-    li
-      h3 Welche News möchten sie sehen?
-    li class='#{"active" if params[:sort].nil? || params[:sort] == "best"}'
-      a href="#{category_path(@category, sort: 'best')}" role="button"
-        |Die Besten
-    li class='#{"active" if params[:sort] == "recent"}'
-      a href="#{category_path(@category, sort: 'recent')}" role="button"
-        |Die Neusten
-    li.pull-right
-      a class="btn btn-default source-modal-btn" data-target="#SourceModal" data-toggle="modal" type="button"
-        |Alle Quellen zu diesem Thema
+- params = { categories: @category.id }
 
+news-item-wall(data-params="#{params.to_json}" data-default-order='week_best' data-sort-options='all')
 
-  #SourceModal.modal.fade.bd-example-modal-lg role="dialog"
-    .modal-dialog.modal-lg
-      .modal-content
-        .modal-header
-          h4.modal-title.source-modal-title Alle Quellen zu diesem Thema
-        .modal-body
-          .row
-            - @category.sources.all.uniq.each do |source|
-              .col-md-6.col-sm-6
-                .panel.panel-default
-                  .panel-heading
-                    - if source.logo.exists?
-                      = image_tag source.logo.url(:thumb)
-                      = ' '
-                    = link_to source.name, source_path(source)
-                  .panel-body
-                    small
-                      | #{source.news_items.count} Beiträge insgesamt
-                      - if source.news_items.current.any?
-                        = ', Aktuell:'
-                    br
-                    ul
-                      - source.news_items.current.sorted.limit(5).each do |ni|
-                        li title="#{ni.title}"
-                          = truncate(ni.title, length: 60)
-          .text-right
-            button.btn.btn-default data-dismiss="modal" type="button" Schließen
-
-  br
-
-  .row
-    = render partial: "news_item", collection: @news_items
-
-  .text-center
-    = will_paginate @news_items, renderer: BootstrapPagination::Rails
+= javascript_packs_with_chunks_tag 'application'

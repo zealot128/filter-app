@@ -1,35 +1,39 @@
-.row
-  .col-sm-6
-    .text-center
+- @container_class = 'container-fluid'
+- content_for :content_header do
+  .content-header
+    .container
+      - if can?(:edit, @source)
+        .panel.panel-danger.pull-right(style='width: 200px')
+          .panel-heading
+            h3.panel-title Admin
+          .panel-body
+            = link_to edit_admin_source_path(@source), class: 'btn btn-primary' do
+              |Bearbeiten
       h1
         small Quelle
         br
         = ' '
         = @source.name
-  .col-sm-6
-    - if can?(:edit, @source)
-      .panel.panel-danger
-        .panel-heading
-          h3.panel-title Admin
-        .panel-body
-          = link_to edit_admin_source_path(@source), class: 'btn btn-primary' do
-            |Bearbeiten
-    .panel.panel-default
-      .panel-body style='height: auto'
+.container: .panel.panel-default(style='margin-top: 30px')
+  .panel-body style='height: auto;'
+    .row
+      .col-sm-6
         dl
           dt Indiziert seit
           dd = l @source.created_at.to_date
-          dt Beiträge insgesamt
-          dd
-            = @count
-            small<
-              | (#{@avg} / Woche)
           - if @source.is_a?(FeedSource) and !@source.remote_url[/feedburner|soundcloud/i]
             dt Homepage
             dd = link_to l=homepage(@source.remote_url), l
           dt Quelle / Feed
           dd = link_to @source.remote_url, @source.remote_url
-          dt Themenfelder
+      .col-sm-6
+        dl
+          dt Beiträge insgesamt
+          dd
+            = @count
+            small<
+              | (#{@avg} / Woche)
+          dt Themen
           dd
             ul.list-inline
               - @categories.each do |category,count|
@@ -47,18 +51,8 @@ br
   .js-chart data-hc=(Charts::SourceScoreChart.new(@source).to_highcharts.to_json) style='height: 200px'
 
 - if @news_items.any?
-  h3 Beiträge
-  .row
-    - @news_items.each do |ni|
-      .col-lg-3.col-sm-6
-        = render ni
+  h3.text-center Beiträge
+  - params = { source_id: @source.id }
+  news-item-wall(data-params="#{params.to_json}" data-default-order='newest')
 
-- content_for :content_footer do
-  .content-header: .container
-    - if @source.news_items.any?
-      h3 Alle News von <strong>#{@source.name}</strong> durchsuchen
-      = form_tag search_source_path(@source), class: 'form-inline', method: :get do
-        .form-group
-          = text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Suchbegriff'
-        = ' '
-        input.btn.btn-primary type='submit' value='Suchen'
+= javascript_packs_with_chunks_tag 'application'

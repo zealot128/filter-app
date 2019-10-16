@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "^4.0.7",
+    "babel-eslint": "^10.0.3",
+    "highcharts": "^7.2.0",
+    "uiv": "^0.33.0",
+    "vue": "^2.6.10",
+    "vue-highcharts": "^0.1.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-vue": "^5.2.3",
+    "vue-eslint-parser": "^6.0.4",
+    "webpack-dev-server": "^3.8.2"
+  }
+}

@@ -7,7 +7,7 @@ export RAILS_ENV=test
 rvm use `cat .ruby-version`
 gem install bundler --no-ri --no-rdoc
 
-# yarn config set cache-folder .yarn
+yarn config set cache-folder .yarn
 bundle --jobs $(nproc) --path=/cache/bundler --without production
 
 cp config/application.hrfilter.yml config/application.yml
@@ -17,7 +17,8 @@ cp config/database.yml.gitlab config/database.yml
 bundle exec rake db:create RAILS_ENV=test
 bundle exec rake db:schema:load RAILS_ENV=test
 
-# yarn
+yarn
+
 # NODE_ENV=test RAILS_ENV=test bundle exec rails webpacker:compile
 
 #bundle exec rspec --color --tty --failure-exit-code 0

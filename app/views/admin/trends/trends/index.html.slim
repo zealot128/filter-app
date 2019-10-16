@@ -15,6 +15,8 @@ table.table
         br
         small.text-muted = trend.words.map(&:word).join(', ')
       td
-        = link_to [:edit, :admin, trend] do
+        = link_to trend_path(trend.slug), class: 'btn btn-primary btn-sm' do
+          |Trend-Seite
+        = link_to [:edit, :admin, trend], class: 'btn btn-default btn-sm' do
           |bearbeiten
 

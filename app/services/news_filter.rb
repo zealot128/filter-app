@@ -1,5 +1,6 @@
 class NewsFilter
   include ActiveModel::Model
+  attr_accessor :query
   attr_accessor :per_page
   attr_accessor :preferred
   attr_accessor :blacklisted
@@ -8,6 +9,9 @@ class NewsFilter
   attr_accessor :image_exists
   attr_accessor :categories
   attr_accessor :order
+  attr_accessor :from
+  attr_accessor :to
+  attr_accessor :trend
 
   def news_items
     @news_items = NewsItem.sorted.visible.includes(:categories, :source).limit(@per_page).page(@page)
@@ -26,7 +30,7 @@ class NewsFilter
       @news_items = @news_items.reorder!(Arel.sql('absolute_score desc, published_at desc, news_items.id'))
     when 'best'
       @news_items = @news_items.
-        top_percent_per_day(4.weeks.ago, 0.3334, 8).
+        top_percent_per_day(6.months.ago, 0.3334, 8).
         reorder!(Arel.sql('published_at::date desc, absolute_score desc, published_at desc, news_items.id'))
     when 'newest'
       @news_items = @news_items.reorder!('published_at desc, id desc')
@@ -34,7 +38,7 @@ class NewsFilter
       @news_items = @news_items.reorder!('published_at asc, id desc')
     when 'week_best'
       @news_items = @news_items.
-        top_percent_per_week(8.weeks.ago, 0.3334, 15).
+        top_percent_per_week(6.months.ago, 0.3334, 15).
         reorder!(Arel.sql("to_char(published_at, 'IW/IYYY') desc, absolute_score desc, news_items.id"))
     when 'month_best'
       @news_items = @news_items.
@@ -63,6 +67,22 @@ class NewsFilter
                                       where news_item_id = news_items.id and
                                             category_id in (#{escape(@categories).join(',')})
                                       )})
+    end
+    if @trend.present?
+      @news_items = @news_items.where(id: Trends::Trend.find_by!(slug: @trend).words.joins(:usages).select('news_item_id'))
+    end
+    if @from.present?
+      from = Time.zone.parse(@from).to_date
+      @news_items = @news_items.where('published_at::date >= ?', from)
+    end
+    if @to.present?
+      to = Time.zone.parse(@to).to_date
+      @news_items = @news_items.where('published_at::date <= ?', to + 1)
+    end
+    if @query.present?
+      @news_items = @news_items.
+        search_full_text(@query).
+        with_pg_search_rank.where('rank > ?', 0)
     end
   end
 

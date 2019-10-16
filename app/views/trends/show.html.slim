@@ -1,0 +1,12 @@
+- @container_class = 'container-fluid'
+- content_for :content_header do
+  .content-header
+    .container
+      h1
+        = @title = "Thema: #{@trend.name.capitalize}"
+
+trend-page(data-trend='#{@trend.to_json}' data-chart='#{@chart.to_highcharts.to_json}')
+
+= javascript_packs_with_chunks_tag 'application'
+
+
