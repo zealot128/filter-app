@@ -12,6 +12,11 @@ rspec:
     - 'redis:3.0'
   script: bin/ci
   stage: test
+  cache:
+    key: "$CI_PROJECT_ID"
+    paths:
+      - node_modules/
+      - .yarn
 
 pronto:
   image: registry.pludoni.com/administrators/docker-images/code-quality:v2
