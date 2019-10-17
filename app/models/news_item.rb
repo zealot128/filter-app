@@ -236,6 +236,7 @@ class NewsItem < ApplicationRecord
       impression_count: impression_count,
       multiplicator: source.multiplicator,
       word_length: word_length,
+      title_length: title.to_s.length,
       categories: category_ids,
       # parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
       published_at: published_at.to_i,

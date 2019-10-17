@@ -31,6 +31,14 @@ class NewsItem::ScoringAlgorithm
 
     base *= data(:multiplicator)
 
+    # Abwertung von langen SEO Titel -> Je länger desto mehr Abwertung
+    # 101 -> 2% abwertung
+    # 150 -> 72% abwertung
+    # 200 -> 87% Abwertung
+    if data(:title_length) > 100
+      base *= 1 / 1.02**(data(:title_length) - 100)
+    end
+
     if data(:published_at) < @max_age
       time_factor = 0
     else
