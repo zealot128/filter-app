@@ -2,8 +2,8 @@
 image: registry.pludoni.com/administrators/docker-images/rails-base:v13
 
 stages:
-  - test
   - checks
+  - test
   - deploy
 
 rspec:
@@ -12,6 +12,7 @@ rspec:
     - 'redis:3.0'
   script: bin/ci
   stage: test
+  interruptible: true
   cache:
     key: "$CI_PROJECT_ID"
     paths:
@@ -20,11 +21,13 @@ rspec:
 
 pronto:
   image: registry.pludoni.com/administrators/docker-images/code-quality:v2
-  stage: test
+  stage: checks
   script: 'run'
+  interruptible: true
 
 bundle_audit:
   stage: checks
+  interruptible: true
   script: |
     gem install bundler-audit
     bundle-audit update
