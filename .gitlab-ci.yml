@@ -1,5 +1,5 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v12
+image: registry.pludoni.com/administrators/docker-images/rails-base:v13
 
 stages:
   - test
