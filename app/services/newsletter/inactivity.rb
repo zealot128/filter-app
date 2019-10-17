@@ -114,7 +114,7 @@ module Newsletter
         Rails.application.routes.url_helpers.reconfirm_mail_subscription_url(id: @mail_subscription.token, host: Setting.host, protocol: 'https')
 
       when 'letzte-oeffnung'
-        I18n.l(last_click_date)
+        I18n.l(last_click_date&.to_date)
 
       when 'abbestellen-link'
         Rails.application.routes.url_helpers.edit_mail_subscription_url(@mail_subscription.token, host: Setting.host, protocol: 'https')
