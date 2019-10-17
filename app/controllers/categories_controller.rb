@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @title = "Alle Themen auf #{Setting.site_name}"
+    @title = "Alle Kategorien auf #{Setting.site_name}"
 
     @categories = Category.all.order('name')
   end
@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
                     sql.top_percent_per_week(6.months.ago, 0.35, 50)
                   end
 
-    @title = "Alle News zum Thema #{@category.name}"
+    @title = "Alle News in der Kategorie #{@category.name}"
 
     @month = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
   end

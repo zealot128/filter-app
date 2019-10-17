@@ -1,6 +1,25 @@
 class Trends::Processor
   REGEX = /[^\p{word}-]/.freeze
 
+  def self.cronjob
+    process_week 1.day.ago
+
+    all = Trends::Word.
+      where('trends_usages.calendar_week = ?', 1.day.ago.strftime("%G%W")).
+      where(ignore: false).
+      joins(:usages).
+      group(:id).
+      order('count desc').
+      having('count(distinct source_id) >= 2').
+      limit(25).
+      select("trends_words.*, count(distinct source_id) as count")
+    words = []
+    words += all.trigram
+    words += all.bigram
+    words += all.single
+    TrendMailer.week_trends(words).deliver_now
+  end
+
   def self.process_week(date_in_week)
     news_this_week = NewsItem.where(created_at: date_in_week.to_time.all_week)
     news_this_week.each do |ni|

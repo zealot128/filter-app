@@ -14,11 +14,13 @@ class Admin::Trends::TrendsController < AdminController
     @other_words -= [@word]
     @other_words.uniq!
     @trend = Trends::Trend.new(name: @word.word, words: [@word])
+    @referer = URI.parse(request.referer).tap { |i| i.host = i.scheme = i.port = nil }.to_s if request.referer
+    @referer = params[:back] if params[:back]
   end
 
   def create
     if @trend.save
-      redirect_to '/admin/trends', notice: "saved"
+      redirect_to params[:back].presence || '/admin/trends', notice: "saved"
     else
       render html: "Nope", layout: true
     end

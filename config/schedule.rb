@@ -26,6 +26,10 @@ every :monday, at: '9am' do
   runner 'CATCH_ALL { Newsletter::Mailing.cronjob }'
 end
 
+every :monday, at: '7am' do
+  runner 'CATCH_ALL { Trends::Processor.cronjob }'
+end
+
 every :day, at: '9am' do
   runner 'CATCH_ALL { Newsletter::Inactivity.cronjob }'
 end

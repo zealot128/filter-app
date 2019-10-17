@@ -1,12 +1,11 @@
-
 = render "admin/trends/nav"
 
-h2 Top Trends KW #{@week}
+h2 Top Trends Monat #{@month.strftime("%m / %Y")}
 
 .row
   .col-sm-6
-    = link_to request.path + "?week=#{(params[:week] || 0).to_i + 1}"
-      |Vorherige Wochce
+    = link_to request.path + "?month=#{(params[:month] || 0).to_i + 1}"
+      |Vorheriger Monat
 .row
   .col-sm-4
     h3 Trigrams
@@ -19,4 +18,5 @@ h2 Top Trends KW #{@week}
   .col-sm-4
     h3 Wörter
     = render "table", items: @top_single
+
 

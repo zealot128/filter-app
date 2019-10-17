@@ -1,4 +1,5 @@
 = simple_form_for [:admin, @trend] do |f|
+  = hidden_field_tag "back", @referer
   = f.input :name
   = f.association :words, collection: [@word] + @other_words, as: :check_boxes, label_method: :word
   = f.input :extra_words, label: "Weitere Keywords zu diesem Thema (kommagetrennt)", as: :string

@@ -9,7 +9,7 @@ SimpleNavigation::Configuration.run do |navigation|
     end
     primary.dom_class = 'nav navbar-nav'
     primary.item :key_1, 'Tage', '/', {}
-    primary.item :key_3, 'Themen', '/kategorien', highlights_on: :subpath
+    primary.item :key_3, 'Kategorien', '/kategorien', highlights_on: :subpath
     primary.item :key_4, 'Suche', '/search', {}
     primary.item :key_5, 'Newsletter', '/newsletter', {}
     primary.item :key_7, 'Feeds', '/rss', {}
@@ -30,7 +30,10 @@ SimpleNavigation::Configuration.run do |navigation|
           sub_nav.item :key_2_1, 'Settings', admin_settings_path
         end
         if can?(:manage, Category)
-          sub_nav.item :key_2_2, 'Themen', admin_categories_path
+          sub_nav.item :key_2_2, 'Kategorien', admin_categories_path
+        end
+        if can?(:manage, Trends::Trend)
+          sub_nav.item :key_2_4, 'Trends', '/admin/trends'
         end
         if can?(:manage, MailSubscription)
           divider.call(sub_nav)

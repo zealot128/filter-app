@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   get "/app", to: "app#index"
 
   namespace :admin do
-    get 'trends' => 'trends/words#index'
+    get 'trends' => 'trends/words#index', as: :week_trends
+    get 'trends/months' => 'trends/words#months'
     namespace :trends do
       resources :trends
       resources :words do

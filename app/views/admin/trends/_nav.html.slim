@@ -1,0 +1,8 @@
+ul.nav.nav-pills
+  li.nav.nav-item(class='#{"active" if request.path[%r{/admin/trends$}]}')
+    a.nav-link(href='/admin/trends') Neue Trends finden (Wochenansicht)
+  li.nav.nav-item(class='#{"active" if request.path[%r{/admin/trends/months$}]}')
+    a.nav-link(href='/admin/trends/months') Neue Trends finden (Monatsansicht)
+  li.nav.nav-item(class='#{"active" if request.path["/admin/trends/trends"]}')
+    a.nav-link(href='/admin/trends/trends') Trends verwalten
+hr
