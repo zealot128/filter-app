@@ -8,7 +8,7 @@
           rel="noopener"
           :title="newsItem.title"
         >
-          {{ newsItem.title | truncate(70)}}
+          {{ newsItem.title | truncate(100)}}
         </a>
       </h3>
     </div>
@@ -18,7 +18,7 @@
       </div>
       <div class="background-text">
         <p class="source"></p>
-        <span>{{ newsItem.teaser }}</span>
+        <span v-if='!lsr'>{{ newsItem.teaser }}</span>
       </div>
       <div class="fog-fade"></div>
     </div>
@@ -44,13 +44,16 @@ export default {
     newsItem: { type: Object, required: true }
   },
   computed: {
+    lsr() {
+      return this.newsItem.source.lsr_active
+    },
     url() {
       return this.newsItem.url.split('?')[0]
     },
     date() {
       const d = new Date(Date.parse(this.newsItem.published_at))
       const today = new Date
-      const month = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dez'][d.getMonth()]
+      const month = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'][d.getMonth()]
       let s = `${d.getDate()}. ${month}`
       if (d.getFullYear() !== today.getFullYear()) {
         s += " " + d.getFullYear()
@@ -58,7 +61,7 @@ export default {
       return s
     },
     hasImage() {
-      return this.newsItem.image && this.newsItem.image.full_url;
+      return this.newsItem.image && this.newsItem.image.full_url && !this.lsr;
     }
   }
 };
@@ -67,8 +70,5 @@ export default {
 <style scoped>
 .panel-footer {
   padding: 2px;
-}
-.panel-default.news-item-panel .panel-heading {
-  height: 60px;
 }
 </style>

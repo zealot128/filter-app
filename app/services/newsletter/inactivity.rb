@@ -120,7 +120,14 @@ module Newsletter
         Rails.application.routes.url_helpers.edit_mail_subscription_url(@mail_subscription.token, host: Setting.host, protocol: 'https')
 
       when 'loeschdatum'
-        I18n.l(unsubscribe_on.to_date)
+        d = if number_of_reminder == 0
+              14.days.from_now
+            elsif number_of_reminder == 1
+              3.days.from_now
+            else
+              unsubscribe_on
+            end
+        I18n.l(d.to_date)
 
       when 'wochen'
         ((Time.zone.today - last_click_date.to_date) / 7).floor

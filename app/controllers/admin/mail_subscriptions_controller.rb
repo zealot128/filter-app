@@ -1,7 +1,7 @@
 class Admin::MailSubscriptionsController < AdminController
   authorize_resource
   def index
-    @subscriptions = MailSubscription.order('created_at desc')
+    @subscriptions = MailSubscription.undeleted.order('created_at desc')
     respond_to do |f|
       f.html
       f.json {

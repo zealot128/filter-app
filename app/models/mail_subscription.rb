@@ -43,6 +43,7 @@ class MailSubscription < ApplicationRecord
   end
   scope :deleted, -> { where 'deleted_at is not null' }
   scope :inactive_for, -> { where('last_send_date > ?', (Setting.inactive_months.to_i).months) }
+  scope :undeleted, -> { where deleted_at: nil }
 
   validates :privacy, acceptance: true
 
