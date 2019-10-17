@@ -1,7 +1,7 @@
 class AdLogic
   class << self
     def enabled?
-      Setting.key == 'hrfilter' && Setting.get('promoted_feed_id')
+      Setting.key == 'hrfilter' && Setting.get('promoted_feed_id').present? && Setting.get('promoted_feed_id') != 0
     end
 
     def events

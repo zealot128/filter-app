@@ -9,4 +9,7 @@ RSpec.configure do |config|
   config.before(:each) do
     Sidekiq::Testing.fake!
   end
+  config.before(:all) do
+    Setting.read_yaml
+  end
 end
