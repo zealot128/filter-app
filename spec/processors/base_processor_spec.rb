@@ -37,5 +37,4 @@ describe BaseProcessor, type: :model do
       expect(NewsItem.first.full_text.length).to be > 200
     end
   end
-
 end

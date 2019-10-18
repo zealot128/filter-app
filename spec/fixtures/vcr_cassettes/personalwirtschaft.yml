@@ -2761,4 +2761,75 @@ http_interactions:
       string: '{"errors":[{"code":99,"message":"Unable to verify your credentials","label":"authenticity_token_error"}]}'
     http_version: 
   recorded_at: Wed, 18 Sep 2019 14:39:32 GMT
+- request:
+    method: head
+    uri: http://dlvr.it/RD2RH1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 301
+      message: Moved Permanently
+    headers:
+      Date:
+      - Fri, 18 Oct 2019 12:24:01 GMT
+      Content-Type:
+      - text/html; charset=UTF-8
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Location:
+      - https://www.personalwirtschaft.de/fuehrung/artikel/deutsche-arbeitnehmer-bemaengeln-fehlende-unterstuetzung-bei-digitaler-weiterbildung.html?utm_source=dlvr.it&utm_medium=twitter
+      Cache-Control:
+      - private; max-age=90
+      X-Backend-Server:
+      - web03
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 18 Oct 2019 12:24:01 GMT
+- request:
+    method: head
+    uri: https://www.personalwirtschaft.de/fuehrung/artikel/deutsche-arbeitnehmer-bemaengeln-fehlende-unterstuetzung-bei-digitaler-weiterbildung.html?utm_medium=twitter&utm_source=dlvr.it
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Fri, 18 Oct 2019 12:24:06 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Content-Length:
+      - '48186'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - private
+      Set-Cookie:
+      - BIGipServer~zone1-external~pool-vs-212.211.139.6_80=rd1574o00000000000000000000ffff0a31545bo80;
+        path=/; Httponly; Secure
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 18 Oct 2019 12:24:08 GMT
 recorded_with: VCR 4.0.0
