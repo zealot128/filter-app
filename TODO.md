@@ -1,5 +1,9 @@
 Trends:
 
+
+- TrendSeite - Keine Day -> Wochenansicht
+-
+
 - Trend show Seite mit to_url
   - Zeitverlauf = Google Trends
   - Alle News nach Datum sortiert

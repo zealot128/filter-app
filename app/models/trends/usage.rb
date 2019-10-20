@@ -8,11 +8,15 @@
 #  source_id     :bigint(8)
 #  calendar_week :string
 #  date          :date
+#  usage_type    :integer          default("title")
+#  dupe          :boolean          default(FALSE)
 #
 # Indexes
 #
+#  index_trends_usages_on_dupe          (dupe)
 #  index_trends_usages_on_news_item_id  (news_item_id)
 #  index_trends_usages_on_source_id     (source_id)
+#  index_trends_usages_on_usage_type    (usage_type)
 #  index_trends_usages_on_word_id       (word_id)
 #
 # Foreign Keys
@@ -25,6 +29,7 @@ class Trends::Usage < ActiveRecord::Base
   belongs_to :word, class_name: "Trends::Word"
   belongs_to :news_item
   belongs_to :source
+  enum usage_type: [:title, :plaintext]
 
   def self.find_trends
     weeks = Trends::Usage.group(:calendar_week).order('calendar_week desc').count.keys.take(12)

@@ -33,11 +33,13 @@
 #  youtube_likes               :integer          default(0)
 #  youtube_views               :integer          default(0)
 #  category_order              :integer          is an Array
+#  dupe_of_id                  :integer
 #
 # Indexes
 #
 #  index_news_items_on_absolute_score                   (absolute_score)
 #  index_news_items_on_absolute_score_and_published_at  (absolute_score,published_at)
+#  index_news_items_on_dupe_of_id                       (dupe_of_id)
 #  index_news_items_on_guid                             (guid)
 #  index_news_items_on_published_at                     (published_at)
 #  index_news_items_on_search_vector                    (search_vector) USING gin
@@ -133,6 +135,9 @@ class NewsItem < ApplicationRecord
       where('news_item_id is null').
       group('news_items.id')
   }
+  scope :without_dupes, -> {
+    where(dupe_of_id: nil)
+  }
 
   belongs_to :source
   has_and_belongs_to_many :categories
@@ -140,6 +145,9 @@ class NewsItem < ApplicationRecord
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
   has_many :referenced_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
   has_many :referencing_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
+  has_many :trend_usages, class_name: "Trends::Usage"
+  belongs_to :dupe_of, class_name: "NewsItem", optional: true, inverse_of: :dupes
+  has_many :dupes, class_name: "NewsItem", inverse_of: :dupe_of
 
   # before_save :categorize
   # before_save :filter_plaintext

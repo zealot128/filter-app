@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :words do
         member do
           patch :ignore
+          patch :merge
         end
       end
     end

@@ -1,3 +1,4 @@
+- @container_class = 'container-fluid'
 
 = render "admin/trends/nav"
 
@@ -8,15 +9,18 @@ h2 Top Trends KW #{@week}
     = link_to request.path + "?week=#{(params[:week] || 0).to_i + 1}"
       |Vorherige Wochce
 .row
-  .col-sm-4
+  .col-sm-3
+    h3 Quadrams
+    = render "table", items: @top_quadram
+
+  .col-sm-3
     h3 Trigrams
     = render "table", items: @top_trigram
 
-  .col-sm-4
+  .col-sm-3
     h3 Bigrams
     = render "table", items: @top_bigram
 
-  .col-sm-4
-    h3 Wörter
+  .col-sm-3
+    h3 Single
     = render "table", items: @top_single
-

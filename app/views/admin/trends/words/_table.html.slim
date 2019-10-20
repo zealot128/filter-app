@@ -5,11 +5,21 @@ table.table
       td = word.count
       td
         - if trend = @trends.find { |t| t.words.include?(word) }
-          = link_to [:edit, :admin, trend], class: 'btn btn-xs btn-primary' do
+          = link_to [:edit, :admin, trend], class: 'btn btn-xs btn-primary btn-block' do
             = trend.name
         - else
-          = link_to [:ignore, :admin, word], data: { method: :patch, remote: true }, class: 'btn btn-xs btn-default' do
+          = link_to [:ignore, :admin, word], data: { method: :patch, remote: true }, class: 'btn btn-xs btn-default btn-block' do
             |ignore
-          = link_to new_admin_trends_trend_path(word: word), class: 'btn btn-xs btn-default' do
+          = link_to new_admin_trends_trend_path(word: word), class: 'btn btn-xs btn-default btn-block' do
             |trend!
+          .dropdown
+            a.btn-block.btn.btn-xs.btn-default(data-toggle="dropdown" href='#')
+              |merge
+              span.caret
+            ul.dropdown-menu
+              - @trends.each do |m|
+                li
+                  = link_to merge_admin_trends_word_path(word, trend_id: m.id), data: { method: :patch, remote: true }
+                    = m.name
+
 

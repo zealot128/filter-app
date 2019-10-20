@@ -14,4 +14,9 @@ table.table
           |Trend-Seite
         = link_to [:edit, :admin, trend], class: 'btn btn-default btn-sm' do
           |bearbeiten
+      td
+        - chart = Charts::TrendChart.new(trend)
+        trend-flame-graph(data-trend='#{trend.to_json}' data-chart='#{chart.to_highcharts.to_json}')
+
+= javascript_packs_with_chunks_tag 'application'
 

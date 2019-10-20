@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_133221) do
+ActiveRecord::Schema.define(version: 2019_10_20_200151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -198,8 +198,10 @@ ActiveRecord::Schema.define(version: 2019_10_16_133221) do
     t.integer "youtube_likes", default: 0
     t.integer "youtube_views", default: 0
     t.integer "category_order", array: true
+    t.integer "dupe_of_id"
     t.index ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at"
     t.index ["absolute_score"], name: "index_news_items_on_absolute_score"
+    t.index ["dupe_of_id"], name: "index_news_items_on_dupe_of_id"
     t.index ["guid"], name: "index_news_items_on_guid"
     t.index ["published_at"], name: "index_news_items_on_published_at"
     t.index ["search_vector"], name: "index_news_items_on_search_vector", using: :gin
@@ -269,18 +271,23 @@ ActiveRecord::Schema.define(version: 2019_10_16_133221) do
     t.bigint "source_id"
     t.string "calendar_week"
     t.date "date"
+    t.integer "usage_type", default: 0
+    t.boolean "dupe", default: false
+    t.index ["dupe"], name: "index_trends_usages_on_dupe"
     t.index ["news_item_id"], name: "index_trends_usages_on_news_item_id"
     t.index ["source_id"], name: "index_trends_usages_on_source_id"
+    t.index ["usage_type"], name: "index_trends_usages_on_usage_type"
     t.index ["word_id"], name: "index_trends_usages_on_word_id"
   end
 
   create_table "trends_words", force: :cascade do |t|
     t.string "word"
-    t.integer "parent_id"
     t.boolean "ignore"
     t.integer "word_type", default: 0
     t.integer "trend_id"
+    t.index ["ignore"], name: "index_trends_words_on_ignore"
     t.index ["trend_id"], name: "index_trends_words_on_trend_id"
+    t.index ["word"], name: "index_trends_words_on_word", unique: true
   end
 
   create_table "users", force: :cascade do |t|

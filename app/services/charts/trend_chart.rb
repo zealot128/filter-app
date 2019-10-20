@@ -1,16 +1,20 @@
 module Charts
   class TrendChart
-    def initialize(trend)
+    def initialize(trend, time_window: 2.years.ago)
       @trend = trend
       @source_trend = @trend.words.joins(:usages).
-        where('date > ?', 2.years.ago).
-        group_by_day('trends_usages.date').count('distinct(source_id)').delete_if { |_k, v| v == 0 }
+        where('date > ?', time_window).
+        group_by_week('trends_usages.date').count('distinct(source_id)').delete_if { |_k, v| v == 0 }
       @ni_trend = @trend.words.joins(:usages).
-        where('date > ?', 2.years.ago).
-        group_by_day('trends_usages.date').count('distinct(news_item_id)').delete_if { |_k, v| v == 0 }
+        where('date > ?', time_window).
+        group_by_week('trends_usages.date').count('distinct(news_item_id)').delete_if { |_k, v| v == 0 }
     end
 
     def to_highcharts
+      p = @source_trend.map { |date, _count| date }
+      min = p.min
+      max = p.max
+      year_df = max.year - min.year
       {
         chart: {
           type: 'column',
@@ -31,6 +35,13 @@ module Charts
           pointFormat: '<b>{point.y} {series.name} </b>'
         },
         xAxis: {
+          plotLines: year_df.times.map { |i| max.year - i }.map { |year|
+            {
+              value: Date.new(year, 1, 1).to_datetime.to_i * 1000,
+              label: { text: year.to_s, fontSize: '8px' },
+              width: 2
+            }
+          },
           type: 'datetime',
           # categories: (@source_trend.keys + @ni_trend.keys).uniq.sort,
           labels: {
