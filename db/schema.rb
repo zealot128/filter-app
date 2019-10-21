@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_20_200151) do
+ActiveRecord::Schema.define(version: 2019_10_21_074403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -273,6 +273,8 @@ ActiveRecord::Schema.define(version: 2019_10_20_200151) do
     t.date "date"
     t.integer "usage_type", default: 0
     t.boolean "dupe", default: false
+    t.index ["calendar_week"], name: "index_trends_usages_on_calendar_week"
+    t.index ["date"], name: "index_trends_usages_on_date"
     t.index ["dupe"], name: "index_trends_usages_on_dupe"
     t.index ["news_item_id"], name: "index_trends_usages_on_news_item_id"
     t.index ["source_id"], name: "index_trends_usages_on_source_id"
@@ -288,6 +290,7 @@ ActiveRecord::Schema.define(version: 2019_10_20_200151) do
     t.index ["ignore"], name: "index_trends_words_on_ignore"
     t.index ["trend_id"], name: "index_trends_words_on_trend_id"
     t.index ["word"], name: "index_trends_words_on_word", unique: true
+    t.index ["word_type"], name: "index_trends_words_on_word_type"
   end
 
   create_table "users", force: :cascade do |t|

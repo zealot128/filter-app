@@ -10,9 +10,10 @@
 #
 # Indexes
 #
-#  index_trends_words_on_ignore    (ignore)
-#  index_trends_words_on_trend_id  (trend_id)
-#  index_trends_words_on_word      (word) UNIQUE
+#  index_trends_words_on_ignore     (ignore)
+#  index_trends_words_on_trend_id   (trend_id)
+#  index_trends_words_on_word       (word) UNIQUE
+#  index_trends_words_on_word_type  (word_type)
 #
 
 class Trends::Word < ActiveRecord::Base

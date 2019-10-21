@@ -33,11 +33,13 @@ class Admin::Trends::WordsController < AdminController
 
   def words!(scope, min: 2)
     usage_type = params[:usage_type] || 'title'
-    base = scope.
+    relevant = scope.
       where(ignore: false).
       joins(:usages).
+      where(trends_usages: { usage_type: Trends::Usage.usage_types[usage_type] })
+
+    base = relevant.
       group(:id).
-      where(trends_usages: { dupe: false, usage_type: Trends::Usage.usage_types[usage_type] }).
       order('count desc').
       having('count(distinct trends_usages.source_id) >= 3').
       limit(50).
@@ -45,6 +47,7 @@ class Admin::Trends::WordsController < AdminController
     @top_quadram = base.quadrogram
     @top_trigram = base.trigram
     @top_bigram = base.bigram
-    @top_single = base.single
+    @word_count = relevant.count('distinct trends_words.id')
+    @news_item_count = relevant.count('distinct news_item_id')
   end
 end

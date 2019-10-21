@@ -8,6 +8,15 @@ table.table
           = link_to [:edit, :admin, trend], class: 'btn btn-xs btn-primary btn-block' do
             = trend.name
         - else
+          - partial = @trends.select { |i| i.words.any? { |subword| word.word.include?(subword.word) || subword.word.include?(word.word) } }
+          - partial.each do |trend|
+            .btn-group.btn-block(style='display: flex')
+              = link_to [:edit, :admin, trend], class: 'btn btn-xs btn-info', style: 'flex-grow: 1' do
+                |partial:
+                = trend.name
+              = link_to merge_admin_trends_word_path(word, trend_id: trend.id), data: { method: :patch, remote: true }, class: 'btn btn-xs btn-primary'
+                |merge!
+
           = link_to [:ignore, :admin, word], data: { method: :patch, remote: true }, class: 'btn btn-xs btn-default btn-block' do
             |ignore
           = link_to new_admin_trends_trend_path(word: word), class: 'btn btn-xs btn-default btn-block' do
