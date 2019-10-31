@@ -30,7 +30,7 @@ class TwitterProcessor < BaseProcessor
   def process_tweet(tweet, follow_redirect: true)
     urls = tweet.urls.map { |i| i.expanded_url.to_s }
     urls = urls.map { |url|
-      if url[/dlvr.it|bit.ly|ow.ly|is.gd|buff.ly|iff.tt/] and follow_redirect
+      if url[/dlvr.it|bit.ly|ow.ly|is.gd|buff.ly|iff.tt|hbapp.handelsblatt.com|sz.de|spon.de/] and follow_redirect
         find_unshortened_url(url)
       else
         url
