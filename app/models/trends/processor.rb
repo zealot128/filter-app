@@ -37,17 +37,21 @@ class Trends::Processor
       group(:id).
       order('count desc').
       having('count(distinct source_id) >= 2').
-      limit(25).
+      limit(10).
       select("trends_words.*, count(distinct source_id) as count")
     words = []
+    words += all.quadrograms
     words += all.trigram
     words += all.bigram
-    words += all.single
     TrendMailer.week_trends(words).deliver_now
   end
 
   def self.process_week(date_in_week)
-    news_this_week = NewsItem.without_dupes.where(created_at: date_in_week.to_time.all_week)
+    news_this_week = NewsItem.
+      without_dupes.
+      where(trend_analyzed: false).
+      where(created_at: date_in_week.to_time.all_week)
+
     news_this_week.each do |ni|
       new(ni).run
     end
@@ -70,6 +74,7 @@ class Trends::Processor
       pl.remove!(%r{https?://[^\s,;\!]+})
       create_usages pl, :plaintext
     end
+    news_item.update(trend_analyzed: true)
   end
 
   def create_usages(text, usage_type)

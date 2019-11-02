@@ -34,6 +34,7 @@
 #  youtube_views               :integer          default(0)
 #  category_order              :integer          is an Array
 #  dupe_of_id                  :integer
+#  trend_analyzed              :boolean          default(FALSE)
 #
 # Indexes
 #
