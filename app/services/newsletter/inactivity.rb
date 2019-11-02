@@ -37,8 +37,8 @@ module Newsletter
         email = SubscriptionMailer.unsubscribe_mail(@mail_subscription,
                                                     subject: replace_tokens(Setting.get('reminder_unsubscribe_notice_subject')),
                                                     body: replace_tokens(Setting.get('reminder_unsubscribe_notice_body')))
-        @mail_subscription.destroy
         email.deliver_now
+        @mail_subscription.destroy
 
       elsif can_receive_next_reminder?
 

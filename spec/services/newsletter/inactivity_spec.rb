@@ -90,6 +90,10 @@ RSpec.describe Newsletter::Inactivity do
     end
     expect(ActionMailer::Base.deliveries.count).to be == 4
     expect(mail_subscription.reload).to be_unsubscribed
+    Timecop.travel 3.day.from_now do
+      Newsletter::Inactivity.cronjob
+    end
+    expect(ActionMailer::Base.deliveries.count).to be == 4
   end
 
   specify 'letzten Klick bzw. öfnnung aus History berücksichten'
