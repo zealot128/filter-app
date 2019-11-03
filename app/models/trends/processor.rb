@@ -108,16 +108,29 @@ class Trends::Processor
       }
     end
     all_words.each do |word|
-      tw = Trends::Word.create(word: word, ignore: false)
-      insert_statements << {
-        usage_type: usage_type,
-        dupe: @news_item.dupe_of_id.present?,
-        news_item_id: @news_item.id,
-        source_id: @news_item.source_id,
-        word_id: tw.id,
-        calendar_week: @calendar_week,
-        date: @news_item.published_at
-      }
+      begin
+        tw = Trends::Word.create(word: word, ignore: false)
+        insert_statements << {
+          usage_type: usage_type,
+          dupe: @news_item.dupe_of_id.present?,
+          news_item_id: @news_item.id,
+          source_id: @news_item.source_id,
+          word_id: tw.id,
+          calendar_week: @calendar_week,
+          date: @news_item.published_at
+        }
+      rescue ActiveRecord::RecordNotUnique
+        tw = Trends::Word.where(word: word).first!
+        insert_statements << {
+          usage_type: usage_type,
+          dupe: @news_item.dupe_of_id.present?,
+          news_item_id: @news_item.id,
+          source_id: @news_item.source_id,
+          word_id: tw.id,
+          calendar_week: @calendar_week,
+          date: @news_item.published_at
+        }
+      end
     end
     Trends::Usage.insert_all(insert_statements) if insert_statements.any?
   end
