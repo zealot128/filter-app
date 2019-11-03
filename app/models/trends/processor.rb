@@ -74,7 +74,7 @@ class Trends::Processor
       pl.remove!(%r{https?://[^\s,;\!]+})
       create_usages pl, :plaintext
     end
-    news_item.update(trend_analyzed: true)
+    @news_item.update(trend_analyzed: true)
   end
 
   def create_usages(text, usage_type)
