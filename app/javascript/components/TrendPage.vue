@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class='panel panel-default chart-panel'>
-      <Highcharts :options='chartOptions' />
+      <Highcharts :options='chartOptions' style='height: 200px'/>
     </div>
-    <NewsItemWall :params='params' />
+    <NewsItemWall :params='params' default-order='hot_score' sort-options='all'/>
   </div>
 </template>
 

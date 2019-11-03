@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "rss/weekly-top-50", to: 'rss#weekly_top_50', as: :weekly_top_50_rss
   get "rss/newest", to: 'rss#newest', as: :newest_rss
 
+  get '/js/trends' => 'trends#index'
   get '/trends/:slug' => 'trends#show', as: :trend
 
   get "/app", to: "app#index"

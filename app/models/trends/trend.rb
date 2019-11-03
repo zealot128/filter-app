@@ -16,6 +16,15 @@
 class Trends::Trend < ApplicationRecord
   has_many :words, class_name: "Trends::Word"
 
+  scope :top_of_n_days, ->(time, min_mentions) {
+    joins(words: :usages).
+      where('date >= ?', time).
+      group('trends_trends.id').
+      order('count desc').
+      having('count(distinct source_id) >= ?', min_mentions).
+      select('trends_trends.*, count(distinct source_id) as count')
+  }
+
   acts_as_url :name, url_attribute: :slug
   attr_accessor :extra_words
 

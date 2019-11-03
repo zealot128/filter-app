@@ -117,4 +117,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: h = Rails.application.secrets.domain_name }
   config.action_mailer.asset_host = "http://#{h}"
   config.lograge.enabled = true
+  config.log_level = :info
 end

@@ -66,6 +66,7 @@ export default {
         // options["best"] = "Top 30% je Tag";
         options.week_best = "Top 30% je Woche";
         options.month_best = "Top 30% je Monat";
+        options.hot_score = "Hot";
       }
       return options;
     },

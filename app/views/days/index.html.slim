@@ -30,9 +30,12 @@
   = render "layouts/job_carousel"
 
 - @container_class = ''
+br
+br
+.container-fluid: recent-trend-app
 .container
-  br
-  br
+  = javascript_packs_with_chunks_tag 'application'
+
   .text-center
     h3 Top-News der letzten Tage
 
