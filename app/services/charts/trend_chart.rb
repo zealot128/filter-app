@@ -12,8 +12,8 @@ module Charts
 
     def to_highcharts
       p = @source_trend.map { |date, _count| date }
-      min = p.min
-      max = p.max
+      min = p.min || Date.today
+      max = p.max || Date.today
       year_df = max.year - min.year
       {
         chart: {
