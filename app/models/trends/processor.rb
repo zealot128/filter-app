@@ -36,11 +36,11 @@ class Trends::Processor
       joins(:usages).
       group(:id).
       order('count desc').
-      having('count(distinct source_id) >= 2').
-      limit(10).
+      having('count(distinct source_id) >= 3').
+      limit(15).
       select("trends_words.*, count(distinct source_id) as count")
     words = []
-    words += all.quadrograms
+    words += all.quadrogram
     words += all.trigram
     words += all.bigram
     TrendMailer.week_trends(words).deliver_now
