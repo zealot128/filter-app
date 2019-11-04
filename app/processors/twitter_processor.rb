@@ -41,6 +41,8 @@ class TwitterProcessor < BaseProcessor
     return if first_url.blank?
 
     item = news_item_for_tweet(tweet)
+    return unless item
+
     if item.full_text
       if blacklist_filter?(item.title + " " + item.teaser.to_s)
         item.destroy if item.persisted?
