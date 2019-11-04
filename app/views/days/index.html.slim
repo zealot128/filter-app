@@ -32,7 +32,8 @@
 - @container_class = ''
 br
 br
-.container-fluid: recent-trend-app
+- if current_user || Setting.get('key') == 'fahrradfilter'
+  .container-fluid: recent-trend-app
 .container
   = javascript_packs_with_chunks_tag 'application'
 
