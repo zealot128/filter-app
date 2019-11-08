@@ -9,8 +9,7 @@ class TwitterProcessor < BaseProcessor
     @source = source
   end
 
-  def process
-    count = @source.created_at > 1.day.ago ? 200 : 20
+  def process(count: @source.created_at > 1.day.ago ? 200 : 20)
     timeline = @source.class.client.user_timeline(@source.user_name, count: count, tweet_mode: "extended")
     timeline.each_with_index do |tweet, i|
       process_tweet(tweet, follow_redirect: i <= 20)
@@ -30,7 +29,7 @@ class TwitterProcessor < BaseProcessor
   def process_tweet(tweet, follow_redirect: true)
     urls = tweet.urls.map { |i| i.expanded_url.to_s }
     urls = urls.map { |url|
-      if url[/dlvr.it|bit.ly|ow.ly|is.gd|buff.ly|iff.tt|hbapp.handelsblatt.com|sz.de|spon.de/] and follow_redirect
+      if follow_redirect
         find_unshortened_url(url)
       else
         url
@@ -106,7 +105,7 @@ class TwitterProcessor < BaseProcessor
   def find_unshortened_url(url)
     r = HTTParty.head(url)
     if r.success?
-      r.request.path.to_s
+      r.request.last_uri.to_s
     else
       url
     end

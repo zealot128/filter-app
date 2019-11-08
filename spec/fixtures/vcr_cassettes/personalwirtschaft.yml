@@ -2832,4 +2832,46 @@ http_interactions:
       string: ''
     http_version: 
   recorded_at: Fri, 18 Oct 2019 12:24:08 GMT
+- request:
+    method: head
+    uri: https://www.personalwirtschaft.de/hr-organisation/die-hr-werkstatt-hier-wird-ihnen-geholfen-alle-beitraege.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Fri, 08 Nov 2019 16:06:45 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Content-Length:
+      - '69229'
+      Connection:
+      - keep-alive
+      Expires:
+      - Sat, 09 Nov 2019 12:46:22 GMT
+      Etag:
+      - '"f0a97016eb0392e576bdff61f05c08f8"'
+      Cache-Control:
+      - max-age=74377
+      Pragma:
+      - public
+      Set-Cookie:
+      - BIGipServer~zone1-external~pool-vs-212.211.139.6_80=rd1574o00000000000000000000ffff0a31545ao80;
+        path=/; Httponly; Secure
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 08 Nov 2019 16:06:48 GMT
 recorded_with: VCR 4.0.0
