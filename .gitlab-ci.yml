@@ -8,7 +8,7 @@ stages:
 
 rspec:
   services:
-    - 'postgres:9.4'
+    - 'postgres:9.6'
     - 'redis:3.0'
   script: bin/ci
   stage: test
