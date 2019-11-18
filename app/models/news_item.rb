@@ -198,6 +198,10 @@ class NewsItem < ApplicationRecord
     end
   end
 
+  after_commit do
+    NewsItem::AnalyseTrendWorker.perform_async(id) unless trend_analyzed
+  end
+
   def categories
     c = super
     if category_order?
