@@ -71,7 +71,7 @@ class FeedProcessor < BaseProcessor
     if url.starts_with?('//')
       url = "http:#{url}"
     end
-    unless url[%r{^http|^/}]
+    unless url[%r{^http/}]
       url = URI.join(@source.url, url).to_s
     end
     @item = find_news_item(guid, url, title)
