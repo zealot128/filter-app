@@ -9,7 +9,8 @@ class SubmitSource < MailForm::Base
     {
       subject: "[#{Setting.site_name}] Neue Quelle eingesendet",
       to: Setting.email,
-      from: email
+      reply_to: email,
+      from: Setting.get('from'),
     }
   end
 end
