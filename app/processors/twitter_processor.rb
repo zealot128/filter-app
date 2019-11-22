@@ -27,14 +27,16 @@ class TwitterProcessor < BaseProcessor
 
   # rubocop:disable Metrics/CyclomaticComplexity
   def process_tweet(tweet, follow_redirect: true)
-    urls = tweet.urls.map { |i| i.expanded_url.to_s }
-    urls = urls.map { |url|
-      if follow_redirect
-        find_unshortened_url(url)
-      else
-        url
-      end
-    }
+    urls = tweet.urls.
+      map { |i| i.expanded_url.to_s }.
+      map { |url| url.include?(" ") ? url.strip.gsub(" ", "%20") : url }.
+      map { |url|
+        if follow_redirect
+          find_unshortened_url(url)
+        else
+          url
+        end
+      }
     first_url = urls.find { |url| allowed_url?(url) }
 
     return if first_url.blank?
