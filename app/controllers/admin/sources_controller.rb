@@ -51,6 +51,7 @@ class Admin::SourcesController < AdminController
       @source = params[:source_type].constantize.new
       @source.value = 1
       @source.multiplicator = 1
+      @source.language = 'german'
     else
       @source_types = Source::SOURCE_TYPES
       render 'select'
