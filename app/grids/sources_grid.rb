@@ -33,10 +33,14 @@ class SourcesGrid < BaseGrid
     end
   end
   column(:recent, Arel.sql('statistics->\'current_news_count\''), header: "News Aktuell", order: '(statistics->>\'current_news_count\')::int')
+  column(:recent_top, Arel.sql('statistics->\'current_top_score\''), header: "Top Score", order: '(statistics->>\'current_top_score\')::int')
   column(:total, Arel.sql('statistics->\'total_news_count\''), header: "News Ingesamt", order: '(statistics->>\'total_news_count\')::int')
   date_column(:last_posting, Arel.sql("(statistics->>'last_posting')::date"), order: "(statistics->>'last_posting')")
   column(:word_length, Arel.sql('statistics->\'average_word_length\''), header: "Wortlänge (Letzte 5 Beiträge)", order: '(statistics->>\'average_word_length\')::int')
   date_column(:created_at)
+  column(:chart, html: true, order: '(statistics->>\'current_top_score\')::int', header: "3-Monats-Platzierung") do |source|
+    content_tag(:div, nil, class: "js-recent-chart", data: { id: source.id }, style: 'height: 100px; width: 200px')
+  end
   column(:actions, html: true) do |source|
     safe_join [
       content_tag(:div, class: 'btn-group') {

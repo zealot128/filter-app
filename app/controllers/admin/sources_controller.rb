@@ -10,6 +10,13 @@ class Admin::SourcesController < AdminController
     end
   end
 
+  def score_chart
+    @source = Source.find(params[:id])
+    render json: {
+      chart: Charts::SourceScoreChart.new(@source, max: 3.months.ago).to_highcharts
+    }
+  end
+
   def select
   end
 

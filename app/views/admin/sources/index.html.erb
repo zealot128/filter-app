@@ -26,3 +26,22 @@ table .success, table .warning, table .danger, table .info, .table .success, .ta
   margin: 0 5px;
 }
 </style>
+
+ <script>
+jQuery(() => {
+  $('.js-recent-chart').each(function() {
+    const el = $(this)
+    const id = el.data('id')
+    fetch(`/admin/sources/${id}/score_chart.json`).
+      then((r) => r.json()).
+      then((r) => {
+        const chart = r.chart
+        chart.title.text = null
+        chart.legend = { enabled: false }
+        chart.xAxis.visible = false
+        chart.chart.margin = [0, 0, 2, 0]
+        el.highcharts(chart)
+      })
+  })
+})
+ </script>

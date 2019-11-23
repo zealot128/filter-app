@@ -1,19 +1,21 @@
 module Charts
   class SourceScoreChart
-    def initialize(source)
+    def initialize(source, max: 2.years.ago)
       @source = source
-      @news_items = source.news_items.where('published_at > ?', 2.years.ago).order('published_at').where('absolute_score > 0')
+      @news_items = source.news_items.where('published_at > ?', max).order('published_at').where('absolute_score > 0')
 
       @benchmark =
-        NewsItem.where('published_at > ?', 2.years.ago).where('absolute_score > 0').group_by_month(:published_at).
-        pluck(
-          "(DATE_TRUNC('month', (\"news_items\".\"published_at\"::timestamptz) AT TIME ZONE 'Etc/UTC')) AT TIME ZONE 'Etc/UTC' as month",
-          "PERCENTILE_CONT(0.25) WITHIN GROUP(ORDER BY absolute_score) as q1",
-          "PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY absolute_score) as median",
-          "PERCENTILE_CONT(0.75) WITHIN GROUP(ORDER BY absolute_score) as q3",
-          "PERCENTILE_CONT(0.90) WITHIN GROUP(ORDER BY absolute_score) as q9",
-          "max(absolute_score) as max"
-        )
+        Rails.cache.fetch("benchmark.#{max.to_date}", expires_in: 1.day) do
+          NewsItem.where('published_at > ?', max).where('absolute_score > 0').group_by_month(:published_at).
+            pluck(
+              "(DATE_TRUNC('month', (\"news_items\".\"published_at\"::timestamptz) AT TIME ZONE 'Etc/UTC')) AT TIME ZONE 'Etc/UTC' as month",
+              "PERCENTILE_CONT(0.25) WITHIN GROUP(ORDER BY absolute_score) as q1",
+              "PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY absolute_score) as median",
+              "PERCENTILE_CONT(0.75) WITHIN GROUP(ORDER BY absolute_score) as q3",
+              "PERCENTILE_CONT(0.90) WITHIN GROUP(ORDER BY absolute_score) as q9",
+              "max(absolute_score) as max"
+          )
+        end
     end
 
     def to_highcharts

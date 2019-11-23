@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :sources do
       member do
         post :refresh
+        get :score_chart
       end
       collection do
         post :autofetch
