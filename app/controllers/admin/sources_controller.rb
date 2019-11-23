@@ -8,6 +8,7 @@ class Admin::SourcesController < AdminController
     @grid = SourcesGrid.new(grid_params) do |scope|
       scope.page(params[:page])
     end
+    @title = "Quellen"
   end
 
   def score_chart
@@ -70,6 +71,7 @@ class Admin::SourcesController < AdminController
 
   def edit
     @source = Source.find(params[:id])
+    @title = "EDIT #{@source.name}"
   end
 
   def update
