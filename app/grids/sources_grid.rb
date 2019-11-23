@@ -18,6 +18,7 @@ class SourcesGrid < BaseGrid
   filter(:name, :string) { |value, scope| scope.where("name ilike '%#{value}%'") }
   filter(:error, :xboolean)
   filter(:type, :enum, select: -> { Source.pluck(Arel.sql('distinct(type)')) }, checkboxes: true)
+  filter(:deactivated, :xboolean, default: false)
 
   column(:id)
   column(:name) do |f|
