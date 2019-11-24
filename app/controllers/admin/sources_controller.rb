@@ -11,6 +11,17 @@ class Admin::SourcesController < AdminController
     @title = "Quellen"
   end
 
+  def download_image
+    @source = Source.find(params[:id])
+    url = params[:url]
+    if url
+      require 'download_url'
+      @source.update! logo: download_url(url), image_candidates: nil
+    else
+      @source.update! image_candidates: nil
+    end
+  end
+
   def score_chart
     @source = Source.find(params[:id])
     render json: {
@@ -63,8 +74,11 @@ class Admin::SourcesController < AdminController
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
       Source::FetchWorker.perform_async(@source.id)
+      unless @source.logo.present?
+        Source::FindLogosWorker.perform_in(1.minute, @source.id)
+      end
 
-      redirect_to [:admin, :sources], notice: 'Done'
+      redirect_to [:admin, :sources], notice: 'Quelle angelegt'
     else
       render :new
     end

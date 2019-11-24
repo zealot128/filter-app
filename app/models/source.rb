@@ -46,6 +46,8 @@ class Source < ApplicationRecord
   has_many :news_items, dependent: :destroy
   validates :url, :name, presence: true
 
+  auto_strip_attributes :url, :name, squish: true, convert_non_breaking_spaces: true
+
   SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource'].freeze
 
   belongs_to :default_category, class_name: 'Category'

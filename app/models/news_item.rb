@@ -51,6 +51,7 @@
 require "fetcher"
 # rubocop:disable Style/GuardClause
 class NewsItem < ApplicationRecord
+  auto_strip_attributes :url, :title, squish: true, convert_non_breaking_spaces: true
   # half life of items is 12.5 hours; all items within the same batch get the same base time score
   HALF_LIFE = 45_000
 

@@ -50,6 +50,28 @@
   .col-md-6
     .panel.panel-default
       .panel-heading
+        h3.panel-title Logo improvements
+      .list-group
+        - Source.where('image_candidates is not null').limit(20).each do |s|
+          .list-group-item(id='#{dom_id(s, "images")}')
+            .row
+              .col-md-9
+                = link_to edit_admin_source_path(s) do
+                  = s.name
+              .col-md-3
+                - if s.logo.present?
+                  = image_tag s.logo.url, height: 50
+            small Kandidaten für besseres Logo von der Website:
+            div
+              .pull-right
+                a.btn.btn-default.btn-sm(href='#{download_image_admin_source_path(s, url: nil)}' data-method='patch' data-remote='true') Ignore
+            br
+            - s.image_candidates.each do |img|
+              = link_to download_image_admin_source_path(s, url: img), data: { method: :patch, remote: true } do
+                = image_tag img, height: 50
+
+    .panel.panel-default
+      .panel-heading
         .panel-title Quellen ohne NewsItems seit 6 Monaten
       table.table
         - Source.antiquated.each do |source|

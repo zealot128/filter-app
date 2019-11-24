@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :sources do
       member do
         post :refresh
+        patch :download_image
         get :score_chart
       end
       collection do

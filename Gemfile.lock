@@ -136,6 +136,8 @@ GEM
       capybara (~> 3.12, < 4)
       websocket-driver (>= 0.6.5)
     ast (2.4.0)
+    auto_strip_attributes (2.5.0)
+      activerecord (>= 4.0)
     autoprefixer-rails (9.5.1)
       execjs
     axiom-types (0.1.1)
@@ -643,6 +645,7 @@ DEPENDENCIES
   angularjs-rails (= 1.2.18)
   annotate
   apparition
+  auto_strip_attributes (~> 2.5)
   babel-transpiler
   bcrypt-ruby
   bootsnap

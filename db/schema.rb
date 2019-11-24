@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_02_210145) do
+ActiveRecord::Schema.define(version: 2019_11_24_160637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -75,10 +75,10 @@ ActiveRecord::Schema.define(version: 2019_11_02_210145) do
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.text "keywords"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "hash_tag"
     t.string "slug"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
@@ -168,18 +168,18 @@ ActiveRecord::Schema.define(version: 2019_11_02_210145) do
   end
 
   create_table "news_items", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255
+    t.string "title"
     t.text "teaser"
-    t.string "url", limit: 255
+    t.string "url"
     t.integer "source_id"
     t.datetime "published_at"
     t.integer "value"
     t.integer "fb_likes"
     t.integer "retweets"
-    t.string "guid", limit: 255
+    t.string "guid"
     t.integer "xing"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text "full_text"
     t.integer "word_length"
     t.text "plaintext"
@@ -228,17 +228,17 @@ ActiveRecord::Schema.define(version: 2019_11_02_210145) do
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
-    t.string "type", limit: 255
-    t.string "url", limit: 255
-    t.string "name", limit: 255
+    t.string "type"
+    t.string "url"
+    t.string "name"
     t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "logo_file_name"
+    t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "full_text_selector", limit: 255
+    t.string "full_text_selector"
     t.boolean "error"
     t.float "multiplicator", default: 1.0
     t.boolean "lsr_active", default: false
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 2019_11_02_210145) do
     t.json "statistics"
     t.text "error_message"
     t.text "url_rules"
-    t.text "code"
+    t.string "image_candidates", array: true
     t.index ["type"], name: "index_sources_on_type"
   end
 
