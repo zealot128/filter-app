@@ -37,7 +37,7 @@ module MassImport
         assign_account CGI.parse(URI.parse(intent.href).query)['screen_name'].first
       end
       if (intent = page.links.select { |i| i.href.to_s[%r{twitter.com/(#\!/)?\w+/?$}] && !i.href[/share/] }.first)
-          acc = intent.href.split('/').last
+        acc = intent.href.split('/').last
         assign_account acc
       end
     end
