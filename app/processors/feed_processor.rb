@@ -55,7 +55,7 @@ class FeedProcessor < BaseProcessor
   def process_entry(entry)
     @entry = entry
     title = entry.title
-    url = entry.url
+    url = entry.url&.strip
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
@@ -66,6 +66,7 @@ class FeedProcessor < BaseProcessor
       url = entry.enclosure_url
     end
     return unless url
+    url.strip!
 
     # next unless url
     if url.starts_with?('//')

@@ -27,7 +27,7 @@ class Admin::SourcesController < AdminController
     ni = NewsItem.new(source: Source.new(full_text_selector: params[:full_text_selector]))
     selector = params[:full_text_selector]
     if feed.entries.first
-      ni.url = feed.entries.first.url
+      ni.url = feed.entries.first.url.strip
       ft = NewsItem::FullTextFetcher.new(ni, unknown_selector: true)
       ft.run
       if params[:full_text_selector].blank? and ni.full_text
