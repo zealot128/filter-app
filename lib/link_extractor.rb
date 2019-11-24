@@ -134,7 +134,7 @@ class LinkExtractor
 
   def clear(text)
     doc = Nokogiri::HTML.fragment(text)
-    doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer, .sr-only, .share-buttons, .shariff, .meta-one`').each(&:remove)
+    doc.search('script, form, style, #ad, div.ad, .social, aside.tools, footer, .sr-only, .share-buttons, .shariff, .meta-one').each(&:remove)
     doc.search('a[href*="facebook.com/shar"], a[href*="twitter.com/intent"]').each(&:remove)
     s = doc.to_s.gsub(/\s+/, ' ')
     sanitize s, attributes: %w(href src), tags: %w[li ul strong b i em ol br p a img]
