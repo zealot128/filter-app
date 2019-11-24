@@ -68,7 +68,12 @@
             br
             - s.image_candidates.each do |img|
               = link_to download_image_admin_source_path(s, url: img), data: { method: :patch, remote: true } do
-                = image_tag img, height: 50
+                = image_tag img, height: 50, class: 'preview-image'
+            css:
+              .preview-image:hover {
+                box-shadow: 0 0 2px black;
+                transform: scale(1.05)
+              }
 
     .panel.panel-default
       .panel-heading

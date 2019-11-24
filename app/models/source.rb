@@ -71,7 +71,7 @@ class Source < ApplicationRecord
   has_attached_file :lsr_confirmation
 
   validates_attachment :logo,
-    content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "image/x-icon", "image/vnd.microsoft.icon"] }
+    content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "image/x-icon", "image/vnd.microsoft.icon", "image/svg", "image/svg+xml"] }
   # do_not_validate_attachment_file_type :logo
 
   def self.[](search)
