@@ -35,7 +35,7 @@ bundle_audit:
 
 deploy:
   image: registry.pludoni.com/administrators/docker-images/deploy:v6
-  script: deploy_app product02 hrfilter
+  script: deploy_app product03 hrfilter
   stage: deploy
   environment: production
   only:

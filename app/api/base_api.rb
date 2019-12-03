@@ -9,7 +9,7 @@ module BaseApi
         'status' => e.status,
         'message' => "Missing parameter",
         'attribute' => e.param
-      }.to_json, e.status)
+      }.to_json, 422)
     end
     # rescue_from ArgumentError, NotImplementedError do
     rescue_from :all do |e|

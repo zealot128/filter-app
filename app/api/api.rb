@@ -1,5 +1,6 @@
 class API < Grape::API
   mount Resources::NewsItems
+  mount Resources::MailSubscriptions
 
   get 'legal' do
     {
