@@ -111,6 +111,8 @@ class TwitterProcessor < BaseProcessor
     else
       url
     end
+  rescue HTTParty::RedirectionTooDeep
+    url
   rescue StandardError => e
     NOTIFY_EXCEPTION(e)
     url
