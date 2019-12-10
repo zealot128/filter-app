@@ -1,5 +1,4 @@
 require 'redis/namespace'
-require 'airbrake/sidekiq'
 
 redis_config = if ENV['REDIS_PORT_6379_TCP_PORT']
                  {

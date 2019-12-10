@@ -124,9 +124,6 @@ GEM
       request_store
       safely_block (>= 0.2.1)
       user_agent_parser
-    airbrake (7.0.3)
-      airbrake-ruby (~> 2.4)
-    airbrake-ruby (2.4.2)
     angularjs-rails (1.2.18)
     annotate (2.7.5)
       activerecord (>= 3.2, < 7.0)
@@ -640,8 +637,6 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10)
   ahoy_matey (~> 2.1)
-  airbrake (~> 7.0.0)
-  airbrake-ruby (~> 2.4.0)
   angularjs-rails (= 1.2.18)
   annotate
   apparition
