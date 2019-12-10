@@ -8,7 +8,7 @@ stages:
 
 rspec:
   services:
-    - 'postgres:9.6'
+    - 'postgres:11'
     - 'redis:3.0'
   script: bin/ci
   stage: test
@@ -20,7 +20,7 @@ rspec:
       - .yarn
 
 pronto:
-  image: registry.pludoni.com/administrators/docker-images/code-quality:v2
+  image: registry.pludoni.com/administrators/docker-images/code-quality:v3
   stage: checks
   script: 'run'
   interruptible: true
