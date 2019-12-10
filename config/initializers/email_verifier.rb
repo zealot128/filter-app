@@ -11,11 +11,11 @@ EmailVerifier.config do |config|
       p exception
       true
     else
-      should_fail = exception.to_s['Failure'] and !exception.to_s['mailbox unavailable']
-      if should_fail
+      ignore = exception.to_s['Failure'] or exception.to_s['mailbox unavailable']
+      unless ignore
         NOTIFY_EXCEPTION(exception, extra: { email: email })
       end
-      !!should_fail
+      ignore
     end
   end
 end
