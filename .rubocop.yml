@@ -1,5 +1,6 @@
+---
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
   Exclude:
     - 'bin/*'
     - 'scripts/**/*'
@@ -22,14 +23,14 @@ Style/GuardClause:
   MinBodyLength: 1
   Enabled: false
 Style/AndOr:
+  Enabled: false
   EnforcedStyle: conditionals
 Style/PercentLiteralDelimiters:
   PreferredDelimiters: {}
+  Enabled: false
 Style/Alias:
   Enabled: false
 Style/Documentation:
-  Enabled: false
-Style/PercentLiteralDelimiters:
   Enabled: false
 Lint/UnusedMethodArgument:
   Enabled: false
@@ -53,10 +54,16 @@ Layout/DotPosition:
   Enabled: false
 Style/BlockDelimiters:
   Enabled: false
-Style/AndOr:
-  Enabled: false
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table
+
 Rails/ActionFilter:
   Enabled: false
 Layout/MultilineMethodCallIndentation:
@@ -129,9 +136,9 @@ Style/SafeNavigation:
   Enabled: false
 Lint/MissingCopEnableDirective:
   Enabled: false
-Rails/InverseOf:
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+Style/NonNilCheck:
   Enabled: false
-Style/NegatedIf:
-  Enabled: false
-Layout/EmptyLineAfterGuardClause:
+RSpec/ExampleLength:
   Enabled: false
