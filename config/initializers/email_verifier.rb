@@ -11,7 +11,7 @@ EmailVerifier.config do |config|
       p exception
       true
     else
-      Airbrake.notify(exception, email: email.split('@').last)
+      NOTIFY_EXCEPTION(exception, extra: { email: email })
       !!exception.to_s['Failure']
     end
   end

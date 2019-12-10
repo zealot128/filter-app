@@ -66,7 +66,6 @@ module Newsletter
     rescue StandardError => e
       history.try(:delete)
       raise e if Rails.env.test?
-      Airbrake.notify(e) if defined?(Airbrake)
       NOTIFY_EXCEPTION(e)
       Rails.logger.error "[NewsletterMailing] #{e.inspect}"
     ensure
