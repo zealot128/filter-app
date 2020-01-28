@@ -50,7 +50,7 @@ class BscController < ApplicationController
             determinable_for_past: true,
             value: MailSubscription::History.
               where('mail_subscription_histories.opened_at is not null').
-              where('extract(year from mail_subscription_histories.created_at) = :year or (opened_at is not null and extract(year from opened_at) = :year)', year: year).
+              where('extract(year from mail_subscription_histories.created_at) = :year', year: year).
               group_by_month('mail_subscription_histories.created_at').
               count('distinct(mail_subscription_id)')
           }
