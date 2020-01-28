@@ -47,8 +47,6 @@ class MailSubscription < ApplicationRecord
 
   validates :privacy, acceptance: true
 
-  has_many :impressions, foreign_key: 'user_id', dependent: :destroy
-
   enum status: [:unconfirmed, :confirmed, :unsubscribed]
 
   def confirm!

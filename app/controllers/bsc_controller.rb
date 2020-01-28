@@ -45,15 +45,6 @@ class BscController < ApplicationController
             percentage_of: :subscribers_total,
             value: subscriptions.confirmed.count
           },
-          subscribers_with_clicks: {
-            title: "Abonnenten mit min. 1 Klick im Jahr",
-            determinable_for_past: true,
-            percentage_of: :subscribers_confirmed,
-            value: subscriptions.
-              joins(:impressions).
-              where('extract(year from impressions.created_at) = ?', year).
-              count('distinct(mail_subscriptions.id)')
-          },
           active_subscribers_per_month: {
             title: "Anzahl aktive Abonnennten je Monat",
             determinable_for_past: true,
