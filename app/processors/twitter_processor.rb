@@ -37,7 +37,7 @@ class TwitterProcessor < BaseProcessor
           url
         end
       }
-    first_url = urls.find { |url| allowed_url?(url) }
+    first_url = urls.compact.find { |url| allowed_url?(url) }
 
     return if first_url.blank?
 
@@ -45,7 +45,7 @@ class TwitterProcessor < BaseProcessor
     return unless item
 
     if item.full_text
-      if blacklist_filter?(item.title + " " + item.teaser.to_s)
+      if blacklist_filter?(item.title.to_s + " " + item.teaser.to_s)
         item.destroy if item.persisted?
         return nil
       else
@@ -111,6 +111,8 @@ class TwitterProcessor < BaseProcessor
     else
       url
     end
+  rescue SocketError
+    nil
   rescue HTTParty::RedirectionTooDeep
     url
   rescue StandardError => e

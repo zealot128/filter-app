@@ -57,6 +57,9 @@ class LinkExtractor
       @image_url = url
       return false
     end
+    if @m.page.is_a?(Mechanize::File)
+      return false
+    end
     if successful?
       if block_given?
         block.call(result)
@@ -64,6 +67,8 @@ class LinkExtractor
         result
       end
     end
+  rescue Mechanize::ResponseCodeError
+    return false
   ensure
     shutdown! if close_connection
   end
