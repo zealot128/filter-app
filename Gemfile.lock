@@ -599,7 +599,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
-    user_agent_parser (2.5.0)
+    user_agent_parser (2.6.0)
     vcr (4.0.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
