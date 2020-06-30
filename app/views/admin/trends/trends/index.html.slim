@@ -1,6 +1,9 @@
 = render "admin/trends/nav"
 
-h2 Angelegte Trends
+h1 Angelegte Trends
+
+= link_to new_admin_trends_trend_path do
+  |Neuen Trend manuell anlegen
 
 table.table
   - @trends.each do |trend|
@@ -10,10 +13,11 @@ table.table
         br
         small.text-muted = trend.words.map(&:word).join(', ')
       td
-        = link_to trend_path(trend.slug), class: 'btn btn-primary btn-sm' do
-          |Trend-Seite
-        = link_to [:edit, :admin, trend], class: 'btn btn-default btn-sm' do
-          |bearbeiten
+        .btn-group-vertical
+          = link_to trend_path(trend.slug), class: 'btn btn-primary btn-sm' do
+            |Trend-Seite
+          = link_to [:edit, :admin, trend], class: 'btn btn-default btn-sm' do
+            |Bearbeiten
       td
         - chart = Charts::TrendChart.new(trend)
         trend-flame-graph(data-trend='#{trend.to_json}' data-chart='#{chart.to_highcharts.to_json}')

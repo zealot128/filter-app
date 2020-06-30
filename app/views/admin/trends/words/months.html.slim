@@ -11,10 +11,6 @@ ul.nav.nav-tabs
     li
       = link_to url_for(controller: controller_name, action: action_name, month: (params[:month].to_i - 1), usage_type: params[:uage_type])
         |Nächster Monat
-  li.nav-item(class='#{"active" if params[:usage_type].blank? || params[:usage_type] == "title"}')
-    a.nav-link(href="#{url_for(controller: controller_name, action: action_name, month: params[:month], usage_type: 'title')}") Titel
-  li.nav-item(class='#{"active" if params[:usage_type] == "plaintext"}')
-    a.nav-link(href="#{url_for(controller: controller_name, action: action_name, month: params[:month], usage_type: 'plaintext')}") Text
 
 .row
   .col-sm-6

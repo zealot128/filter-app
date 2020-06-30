@@ -6,6 +6,7 @@ h2 Top Trends KW #{@week}
 
 .row
   .col-sm-6
-    = link_to request.path + "?week=#{(params[:week] || 0).to_i + 1}"
-      |Vorherige Wochce
+    = link_to request.path + "?week=#{(params[:week] || 0).to_i + 1}", class: 'btn btn-primary'
+      |Vorherige Woche
+
 = render "tables"

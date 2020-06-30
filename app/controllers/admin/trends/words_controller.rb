@@ -1,7 +1,7 @@
 class Admin::Trends::WordsController < AdminController
   load_and_authorize_resource class: 'Trends::Word'
 
-  def index
+  def weeks
     @week = (params[:week] || 0).to_i.weeks.ago.strftime("%G%W")
     @title = "Trendfinder #{@week}"
     words! Trends::Word.
@@ -31,7 +31,7 @@ class Admin::Trends::WordsController < AdminController
 
   private
 
-  def words!(scope, min: 2)
+  def words!(scope, min: 3)
     usage_type = params[:usage_type] || 'title'
     relevant = scope.
       where(ignore: false).
@@ -41,7 +41,7 @@ class Admin::Trends::WordsController < AdminController
     base = relevant.
       group(:id).
       order('count desc').
-      having('count(distinct trends_usages.source_id) >= 3').
+      having('count(distinct trends_usages.source_id) >= ?', min).
       limit(50).
       select("trends_words.*, count(distinct trends_usages.source_id) as count")
     @top_quadram = base.quadrogram
