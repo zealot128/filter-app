@@ -57,7 +57,7 @@ class LinkExtractor
       @image_url = url
       return false
     end
-    if @m.page.is_a?(Mechanize::File)
+    unless @m.page.respond_to?(:at)
       return false
     end
     if successful?

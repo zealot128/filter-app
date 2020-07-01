@@ -10,7 +10,7 @@ RSpec.describe TwitterSource do
 
     allow_any_instance_of(LinkExtractor).to receive(:image_blob).and_return(nil)
 
-    VCR.use_cassette 'personalwirtschaft', record: :new_episodes do
+    VCR.use_cassette 'personalwirtschaft' do
       source = TwitterSource.new(url: 'personaler_de', name: 'Personalwirtschaft', url_rules: 'personalwirtschaft.de')
       source.save
       TwitterProcessor.new(source).process(count: 200)
