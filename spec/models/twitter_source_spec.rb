@@ -38,4 +38,19 @@ RSpec.describe TwitterSource do
       expect(source.news_items.first.full_text).to be_present
     end
   end
+
+  specify 'Handelsblatt - paywall' do
+    Rails.application.secrets.twitter_consumer_key = "lrcdzswhEHYM4CgnutP9eRWtI"
+    Rails.application.secrets.twitter_consumer_secret = "u59zEwzLnKQ68a7RMD73QVZEcmNW2TpH1hZxrBNQLrN3BgDamY"
+    VCR.use_cassette 'paywall/handelsblatt_twitter', record: :new_episodes do
+      Setting.set('twitter_access_token', Rails.application.secrets.twitter_access_token)
+      Setting.set('twitter_access_secret', Rails.application.secrets.twitter_access_secret)
+      source = TwitterSource.new(url: 'handelsblatt', name: 'handelsblatt')
+      source.save
+      TwitterProcessor.new(source).process(count: 5)
+
+      expect(source.news_items.count).to be > 0
+      expect(source.news_items.where(paywall: true).count).to be > 0
+    end
+  end
 end

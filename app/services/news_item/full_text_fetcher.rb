@@ -1,3 +1,4 @@
+require 'link_extractor'
 class NewsItem::FullTextFetcher
   def initialize(news_item, unknown_selector: false)
     @news_item = news_item
@@ -31,6 +32,7 @@ class NewsItem::FullTextFetcher
     if @news_item.title.blank?
       @news_item.title = page.at('title').try(:text)
     end
+    @news_item.paywall = ::LinkExtractor.paywall?(@page)
     NewsItem::ImageFetcher.new(@news_item, page).run if @news_item.persisted?
     NewsItem::AnalyseTrendWorker.perform_async(@news_item.id) if @news_item.persisted?
   rescue Mechanize::ResponseCodeError, Timeout::Error, SocketError, Mechanize::RedirectLimitReachedError, Nokogiri::CSS::SyntaxError => e

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_24_160637) do
+ActiveRecord::Schema.define(version: 2020_07_01_142119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 2019_11_24_160637) do
     t.integer "category_order", array: true
     t.integer "dupe_of_id"
     t.boolean "trend_analyzed", default: false
+    t.boolean "paywall"
     t.index ["absolute_score", "published_at"], name: "index_news_items_on_absolute_score_and_published_at"
     t.index ["absolute_score"], name: "index_news_items_on_absolute_score"
     t.index ["dupe_of_id"], name: "index_news_items_on_dupe_of_id"
@@ -255,7 +256,6 @@ ActiveRecord::Schema.define(version: 2019_11_24_160637) do
     t.json "statistics"
     t.text "error_message"
     t.text "url_rules"
-    t.text "code"
     t.string "image_candidates", array: true
     t.index ["type"], name: "index_sources_on_type"
   end

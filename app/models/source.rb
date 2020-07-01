@@ -30,7 +30,6 @@
 #  statistics                    :json
 #  error_message                 :text
 #  url_rules                     :text
-#  code                          :text
 #  image_candidates              :string           is an Array
 #
 # Indexes

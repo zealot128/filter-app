@@ -63,6 +63,7 @@ class TwitterProcessor < BaseProcessor
     item.full_text = response.full_text
     item.title = response.title || tweet.attrs[:full_text] || tweet.text
     item.teaser = response.teaser.presence || tweet.attrs[:full_text].gsub(%r{https?://[^ ]+}, '')
+    item.paywall = response.paywall?
     item.rescore!
 
     if response && (img = response.image_blob)
@@ -88,7 +89,7 @@ class TwitterProcessor < BaseProcessor
   end
 
   def news_item_for_tweet(tweet)
-    guid = tweet.url.to_s
+    guid = tweet.url.to_s.remove(/(utm_\w+|social)=[^&]+&/)
     item = @source.news_items.where(guid: guid).first_or_initialize
     if blacklist_filter?(tweet.attrs[:full_text])
       item.destroy if item.persisted?

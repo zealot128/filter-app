@@ -35,6 +35,7 @@
 #  category_order              :integer          is an Array
 #  dupe_of_id                  :integer
 #  trend_analyzed              :boolean          default(FALSE)
+#  paywall                     :boolean
 #
 # Indexes
 #
@@ -252,6 +253,7 @@ class NewsItem < ApplicationRecord
       word_length: word_length,
       title_length: title.to_s.length,
       categories: category_ids,
+      paywall: paywall,
       # parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
       published_at: published_at.to_i,
       incoming_link_count: incoming_link_count || 0

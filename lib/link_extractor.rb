@@ -79,7 +79,8 @@ class LinkExtractor
       teaser: teaser,
       image_url: image_url,
       full_text: full_text,
-      clean_url: clean_url
+      clean_url: clean_url,
+      has_paywall: paywall?
     }
   end
 
@@ -103,6 +104,29 @@ class LinkExtractor
                      image ||= @m.page.parser.xpath('//link[@rel="image_src"]').first
                      image['content'] || image['href'] if image
                    end
+  end
+
+  def paywall?
+    return @_paywall if @_paywall != nil
+
+    @_paywall = self.class.paywall?(@m.page)
+  end
+
+  def self.paywall?(doc)
+    lds = doc.search('script[type="application\/ld+json"]')
+
+    lds.each do |ld|
+      json = JSON.parse(ld.inner_html)
+      json = [json] unless json.is_a?(Array)
+      json.each do |ld|
+        if ld['isAccessibleForFree'].to_s.downcase == 'false' # Handelsblatt macht "False"
+          return true
+        end
+      end
+    rescue JSON::ParserError
+      next
+    end
+    false
   end
 
   def image_blob
@@ -132,7 +156,7 @@ class LinkExtractor
   end
 
   def clean_url
-    @clean_url ||= @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source)=[^&]+/, '').remove(/\?$/)
+    @clean_url ||= @m.page.uri.to_s.gsub(/&?utm_(medium|campaign|source|term|content)=[^&]+/, '').remove(/\?$/)
   end
 
   private

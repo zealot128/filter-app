@@ -37,4 +37,18 @@ describe BaseProcessor, type: :model do
       expect(NewsItem.first.full_text.length).to be > 200
     end
   end
+
+  specify 'Paywall', freeze_time: '2020-07-01 12:00' do
+    news_item = NewsItem.create(
+      title: "...",
+      source: feed_source,
+      url: "https://www.manager-magazin.de/premium/herbert-diess-bei-volkswagen-die-strafe-fuer-sein-auftreten-a-b5fb474e-7e6b-4dfa-8d7d-5da06a8c2452"
+    )
+    feed_source.update(full_text_selector: 'article')
+
+    VCR.use_cassette "paywall/mm", record: :new_episodes do
+      news_item.get_full_text
+      expect(news_item.paywall).to be == true
+    end
+  end
 end

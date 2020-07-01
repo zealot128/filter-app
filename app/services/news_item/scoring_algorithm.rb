@@ -31,6 +31,8 @@ class NewsItem::ScoringAlgorithm
 
     base *= data(:multiplicator)
 
+    base *= 0.75 if data(:paywall)
+
     # Abwertung von langen SEO Titel -> Je länger desto mehr Abwertung
     # 101 -> 2% abwertung
     # 150 -> 72% abwertung
