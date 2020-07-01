@@ -274,10 +274,11 @@ class NewsItem < ApplicationRecord
     plaintext.split(/[^\p{Word}]+/)
   end
 
-  def get_full_text
-    if full_text.blank? || updated_at < 7.days.ago
+  def get_full_text(force: false)
+    if full_text.blank? || updated_at < 7.days.ago || force
       NewsItem::FullTextFetcher.new(self).run
     end
+    save if force
   rescue Net::HTTP::Persistent::Error
   end
 
