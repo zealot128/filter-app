@@ -1,42 +1,13 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v13
+image: registry.pludoni.com/administrators/docker-images/rails-base:v14
+stages: [checks, test, deploy]
 
-stages:
-  - checks
-  - test
-  - deploy
+variables:
+  deploy_host: 'product03'
+  deploy_name: 'hrfilter'
 
-rspec:
-  services:
-    - 'postgres:11'
-    - 'redis:3.0'
-  script: bin/ci
-  stage: test
-  interruptible: true
-  cache:
-    key: "$CI_PROJECT_ID"
-    paths:
-      - node_modules/
-      - .yarn
-
-pronto:
-  image: registry.pludoni.com/administrators/docker-images/code-quality:v3
-  stage: checks
-  script: 'run'
-  interruptible: true
-
-bundle_audit:
-  stage: checks
-  interruptible: true
-  script: |
-    gem install bundler-audit
-    bundle-audit update
-    bundle-audit check -i CVE-2015-9284
-
-deploy:
-  image: registry.pludoni.com/administrators/docker-images/deploy:v6
-  script: deploy_app product03 hrfilter
-  stage: deploy
-  environment: production
-  only:
-    - master
+include:
+  - project: 'administrators/gitlab-ci-yml'
+    file: '/rails_default.yml'
+  - project: 'administrators/gitlab-ci-yml'
+    file: '/dependency_update.yml'
