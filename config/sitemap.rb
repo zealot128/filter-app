@@ -8,6 +8,12 @@ SitemapGenerator::Sitemap.create do
   add '/quellen'
 
   Source.visible.each do |s|
-    add source_path(s)
+    add source_path(s), priority: 0.4, changefreq: 'weekly'
+  end
+  Trends::Trend.each do |trend|
+    add trend_path(slug: trend.slug)
+  end
+  Category.each do |c|
+    add category_path(c)
   end
 end
