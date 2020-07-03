@@ -37,6 +37,10 @@ class Trends::Trend < ApplicationRecord
     end
   end
 
+  def news_items
+    NewsItem.where(id: words.joins(:usages).select('news_item_id'))
+  end
+
   def include_word?(word)
     words.any? { |i| i.word == word }
   end

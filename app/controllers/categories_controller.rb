@@ -3,6 +3,9 @@ class CategoriesController < ApplicationController
     @title = "Alle Kategorien auf #{Setting.site_name}"
 
     @categories = Category.all.order('name')
+
+    count = (Setting.get('trend_min_sources_count') || 4).to_i
+    @trends = Trends::Trend.top_of_n_days(60.days.ago, count)
   end
 
   def show

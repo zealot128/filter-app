@@ -1,17 +1,31 @@
+- @container_class = 'container-fluid'
 - content_for :content_header do
   .content-header.hidden-xs
     .container
       .text-center
         h2 = @title
 
-br
-br
+.row
+  .col-lg-6
+    h2.text-center.mb-2 Kategorien
+    - @categories.each do |category|
+      .col-md-4.col-sm-6.col-xs-12
+        = render "category", category: category
 
-- @categories.each do |category|
-  .col-md-4.col-sm-6.col-xs-12
-    = render "category", category: category
+  .col-lg-6
+    - if @trends.any?
+      h2.text-center Trends / Aktuelles
+      .row
+        - @trends.each do |trend|
+          .col-md-4.col-sm-6.col-xs-12
+            = render 'trend', trend: trend
+
 
 javascript:
   $(document).ready(function() {
     $('[data-toggle=tooltip]').tooltip()
   });
+css:
+  h2 {
+    margin: 40px 0 20px
+  }
