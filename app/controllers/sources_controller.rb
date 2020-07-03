@@ -18,11 +18,13 @@ class SourcesController < ApplicationController
       joins(:categories).
       group('categories.name').order('count_all desc').limit(5).count
     @count = found_news_items.count
-    # @avg = @count / @source.age_in_weeks
     @avg = 10
     @news_items = found_news_items.limit(30)
     @chart = Charts::SourceTimeChart.new(@source)
     @title = @source.name
+
+    @page_description = "#{@source.news_items.count} News der Quelle #{@source.name}"
+    @page_keywords = @categories.map(&:first).join(',')
   end
 
   def search

@@ -109,3 +109,5 @@ group :capistrano do
   gem "whenever"
   gem "rubocop"
 end
+
+gem "meta-tags", "~> 2.13"

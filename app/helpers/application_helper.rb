@@ -3,6 +3,27 @@ module ApplicationHelper
     [@title, Setting.site_name].reject(&:blank?).join(' | ')
   end
 
+  def default_meta_tags
+    {
+      title: page_title,
+      site: Setting.site_name,
+      reverse: true,
+      description: Setting.get('meta_description'),
+      keywords: Setting.get('meta_keywords'),
+      separator: "&mdash;".html_safe,
+      image: img = image_url("#{Setting.key}/logo-large.png"),
+      image_src: img,
+      og: {
+        title: :title,
+        type: 'website',
+        url: request.url,
+        image: :image,
+        description: :description
+      },
+      twitter: { image: :image_src }
+    }
+  end
+
   def homepage(url)
     URI.parse(url).tap { |o| o.path = '/'; o.query = nil }.to_s
   end

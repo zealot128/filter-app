@@ -34,12 +34,19 @@ class Setting < ActiveRecord::Base
       :from,
       :inactive_months,
     ],
+    seo: [
+      :meta_description,
+      :meta_keywords,
+    ],
     texte: [
       :credits,
       :impressum,
       :datenschutz,
       :intro,
       :explanation
+    ],
+    trends: [
+      :trend_min_sources_count,
     ],
     newsletter_erinnerung: [
       :inactive_months,
