@@ -5,6 +5,7 @@ class NewsItemSerializer < ApplicationSerializer
   attribute :categories
   attribute :category_objects
   attribute :original_url
+  attribute :paywall
   has_one :source, serializer: SourcePreviewSerializer
 
   def url

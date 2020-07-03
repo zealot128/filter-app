@@ -23,7 +23,12 @@
       <div class="fog-fade"></div>
     </div>
     <div class='panel-footer'>
-      <span class='pull-right text-muted'> {{ date }}</span>
+      <span class='pull-right text-muted'>
+        <span v-if='newsItem.paywall' class='label label-warning'>
+          <i class='fa fa-euro fa-fw' title='Paywall'></i>
+        </span>
+        {{ date }}
+      </span>
       <span class='source'>
         <img v-if='newsItem.source.logo' :src='newsItem.source.logo' width='16' height='16'/>
         <a title='newsItem.source.name' :href='newsItem.source.url'>
@@ -70,5 +75,10 @@ export default {
 <style scoped>
 .panel-footer {
   padding: 2px;
+}
+.label-warning {
+  display: inline-block;
+  height: 15px;
+  border-radius: 5px;
 }
 </style>
