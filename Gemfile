@@ -49,7 +49,7 @@ gem 'redis-namespace', '~> 1.5.0'
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false
 
-gem 'webpacker', '~> 4.x'
+gem 'webpacker', '~> 5.x'
 
 gem 'rack-cors', require: 'rack/cors'
 

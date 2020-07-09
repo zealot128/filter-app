@@ -86,7 +86,7 @@ Rails.application.routes.draw do
   get 'api/news_items' => 'api#news_items'
   get 'api/categories' => 'api#categories'
 
-  get 'days' => redirect('/')
+  get 'days' => 'days#index'
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
 
   resources :categories, path: "kategorien", only: [:index, :show]
@@ -98,5 +98,5 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: '/rails/sidekiq'
   end
   mount Ahoy::Engine => "/stellenanzeigen"
-  root to: "days#index"
+  root to: "static_pages#index"
 end

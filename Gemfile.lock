@@ -548,6 +548,7 @@ GEM
       ffi (~> 1.9)
       rake
     sax-machine (1.3.2)
+    semantic_range (2.3.0)
     sentry-raven (2.9.0)
       faraday (>= 0.7.6, < 1.0)
     sidekiq (5.2.9)
@@ -634,10 +635,11 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (4.0.7)
-      activesupport (>= 4.2)
+    webpacker (5.1.1)
+      activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     webrick (1.7.0)
     webrobots (0.1.2)
     websocket-driver (0.7.3)
@@ -735,7 +737,7 @@ DEPENDENCIES
   vcr
   voight_kampff
   webmock
-  webpacker (~> 4.x)
+  webpacker (~> 5.x)
   whenever
   will_paginate-bootstrap
   zurb-ink!

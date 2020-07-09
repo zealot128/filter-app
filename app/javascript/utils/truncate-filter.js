@@ -3,6 +3,7 @@ export default function(text, length, clamp) {
   clamp = clamp || '...';
   length = length || 30;
 
+  if (!text) return ""
   if (text.length <= length) return text;
 
   let tcText = text.slice(0, length - clamp.length);
