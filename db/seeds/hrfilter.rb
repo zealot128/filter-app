@@ -31,6 +31,10 @@ FeedSource.create(url: "http://www.controllerakademie.de/feed/", name: "CA Contr
 FeedSource.create(url: "https://hrtrendinstitute.com/feed/", name: "HR Trend Institute", value: 3, full_text_selector: ".cb-entry-content")
 FeedSource.create(url: "https://www.generation-silberhaar.de/feed/", name: "Demographie-Blog", value: 3, full_text_selector: ".post-content")
 
+Source.find_each do |s|
+  Source::FindLogosWorker.perform_in(1.minute, s.id)
+end
+
 # to regenerate
 # Category.all.map { |i| %[Category.create!(name: "#{i.name}", keywords: "#{i.keywords}", hash_tag: "#{i.hash_tag}")] }
 Category.create!(name: "Personalmarketing", keywords: "Stellenanzeigen,Kandidaten,Fachkräftemangel,Jobbörse,Bewerbermanagement,talentpool,Karriereseite,job board,Stellenausschreibung,Matching,Recruiting,Stellenanzeige,Anschreiben,Bewerbungsunterlagen,Stellenbörse,kanaleo,kanaleo-analyse", hash_tag: "Personalmarketing")
@@ -79,3 +83,5 @@ words = [ Trends::Word.create!(word: "zukunft personal europe"), Trends::Word.cr
 Trends::Trend.create!(name: "HR Events", words: words)
 words = [ Trends::Word.create!(word: "corona-krise trifft"), Trends::Word.create!(word: "coronakrise unternehmen"), Trends::Word.create!(word: "wegen coronavirus"), Trends::Word.create!(word: "arbeitsausfall wegen coronavirus"), Trends::Word.create!(word: "kurzarbeitergeld arbeitsausfall wegen coronavirus"), Trends::Word.create!(word: "corona-krise kurzfristige arbeitnehmerüberlassung"), Trends::Word.create!(word: "corona-krise kurzfristige arbeitnehmerüberlassung möglich"), Trends::Word.create!(word: "wegen corona-krise"), Trends::Word.create!(word: "während corona-krise"), Trends::Word.create!(word: "kununu corona"), Trends::Word.create!(word: "recruiting zeiten corona"), Trends::Word.create!(word: "auswirkungen corona"), Trends::Word.create!(word: "thema corona"), Trends::Word.create!(word: "zeit corona"), Trends::Word.create!(word: "während corona"), Trends::Word.create!(word: "gegen corona"), Trends::Word.create!(word: "trotz corona"), Trends::Word.create!(word: "wegen corona"), Trends::Word.create!(word: "zeiten corona") ]
 Trends::Trend.create!(name: "Corona + Recruiting", words: words)
+
+

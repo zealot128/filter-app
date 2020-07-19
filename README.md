@@ -51,34 +51,27 @@ It is possible to subscribe via E-Mail. Then, once per week on sunday, you will 
 
 # Development
 
-As it is a fully functioning Rails app, you can try to run it yourself. First make sure to have Ruby at least 2.0 installed and bundler, then:
+As it is a Rails app, you can try to run it yourself. First make sure to have installed:
+
+- Linux or macos
+- Ruby 2.2+
+- Postgresql 9.5+
+- Redis (For Background jobs) 3.0+
+- nodejs 10.0+ and yarn
 
 ```
-git clone ...
-cd ...
-bundle install
-rake environment db:create
-rake db:migrate
-rails server
+git clone https://github.com/zealot128/filter-app.git
+cd filter-app
+bin/setup
 ```
 
-before the rake commands, you might have to create a config/application.yml (see config/application.hrfilter.yml as example) and adjust config/database.yml and config/secrets.yml too your needs.
-
-If you'd like, you can try to import some of the HRfilter sources for an initial seed:
+To run the app + background worker + webpack run:
 
 ```
-rails r 'Setting.read_yaml'
-rake db:seed
+foreman start
 ```
 
+If anything fails, then you might need to adjust the ``config/database.yml`` to configure the correct database or run the individual commands
 
-If you have issues to get the data with db:seed you can also try:
-
-```
-rails runner 'Source.cronjob'
-rails runner 'NewsItem.cronjob'
-```
-
-The necessary tasks are at:  config/schedule.rb
-
+Otherwise: you can check out the running app on ``localhost:5000``
 

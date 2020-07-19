@@ -97,6 +97,7 @@ group :development do
   gem 'annotate'
   gem "habtm_generator"
   gem "listen"
+  gem "foreman"
 end
 
 group :development, :test do

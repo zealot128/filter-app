@@ -245,6 +245,7 @@ GEM
     ffi (1.10.0)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
+    foreman (0.87.1)
     fspath (3.1.0)
     fuubar (2.4.1)
       rspec-core (~> 3.0)
@@ -669,6 +670,7 @@ DEPENDENCIES
   fcm
   feedjira
   font-awesome-rails (~> 4.0)
+  foreman
   google-cloud-firestore
   grape
   groupdate
