@@ -35,9 +35,8 @@ class MailSubscription < ApplicationRecord
 
   validates :interval, presence: true, inclusion: { in: %w(weekly monthly biweekly) }
   validates :categories, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :limit, presence: true
-  validates_email_realness_of :email
   before_create do
     self.token = SecureRandom.hex(32)
   end
