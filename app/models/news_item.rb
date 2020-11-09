@@ -330,4 +330,12 @@ class NewsItem < ApplicationRecord
       i.save validate: false
     }
   end
+
+  def reading_time
+    # Naive Approach towards the problem, assumed that the site only consists of words(No other resources,
+    # 3-rd party links,..) and the reading speed of a normal person is around 150 words per minute
+    wpm = 150
+    word_length.nil? ? 0 : (word_length/wpm.to_f).ceil
+  end
+
 end

@@ -1,0 +1,45 @@
+#Dokumentation zur Testaufgabe (Filter-app)
+
+*Bewerber: Duy Nhu
+*Bewerbungsnr: 8E2S4
+
+##06/11/2020 - Freitag:
+
+Bekommen der Testaufgabe. An diesem Tag habe ich leider keine Zeit wegen des Studiums gefunden, die zu bearbeiten. Geschafft ist nur das Durchlesen der Aufgabe.
+
+##07/11/2020 - Samstag:
+
+Erst ab 16:00 Uhr faengt die Bearbeitung der Aufgabe an. Da ich keine bis zu diesem Zeitpunkt kaum Erfahrungen mit Ruby und Rails gehabt habe, trat viele viele Problemen am Anfang auf. 
+
+*1. Die erforderte Version von Ruby wurde in README.md(Da steht 2.2+) nicht genau dokumentiert (Obwohl es schon in .ruby-version 2.5.3 spezifiziert wurde) 
+
+*2. Rbenv wurde NACH Installation der neusten Version von Ruby installiert => Es ging danach chaotisch, ich musste Ruby dann purgen/uninstallieren.
+
+*3. Keine ausfuehrliche Dokumentation fuer Postgresql und Redis-server fuer Einsteiger. Es war echt verwirrend fuer mich, aber ist verstaendlich vom Entwicklers Standpunkt. 
+
+*4. Gem? Bundler? Installation? Da sind wieder Problemen :( Beim Befehl "bin/setup" hat immer Problemen aufgetreten(Es laesst sich nur teilweise laufen), deshalb musste ich selbst eigene Befehle herausfinden (Google)
+
+Das Ganze Prozess hat sehr viel Zeit gedauert, habe ich gleichzeitig Rubys Dokumentation schnell durchgelesen und die Grundlagen davon gelernt. Ich war um 20:00 fertig mit der Installation und dem Kennenlernen von Ruby & Rails. 
+
+
+##08/11/2020 - Sonntag: 
+
+Feiertag :) 
+
+##09/11/2020 - Montag:
+
+Mit "foreman start" laesst das Projekt sich nicht laufen. Foreman wurde immer gleich nach Aufruf ohne Fehlermeldung terminiert. Leider war keine Instruktion vorhanden und deswegen musste ich mithilfe Google eine Loesung finden. Durch eigene Befehle hat das Projekt endlich gegen 11:00 Uhr gestartet.
+
+Danach wendete ich mich an localhost:5000. Dort funktionerte die Webseite sehr sehr sehr langsam. Viele Variablen von NewsItem wurden nicht initializiert, obwohl die Webseite schon News angezeigt haben. (z.B da gabs keine Anzahl von Woertern)
+
+Einerseits hat man im Projekt einige Technologien genutzt, die ich nicht wusste. Andererseits war es ein ziemlich groesses Projekt. Deshalb musste ich viele Muehe geben, um alle verwandte Files zu lesen und so viel wie moeglich zu verstehen.  
+
+Nach dem Rumspielen mit Rails Console scheinte es zu sein, dass der Aufruf von word_length immer nil ausgibt (Und deshalb keine Anzahl von Woertern wurde angezeigt). Ich liess dann die App fuer ungefaehr 20~30mins laufen und dann waren word_length und andere Variablen nicht mehr nil.
+
+Fuer die reading_time Funktion habe ich einfach eine Naive Approach gemacht, die Formel dafuer habe ich von Wiki genommen. (Source: https://de.wikipedia.org/wiki/Lesegeschwindigkeit#:~:text=Die%20durchschnittliche%20Vorlesegeschwindigkeit%20liegt%20dagegen,zu%201000%20W%C3%B6rter%20pro%20Minute.)
+
+Zu diesem Punkt bleib nur noch das Anzeigen des Uhr Symbols und der Anzahl von Minuten auf jedem Beitrag. Es hat mir sehr viel Zeit gedauert, da ich slim nicht kannte (was zu Schwierigkeiten beim Verstehen der html-Files fuehrte) und es zu viele Files unter views/news_items gab. Gluecklich habe ich das Projekts Struktur nach eine Weile verstanden und damit eine Loesung herausgefunden.
+
+Gesamte Bearbeitungszeit: ca. 9 Stunden (ink. Installation und Lernen der Sprache und Framework)
+
+
