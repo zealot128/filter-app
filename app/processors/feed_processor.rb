@@ -44,6 +44,7 @@ class FeedProcessor < BaseProcessor
   end
 
   def find_news_item(guid, url, title)
+    title = title[0...255]
     guid = guid[0..230]
     old = @source.news_items.where(guid: guid).first
     old || @source.news_items.where(url: url).first ||
