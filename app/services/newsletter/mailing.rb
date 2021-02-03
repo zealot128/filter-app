@@ -41,7 +41,7 @@ module Newsletter
 
       subjects = []
       top_news_items.each do |item|
-        truncated = item.title.truncate(60)
+        truncated = item.title.truncate(80)
         subjects << truncated
         if subjects.join.length >= 120
           break
