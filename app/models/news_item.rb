@@ -291,6 +291,7 @@ class NewsItem < ApplicationRecord
 
   def rescore!
     result = NewsItem::ScoringAlgorithm.new(to_data, max_age: self.class.max_age.ago).run
+    self.impression_count = Ahoy::Event.where(name: 'news_item').where("(properties->'id')::int = ?", id).count
     self.absolute_score = result[:absolute_score]
     self.value = result[:relative_score]
 

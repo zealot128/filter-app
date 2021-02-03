@@ -63,7 +63,7 @@ class Trends::Processor
   end
 
   def run
-    print '-' if ENV['USER'] # not in cron
+    print '-' if ENV['USER'] && !Rails.env.test? # not in cron
     return unless @calendar_week
     # return if @news_item.source.language == 'english'
 
