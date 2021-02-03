@@ -26,6 +26,32 @@ module Newsletter
       @subscription.salutation
     end
 
+    def subject
+      kw = Date.today.strftime("%W").to_i
+      top_news_items = sections.
+        flat_map { |i| i.respond_to?(:news_items) ? i.news_items : [] }.
+        sort_by { |i|
+          source = i.source.value || 1
+          -(i.value / source * Math.log([source, 8].min))
+        }.
+        take(3)
+      if top_news_items.none?
+        return "[#{Setting.site_name}] KW #{kw} - #{count} Beiträge"
+      end
+
+      subjects = []
+      top_news_items.each do |item|
+        truncated = item.title.truncate(60)
+        subjects << truncated
+        if subjects.join.length >= 120
+          break
+        end
+      end
+      title = subjects.map { |i| %{"#{i}"} }.to_sentence
+
+      "#{title} - HRfilter KW #{kw}"
+    end
+
     # rubocop:disable Metrics/CyclomaticComplexity
     def intro
       Setting.mail_intro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
