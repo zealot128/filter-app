@@ -31,8 +31,8 @@ module Newsletter
       top_news_items = sections.
         flat_map { |i| i.respond_to?(:news_items) ? i.news_items : [] }.
         sort_by { |i|
-          source = i.source.value || 1
-          -(i.value / source * Math.log([source, 8].min + 1))
+          source = (i.source.value || 1).clamp(1, 8)
+          -(i.value / source * Math.log(source + 1))
         }.
         take(3)
       if top_news_items.none?
