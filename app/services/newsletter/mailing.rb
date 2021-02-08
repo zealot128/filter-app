@@ -32,7 +32,7 @@ module Newsletter
         flat_map { |i| i.respond_to?(:news_items) ? i.news_items : [] }.
         sort_by { |i|
           source = i.source.value || 1
-          -(i.value / source * Math.log([source, 8].min))
+          -(i.value / source * Math.log([source, 8].min + 1))
         }.
         take(3)
       if top_news_items.none?
