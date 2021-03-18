@@ -71,7 +71,8 @@ To run the app + background worker + webpack run:
 foreman start
 ```
 
-If anything fails, then you might need to adjust the ``config/database.yml`` to configure the correct database or run the individual commands
+If anything fails, then you might need to adjust the ``config/database.yml`` to configure the correct database or run the individual commands.
+Make sure Redis-Server is running (command: redis-server)
 
 Otherwise: you can check out the running app on ``localhost:5000``
 
