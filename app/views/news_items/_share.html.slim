@@ -26,7 +26,7 @@
         = item.word_length
       span.label.label-default<>(title='Lesedauer (ca.)')
         i.fa.fa-clock-o>
-        = "#{(item.word_length / 200.00).ceil().round()} min"
+        = "#{(item.word_length / 200.00).ceil()} min"
 .categories
   - if item.paywall?
     span.label.label-paywall
