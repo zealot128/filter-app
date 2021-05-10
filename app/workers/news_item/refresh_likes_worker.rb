@@ -5,8 +5,11 @@ class NewsItem::RefreshLikesWorker
   sidekiq_options queue: :low
 
   def perform(news_item_id)
-    news_item = NewsItem.find(news_item_id)
-    news_item.refresh
+    Timeout::timeout(30) do
+      news_item = NewsItem.find(news_item_id)
+      news_item.refresh
+    end
+  ensure
     NewsItem::RefreshStatsWorker.perform_async(news_item.id)
   end
 end
