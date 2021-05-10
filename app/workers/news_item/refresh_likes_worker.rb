@@ -10,6 +10,6 @@ class NewsItem::RefreshLikesWorker
       news_item.refresh
     end
   ensure
-    NewsItem::RefreshStatsWorker.perform_async(news_item.id)
+    NewsItem::RefreshStatsWorker.perform_async(news_item_id)
   end
 end
