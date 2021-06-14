@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   end
 
   get 'ni/:id' => 'news_items#show', as: :click_proxy
+  get 'share/:id/:channel' => 'news_items#share', as: :share_news_item
   get "mt/gif/:token", to: "mail_subscriptions#track_open", as: :mail_trackings_open
 
   get 'search' => 'news_items#index'
@@ -98,5 +99,5 @@ Rails.application.routes.draw do
     mount Sidekiq::Web, at: '/rails/sidekiq'
   end
   mount Ahoy::Engine => "/stellenanzeigen"
-  root to: "static_pages#index"
+  root to: "days#index"
 end

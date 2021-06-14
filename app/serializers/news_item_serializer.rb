@@ -1,5 +1,5 @@
 class NewsItemSerializer < ApplicationSerializer
-  attributes :id, :title, :teaser, :url, :published_at, :word_length
+  attributes :id, :title, :teaser, :url, :published_at, :word_length, :media_url
   attribute :score
   attribute :image
   attribute :categories

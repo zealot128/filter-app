@@ -1,8 +1,8 @@
 class FeedProcessor < BaseProcessor
   def process(source)
     @source = source
-
     feed = parse_feed(source.url)
+
     if !feed.respond_to?(:entries)
       source.update_column :error, true
     else
@@ -60,12 +60,16 @@ class FeedProcessor < BaseProcessor
     text = entry.content || entry.summary
     published = entry.published
     guid = (entry.entry_id || entry.url)
+
     if !url and entry.entry_id and entry.entry_id.starts_with?('http')
       url = entry.entry_id
     end
-    if !url and defined? entry.enclosure_url
-      url = entry.enclosure_url
+
+    if defined? entry.enclosure_url
+      media_url = entry.enclosure_url
+      url = entry.enclosure_url unless url
     end
+
     return unless url
     url.strip!
 
@@ -79,6 +83,9 @@ class FeedProcessor < BaseProcessor
     @item = find_news_item(guid, url, title)
     was_new = @item.new_record?
     @item.url = url
+    unless media_url.nil?
+      @item.media_url = media_url
+    end
     if @item.new_record?
       @item.source = @source
       @item.published_at = [Time.zone.now, published].min
