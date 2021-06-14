@@ -4,6 +4,7 @@ class JobsController < ApplicationController
       HTTParty.get(Setting.jobs_url)['jobs']
     }
     @jobs = response.shuffle
-    render layout: false
+    # render layout: false
+    render json: @jobs
   end
 end

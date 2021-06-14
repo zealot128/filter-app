@@ -47,8 +47,7 @@ class NewsItemsController < ApplicationController
     redirect_to news_item.url
   end
 
-  # Frontend: Weiterleitung auf <a href="/share/${id}/facebook" target="_blank" rel="noopener">
-  def share 
+  def share
     news_item = NewsItem.find(params[:id])
     unless bot?
       ahoy.track 'hrfilter/share', id: news_item.id, source_id: news_item.source_id, channel: params[:channel]

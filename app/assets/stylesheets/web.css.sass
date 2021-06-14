@@ -43,7 +43,7 @@ footer
   border: 1px solid #ddd
   background: #f2f2f2
 
-$panel-body-height: 200px
+$panel-body-height: fit-content
 
 .panel-default.news-item-panel
   .panel-body
@@ -437,11 +437,9 @@ footer
   margin: 0.5em
 
 .resp-sharing-button
-  border-radius: 5px
   transition: 25ms ease-out
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif
-  padding: 1px 1rem
-  margin: 7px
+  padding: 0.5em 0.75em
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif
 
 .resp-sharing-button__icon svg
   width: 1em
@@ -561,10 +559,114 @@ footer
     background-color: #046293
     border-color: #046293
 
-.resp-sharing-button--reddit
-  background-color: #5f99cf
-  border-color: #5f99cf
+.resp-sharing-button--xing
+  background-color: #1a7576
+  border-color: #1a7576
 
-  &:hover, &:active
-    background-color: #3a80c1
-    border-color: #3a80c1
+  &:hover .resp-sharing-button--xing:active
+    background-color: #114C4C
+    border-color: #114C4C
+
+.display-flex
+  display: flex
+  flex-wrap: wrap
+
+.row.display-flex > [class*='col-']
+  display: relative
+  flex-direction: column
+
+.sticky-top
+  background: white
+  position: relative
+  position: -webkit-sticky
+  position: sticky
+  padding-bottom: 1rem
+  top: 0
+
+  &--z1
+    z-index: 1001
+
+  &--z2
+    z-index: 1002
+
+// VueAgile styles
+.agile
+  &__nav-button
+    background: transparent
+    border: none
+    color: #b2b3b5
+    cursor: pointer
+    font-size: 24px
+    height: 100%
+    position: absolute
+    top: 0
+    transition-duration: .3s
+    width: 80px
+
+    &:hover
+      background-color: rgba(#b2b3b5, .5)
+      opacity: 1
+
+    &--prev
+      left: 0
+
+    &--next
+      right: 0
+
+  &__dots
+    bottom: 10px
+    left: 50%
+    position: absolute
+    transform: translateX(-50%)
+
+  &__dot
+    margin: 0 10px
+
+    button
+      background-color: transparent
+      border: 1px solid #fff
+      border-radius: 50%
+      cursor: pointer
+      display: block
+      height: 10px
+      font-size: 0
+      line-height: 0
+      margin: 0
+      padding: 0
+      transition-duration: .3s
+      width: 10px
+
+    &--current,
+    &:hover
+      button
+        background-color: #fff
+
+// Slides styles
+.slide
+  display: block
+  min-height: 380px
+  height: 100%
+  width: 100%
+
+.mt-1
+  margin-top: 1rem
+
+.mt-2
+  margin-top: 2rem
+
+.mr-1
+  margin-right: 1rem
+
+.mb-1
+  margin-bottom: 1rem
+
+.mb-2
+  margin-bottom: 2rem
+
+.p-0
+  padding: 0
+
+.border-0
+  border: 0
+
+

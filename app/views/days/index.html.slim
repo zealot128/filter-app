@@ -24,24 +24,11 @@
 - if browser.device.mobile?
   = render 'layouts/mobile_notice'
 
-- if Setting.get('jobs_url').present?
-  br
-  br
-  = render "layouts/job_carousel"
 
 - @container_class = ''
-br
-br
-.container-fluid
-  recent-trend-app
-  - params = {}
-  news-item-wall(data-params="#{params.to_json}" data-default-order='hot_score' data-sort-options='no_best')
 
+front-page-app
 
 .container
-  = javascript_packs_with_chunks_tag 'application'
+  = javascript_packs_with_chunks_tag 'front-page'
 
-  / .text-center
-  /   h3 Top-News der letzten Tage
-/
-/ = render "day_container"

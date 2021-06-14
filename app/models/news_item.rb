@@ -162,7 +162,7 @@ class NewsItem < ApplicationRecord
   NEWSLETTER_SIZE = [140, 70].freeze
   has_attached_file :image,
     styles: {
-      original: ["250x200>", :jpg],
+      original: ["700x400>", :jpg],
       newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg]
     },
     processors: [:thumbnail, :paperclip_optimizer],

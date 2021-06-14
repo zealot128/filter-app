@@ -3,16 +3,21 @@
     <div class='panel panel-default chart-panel'>
       <Highcharts :options='chartOptions' style='height: 200px'/>
     </div>
-    <NewsItemWall :params='params' default-order='hot_score' sort-options='all'/>
+    <NewsItemWall default-order='hot_score' sort-options='all'/>
+    <SearchBar v-bind:expand="true"/>
   </div>
 </template>
 
 <script>
 import 'utils/highcharts'
-import NewsItemWall from './NewsItemWall'
+import NewsItemWall from '../front-page/components/NewsItemWall'
+import SearchBar from '../front-page/components/SearchBar'
 
 export default{
-  components: { NewsItemWall },
+  components: {
+    NewsItemWall,
+    SearchBar
+  },
   props: {
     chart: { type: Object, required: true },
     trend: { type: Object, required: true }
@@ -50,6 +55,9 @@ export default{
       }
     }
   },
+  mounted() {
+    this.$store.commit('expand_params_based_on_data', this.params);
+  }
 }
 </script>
 
