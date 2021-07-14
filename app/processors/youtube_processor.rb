@@ -21,7 +21,7 @@ class YoutubeProcessor < FeedProcessor
     item.full_text = entry.content
     item.title = entry.title
     item.teaser = teaser(item.full_text)
-
+    item.media_url = url.sub! 'watch?v=', 'embed/'
     if NewsItem::CheckFilterList.new(@source).skip_import?(title, item.full_text)
       item.destroy if item.persisted?
       return nil

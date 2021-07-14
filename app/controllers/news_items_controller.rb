@@ -47,6 +47,26 @@ class NewsItemsController < ApplicationController
     redirect_to news_item.url
   end
 
+  # Frontend: Weiterleitung auf <a href="/share/${id}/facebook" target="_blank" rel="noopener">
+  def share 
+    news_item = NewsItem.find(params[:id])
+    unless bot?
+      ahoy.track 'hrfilter/share', id: news_item.id, source_id: news_item.source_id, channel: params[:channel]
+    end
+    url = CGI.escape(news_item.url)
+    title = CGI.escape(news_item.title)
+    case params[:channel]
+    when 'facebook' 
+      redirect_to "https://www.facebook.com/sharer/sharer.php?u=#{url}&title=#{title}"
+    when 'twitter' 
+      redirect_to "https://twitter.com/intent/tweet?url=#{url}"
+    when 'linkedin' 
+      redirect_to "https://www.linkedin.com/shareArticle?url=#{url}"
+    when 'xing' 
+      redirect_to "https://www.xing.com/social/share/spi?op=share&url=#{url}&title=#{title}"
+    end
+  end
+
   def homepage
     @news_items = NewsItem.home_page.limit(36).page(page)
     if params[:category].present?

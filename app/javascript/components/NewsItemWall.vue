@@ -25,7 +25,12 @@
       <i class="fa fa-spinner fa-spin fa-3x"></i>
     </div>
     <div class="news-items--wrapper">
-      <NewsItem v-for="ni in newsItems" :key="ni.id" :news-item="ni" />
+      <NewsItem
+          v-for="ni in newsItems"
+          :key="ni.id"
+          :news-item="ni"
+          @chooseMedia="setMedia"
+      />
     </div>
     <div class="text-center">
       <a v-if="hasNextPage" class="btn btn-default" @click="loadNextPage">
@@ -33,17 +38,31 @@
       </a>
     </div>
     <div style="flex-grow: 1"></div>
+
+    <div :class="{ 'media-fixed': true, 'audio': !isVideo }" v-if="showPlayer">
+      <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          @click="showPlayer=!showPlayer"
+          style="color: #000; -webkit-text-stroke: 1px white;}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <Media :url="url" :isVideo="isVideo" :key="url"/>
+    </div>
   </div>
 </template>
 
 <script>
 import { Dropdown } from "uiv";
 import NewsItem from "./NewsItem";
+import Media from "./Media"
 
 const qs = require("qs");
 
 export default {
-  components: { NewsItem, BDropdown: Dropdown },
+  components: { NewsItem, Media, BDropdown: Dropdown },
   props: {
     params: { type: Object, required: true },
     defaultOrder: { type: String, default: () => "all_best" },
@@ -56,17 +75,23 @@ export default {
       loading: true,
       newsItems: [],
       order: this.defaultOrder,
-      meta: {}
+      meta: {},
+      url: null,
+      isVideo: false,
+      showPlayer: false,
     };
   },
   computed: {
     orderOptions() {
       const options = { all_best: "Beste", newest: "Neuste" };
-      if (this.sortOptions === "all") {
+      if (this.sortOptions === "all" || this.sortOptions === 'no_best') {
         // options["best"] = "Top 30% je Tag";
         options.week_best = "Top 30% je Woche";
         options.month_best = "Top 30% je Monat";
         options.hot_score = "Hot";
+      }
+      if (this.sortOptions === "no_best") {
+        delete options.all_best
       }
       return options;
     },
@@ -125,6 +150,11 @@ export default {
           this.loading = false;
         })
         .catch(error => console.error(error));
+    },
+    setMedia(payload) {
+      this.showPlayer = true;
+      this.url = payload.url;
+      this.isVideo = payload.isVideo;
     }
   }
 };
@@ -162,11 +192,21 @@ export default {
 .news-items--form {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 3px;
+  margin: 10px;
 }
 .news-items--form .form-control {
   height: 32px;
   padding-top: 0;
   padding-bottom: 0;
+}
+.media-fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2000;
+}
+
+.audio {
+  opacity: 0.9;
 }
 </style>

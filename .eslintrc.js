@@ -10,6 +10,10 @@ module.exports = {
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false
+  },
   "globals": {
     OneDrive: true,
     Dropbox: true,

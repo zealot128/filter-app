@@ -32,11 +32,16 @@
 - @container_class = ''
 br
 br
-.container-fluid: recent-trend-app
+.container-fluid
+  recent-trend-app
+  - params = {}
+  news-item-wall(data-params="#{params.to_json}" data-default-order='hot_score' data-sort-options='no_best')
+
+
 .container
   = javascript_packs_with_chunks_tag 'application'
 
-  .text-center
-    h3 Top-News der letzten Tage
-
-= render "day_container"
+  / .text-center
+  /   h3 Top-News der letzten Tage
+/
+/ = render "day_container"

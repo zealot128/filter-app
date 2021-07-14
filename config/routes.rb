@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   end
 
   get 'ni/:id' => 'news_items#show', as: :click_proxy
+  get 'share/:id/:channel' => 'news_items#share', as: :share_news_item
   get "mt/gif/:token", to: "mail_subscriptions#track_open", as: :mail_trackings_open
 
   get 'search' => 'news_items#index'
@@ -86,7 +87,7 @@ Rails.application.routes.draw do
   get 'api/news_items' => 'api#news_items'
   get 'api/categories' => 'api#categories'
 
-  get 'days' => redirect('/')
+  get 'days' => 'days#index'
   get 'days/:year/:month/:day' => 'days#show', as: :raw_day
 
   resources :categories, path: "kategorien", only: [:index, :show]

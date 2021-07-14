@@ -25,4 +25,14 @@ describe NewsItemsController do
       expect(assigns(:news_items)).to be == []
     end
   end
+
+  describe "share proxy" do
+    specify 'facebook' do
+      ni = Fabricate(:news_item, title: 'Foo Bar', url: 'https://www.example.com')
+      get :share, params: { id: ni.id, channel: 'facebook' }
+      expect(response).to be_redirect
+      expect(Ahoy::Event.count).to be == 1
+      expect(response.location).to be == "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.example.com&title=Foo+Bar"
+    end
+  end
 end
