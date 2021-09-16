@@ -1,4 +1,4 @@
-- @container_class = 'container-fluid'
+- @container_class = 'container'
 - content_for :content_header do
   .content-header
     .container
@@ -53,6 +53,6 @@ br
 - if @news_items.any?
   h3.text-center Beiträge
   - params = { source_id: @source.id }
-  news-item-wall(data-params="#{params.to_json}" data-default-order='newest')
+  sources(data-params="#{params.to_json}")
 
 = javascript_packs_with_chunks_tag 'application'

@@ -12,6 +12,7 @@ class NewsFilter
   attr_accessor :from
   attr_accessor :to
   attr_accessor :trend
+  attr_accessor :media_type
 
   def news_items
     @news_items = NewsItem.sorted.visible.includes(:categories, :source).limit(@per_page).page(@page)
@@ -69,7 +70,8 @@ class NewsFilter
                                       )})
     end
     if @trend.present?
-      @news_items = @news_items.where(id: Trends::Trend.find_by!(slug: @trend).words.joins(:usages).select('news_item_id'))
+      trends = Trends::Trend.where(slug: @trend.split(','))
+      @news_items = @news_items.where(id: Trends::Word.where(trend_id: trends).joins(:usages).select('news_item_id'))
     end
     if @from.present?
       from = Time.zone.parse(@from).to_date
@@ -83,6 +85,9 @@ class NewsFilter
       @news_items = @news_items.
         search_full_text(@query).
         with_pg_search_rank.where('rank > ?', 0)
+    end
+    if @media_type.present?
+      @news_items = @news_items.where(source_id: Source.where(type: @media_type.split(',')).uniq)
     end
   end
 

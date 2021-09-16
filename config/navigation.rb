@@ -8,9 +8,9 @@ SimpleNavigation::Configuration.run do |navigation|
       sub.item :"types-#{i += 1}", "", "#", html: { divider: true, class: 'divider' }, class: 'divider'
     end
     primary.dom_class = 'nav navbar-nav'
-    primary.item :key_1, 'Tage', '/', {}
-    primary.item :key_3, 'Kategorien', '/kategorien', highlights_on: :subpath
-    primary.item :key_4, 'Suche', '/search', {}
+    primary.item :key_1, 'News', '/', {}
+    # primary.item :key_3, 'Kategorien', '/kategorien', highlights_on: :subpath
+    # primary.item :key_4, 'Suche', '/search', {}
     primary.item :key_5, 'Newsletter', '/newsletter', {}
     primary.item :key_7, 'Feeds', '/rss', {}
     primary.item :key_6, 'Als App', '/app', {}

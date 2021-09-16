@@ -16,6 +16,7 @@ class Resources::NewsItems < Grape::API
       optional :topic, String, desc: "DEPRECATED, use trend"
       optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
       optional :query, String, desc: "Search term"
+      optional :media_type, String
     end
     get '/' do
       filter = NewsFilter.new(
@@ -30,7 +31,8 @@ class Resources::NewsItems < Grape::API
         page: params[:page],
         categories: params[:categories],
         trend: params[:topic] || params[:trend],
-        order: params[:order]
+        order: params[:order],
+        media_type: params[:media_type]
       )
       @news_items = filter.news_items
       if params[:source_id]
@@ -60,7 +62,9 @@ class Resources::NewsItems < Grape::API
       end
       base
     end
-
+    get '/media-types' do
+      Source::SOURCE_TYPES.as_json
+    end
     get '/:id' do
       Source.visible.find(params[:id])
     end
