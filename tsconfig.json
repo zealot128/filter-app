@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "lib": ["es2020", "dom"],
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "noImplicitAny": true,
+    "paths": {
+      "@/*": [
+        "app/javascript/*"
+      ],
+      "~/*": [
+        "app/javascript/*"
+      ],
+        "*": ["node_modules/*"]
+    },
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "noEmit": true
+  },
+  "include": [
+    "app/javascript/types/**/*.ts",
+    "app/javascript/**/*.ts",
+    "app/javascript/**/*.tsx"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules",
+    "vendor",
+    "public"
+  ],
+  "compileOnSave": false
+}

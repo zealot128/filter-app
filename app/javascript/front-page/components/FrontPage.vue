@@ -8,7 +8,7 @@
               div
                 .header
                   a(href="/")
-                    img(:src="hrfilterLogo" height="30px")
+                    img(:src="logo" height="30px")
                   hr(style="margin: 1rem 0.5rem")
                 SideComponents
           .col-sm-7.col-md-8
@@ -22,7 +22,7 @@
             v-if="!$store.getters.wideLayout"
             @buildPayload="buildPayload"
           )
-    .container
+    .container(v-if='showJobs')
       .text-center
         h3(style="margin-top: 0;")
           | HR-Stellenanzeigen
@@ -35,10 +35,13 @@ import SearchBar from "./SearchBar";
 import SideComponents from "./SideComponents";
 import Modal from "./Modal"
 import Jobs from "./Jobs";
-import hrfilterLogo from "../../../assets/images/hrfilter/logo-large.png"
 
 export default {
-  name: "FrontPage.vue",
+  name: "FrontPage",
+  props: {
+    logo: { type: String, },
+    showJobs: { type: Boolean }
+  },
   data() {
     return {
       bottom: "0",

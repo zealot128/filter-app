@@ -27,7 +27,10 @@
 
 - @container_class = ''
 
-front-page-app
+front-page-app(
+  data-logo="#{image_path(%[#{Setting.key}/logo-large.png])}"
+  data-show-jobs="#{Setting.key == 'hrfilter'}"
+)
 
 .container
   = javascript_packs_with_chunks_tag 'front-page'

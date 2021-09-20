@@ -4,7 +4,7 @@
       template(v-slot:default="{item}")
         span
           | {{ item.name }}
-        img.category-thumb(:src="item.logo.thumb" loading="lazy")
+        img.category-thumb(:src="item.logo.thumb" loading="lazy" v-if='item.logo')
 
     filter-box(title="Medientyp" v-model="selectedMediatypes" :items="mediaTypes")
       template(v-slot:default="{item}")
