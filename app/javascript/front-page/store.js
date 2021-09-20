@@ -92,8 +92,7 @@ export default new Vuex.Store({
       fetch(`/js/trends.json`)
         .then((stream) => stream.json())
         .then((data) => {
-          //change this back to data.month
-          context.commit("set_trends", data.all)
+          context.commit("set_trends", data.month)
         })
         .catch((error) => console.error(error))
     },
