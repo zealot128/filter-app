@@ -1,5 +1,5 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v14
+image: registry.pludoni.com/administrators/docker-images/rails-base:v17
 stages: [checks, test, deploy]
 
 variables:
