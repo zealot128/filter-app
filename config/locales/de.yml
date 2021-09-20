@@ -9,6 +9,8 @@ de:
       PodcastSource: 'Podcast-Feed'
       TwitterSource: 'Twitter'
       FacebookSource: 'Facebook'
+      YoutubeSource: 'Youtube'
+      RedditSource: 'Reddit'
 
   categories:
     category:
