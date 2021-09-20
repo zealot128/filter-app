@@ -39,9 +39,9 @@ class YoutubeSource < Source
 
   def download_thumb
     doc = Nokogiri.parse(open(url))
-    img = doc.at('img.channel-header-profile-image')
-    return if img.blank? or img['src'].blank?
-    update logo: download_url(img['src'])
+    img = doc.search('meta[property="og:image"]').first["content"]
+    return if img.blank?
+    update logo: download_url(img)
   end
 
   def refresh
