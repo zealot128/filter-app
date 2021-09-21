@@ -16,7 +16,7 @@ export default {
   props: {
     params: { type: Object, required: true },
   },
-  mounted() {
+  created() {
     this.$store.commit("expand_params_based_on_data", this.params);
   }
 }

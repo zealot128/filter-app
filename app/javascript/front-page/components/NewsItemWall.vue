@@ -58,11 +58,12 @@ export default {
       page: 0,
       meta: {},
       url: null,
+      firstLoad: true,
     };
   },
   computed: {
     ...mapState([
-      'params'
+      'params',
     ]),
     orderOptions() {
       const options = { all_best: "Beste", newest: "Neueste" };
@@ -89,9 +90,15 @@ export default {
   watch: {
     params: {
       handler() {
-        this.refresh();
+        if(this.firstLoad){
+          this.loadPages(history.state?.page || 1);
+          this.firstLoad = false;
+        }
+        else {
+          this.refresh();
+        }
       },
-      deep: true
+      deep: true,
     },
     order() {
       this.refresh();
@@ -108,16 +115,14 @@ export default {
       }
       history.pushState(newState, '', location.href)
     })
-    if (history.state) {
-      try {
-        this.$store.commit('set_params_based_on_data', history.state.params);
-        this.order = history.state.params.order;
-      }
-      catch(error){
-        console.error(error, "History is null!");
-      }
+    try {
+      this.$store.commit('set_params_based_on_data', history.state.params);
+      this.order = history.state.params.order;
     }
-    this.loadPages(history.state?.page || 1)
+    catch(error){
+      // console.error(error, "History is null!");
+      this.$store.dispatch('trigger_watch_params');
+    }
   },
   beforeDestroy() {
     window.removeEventListener("beforeunload") ;
@@ -163,7 +168,6 @@ export default {
         ...this.searchParams,
         page,
       };
-      // console.log(`/api/v1/news_items.json?${qs.stringify(params)}`);
       return fetch(`/api/v1/news_items.json?${qs.stringify(params)}`)
           .then(stream => stream.json())
           .then(data => {
