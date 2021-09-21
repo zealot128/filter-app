@@ -27,6 +27,6 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-vue": "^5.2.3",
     "vue-eslint-parser": "^6.0.4",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^3.11.0"
   }
 }

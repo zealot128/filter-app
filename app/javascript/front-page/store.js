@@ -108,6 +108,11 @@ export default new Vuex.Store({
     play_or_pause(context, bool) {
       context.commit("set_play", bool)
     },
+    trigger_watch_params(context) {
+      let paramsCopie = context.state.params;
+      context.state.params = {};
+      context.state.params = paramsCopie;
+    },
   },
   modules: {},
   getters: {
