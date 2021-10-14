@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@babel/preset-typescript": "^7.16.5",
     "@rails/webpacker": "5.4.0",
     "ahoy.js": "^0.3.8",
     "babel-eslint": "^10.0.3",
@@ -7,6 +8,7 @@
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
     "qs": "^6.9.0",
+    "typescript": "^4.5.4",
     "uiv": "^0.33.0",
     "vue": "^2.6.14",
     "vue-highcharts": "^0.1.0",
@@ -27,5 +29,14 @@
     "eslint-plugin-vue": "^5.2.3",
     "vue-eslint-parser": "^6.0.4",
     "webpack-dev-server": "^3.11.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "printWidth": 150,
+    "htmlWhitespaceSensitivity": "ignore",
+    "pugAttributeSeparator": "as-needed",
+    "bracketSameLine": true,
+    "pugPrintWidth": 130
   }
 }
