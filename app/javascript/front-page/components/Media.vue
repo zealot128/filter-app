@@ -27,7 +27,9 @@ export default {
   },
   methods: {
     pause() {
-      this.$refs.audio.pause();
+      if(!this.isVideo) {
+        this.$refs.audio.pause();
+      }
     },
   },
   computed: {

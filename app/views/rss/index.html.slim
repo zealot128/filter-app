@@ -1,12 +1,12 @@
 - content_for :content_header do
-  .content-header.hidden-xs
+  .content-header.hidden-xs(style='margin-top: 69px')
     .container
       - @title = "RSS-Feeds"
 
       h1 = @title
       p Abonnieren Sie die am höchsten gerankten News von #{Setting.site_name} per RSS-Feed.
 
-.feeds(style='margin-top: 50px')
+.feeds
   .panel.panel-default
     .panel-heading
       h3.panel-title Top 10 jedes Tags

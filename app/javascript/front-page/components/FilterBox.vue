@@ -4,6 +4,7 @@
     | {{ title }}
     button.btn.btn-sm.btn-link(
       @click='reset'
+      type='button'
       :disabled='value.length == 0'
     )
       i.fa.fa-trash.fa-lg
@@ -32,6 +33,7 @@ export default {
       return this.value.some((e) => e.id == id)
     },
     toggle(item) {
+      this.resetScroll();
       if (this.isSelected(item.id)) {
         const newVal = this.value.filter((el) => el.id != item.id)
         this.$emit("input", newVal)
@@ -40,8 +42,12 @@ export default {
       }
     },
     reset() {
+      this.resetScroll();
       this.$emit("input", [])
     },
+    resetScroll() {
+      window.scrollTo(0, 0);
+    }
   },
 }
 </script>

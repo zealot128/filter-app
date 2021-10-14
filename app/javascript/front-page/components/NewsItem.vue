@@ -2,13 +2,10 @@
   .panel.panel-default.news-item-panel
     .panel-body
       .content-container
-
         .row(v-if="$store.getters.wideLayout && hasImage")
           .col-xs-9
             h4.panel-title
-              a(:href="url"
-                :title="newsItem.title"
-              )
+              a(:href="url" target="_blank" rel="noopener noreferrer" :title="newsItem.title")
                 | {{ newsItem.title | truncate(100)}}
             div.mt-1(v-if="!lsr")
               i.fa.fa-angle-double-right
@@ -24,6 +21,8 @@
           h4.panel-title
             a(:href="url"
               :title="newsItem.title"
+              target="_blank" 
+              rel="noopener noreferrer" 
             )
               | {{ newsItem.title | truncate(100)}}
           div.mt-1(v-if="!lsr")

@@ -54,6 +54,7 @@ Rails.application.routes.draw do
 
   if Setting.get('jobs_url').present? || Rails.env.test?
     get 'jobs' => 'jobs#index'
+    get 'events' => 'jobs#events'
   end
 
   get "sources" => redirect('/quellen')

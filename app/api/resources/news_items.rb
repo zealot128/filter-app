@@ -63,7 +63,8 @@ class Resources::NewsItems < Grape::API
       base
     end
     get '/media-types' do
-      Source::SOURCE_TYPES.as_json
+      ignore = %w(TwitterSource RedditSource FacebookSource)
+      Source::SOURCE_TYPES.select{|el| !ignore.include?(el)}.as_json
     end
     get '/:id' do
       Source.visible.find(params[:id])

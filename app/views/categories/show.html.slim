@@ -1,12 +1,12 @@
-- @container_class = 'container'
-- content_for :content_header do
-  .content-header
-    .container
-      .text-center
-        div.category-headline
-          h2 Alle News zum Thema #{@category.name}
-          - if @category.logo.attached?
-            = image_tag @category.logo.variant(resize: '66x66>'), class: 'category-headline-img', size: '66x66'
+/- @container_class = 'container'
+/- content_for :content_header do
+.content-header
+  .container
+    .text-center
+      div.category-headline
+        h2 Alle News zum Thema #{@category.name}
+        - if @category.logo.attached?
+          = image_tag @category.logo.variant(resize: '66x66>'), class: 'category-headline-img', size: '66x66'
 br
 br
 

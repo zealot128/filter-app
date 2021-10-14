@@ -1,110 +1,55 @@
 <template lang="pug">
-  agile(
+  .panel.panel-default(
     v-if="loaded"
-    :options="myOptions"
-    :autoplay="true"
-    :autoplaySpeed="5000"
-    :infinite="true"
-    :dots="false"
-    :pauseOnHover="true"
   )
-    div.slide(v-for="job in jobs", :key="job.id")
-      .arbeit-panel
-        .panel-header
-          .text-center
-            a(target="_blank" :href="job.url" style="color: black")
-              h4 {{ job.title }}
-        .background-frame
-          img.job-img(:src="job.company_logo_big" loading="lazy")
-          .text-center
-            b {{ job.company_name }}
-        .panel-body
-          .wrapper.tag-wrapper
-            template(v-for="v in job.variants")
-              span.label.label-default.job-label(v-for="loc in v.locations") {{ loc.ort }}
-            template(v-for="i in 5")
-              span.label.label-primary.job-label {{ removeTags(job.tags)[i] }}
-        .panel-footer
-          .row.text-center
-            a.btn.btn-primary.btn-job-offer(:href="job.url" target="_blank")
-              |Zum Stellenangebot
-    div.slide
-      .arbeit-panel
-        .panel-header
-          .text-center
-            h4(style="color: black") Nichts gefunden?
-        .background-frame
-        .panel-body.last-job-body
-          h5 Alle Stellen finden Sie aktuell auf
-          img.img-responsive.center-block(:src="empfehlungsbundLogo")
-          .wrapper.tag-wrapper
-        .panel-footer
-          .row.text-center
-            a.btn.btn-primary.btn-job-offer(href="https://www.empfehlungsbund.de/jobs/search?utf8=%E2%9C%93&q=HR+Personal&position=" target="_blank")
-              |www.empfehlungsbund.de
-
-
-    template(slot="prevButton")
-      i.fa.fa-chevron-left
-    template(slot="nextButton")
-      i.fa.fa-chevron-right
+    .panel-heading
+      h3.panel-title 
+        |HR-Stellenanzeigen
+    .panel-body
+      div.job(v-for="job in jobs", :key="job.id")
+        a(:href="job.url" rel="noopener" target="_blank")
+          |{{ job.title }}
+          |
+          i.text-muted
+            | {{ job.company_name }}
+    .panel-footer
+      h5(style='margin: 0; margin-bottom: 1rem;text-align: center;') Alle Stellen finden Sie aktuell auf
+      a(href="https://www.empfehlungsbund.de/jobs/search?utf8=%E2%9C%93&q=HR+Personal&position=" target="_blank" )
+        img.img-responsive.center-block(:src="empfehlungsbundLogo")
 
 </template>
 
 <script>
-import { VueAgile } from 'vue-agile';
 import Empfehlungsbund from '../../../assets/images/Empfehlungsbund.png'
+
+const shuffle = (a) => {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
 
 export default {
   data() {
     return {
       jobs: [],
       loaded: false,
-      myOptions: {
-        navButtons: false,
-        responsive: [
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 2,
-              centerMode: true,
-              navButtons: true,
-            }
-          },
-          {
-            breakpoint: 900,
-            settings: {
-              slidesToShow: 3,
-              centerMode: true,
-              navButtons: true,
-            }
-          }
-        ]
-      },
     }
   },
-  methods: {
-    removeTags(tags) {
-      i = tags.indexOf('m/w');
-      if(i > -1) {
-        tags.splice(i, 1);
-      }
-      return tags;
-    },
-  },
-  mounted() {
+ mounted() {
     fetch(`/jobs`)
         .then(stream => stream.json())
         .then(data => {
-          this.jobs = data;
+          this.jobs = shuffle(data).slice(0, 5);
           this.loaded = true;
           this.$nextTick(() => {
           })
         })
         .catch(error => console.error(error));
-  },
-  components: {
-    agile: VueAgile,
   },
   computed: {
     empfehlungsbundLogo() {
@@ -116,13 +61,6 @@ export default {
 
 
 <style scoped>
-.arbeit-panel {
-  display: flex;
-  flex-flow: column wrap;
-  border: 1px solid #dadce0;
-  margin: 0.5rem;
-}
-
 .panel-header {
   padding-right: 5px;
   padding-left: 5px;
@@ -138,8 +76,13 @@ export default {
   font-size: 12px;
 }
 
-.last-job-body {
- min-height: 192px;
+.job { 
+  margin-bottom: 10px;
 }
+
+.panel {
+  margin-top: 10px;
+}
+
 
 </style>

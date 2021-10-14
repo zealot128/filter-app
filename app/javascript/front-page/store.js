@@ -7,14 +7,15 @@ export default new Vuex.Store({
   state: {
     chosenCat: [],
     categories: [],
-    chosenTypes: [],
+    chosenMediaType: '',
     chosenTrends: [],
-    mediaTypes: [],
+    mediaTypes: [''],
     loaded: false,
     params: {},
     query: null,
     play: false,
     trends: [],
+    size: null,
   },
   mutations: {
     set_categories(state, cat) {
@@ -30,7 +31,7 @@ export default new Vuex.Store({
       state.play = bool
     },
     set_media_types(state, media_types) {
-      state.mediaTypes = media_types.map(el => ({ id: el, name: el }))
+      state.mediaTypes.push(...media_types)
     },
     set_trends(state, trends) {
       state.trends = trends
@@ -38,8 +39,8 @@ export default new Vuex.Store({
     set_chosen_cat(state, categories) {
       state.chosenCat = categories
     },
-    set_chosen_type(state, types) {
-      state.chosenTypes = types
+   set_chosen_type(state, type) {
+      state.chosenMediaType = type
     },
     set_chosen_trend(state, types) {
       state.chosenTrends = types
@@ -47,7 +48,7 @@ export default new Vuex.Store({
     set_params_based_on_state(state) {
       state.params = {
         categories: state.chosenCat.join(","),
-        media_type: state.chosenTypes.join(","),
+        media_type: state.chosenMediaType,
         trend: state.chosenTrends.join(","),
       }
       if (state.query) {
@@ -60,7 +61,7 @@ export default new Vuex.Store({
       if (params.categories)
         state.chosenCat = params.categories.split(",").map(Number)
       if (params.media_type)
-        state.chosenTypes = params.media_type.split(",")
+        state.chosenMediaType = params.media_type
       if (params.trend)
         state.chosenTrends = params.trend.split(",")
     },
@@ -70,6 +71,9 @@ export default new Vuex.Store({
         ...params,
       }
     },
+    set_size(state, size) {
+      state.size = size;
+    }
   },
   actions: {
     get_categories(context) {
@@ -92,7 +96,7 @@ export default new Vuex.Store({
       fetch(`/js/trends.json`)
         .then((stream) => stream.json())
         .then((data) => {
-          context.commit("set_trends", data.month)
+          context.commit("set_trends", data.all)
         })
         .catch((error) => console.error(error))
     },
@@ -121,21 +125,21 @@ export default new Vuex.Store({
         navigator.userAgent
       )
     },
-    wideLayout: () => {
-      return document.body.clientWidth > 767
+    wideLayout: (state) => {
+      return state.size > 767
     },
     play: (state) => {
       return state.play
     },
     isChosen: (state) => (id) => {
-      asdasdasd
       return state.chosenCat.includes(id)
     },
-    isChosenType: (state) => (type) => {
-      return state.chosenTypes.includes(type)
+    isChosenMediaType: (state) => (type) => {
+      return state.chosenMediaType === type
     },
     typeTitle: () => (type) => {
       if (type === "FeedSource") return "Artikel"
+      if (type === "") return "Alle"
       return type.replace("Source", "")
     },
   },
