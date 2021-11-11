@@ -1,9 +1,13 @@
 <template lang="pug">
   .news-items--wall
     //SortTabs.vue
-    ul.nav.nav-tabs.nav-justified.mb-2
-      li(v-for="(o, i) in orderOptions" :key='i' :class='i == order ? "active" : ""')
-        a(role="button" @click="order = i") {{ o }}
+    ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
+      li(v-for="mt in mediaTypes" :key='mt' :class='isChosenMediaType(mt) ? "active" : ""')
+          a(role="button" @click="setMediaType(mt)")
+            span(style="display: inline-flex")
+              | {{ typeTitle(mt) }}
+              svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
+                path(:d="iconForType(mt)")
 
     .news-items--wrapper
       template(v-if="loading")
@@ -12,7 +16,7 @@
           :key="ni.id"
           :news-item="ni"
         )
-        Skeleton(v-for="i in 10" :key="i")
+        Skeleton(v-for="i in 15" :key="i")
       template(v-else)
         NewsItem(
           v-for="ni in newsItems"
@@ -25,16 +29,18 @@
             i.fa.fa-exclamation-triangle
           h4 Leider gibt es keinen Artikel für ihre ausgewählte Suchmuster, bitte versuchen Sie nochmal mit einem neuen Muster.
 
+
     .text-center
-      a.btn.btn-default(v-if="hasNextPage" @click="loadNextPage()" style="margin-bottom: 30px")
+      a.btn.btn-default(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
         | Mehr
+
 </template>
 
 <script>
 import NewsItem from "./NewsItem";
 import Skeleton from "./Skeleton"
-import { mapState } from 'vuex';
-
+import { mapState, mapGetters } from 'vuex';
+import json from "../icons.json"
 
 const qs = require("qs");
 
@@ -45,36 +51,30 @@ export default {
   },
   props: {
     defaultOrder: { type: String, default: () => "all_best" },
-    perPage: { type: Number, default: 15 },
+    perPage: { type: Number, default: 30 },
     sortOptions: { type: String, default: "few" },
+    fullLayout: { type: Boolean, default: true }
   },
   data() {
     return {
-      savedScrollPosition: 0,
       loading: true,
       newsItems: [],
       newsItemsLoading: [],
       order: this.defaultOrder,
       page: 0,
       meta: {},
-      url: null,
       firstLoad: true,
     };
   },
   computed: {
     ...mapState([
       'params',
+      'mediaTypes'
     ]),
-    orderOptions() {
-      const options = { all_best: "Beste", newest: "Neueste" };
-      if (this.sortOptions === "all" || this.sortOptions === 'no_best') {
-        options.hot_score = "Hot";
-      }
-      if (this.sortOptions === "no_best") {
-        delete options.all_best
-      }
-      return options;
-    },
+    ...mapGetters([
+      'isChosenMediaType',
+      'typeTitle'
+    ]),
     hasNextPage() {
       return this.meta && this.meta.current_page < this.meta.pages;
     },
@@ -104,33 +104,7 @@ export default {
       this.refresh();
     }
   },
-  mounted() {
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.addEventListener('beforeunload', () => {
-      const newState = {
-        ...history.state,
-        params: this.searchParams,
-        lastScrollPosition: window.scrollY,
-        page: this.page
-      }
-      history.pushState(newState, '', location.href)
-    })
-    try {
-      this.$store.commit('set_params_based_on_data', history.state.params);
-      this.order = history.state.params.order;
-    }
-    catch(error){
-      // console.error(error, "History is null!");
-      this.$store.dispatch('trigger_watch_params');
-    }
-  },
-  beforeDestroy() {
-    window.removeEventListener("beforeunload") ;
-  },
   methods: {
-    getScrollPosition() {
-      return window.scrollY;
-    },
     setScrollPosition(position) {
       window.scrollTo(0, position);
     },
@@ -158,12 +132,12 @@ export default {
       return this.loadNextPage(true)
     },
     loadNextPage(clearNewsItem=false) {
+      this.loading = true;
       let page = 1;
       if(!clearNewsItem) {
         page = this.page+ 1;
         this.newsItemsLoading = this.newsItems;
       }
-      this.loading = true;
       const params = {
         ...this.searchParams,
         page,
@@ -180,6 +154,39 @@ export default {
           })
           .catch(error => console.error(error));
     },
+    handleHistory: function() {
+      const newState = {
+        ...history.state,
+        params: this.searchParams,
+        lastScrollPosition: window.scrollY,
+        page: this.page
+      }
+      history.pushState(newState, '', location.href);
+    },
+    autoload() {
+      if(this.loading == false && this.hasNextPage) this.loadNextPage();
+    },
+    iconForType(type) {
+      return json[type];
+    },
+    setMediaType(type) {
+      this.$store.commit('set_chosen_type', type);
+      this.$store.dispatch("build_params");
+    }
+  },
+  mounted() {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('beforeunload', this.handleHistory);
+    try {
+      this.$store.commit('set_params_based_on_data', history.state.params);
+      this.order = history.state.params.order;
+    }
+    catch(error){
+      this.$store.dispatch('trigger_watch_params');
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.handleHistory);
   }
 };
 </script>
@@ -187,6 +194,7 @@ export default {
 <style scoped>
 .news-items--wall {
   position: relative;
+  margin-top: 10px;
   min-height: 400px;
 }
 .news-items--wrapper {

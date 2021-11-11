@@ -3,6 +3,8 @@
     span.icon(v-show="wideLayout")
       i.fa.fa-search.fa-lg
     input#search(
+      :style='customWidth'
+      autocomplete="off"
       type="text"
       class="form-control"
       placeholder="Was suchen Sie?"
@@ -15,11 +17,15 @@
 
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex';
-
 export default {
   props: {
     bottom: { type: String, default: "0" },
     expand: {type: Boolean, default: false},
+  },
+  data() {
+    return {
+      width: "250px",
+    }
   },
   computed: {
     ...mapGetters([
@@ -41,13 +47,29 @@ export default {
         'bottom': this.bottom
       }
     },
+    customWidth(){
+      if(!this.wideLayout) return '';
+      return {
+        'width': this.width
+      }
+    }
   },
   methods: {
     ...mapMutations(['set_query']),
     buildPayload() {
       (this.expand) ? (this.$store.commit("expand_params_based_on_data", {query: this.storeQuery})) : (this.$store.dispatch("build_params"));
     },
+    calWidth() {
+      let sb = document.getElementById('sidebar');
+      if (sb != null) {
+        console.log("Calulating width: " + sb.clientWidth);
+	this.width = `${sb.clientWidth-30}px`;
+      }
+    }
   },
+  mounted() {
+    this.calWidth();
+  }
 }
 </script>
 
@@ -86,31 +108,25 @@ input {
 }
 
 .search-bar {
-  width: 300px;
+  box-shadow: 0px 10px white;
   height: 50px;
   vertical-align: middle;
   white-space: nowrap;
   position: fixed;
-  top: 10px !important;
-  right: 20px;
+  top: 95px !important;
+  left: 15px;
+  z-index: 1000;
 }
 
 .search-bar input#search{
-  width: 50px;
   height: 50px;
-  float: right;
+  float: left;
   padding-left: 35px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  border-radius: 9999px;
-  border: 2px solid #4f5b66;
+  border-radius: 5px;
+  border: 1px solid #4f5b66;
   color: #000;
-
-  -webkit-transition: width .55s ease;
-  -moz-transition: width .55s ease;
-  -ms-transition: width .55s ease;
-  -o-transition: width .55s ease;
-  transition: width .55s ease;
 }
 
 .search-bar input#search::-webkit-input-placeholder {
@@ -132,22 +148,13 @@ input {
 .search-bar .icon{
   position: absolute;
   top: 13px;
-  right: 33px;
-  z-index: 1;
+  left: 15px;
+  z-index: 10;
   color: grey;
 }
 
 .search-bar input#search:focus, .search-bar input#search:active{
   outline:none;
-  width: 300px;
-}
-
-.search-bar:hover input#search{
-  width: 300px;
-}
-
-.search-bar:hover .icon{
-  color: #93a2ad;
 }
 
 .disabled {

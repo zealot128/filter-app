@@ -1,32 +1,31 @@
 <template lang="pug">
   div
     .news-app-wrapper
-      .container
-        .row.display-flex
-          .col-sm-5.col-md-4(v-if="$store.state.loaded && $store.getters.wideLayout")
-            .sticky-top.sticky-top--1.scrollable
-              div
-                .header
-                  a(href="/")
-                    img(:src="logo" height="30px")
-                  hr(style="margin: 1rem 0.5rem")
-                SideComponents
-          .col-sm-7.col-md-8
+      .container-fluid
+        .row
+          .col-sm-5.col-md-4.col-lg-3(v-show="loaded && wideLayout")
+             .top-fixed.top-fixed--f1#sidebar(style="margin-top: 60px")
+               SideComponents
+          .col-sm-7.col-md-8.col-lg-6
+            a#top
             NewsItemWall(
-              default-order="hot_score"
-              sort-options="no_best"
+               ref="niw"
+               default-order="hot_score"
+               sort-options="no_best"
+               style="padding-left: 1rem, padding-right: 1rem"
+             )
+          .col-lg-3.visible-lg
+            Subscribe
+            Jobs(v-if="showJobs")
+            Events
+          template(v-if="loaded")
+            SearchBar(:bottom="bottom" ref="searchBar")
+            Modal(
+              v-if="!wideLayout"
             )
-        template(v-if="$store.state.loaded")
-          SearchBar(:bottom="bottom")
-          Modal(
-            v-if="!$store.getters.wideLayout"
-            @buildPayload="buildPayload"
-          )
-    .container(v-if='showJobs')
-      .text-center
-        h3(style="margin-top: 0;")
-          | HR-Stellenanzeigen
-      Jobs(style="margin-bottom: 2rem")
+            a.btn.btn-primary.back-to-top(:style="anchorPos" href="#top")
+              i.fa.fa-chevron-up
+
 </template>
 
 <script>
@@ -35,16 +34,21 @@ import SearchBar from "./SearchBar";
 import SideComponents from "./SideComponents";
 import Modal from "./Modal"
 import Jobs from "./Jobs";
+import Events from "./Events"
+import Subscribe from "./Subscribe"
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: "FrontPage",
   props: {
     logo: { type: String, },
-    showJobs: { type: Boolean }
+    showJobs: { type: Boolean },
   },
   data() {
     return {
-      bottom: "0",
+      bottom: "-100px",
+      width: "0",
+      aPos: "10px",
     }
   },
   components: {
@@ -52,45 +56,59 @@ export default {
     SearchBar,
     Jobs,
     SideComponents,
+    Events,
     Modal,
+    Subscribe
   },
   computed: {
-    hrfilterLogo() {
-      return hrfilterLogo
-   },
-   },
+    ...mapGetters([
+      'wideLayout'
+    ]),
+    ...mapState([
+      'loaded',
+    ]),
+    anchorPos(){
+      return {
+        "bottom": this.aPos,
+      }
+    }
+  },
   methods: {
-    buildPayload(pl) {
-      const payload = {
-        selection: pl.selection,
-        data: pl.data,
-      };
-      this.$store.dispatch("add_or_delete_selections", payload);
-    },
     scroll () {
-      var prevScrollpos = window.pageYOffset;
+      var prevScrollPos = window.pageYOffset;
       window.onscroll = () => {
+	let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 100;
         let currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
+        if(bottomOfWindow) this.$refs.niw.autoload();
+        if(prevScrollPos > currentScrollPos){ 
           this.bottom = "0";
-        } else {
+          if(!this.wideLayout) this.aPos = "60px";
+        } 
+        else{
           this.bottom = "-100px";
+          this.aPos = "10px";
         }
-        prevScrollpos = currentScrollPos;
+        prevScrollPos = currentScrollPos;
       }
     },
+    resize() {
+      window.onresize = () => {
+	console.log("Resized: " + document.body.clientWidth);
+        this.$store.commit("set_size", document.body.clientWidth);
+        this.$nextTick(()=>{this.$refs.searchBar.calWidth()})
+      }
+    }
   },
   mounted () {
+    this.resize();
     this.scroll();
+    this.$store.commit("set_size", document.body.clientWidth);
     this.$store.dispatch("get_data");
   },
 }
 </script>
 
 <style scoped>
-.news-app-wrapper {
-  padding-top: 30px;
-}
 
 .scrollable {
   overflow-y: scroll !important;
@@ -98,19 +116,7 @@ export default {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  display: none;
 }
 
 .header {
@@ -121,5 +127,15 @@ export default {
 .header i:hover {
   color: #2780e3;
 }
-</style>
+
+.back-to-top {
+  border-radius: 5px;
+  position: fixed;
+  right: 15px;
+  background-color: #2780E3;
+  border: none;
+  z-index: 100;
+  opacity: 0.7;
+}
+
 </style>

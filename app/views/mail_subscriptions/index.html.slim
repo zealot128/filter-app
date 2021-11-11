@@ -3,7 +3,7 @@
     = simple_form_for @subscription do |f|
       .panel.panel-primary
         .panel-body
-          = f.input :email, as: :string
+          = f.input :email, as: :string, input_html: {value: @email || ''}
           = render "form", f: f
           - if f.object.new_record?
             = f.input :privacy, as: :boolean, label: I18n.t('simple_form.labels.mail_subscription.privacy', site_name: Setting.site_name, email: Setting.email).html_safe

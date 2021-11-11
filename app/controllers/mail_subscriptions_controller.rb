@@ -1,6 +1,7 @@
 # rubocop:disable Rails/OutputSafety
 class MailSubscriptionsController < ApplicationController
   def index
+    @email = params.require("mail_subscription").permit("email")[:email] if !params["mail_subscription"].nil?
     @subscription = MailSubscription.new
     @subscription.interval = 'weekly'
   end

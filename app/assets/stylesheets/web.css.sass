@@ -29,12 +29,15 @@ $navbar-default-link-hover-bg: #f2f2f2
     height: 50px
 
 .navbar
-  border-radius: 0
   border: 0
-.navbar-nav
-  padding-top: 5px
+  border-bottom: 1px solid lightgrey
+  margin-bottom: 10px
+  box-shadow: 0 2px 3px #ccc
 
-header
+.navbar-nav
+  padding: 10px 0px
+
+.header
   margin-top: 10px
   margin-bottom: 10px
 
@@ -145,6 +148,7 @@ $category-background: lighten(#666, 10%)
 .content
   min-height: 70vh
   padding-bottom: 20px
+  padding-top: 85px
 
 .content-header
   background: $feature-color
@@ -567,86 +571,19 @@ footer
     background-color: #114C4C
     border-color: #114C4C
 
-.display-flex
-  display: flex
-  flex-wrap: wrap
-
-.row.display-flex > [class*='col-']
-  display: relative
-  flex-direction: column
-
-.sticky-top
-  background: white
-  position: relative
-  position: -webkit-sticky
-  position: sticky
-  padding-bottom: 1rem
-  top: 0
-
-  &--z1
-    z-index: 1001
-
-  &--z2
-    z-index: 1002
-
-// VueAgile styles
-.agile
-  &__nav-button
-    background: transparent
-    border: none
-    color: #b2b3b5
-    cursor: pointer
-    font-size: 24px
-    height: 100%
-    position: absolute
-    top: 0
-    transition-duration: .3s
-    width: 80px
-
-    &:hover
-      background-color: rgba(#b2b3b5, .5)
-      opacity: 1
-
-    &--prev
-      left: 0
-
-    &--next
-      right: 0
-
-  &__dots
-    bottom: 10px
-    left: 50%
-    position: absolute
-    transform: translateX(-50%)
-
-  &__dot
-    margin: 0 10px
-
-    button
-      background-color: transparent
-      border: 1px solid #fff
-      border-radius: 50%
-      cursor: pointer
-      display: block
-      height: 10px
-      font-size: 0
-      line-height: 0
-      margin: 0
-      padding: 0
-      transition-duration: .3s
-      width: 10px
-
-    &--current,
-    &:hover
-      button
-        background-color: #fff
-
-// Slides styles
-.slide
-  display: block
-  min-height: 380px
-  height: 100%
+.top-fixed
+  position: fixed
   width: 100%
+  z-index: 5
+
+  &--f0
+    top: 0px
+
+  &--f1
+    width: inherit
+    padding-right: 30px
+    overflow: scroll 
+    height: calc(100vh - 80px)
 
 .mt-1
   margin-top: 1rem
