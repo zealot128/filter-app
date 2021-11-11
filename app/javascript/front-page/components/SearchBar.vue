@@ -62,8 +62,7 @@ export default {
     calWidth() {
       let sb = document.getElementById('sidebar');
       if (sb != null) {
-        console.log("Calulating width: " + sb.clientWidth);
-	this.width = `${sb.clientWidth-30}px`;
+        this.width = `${sb.clientWidth-30}px`;
       }
     }
   },

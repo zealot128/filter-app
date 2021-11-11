@@ -8,4 +8,20 @@ RSpec.describe JobsController, type: :controller do
     expect(response).to be_successful
     # expect(response.body).to include "Nichts gefunden?"
   end
+
+  specify 'events index' do
+    VCR.use_cassette('jobs/events') do
+      get :events, format: 'json'
+    end
+    expect(response).to be_successful
+    expect(JSON.parse(response.body).count).to be > 0
+  end
+
+  specify 'leere events - serializer error?' do
+    expect(AdLogic).to receive(:promoted_events).and_return([])
+
+    get :events, format: 'json'
+    expect(response).to be_successful
+    expect(JSON.parse(response.body).count).to be == 0
+  end
 end

@@ -9,15 +9,15 @@ class JobsController < ApplicationController
   end
 
   def events
-    render json:
-      AdLogic.promoted_events.map { |event| 
-        {
-          from: event.from,
-          url: event.url,
-          image: event.image,
-          title: event.title,
-          from: event.from.strftime('Am %d.%m.%Y um %H:%M Uhr'),
-        }
+    events = AdLogic.promoted_events.map { |event| 
+      {
+        from: event.from,
+        url: event.url,
+        image: event.image,
+        title: event.title,
+        from: event.from.strftime('Am %d.%m.%Y um %H:%M Uhr'),
       }
+    }.as_json
+    render json: events.to_json
   end
 end

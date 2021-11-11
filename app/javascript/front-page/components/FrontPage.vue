@@ -93,7 +93,6 @@ export default {
     },
     resize() {
       window.onresize = () => {
-	console.log("Resized: " + document.body.clientWidth);
         this.$store.commit("set_size", document.body.clientWidth);
         this.$nextTick(()=>{this.$refs.searchBar.calWidth()})
       }
