@@ -1,6 +1,6 @@
 ---
 :verbose: false
-:pidfile: tmp/pids/sidekiq.pid
+#:pidfile: tmp/pids/sidekiq.pid
 :concurrency: 3
 :url: 'redis://localhost:6379/0'
 :queues:

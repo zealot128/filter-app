@@ -1,5 +1,8 @@
 development:
   adapter: postgresql
+  username: postgres
+  host:     localhost
+  password: Testadmin1
   encoding: unicode
   database: hrfilter_<%= ENV['USER'] %>_dev
   template: template0
@@ -7,6 +10,9 @@ development:
 
 test:
   adapter: postgresql
+  username: postgres
+  host:     localhost
+  password: Testadmin1
   encoding: unicode
   database: "hrfilter_<%= ENV['LOGNAME'] %>_test"
   template: template0
