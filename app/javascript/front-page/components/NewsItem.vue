@@ -57,6 +57,7 @@
             a(title='newsItem.source.name' :href='newsItem.source.url')
               | &nbsp;{{ newsItem.source.name | truncate(30) }}
             | &nbsp;{{ date }}
+            | &nbsp;{{readingTime}} Min. Lesedauer
             span(v-if='newsItem.paywall' class='label label-warning' style="margin-left:1rem")
               i.fa.fa-euro.fa-fw(title='Paywall')
           button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
@@ -82,6 +83,7 @@ import { mapGetters } from 'vuex';
 import Media from "./Media";
 import ahoy from 'utils/ahoy';
 
+
 export default {
   filters: { truncate },
   data() {
@@ -92,7 +94,8 @@ export default {
   },
   props: {
     newsItem: { type: Object, required: true },
-  },
+
+
   methods: {
     chooseMedia() {
       this.$store.dispatch('play_or_pause', false);
@@ -141,6 +144,17 @@ export default {
     webShareApiSupported() {
       return navigator.share;
     },
+    readingTime() {
+      console.log ("laura");
+      console.log (this.newsItem);
+      let minutes = 0;
+      const words = newsItem.length;
+      const wordsPerMinute = 200;
+      minutes = Math.ceil(words / wordsPerMinute);
+      return minutes;
+
+    }
+  }
 
   },
   components: {
