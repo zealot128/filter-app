@@ -57,7 +57,9 @@
             a(title='newsItem.source.name' :href='newsItem.source.url')
               | &nbsp;{{ newsItem.source.name | truncate(30) }}
             | &nbsp;{{ date }}
-            | &nbsp;{{readingTime}} Min. Lesedauer
+          button
+            i.fa.fa-clock-o
+            | &nbsp;{{newsItem.word_length}} Min. Lesedauer&nbsp;        
             span(v-if='newsItem.paywall' class='label label-warning' style="margin-left:1rem")
               i.fa.fa-euro.fa-fw(title='Paywall')
           button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
@@ -108,6 +110,13 @@ export default {
         title: this.newsItem.title,
         url: this.newsItem.original_url,
       })
+    },
+    readingTime() {
+     let minutes = 0;
+      const words = this.newsItem.word_length;
+      const wordsPerMinute = 200;
+      minutes = Math.ceil(words / wordsPerMinute);
+      return minutes;
     }
   },
   computed: {
@@ -144,16 +153,6 @@ export default {
     webShareApiSupported() {
       return navigator.share;
     },
-    readingTime() {
-      console.log ("laura");
-      console.log (this.newsItem);
-      let minutes = 0;
-      const words = newsItem.length;
-      const wordsPerMinute = 200;
-      minutes = Math.ceil(words / wordsPerMinute);
-      return minutes;
-
-    }
   }
 
   },

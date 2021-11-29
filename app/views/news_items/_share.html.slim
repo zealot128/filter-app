@@ -24,6 +24,11 @@
       span.label.label-default<>(title='Anzahl Worte (ca.)')
         i.fa.fa-file-text-o>
         = item.word_length
+    //reading time   
+    - if item.reading_time.to_i > 0
+      span.label.label-default<>(title='Lesedauer')
+        i.fa.fa-.fa-clock-o>
+        = item.reading_time.to_s + "min"
 .categories
   - if item.paywall?
     span.label.label-paywall

@@ -332,4 +332,12 @@ class NewsItem < ApplicationRecord
       i.save validate: false
     }
   end
+
+  def readingtime
+    #words per minute 
+    wpm = 200
+    #calculate readingtime
+    word_length ? 0 : (word_length/wpm.to_i).ceil
+
+  end
 end
