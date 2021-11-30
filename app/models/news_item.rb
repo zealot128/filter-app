@@ -337,7 +337,7 @@ class NewsItem < ApplicationRecord
     #words per minute 
     wpm = 200
     #calculate readingtime
-    word_length ? 0 : (word_length/wpm.to_i).ceil
-
+    word_length.nil? ? 0 : (word_length/wpm.to_f).ceil
   end
+  
 end

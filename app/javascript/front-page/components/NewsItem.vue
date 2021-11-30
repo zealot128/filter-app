@@ -59,7 +59,7 @@
             | &nbsp;{{ date }}
           button
             i.fa.fa-clock-o
-            | &nbsp;{{newsItem.word_length}} Min. Lesedauer&nbsp;        
+            | &nbsp;{{ readingTime() }} Min. Lesedauer&nbsp;        
             span(v-if='newsItem.paywall' class='label label-warning' style="margin-left:1rem")
               i.fa.fa-euro.fa-fw(title='Paywall')
           button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
@@ -95,8 +95,8 @@ export default {
     }
   },
   props: {
-    newsItem: { type: Object, required: true },
-
+    newsItem: { type: Object, required: true }
+  },
 
   methods: {
     chooseMedia() {
@@ -113,11 +113,19 @@ export default {
     },
     readingTime() {
      let minutes = 0;
-      const words = this.newsItem.word_length;
-      const wordsPerMinute = 200;
-      minutes = Math.ceil(words / wordsPerMinute);
-      return minutes;
-    }
+     const words = this.newsItem.word_length;
+     if (words < 0) {
+       return minutes = 1;
+     } else {
+     const wordsPerMinute = 200;
+     minutes = Math.ceil(words / wordsPerMinute);
+     if (minutes < 0) {
+       return minutes = 1;
+     } else {
+     return minutes;
+     }
+     }
+    } 
   },
   computed: {
     ...mapGetters([
@@ -153,9 +161,8 @@ export default {
     webShareApiSupported() {
       return navigator.share;
     },
-  }
-
   },
+
   components: {
     ShareButton,
     Media
