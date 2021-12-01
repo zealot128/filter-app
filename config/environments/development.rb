@@ -61,6 +61,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   ###########
-  config.action_mailer.default_url_options = { host: Rails.application.secrets.domain_name }
+  host = "hrfilter.#{ENV["USER"]}.pludoni.com"
+  config.action_mailer.default_url_options = { host: host, protocols: 'https' }
   config.cache_store = :memory_store, { size: 64.megabytes }
 end

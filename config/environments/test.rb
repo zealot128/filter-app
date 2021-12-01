@@ -47,7 +47,10 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   #####
-  config.action_mailer.default_url_options = { host: Rails.application.secrets.domain_name }
+  InvisibleCaptcha.timestamp_enabled = false
+
+  host = "hrfilter.#{ENV["USER"]}.pludoni.com"
+  config.action_mailer.default_url_options = { host: host, protocols: 'https' } 
   config.active_job.queue_adapter = :test
   config.eager_load = ENV['CI'].present?
 end

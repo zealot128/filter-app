@@ -5,6 +5,8 @@ describe MailSubscriptionsController do
 
   let(:subscription) {
     {
+      first_name: 'Stefan',
+      last_name: 'Wienert',
       email: 'stwienert@gmail.com',
       categories: [category.id],
       limit: 50,

@@ -37,6 +37,10 @@ class MailSubscription < ApplicationRecord
   validates :categories, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :limit, presence: true
+  validates :first_name, :last_name, format: { with: /\A[\p{L} \.-]+\z/i } 
+  validates :first_name, :last_name, format: { without: /https|http/i }
+  # validates :academic_title, :company, :position, format: {with: /\p{Word}/}
+
   before_create do
     self.token = SecureRandom.hex(32)
   end
