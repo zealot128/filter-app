@@ -1,5 +1,7 @@
 # rubocop:disable Rails/OutputSafety
 class MailSubscriptionsController < ApplicationController
+  invisible_captcha only: [:create, :update] unless Rails.env.test?
+
   def index
     @email = params.require("mail_subscription").permit("email")[:email] if !params["mail_subscription"].nil?
     @subscription = MailSubscription.new
@@ -100,7 +102,7 @@ class MailSubscriptionsController < ApplicationController
   end
 
   private
-
+ 
   def preview(subscription, from: 1.week.ago.at_beginning_of_week)
     open_token = subscription.histories.order('created_at desc').first.try(:open_token)
     @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from), open_token)
@@ -124,7 +126,7 @@ class MailSubscriptionsController < ApplicationController
       categories: []
     )
   end
-
+  
   require "whenever"
   def filter_jobs
     jobs = Whenever::JobList.new(file: Rails.root.join("config", "schedule.rb").to_s).instance_variable_get("@jobs")

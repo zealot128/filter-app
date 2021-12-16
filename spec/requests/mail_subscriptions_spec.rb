@@ -8,15 +8,18 @@ describe 'MailSubscriptionsController' do
       get '/newsletter'
       assert(response.successful?)
       c = Category.create!(name: 'Recruiting', keywords: 'Headhunter')
-
+      
       post '/newsletter', params: {
         mail_subscription: {
+          first_name: 'Stefan',
+          last_name: 'Wienert',
           email: 'stwienert@gmail.com',
           interval: 'weekly',
           limit: 50,
           categories: [c.id]
         }
       }
+      
       expect(response.redirect?).to be == true
       expect(ActionMailer::Base.deliveries.count).to be == 1
       body = ActionMailer::Base.deliveries.first.html_part.body.to_s
@@ -35,6 +38,8 @@ describe 'MailSubscriptionsController' do
   describe 'Versenden' do
     let(:subscription) {
       MailSubscription.create!(
+        first_name: 'Stefan',
+        last_name: 'Wienert',
         email: 'stwienert@gmail.com',
         categories: [category.id],
         limit: 50,
