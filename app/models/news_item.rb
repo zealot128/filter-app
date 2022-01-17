@@ -37,6 +37,7 @@
 #  trend_analyzed              :boolean          default(FALSE)
 #  paywall                     :boolean          default(FALSE)
 #  media_url                   :string
+#  embeddable                  :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -318,8 +319,8 @@ class NewsItem < ApplicationRecord
     end
   end
 
-  def as_json(options)
-    super(methods: :image_url_full).merge(gplus: 0, linkedin: 0)
+  def as_json(options = {})
+    super(options.merge(methods: :image_url_full)).merge(gplus: 0, linkedin: 0)
   end
 
   def image_url_full

@@ -7,4 +7,5 @@ document.addEventListener('DOMContentLoaded', () => {
   Automount('trend-page', () => import("components/TrendPage"), {store})
   Automount('trend-flame-graph', () => import("components/TrendFlameGraph"))
   Automount('sources', () => import("components/Sources"), {store})
+  Automount('embed-head', () => import("components/EmbedHead"))
 })

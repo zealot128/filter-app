@@ -1,0 +1,52 @@
+doctype html
+html lang=(locale) class=(browser.to_s)
+  head
+    meta charset="utf-8"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    = display_meta_tags(default_meta_tags)
+    link rel="shortcut icon" href=image_path("#{Setting.key}/favicon.png")
+    meta name="google-site-verification" content=(Setting.google_site_verification)
+    = csrf_meta_tags
+    = stylesheet_link_tag "web"
+    = javascript_include_tag "web"
+    = yield :head
+    javascript:
+      function chkFrame(fr) {
+        if (!fr.contentDocument.location) { 
+          alert('Cross domain');
+        }
+      }
+
+    css:
+      .navbar {
+        margin-bottom: 0;
+      }
+      .navbar-nav {
+        padding: 5px 0px;
+      }
+      .share-button {
+        margin-bottom: 5px;
+      }
+      .page-wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      iframe {
+        flex-grow: 1;
+        border: 0;
+      }
+
+  body: .page-wrapper(style='position:relative;')
+    div
+      embed-head(
+        data-news-item="#{@news_item.to_json}"
+        data-source="#{SourceSerializer.new(@news_item.source).to_json}"
+        data-logo="#{image_path(%[#{Setting.key}/logo-large.png])}"
+      )
+    - if @news_item.embeddable?
+      iframe(src='#{@news_item.url}' onload='')
+    - else
+      h5 Hello World
+
+= javascript_packs_with_chunks_tag 'application'
