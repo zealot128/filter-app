@@ -45,7 +45,7 @@ class NewsItemsController < ApplicationController
       ahoy.track 'news_item', id: @news_item.id, source_id: @news_item.source_id, mail_subscription_id: @current_user&.id
     end
     if @news_item.embeddable == false
-      redirect_to news_item.url
+      redirect_to @news_item.url
     else
       render layout: false
     end
