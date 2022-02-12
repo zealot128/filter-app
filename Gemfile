@@ -42,9 +42,9 @@ gem 'mini_magick'
 gem 'datagrid'
 
 gem 'rack', '~> 2.0'
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.2.10'
 gem 'sidekiq-unique-jobs'
-gem 'redis-namespace', '~> 1.5.0'
+gem 'redis-namespace', '~> 1.5'
 
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false
