@@ -1,3 +1,4 @@
+## OR set DATABASE_URL postgres://username:password@ipaddresshostname:portnumber/database_name
 development:
   adapter: postgresql
   encoding: unicode

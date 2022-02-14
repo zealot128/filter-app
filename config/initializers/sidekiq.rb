@@ -1,6 +1,11 @@
 require 'redis/namespace'
 
-redis_config = if ENV['REDIS_PORT_6379_TCP_PORT']
+redis_config = if ENV['REDIS_URL']
+                 {
+                   url: ENV['REDIS_URL'],
+                   namespace: "filter_#{Rails.env}"
+                 }
+               elsif ENV['REDIS_PORT_6379_TCP_PORT']
                  {
                    url: "redis://#{ENV['REDIS_PORT_6379_TCP_ADDR']}:#{ENV['REDIS_PORT_6379_TCP_PORT']}/0",
                    namespace: "filter_#{Rails.env}"

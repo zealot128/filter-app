@@ -113,7 +113,11 @@ Rails.application.configure do
   ######
   config.assets.js_compressor = Uglifier.new(harmony: true)
   config.action_mailer.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
+  if File.exists?('config/email.yml')
+    ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
+  else
+    warn "no config/email.yml configuration found, e-mail delivery will not work!"
+  end
   config.action_mailer.default_url_options = { host: h = Rails.application.secrets.domain_name }
   config.action_mailer.asset_host = "http://#{h}"
   config.lograge.enabled = true

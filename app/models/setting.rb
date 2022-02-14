@@ -120,10 +120,15 @@ class Setting < ActiveRecord::Base
         [setting.key, setting.value]
       end
       Hash[pairs]
+    rescue PG::ConnectionBad
+      warn 'could not load settings from database, using default from application.yml'
+      YAML.load_file('config/application.yml')
     end
 
     def get_value(name)
       Setting.select('value').find_by(key: name).try(:value)
+    rescue PG::ConnectionBad
+      to_h[name.to_s]
     end
 
     def method_missing(m, *args, &block)
