@@ -147,7 +147,7 @@ class Source < ApplicationRecord
       refresh
       update_column :error, false
     rescue StandardError => e
-      update error: true, error_message: e.inspect
+      update error: true, error_message: e.inspect[0..255]
     end
     update_statistics!
   end
