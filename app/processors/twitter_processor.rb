@@ -15,6 +15,9 @@ class TwitterProcessor < BaseProcessor
       process_tweet(tweet, follow_redirect: i <= 20)
     end
     @source.update_column :error, false
+  rescue Twitter::Error::NotFound
+    @source.update_column :error, true
+    @source.update_column :error_message, "Twitter user not found"
   rescue StandardError => e
     if Rails.env.test?
       raise e
