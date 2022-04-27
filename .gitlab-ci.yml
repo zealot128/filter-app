@@ -9,5 +9,3 @@ variables:
 include:
   - project: 'administrators/gitlab-ci-yml'
     file: '/rails_default.yml'
-  - project: 'administrators/gitlab-ci-yml'
-    file: '/dependency_update.yml'

@@ -4,6 +4,6 @@ class AddEmbeddableToNewsItems < ActiveRecord::Migration[6.0]
   end
 
   def data
-    NewsItem.update_all embeddable: true
+    NewsItem.in_batches.update_all embeddable: true
   end
 end
