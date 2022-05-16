@@ -3,6 +3,11 @@ describe 'MailSubscriptionsController' do
     Sidekiq::Testing.inline!
   end
 
+  specify 'Embed' do
+    get '/newsletter/embed'
+    expect(response).to be_successful
+  end
+
   specify 'Anlegen' do
     VCR.use_cassette 'events' do
       get '/newsletter'
@@ -16,7 +21,8 @@ describe 'MailSubscriptionsController' do
           email: 'stwienert@gmail.com',
           interval: 'weekly',
           limit: 50,
-          categories: [c.id]
+          categories: [c.id],
+          privacy: 1
         }
       }
       

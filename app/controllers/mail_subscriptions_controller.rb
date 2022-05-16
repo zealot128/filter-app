@@ -29,7 +29,7 @@ class MailSubscriptionsController < ApplicationController
         redirect_to created_mail_subscription_path(@subscription)
       end
     else
-      render :index
+      render :index, status: 422
     end
   end
 

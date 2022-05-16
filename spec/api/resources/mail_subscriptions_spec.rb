@@ -1,8 +1,11 @@
 RSpec.describe Resources::MailSubscriptions, type: :request do
   describe '/api/v1/mail_subscriptions' do
+
+    let(:api_key) { Rails.application.secrets.secret_api_key }
+
     specify 'check if email exists' do
       get '/api/v1/mail_subscriptions.json', params: {
-        api_key: Rails.application.secrets.secret_api_key,
+        api_key: api_key,
         email: "test@test.com"
       }
       expect(response.status).to be == 404
@@ -11,7 +14,7 @@ RSpec.describe Resources::MailSubscriptions, type: :request do
     specify 'create subscription' do
       Category.create!(name: 'Recruiting', keywords: 'Headhunter')
       post '/api/v1/mail_subscriptions.json', params: {
-        api_key: Rails.application.secrets.secret_api_key,
+        api_key: api_key,
         email: "test@test.com",
         categories: ['recruiting'],
         first_name: "Max",
@@ -26,7 +29,7 @@ RSpec.describe Resources::MailSubscriptions, type: :request do
       expect(MailSubscription.count).to be == 1
 
       get '/api/v1/mail_subscriptions.json', params: {
-        api_key: Rails.application.secrets.secret_api_key,
+        api_key: api_key,
         email: "test@test.com"
       }
       expect(response.status).to be == 200
