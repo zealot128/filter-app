@@ -41,7 +41,7 @@ gem 'image_optim_pack'
 gem 'mini_magick'
 gem 'datagrid'
 
-gem 'rack', '~> 2.0'
+gem 'rack', '~> 2.2'
 gem 'sidekiq', '~> 5.2.10'
 gem 'sidekiq-unique-jobs'
 gem 'redis-namespace', '~> 1.5'
