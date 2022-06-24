@@ -1,34 +1,10 @@
-/ - content_for :content_header do
-/   .content-header.hidden-xs
-/     .container
-/       p = raw Setting.intro
-/       - cache 'counts', expires_in: 1.day do
-/         p #{Source.count} Quellen mit #{NewsItem.count} Beiträgen indiziert.
-      / .pull-right
-      /   = link_to '/newsletter', class: 'btn btn-default' do
-      /     i.fa.fa-fw.fa-envelope-o>
-      /     |Individuellen Newsletter abonnieren
-      /   - if Setting.get('twitter_account')
-      /     = ' '
-      /     = link_to "https://twitter.com/#{Setting.get('twitter_account')}", class: 'btn btn-default' do
-      /       i.fa.fa-fw.fa-twitter>
-      /       |Twitter
-      /   = ' '
-      /   = link_to "/app", class: 'btn btn-default'
-      /     i.fa.fa-fw.fa-mobile>
-      /     |Als App
-      /   = ' '
-      /   = link_to "/rss", class: 'btn btn-default'
-      /     i.fa.fa-fw.fa-rss>
-      /     |Als Feed
-/- if browser.device.mobile?
-/  = render 'layouts/mobile_notice'
-
-
 - @container_class = ''
 
 front-page-app(
   data-show-jobs="#{Setting.key == 'hrfilter'}"
+  data-paths="#{@paths.to_json}"
+  data-twitter="#{@twitter}"
+  data-year="#{Date.today.year}"
 )
 
 .container

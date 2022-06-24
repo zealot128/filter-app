@@ -1,22 +1,16 @@
 class DaysController < ApplicationController
   def index
-    reference = Date.today
-    if params[:date] && params[:date].to_s[/^\d{4}/]
-      reference = Date.parse(params[:date])
-      days = [reference]
-    else
-      days = 2.times.map { |i| reference - i }
-    end
-    @days = days.map { |date|
-      all =  NewsItem.top_of_day(date)
-      count = all.count
-      take = [(count * 0.33).ceil, 8].max
-      news = all.limit(take)
-      [date, count, news]
+    @paths = {
+      "Suche/Feeds": search_path,
+      "Impressum": impressum_path,
+      "Datenschutz": datenschutz_path,
+      "FAQ": faq_path,
+      "Quellen": '/quellen',
+      "Quelle einreichen": new_submit_source_path,
+      "Als App": app_path,
+      "Newsletter": '/newsletter'
     }
-    if request.xhr?
-      render partial: 'day_container', layout: false
-    end
+    @twitter = "#{Setting.get('twitter_account')}" || ""
   end
 
   def show

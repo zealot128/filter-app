@@ -4,7 +4,7 @@
       .container-fluid
         .row
           .col-sm-5.col-md-4.col-lg-3(v-show="loaded && wideLayout")
-             .top-fixed.top-fixed--f1#sidebar(style="margin-top: 60px")
+             .top-fixed.top-fixed--f1#sidebar(style="margin-top: 60px; overflow: auto !important")
                SideComponents
           .col-sm-7.col-md-8.col-lg-6
             a#top
@@ -13,11 +13,32 @@
                default-order="hot_score"
                sort-options="no_best"
                style="padding-left: 1rem, padding-right: 1rem"
+               :fullLayout="!isMobile"
              )
           .col-lg-3.visible-lg
             Subscribe
             Jobs(v-if="showJobs")
             Events
+            .panel.panel-default.mt-2(style="position: sticky; top: 85px")
+              .panel-body
+                .row
+                  .col-xs-6(v-for="[key, path] in Object.entries(paths)")
+                    .footer-item
+                      a(href="path" target= "_blank") 
+                        | {{ key }}
+                  .col-xs-6(v-if="twitter.length > 0")
+                    .footer-item
+                      a(:href="twitterUrl")
+                        | Twitter
+                        i.fa.fa-fw.fa-twitter
+                  .col-xs-6
+                    .footer-item
+                      a(href="/" style="color: #555")
+                        | HRfilter.de&nbsp;
+                      | &copy;&nbsp;{{ year }}
+              
+                                      
+  
           template(v-if="loaded")
             SearchBar(:bottom="bottom" ref="searchBar")
             Modal(
@@ -25,7 +46,6 @@
             )
             a.btn.btn-primary.back-to-top(:style="anchorPos" href="#top")
               i.fa.fa-chevron-up
-
 </template>
 
 <script>
@@ -43,6 +63,9 @@ export default {
   props: {
     logo: { type: String, },
     showJobs: { type: Boolean },
+    paths: { type: Object, required: true },
+    twitter: { type: String, default: "" },
+    year: { type: Number, required: true}
   },
   data() {
     return {
@@ -58,11 +81,12 @@ export default {
     SideComponents,
     Events,
     Modal,
-    Subscribe
+    Subscribe,
   },
   computed: {
     ...mapGetters([
-      'wideLayout'
+      'wideLayout',
+      'isMobile'
     ]),
     ...mapState([
       'loaded',
@@ -71,7 +95,10 @@ export default {
       return {
         "bottom": this.aPos,
       }
-    }
+    },
+    twitterUrl() {
+      return `https://twitter.com/${this.twitter}`
+    },
   },
   methods: {
     scroll () {
@@ -79,7 +106,7 @@ export default {
       window.onscroll = () => {
 	let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 100;
         let currentScrollPos = window.pageYOffset;
-        if(bottomOfWindow) this.$refs.niw.autoload();
+        if(bottomOfWindow && !this.isMobile) this.$refs.niw.autoload();
         if(prevScrollPos > currentScrollPos){ 
           this.bottom = "0";
           if(!this.wideLayout) this.aPos = "60px";
@@ -135,6 +162,23 @@ export default {
   border: none;
   z-index: 100;
   opacity: 0.7;
+}
+
+.footer-item {
+  padding: 3px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
 }
 
 </style>
