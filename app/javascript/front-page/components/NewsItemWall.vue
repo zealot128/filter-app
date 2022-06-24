@@ -1,6 +1,5 @@
 <template lang="pug">
   .news-items--wall
-    //SortTabs.vue
     ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
       li(v-for="mt in mediaTypes" :key='mt' :class='isChosenMediaType(mt) ? "active" : ""')
           a(role="button" @click="setMediaType(mt)")
@@ -23,7 +22,6 @@
           :key="ni.id"
           :news-item="ni"
         )
-        //EmptyState.vue
         template(v-if="newsItems.length === 0")
           div(style="font-size:5rem")
             i.fa.fa-exclamation-triangle
