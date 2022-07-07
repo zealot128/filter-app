@@ -55,7 +55,8 @@ class FeedProcessor < BaseProcessor
 
   def process_entry(entry)
     @entry = entry
-    title = entry.title
+    title = entry.title.truncate(255)
+    # binding.pry if title != entry.title
     url = entry.url&.strip
     text = entry.content || entry.summary
     published = entry.published
