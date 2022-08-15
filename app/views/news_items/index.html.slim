@@ -3,7 +3,7 @@ h2 Alle indizierten News durchsuchen
   link rel="alternate" type="application/rss+xml" title="RSS-Feed dieser Suche" href="#{@feed_url}"
 
 - content_for :content_header do
-  .content-header
+  .content-header(style="margin-top: 70px")
     .container
       = form_tag '/search', class: 'form-inline', method: :get do
         .form-group
