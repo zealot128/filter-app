@@ -24,7 +24,7 @@
                 .row
                   .col-xs-6(v-for="[key, path] in Object.entries(paths)")
                     .footer-item
-                      a(href="path" target= "_blank") 
+                      a(:href="path" target= "_blank") 
                         | {{ key }}
                   .col-xs-6(v-if="twitter.length > 0")
                     .footer-item
