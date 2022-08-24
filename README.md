@@ -54,8 +54,8 @@ It is possible to subscribe via E-Mail. Then, once per week on sunday, you will 
 As it is a Rails app, you can try to run it yourself. First make sure to have installed:
 
 - Linux or macos
-- Ruby 2.2+
-- Postgresql 9.5+
+- Ruby <=2.6
+- Postgresql 9.5+ with running db cluster
 - Redis (For Background jobs) 3.0+
 - nodejs 10.0+ and yarn
 
