@@ -7,7 +7,37 @@ class SourcesController < ApplicationController
   end
 
   def index
-    @sources = Source.order(Arel.sql 'lower(name)')
+    @count_feed = 0
+    @count_yt = 0
+    @count_podcasts = 0
+    @count_socialmedia = 0
+    @sources_feed = Source.where("type = 'FeedSource'")
+    @sources_feed.each do |source|
+      @count_feed = @count_feed + source.news_items.count
+    end
+    @sources_yt = Source.where("type = 'Youtube'")
+    @sources_yt.each do |source|
+      @count_yt = @count_yt + source.news_items.count
+    end
+    @sources_podcasts = Source.where("type = 'Podcasts'")
+    @sources_podcasts.each do |source|
+      @count_podcasts = @count_podcasts + source.news_items.count
+    end
+    @sources_socialmedia = Source.where("type = 'SocialMedia'")
+    @sources_socialmedia.each do |source|
+      @count_socialmedia = @count_socialmedia + source.news_items.count
+    end
+    if params[:source_type] == "feed"
+      @sources = @sources_feed
+    elsif params[:source_type] == "yt"
+      @sources = @sources_yt
+    elsif params[:source_type] == "podcasts"
+      @sources = @sources_podcasts
+    elsif params[:source_type] == "socialmedia"
+      @sources = @sources_socialmedia
+    else
+      @sources = @sources_feed
+    end
   end
 
   def show
