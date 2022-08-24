@@ -1,6 +1,24 @@
 .page-header
   h1 Quellen
 
+ul.nav.nav-pills
+  li
+    a href="/quellen?source_type=feed" 
+      | Text-Beiträge
+      span.badge #{@count_feed.inspect}
+  li
+    a href="/quellen?source_type=yt" 
+      | Youtube
+      span.badge #{@count_yt.inspect}
+  li
+    a href="/quellen?source_type=podcasts" 
+      | Podcasts
+      span.badge #{@count_podcasts.inspect}
+  li
+    a href="/quellen?source_type=socialmedia" 
+      | Social-Media
+      span.badge #{@count_socialmedia.inspect}
+
 .row
   - @sources.each_with_index do |source,i|
     - if i % 4 == 0
