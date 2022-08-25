@@ -5,45 +5,46 @@ ul.nav.nav-pills
   li
     a href="/quellen?source_type=feed" 
       | Text-Beiträge
-      span.badge #{@count_feed.inspect}
+      span.badge #{@count["FeedSource"].inspect.to_i}
   li
     a href="/quellen?source_type=yt" 
       | Youtube
-      span.badge #{@count_yt.inspect}
+      span.badge #{@count["YoutubeSource"].inspect.to_i}
   li
     a href="/quellen?source_type=podcasts" 
       | Podcasts
-      span.badge #{@count_podcasts.inspect}
+      span.badge #{@count["PodcastSource"].inspect.to_i}
   li
     a href="/quellen?source_type=socialmedia" 
       | Social-Media
-      span.badge #{@count_socialmedia.inspect}
+      span.badge #{@count["RedditSource"].inspect.to_i + @count["TwitterSource"].inspect.to_i + @count["FacebookSource"].inspect.to_i}
 
 .row
-  - @sources.each_with_index do |source,i|
-    - if i % 4 == 0
-      .clearfix.visible-lg
-    - if i % 2 == 0
-      .clearfix.visible-sm
+  - unless @sources.nil?
+    - @sources.each_with_index do |source,i|
+      - if i % 4 == 0
+        .clearfix.visible-lg
+      - if i % 2 == 0
+        .clearfix.visible-sm
 
-    .col-lg-3.col-sm-6
-      .panel.panel-default
-        .panel-heading
-          - if source.logo.exists?
-            = image_tag source.logo.url(:thumb)
-            = ' '
-          = link_to source.name, source_path(source)
-        .panel-body
-          small
-            | #{source.news_items.count} Beiträge insgesamt
-            - if source.news_items.current.any?
-              = ', Aktuell:'
-          br
-          ul
-            - source.news_items.current.sorted.limit(5).each do |ni|
-              li title="#{ni.title}"
-                = truncate(ni.title, length: 60)
-
+      .col-lg-3.col-sm-6
+        .panel.panel-default
+          .panel-heading
+            - if source.logo.exists?
+              = image_tag source.logo.url(:thumb)
+              = ' '
+            = link_to source.name, source_path(source)
+          .panel-body
+            small
+              | #{source.news_items.count} Beiträge insgesamt
+              - if source.news_items.current.any?
+                = ', Aktuell:'
+            br
+            ul
+              - source.news_items.current.sorted.limit(5).each do |ni|
+                li title="#{ni.title}"
+                  = truncate(ni.title, length: 60)
+  end
 css:
   .panel-body ul {
     padding-left: 15px;
