@@ -12,17 +12,20 @@ class SourcesController < ApplicationController
     @sources_yt = Source.where("type = 'YoutubeSource'")
     @sources_podcasts = Source.where("type = 'PodcastSource'")
     @sources_socialmedia = Source.where("type = 'RedditSource' OR type = 'TwitterSource' OR type = 'FacebookSource'")
-    if params[:source_type] == "feed"
+
+    case params[:source_type]
+    when "feed"
       @sources = @sources_feed
-    elsif params[:source_type] == "yt"
+    when "yt"
       @sources = @sources_yt
-    elsif params[:source_type] == "podcasts"
+    when "podcasts"
       @sources = @sources_podcasts
-    elsif params[:source_type] == "socialmedia"
+    when "socialmedia"
       @sources = @sources_socialmedia
     else
       @sources = @sources_feed
     end
+
   end
 
   def show
