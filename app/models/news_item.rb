@@ -3,18 +3,18 @@
 # Table name: news_items
 #
 #  id                          :integer          not null, primary key
-#  title                       :string(255)
+#  title                       :string
 #  teaser                      :text
-#  url                         :string(255)
+#  url                         :string
 #  source_id                   :integer
 #  published_at                :datetime
 #  value                       :integer
 #  fb_likes                    :integer
 #  retweets                    :integer
-#  guid                        :string(255)
+#  guid                        :string
 #  xing                        :integer
-#  created_at                  :datetime         not null
-#  updated_at                  :datetime         not null
+#  created_at                  :datetime
+#  updated_at                  :datetime
 #  full_text                   :text
 #  word_length                 :integer
 #  plaintext                   :text

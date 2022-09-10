@@ -102,7 +102,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "thin"
+  gem 'puma'
 end
 gem "pry-rails"
 gem 'rack-attack'

@@ -1,0 +1,14 @@
+- @container_class = ''
+
+front-page-app(
+  data-show-jobs="#{Setting.key == 'hrfilter'}"
+  data-paths="#{@paths.to_json}"
+  data-twitter="#{@twitter}"
+  data-helden-url="#{Setting.get('helden')}"
+  data-year="#{Date.today.year}"
+)
+
+.container
+  = javascript_packs_with_chunks_tag 'front-page'
+  = stylesheet_packs_with_chunks_tag 'front-page'
+

@@ -1,42 +1,47 @@
 <template lang="pug">
-  .news-items--wall
-    ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
-      li(v-for="mt in mediaTypes" :key='mt' :class='isChosenMediaType(mt) ? "active" : ""')
-          a(role="button" @click="setMediaType(mt)")
-            span(style="display: inline-flex")
-              | {{ typeTitle(mt) }}
-              svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
-                path(:d="iconForType(mt)")
+.news-items--wall
+  ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
+    li(v-for="mt in mediaTypes" :key='mt' :class='isChosenMediaType(mt) ? "active" : ""')
+        a(role="button" @click="setMediaType(mt)")
+          span(style="display: inline-flex")
+            | {{ typeTitle(mt) }}
+            svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
+              path(:d="iconForType(mt)")
 
-    .news-items--wrapper
-      template(v-if="loading")
+  .news-items--wrapper
+    template(v-if="loading")
+      NewsItem(
+        v-for="ni in newsItemsLoading"
+        :key="ni.id"
+        :news-item="ni"
+      )
+      Skeleton(v-for="i in 15" :key="i")
+    template(v-else)
+      div(
+        v-for="(ni, idx) in newsItems"
+        :key="ni.id"
+      )
         NewsItem(
-          v-for="ni in newsItemsLoading"
-          :key="ni.id"
           :news-item="ni"
         )
-        Skeleton(v-for="i in 15" :key="i")
-      template(v-else)
-        NewsItem(
-          v-for="ni in newsItems"
-          :key="ni.id"
-          :news-item="ni"
-        )
-        template(v-if="newsItems.length === 0")
-          div(style="font-size:5rem")
-            i.fa.fa-exclamation-triangle
-          h4 Leider gibt es keinen Artikel für ihre ausgewählte Suchmuster, bitte versuchen Sie nochmal mit einem neuen Muster.
+        div(v-if='idx == 1 && heldenUrl')
+          helden-ad(:helden-url="heldenUrl")
+      template(v-if="newsItems.length === 0")
+        div(style="font-size:5rem")
+          i.fa.fa-exclamation-triangle
+        h4 Leider gibt es keinen Artikel für ihre ausgewählte Suchmuster, bitte versuchen Sie nochmal mit einem neuen Muster.
 
 
-    .text-center
-      a.btn.btn-default(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
-        | Mehr
+  .text-center
+    a.btn.btn-default(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
+      | Mehr
 
 </template>
 
 <script>
-import NewsItem from "./NewsItem";
-import Skeleton from "./Skeleton"
+import NewsItem from "./NewsItem.vue";
+import Skeleton from "./Skeleton.vue"
+import HeldenAd from "front-page/HeldenAd.vue"
 import { mapState, mapGetters } from 'vuex';
 import json from "../icons.json"
 
@@ -45,13 +50,15 @@ const qs = require("qs");
 export default {
   components: {
     NewsItem,
+    HeldenAd,
     Skeleton
   },
   props: {
     defaultOrder: { type: String, default: () => "all_best" },
     perPage: { type: Number, default: 30 },
     sortOptions: { type: String, default: "few" },
-    fullLayout: { type: Boolean, default: true }
+    fullLayout: { type: Boolean, default: true },
+    heldenUrl: { type: String, default: null },
   },
   data() {
     return {

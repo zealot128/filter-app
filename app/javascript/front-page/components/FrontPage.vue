@@ -1,51 +1,52 @@
 <template lang="pug">
-  div
-    .news-app-wrapper
-      .container-fluid
-        .row
-          .col-sm-5.col-md-4.col-lg-3(v-show="loaded && wideLayout")
-             .top-fixed.top-fixed--f1#sidebar(style="margin-top: 60px; overflow: auto !important")
-               SideComponents
-          .col-sm-7.col-md-8.col-lg-6
-            a#top
-            NewsItemWall(
-               ref="niw"
-               default-order="hot_score"
-               sort-options="no_best"
-               style="padding-left: 1rem, padding-right: 1rem"
-               :fullLayout="!isMobile"
-             )
-          .col-lg-3.visible-lg
-            Subscribe
-            Jobs(v-if="showJobs")
-            Events
-            .panel.panel-default.mt-2(style="position: sticky; top: 85px")
-              .panel-body
-                .row
-                  .col-xs-6(v-for="[key, path] in Object.entries(paths)")
-                    .footer-item
-                      a(:href="path" target= "_blank") 
-                        | {{ key }}
-                  .col-xs-6(v-if="twitter.length > 0")
-                    .footer-item
-                      a(:href="twitterUrl")
-                        | Twitter
-                        i.fa.fa-fw.fa-twitter
-                  .col-xs-6
-                    .footer-item
-                      a(href="/" style="color: #555")
-                        | HRfilter.de&nbsp;
-                      | &copy;&nbsp;{{ year }}
-              
-                                      
-  
-          template(v-if="loaded")
-            SearchBar(:bottom="bottom" ref="searchBar")
-            Modal(
-              v-if="!wideLayout"
-            )
-            a.btn.btn-primary.back-to-top(:style="anchorPos" href="#top")
-              i.fa.fa-chevron-up
+div
+  .news-app-wrapper
+    .container-fluid
+      .row
+        .col-sm-5.col-md-4.col-lg-3(v-show="loaded && wideLayout")
+           .top-fixed.top-fixed--f1#sidebar(style="margin-top: 60px; overflow: auto !important")
+             SideComponents
+        .col-sm-7.col-md-8.col-lg-6
+          a#top
+          NewsItemWall(
+             ref="niw"
+             default-order="hot_score"
+             sort-options="no_best"
+             style="padding-left: 1rem, padding-right: 1rem"
+             :fullLayout="!isMobile"
+             :heldenUrl='heldenUrl'
+           )
+        .col-lg-3.visible-lg
+          Subscribe
+          Jobs(v-if="showJobs")
+          Events
+          .panel.panel-default.mt-2(style="position: sticky; top: 85px")
+            .panel-body
+              .row
+                .col-xs-6(v-for="[key, path] in Object.entries(paths)")
+                  .footer-item
+                    a(:href="path" target= "_blank")
+                      | {{ key }}
+                .col-xs-6(v-if="twitter.length > 0")
+                  .footer-item
+                    a(:href="twitterUrl")
+                      | Twitter
+                      i.fa.fa-fw.fa-twitter
+                .col-xs-6
+                  .footer-item
+                    a(href="/" style="color: #555")
+                      | HRfilter.de&nbsp;
+                    | &copy;&nbsp;{{ year }}
+
+
+
+        template(v-if="loaded")
+          SearchBar(:bottom="bottom" ref="searchBar")
+          Modal(
+            v-if="!wideLayout"
+          )
+          a.btn.btn-primary.back-to-top(:style="anchorPos" href="#top")
+            i.fa.fa-chevron-up
 </template>
 
 <script>
@@ -65,7 +66,8 @@ export default {
     showJobs: { type: Boolean },
     paths: { type: Object, required: true },
     twitter: { type: String, default: "" },
-    year: { type: Number, required: true}
+    year: { type: Number, required: true},
+    heldenUrl: { type: String, required: false },
   },
   data() {
     return {
@@ -107,10 +109,10 @@ export default {
 	let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 100;
         let currentScrollPos = window.pageYOffset;
         if(bottomOfWindow && !this.isMobile) this.$refs.niw.autoload();
-        if(prevScrollPos > currentScrollPos){ 
+        if(prevScrollPos > currentScrollPos){
           this.bottom = "0";
           if(!this.wideLayout) this.aPos = "60px";
-        } 
+        }
         else{
           this.bottom = "-100px";
           this.aPos = "10px";
