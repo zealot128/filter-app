@@ -6,11 +6,11 @@ div
         span
           |Fahrrad/E-Bike Vollkasko Versicherung von helden.de
         span.badge.badge-dark Werbung
-    a(:href='heldenUrl')
+    a(:href='heldenUrl' @click='trackClick')
       img(:src='image' alt='helden.de E-Bike und Fahrradschutz Banner.')
 
     .bottom
-      a.btn.btn-primary(:href='heldenUrl')
+      a.btn.btn-primary(:href='heldenUrl' @click='trackClick')
         |Zum Angebot
       ul.list-check
         li Entschädigung bei Diebstahl des Fahrrads &amp; Zubehör
@@ -23,6 +23,7 @@ div
 
 <script lang="ts">
 import Vue from "vue"
+import ahoy from 'utils/ahoy'
 
 import image from "../../assets/images/fahrrad-filter/heldende.jpg"
 
@@ -33,8 +34,14 @@ export default Vue.extend({
   data() {
     return { image }
   },
+  methods: {
+    trackClick() {
+      ahoy.track('helden_click')
+    }
+  }
 })
 </script>
+
 <style scoped>
 img {
   width: 100%;

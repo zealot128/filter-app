@@ -35,4 +35,13 @@ class Ahoy::Visit < ApplicationRecord
   self.table_name = "ahoy_visits"
 
   has_many :events, class_name: "Ahoy::Event", dependent: :destroy
+
+  def self.cronjob
+    Ahoy::Visit.rollup("Visits", interval: "day", column: :started_at)
+    Ahoy::Event.pluck(Arel.sql("distinct name")).each do |name|
+      Ahoy::Event.where(name: name).rollup("ahoy:#{name}", interval: 'week')
+    end
+    Ahoy::Event.where(visit_id: Ahoy::Visit.where('started_at < ?', 1.year.ago).select(:id)).delete_all
+    Ahoy::Visit.where('started_at < ?', 1.year.ago).delete_all
+  end
 end

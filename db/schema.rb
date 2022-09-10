@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_10_155015) do
+ActiveRecord::Schema.define(version: 2022_09_10_185607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -222,6 +222,15 @@ ActiveRecord::Schema.define(version: 2022_09_10_155015) do
     t.datetime "updated_at", null: false
     t.string "os"
     t.string "app_version"
+  end
+
+  create_table "rollups", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "interval", null: false
+    t.datetime "time", null: false
+    t.jsonb "dimensions", default: {}, null: false
+    t.float "value"
+    t.index ["name", "interval", "time", "dimensions"], name: "index_rollups_on_name_and_interval_and_time_and_dimensions", unique: true
   end
 
   create_table "settings", id: :serial, force: :cascade do |t|

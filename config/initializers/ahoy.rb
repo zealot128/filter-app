@@ -19,3 +19,5 @@ Ahoy.mask_ips = true
 Ahoy.cookies = false
 Ahoy.quiet = Rails.env.production?
 Ahoy.geocode = false
+
+Rollup.week_start = :monday

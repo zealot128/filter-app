@@ -29,6 +29,7 @@ gem "angularjs-rails", "1.2.18"
 gem 'parallel'
 
 gem "ahoy_matey", "~> 2.1"
+gem "rollups"
 gem 'devise'
 gem 'cancancan'
 # gem 'devise-i18n'
