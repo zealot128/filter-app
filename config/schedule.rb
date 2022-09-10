@@ -22,6 +22,10 @@ every 1.day, at: '03:25' do
   runner 'CATCH_ALL { NewsItem.cleanup }'
 end
 
+every :week do
+  runner 'CATCH_ALL { Ahoy::Visit.cronjob }'
+end
+
 every :monday, at: '9am' do
   runner 'CATCH_ALL { Newsletter::Mailing.cronjob }'
 end
