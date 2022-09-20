@@ -4,6 +4,17 @@ module ApplicationHelper
   end
 
   def default_meta_tags
+    img = image_url("#{Setting.key}/logo-large.png")
+    unless @news_item.nil?
+      og_img = if @news_item.image.exists?
+                 @news_item.image_url_full 
+               else
+                 img
+               end
+      title = @news_item.title
+      description = @news_item.teaser
+      creator = @news_item.source.name
+    end
     {
       title: page_title,
       site: Setting.site_name,
@@ -11,16 +22,22 @@ module ApplicationHelper
       description: Setting.get('meta_description'),
       keywords: Setting.get('meta_keywords'),
       separator: "&mdash;".html_safe,
-      image: img = image_url("#{Setting.key}/logo-large.png"),
+      image: img,
       image_src: img,
       og: {
         title: :title,
         type: 'website',
         url: request.url,
-        image: :image,
+        image: og_img,
         description: :description
       },
-      twitter: { image: :image_src }
+      twitter: { 
+        card: "summary_large_image",
+        title: title || :title,
+        image: og_img,
+        description: description || :description,
+        creator: creator || :site 
+      }
     }
   end
 

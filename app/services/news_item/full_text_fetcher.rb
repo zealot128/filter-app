@@ -21,7 +21,11 @@ class NewsItem::FullTextFetcher
     return unless page.respond_to?(:at)
 
     @news_item.url = page.uri.to_s.gsub(/\?utm_source.*/, "")
-    @news_item.embeddable = page.response.keys.map(&:downcase).exclude?('x-frame-options')
+
+    possible_policies = page.response.keys.map(&:downcase)
+    found_policies = possible_policies & %w[x-frame-options content-security-policy]
+    @news_item.embeddable = found_policies.empty?
+
     content = page.at(selector)
     if content
       content.search('script, style, .dd_post_share, .dd_button_v, .dd_button_extra_v, #respond').remove

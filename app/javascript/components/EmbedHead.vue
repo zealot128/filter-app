@@ -16,7 +16,9 @@
           <i class="fa fa-lg fa-share-alt-square" style="color: #696969" aria-hidden="true"></i>
         </a>
         <div class="navbar-brand" @click="back()">
-          <img alt="logo" title="HRfilter.de" :src="logo" style="height: 30px" />
+          <a href="/" alt="HRfilter Startseite">
+            <img alt="logo" title="HRfilter.de" :src="logo" style="height: 30px" />
+          </a>
         </div>
       </div>
 
