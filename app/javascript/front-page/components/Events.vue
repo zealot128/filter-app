@@ -1,17 +1,17 @@
 <template lang="pug">
-  .event-wrapper(v-if="loaded")
-    h5.section-title Kommende Veranstaltungen
-    .panel.panel-default(v-for="event in events")
-      a(:href="event.url" rel="noopener" target="_blank")
-        img(width="100%" :src="event.image" loading="lazy" alt="Upcoming event")
-      .panel-body
-        h5
-          a(:href="event.url" rel="noopener" target="_blank")
-            | {{ event.title }}
-        p  {{ event.from }}
+.event-wrapper(v-if="loaded")
+  h5.section-title Kommende Veranstaltungen
+  .panel.panel-default(v-for="event in events")
+    a(:href="event.url" rel="noopener" target="_blank")
+      img(width="100%" :src="event.image" loading="lazy" alt="Upcoming event")
+    .panel-body
+      h5
+        a(:href="event.url" rel="noopener" target="_blank")
+          | {{ event.title }}
+      p  {{ event.from }}
 </template>
 
-<script>
+<script lang='ts'>
 export default {
   data() {
     return {
@@ -19,16 +19,18 @@ export default {
       loaded: false,
     }
   },
+  methods: {
+    async fetchEvents() {
+      const stream = await fetch(`/events`)
+      if (stream.status === 404) return
+
+      const data =  stream.json()
+      this.events = data;
+      this.loaded = true;
+    }
+  },
   mounted() {
-    fetch(`/events`)
-        .then(stream => stream.json())
-        .then(data => {
-          this.events = data;
-          this.loaded = true;
-          this.$nextTick(() => {
-          })
-        })
-        .catch(error => console.error(error));
+    this.fetchEvents()
   },
 }
 </script>
@@ -50,6 +52,6 @@ export default {
 }
 
 .section-title {
-  font-size: 17px; 
+  font-size: 17px;
 }
 </style>

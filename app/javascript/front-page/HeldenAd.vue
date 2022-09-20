@@ -10,8 +10,11 @@ div
       img(:src='image' alt='helden.de E-Bike und Fahrradschutz Banner.')
 
     .bottom
-      a.btn.btn-primary(:href='heldenUrl' @click='trackClick')
-        |Zum Angebot
+      div
+        a.btn.btn-primary(:href='heldenUrl' @click='trackClick' @click.middle='trackClick')
+          |Jetzt Rabatt sichern
+        br
+        small mit Helden Code SWIE2 dauerhaft einen Monatsbeitrag sparen
       ul.list-check
         li Entschädigung bei Diebstahl des Fahrrads &amp; Zubehör
         li Übernahme Reparaturkosten inkl. Verschleißkosten
