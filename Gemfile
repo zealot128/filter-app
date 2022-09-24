@@ -49,6 +49,7 @@ gem 'redis-namespace', '~> 1.5'
 
 gem 'google-cloud-firestore', require: false
 gem 'fcm', require: false
+gem 'mjml-rails'
 
 gem 'webpacker', '~> 5.x'
 

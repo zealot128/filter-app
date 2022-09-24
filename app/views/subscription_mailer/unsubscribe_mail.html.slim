@@ -1,5 +1,6 @@
-table.row: tr: td.wrapper.last
-  table.twelve.columns: tr: td
-    p = @subscription.salutation + ','
+mj-section(background-color="#fff")
+  mj-column
+    mj-text
+      p = @subscription.salutation + ','
     == @body
 

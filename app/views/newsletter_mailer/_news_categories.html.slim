@@ -1,0 +1,12 @@
+mj-table
+  tr 
+    - if categories.count == 1
+      th
+        | Auf #{Setting.host} wurde kürzlich eine neues Thema "<strong>#{categories.first.name}</strong>" hinzugefügt.
+    - else
+      th
+        | Auf #{Setting.host} wurden kürzlich die neuen Themen <strong>#{categories.map(&:name).to_sentence}</strong> hinzugefügt.
+    = ' '
+    | Diese können Sie bei Interesse in Ihrem Profil aktivieren.
+
+

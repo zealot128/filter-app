@@ -1,0 +1,35 @@
+mjml
+  mj-head
+    mj-attributes
+      mj-all font-family="Helvetica Neue"
+    - if @preview
+      mj-preview
+        == @preview
+  mj-body(background-color="#c5c5c5")
+    mj-section background-color="#d1e3ea"
+      mj-column 
+        - if @tracking_token
+          mj-image(src='#{image_url("/mt/gif/#{@tracking_token}.png")}' width='150px' alt="#{Setting.site_name}-Logo")
+        - else
+          mj-image width="300px" src="#{image_url("#{Setting.key}/logo-large.png")}"
+    
+    = yield 
+
+    mj-section(background-color="#f0f0f0")
+      mj-column
+        - if @mailing
+          mj-text = raw @mailing.outro
+        mj-social
+          mj-social-element(href="#{root_url}" background-color="#bbb" src="#{image_url("#{Setting.key}/favicon.png")}")
+            = Setting.site_name 
+          - if Setting.get('twitter_account').present?
+            mj-social-element(href="https://twitter.com/#{Setting.get('twitter_account')}" src="#{image_url("twitter-white.png")}" background-color="#55acee")
+              = Setting.get('twitter_account') 
+          mj-social-element(href="https://play.google.com/store/apps/details?id=com.pludoni.filterapp" src="#{image_url("google-play.png")}" background-color="#aac1d5")
+            |Android
+          mj-social-element(href="https://itunes.apple.com/us/app/hrfilter-news/id1435577499" src="#{image_url("app-store.png")}" background-color="#aac1d5")
+            |iPhone
+
+
+        mj-text color='#888' font-size='10px'
+          = raw Setting.get('mail_impressum')

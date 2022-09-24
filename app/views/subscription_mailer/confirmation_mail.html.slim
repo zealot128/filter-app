@@ -1,15 +1,18 @@
-table.row: tr: td.wrapper.last
-  table.twelve.columns: tr: td
-    p = @subscription.salutation + ','
-    p bitte bestätigen Sie Ihre Anmeldung für den #{ Setting.site_name } Newsletter. Sollten Sie dieses Abo nicht ausgelöst haben, so brauchen Sie nichts weiter zu tun, Ihre E-Mail wird automatisch gelöscht.
-    p: strong Bitte klicken Sie auf diesen Link, um Ihr Abo zu aktivieren:
+mj-section(background-color="#fff")
+  mj-column
+    mj-text
+      = @subscription.salutation + ','
+    mj-text
+      | bitte bestätigen Sie Ihre Anmeldung für den #{ Setting.site_name } Newsletter. Sollten Sie dieses Abo nicht ausgelöst haben, so brauchen Sie nichts weiter zu tun, Ihre E-Mail wird automatisch gelöscht.
+    mj-text
+      strong Bitte klicken Sie auf diesen Link, um Ihr Abo zu aktivieren:
 
-    table.button: tr: td
-      = link_to (a=confirm_mail_subscription_url(@subscription)) do
-        |Abo bestätigen
-    br
-    p Bitte klicken Sie auf den oben stehenden Link oder kopieren Sie diesen Link in einen Webbrowser:
-    br
-    =a
+    mj-button(href="#{a=confirm_mail_subscription_url(@subscription)}")
+      |Abo bestätigen
+
+    mj-text
+      p Bitte klicken Sie auf den oben stehenden Link oder kopieren Sie diesen Link in einen Webbrowser:
+      br
+      code =a
 
 

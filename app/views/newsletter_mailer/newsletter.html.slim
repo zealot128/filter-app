@@ -1,52 +1,49 @@
 - profile_url = @mailing.subscription.persisted? && edit_mail_subscription_url(@mailing.subscription)
-table.row: tr: td.wrapper.last
-  table.twelve.columns: tr: td
-    p = @mailing.salutation + ','
-    p = raw @mailing.intro
-- if @mailing.new_categories.any?
-  = render 'new_categories', categories: @mailing.new_categories
 
-table.row: tr
-  td.wrapper: table.six.columns: tr: td
-    table.button: tr: td
-      a href='https://#{Setting.host}' #{Setting.site_name} Tagesübersicht
-  td.wrapper.last: table.six.columns: tr: td
-    - if profile_url
-      table.button: tr: td
-        a href='#{profile_url}' Newsletter-Einstellungen
-table.row: tr
-  td.wrapper: table.six.columns: tr: td
-    strong Inhalt
-    ul
-      - @mailing.sections.each do |section|
-        li
-          a href="##{section.anchor}"
-            |#{raw section.toc_title}
-  td.wrapper.last: table.six.columns: tr
-    - if AdLogic.enabled?
-      = render "ad_section_right", mailing: @mailing
+mj-section(background-color="#fff")
+  mj-column
+    mj-text = @mailing.salutation + ','
+    mj-text = raw @mailing.intro
 
 - if AdLogic.enabled? && AdLogic.promoted_events.any?
-  table.row: tr: td.wrapper.last
-    td
-      - event = AdLogic.promoted_events.first
-      / strong Empfohlene Events
-      - if event.image.present?
-        = image_tag event.image, algin: "center", alt: "#{event.title}", width: "580", style: "width: 580px"
-      br
-      p
-        = event.body
-      p
-        table.button: tr: td
-          = link_to event.url do
-            | Zu den Eventdetails
+  mj-section background-color="#fff"
+    mj-column
+      mj-divider border-width="1px" border-color="#E0E0E0"
+      mj-text
+        h2(style="color: #30a2bf; text-align: center")
+          | Kommende Veranstaltungen 
+      - events = AdLogic.promoted_events
+      mj-carousel  
+        - events.each do |event|
+          mj-carousel-image src="#{event.image}" href="#{event.url}"
 
-- @mailing.sections.each_with_index do |s,i|
-  = render s, index: i
+- @mailing.sections.each do |section|
+  mj-section(background-color="#fff")
+    mj-column
+      mj-divider border-width="1px" border-color="#E0E0E0"         
+      mj-text
+        h3(style="font-weight: bold; color: #3498BD; text-align: center") 
+          = raw section.toc_title
+  mj-section(background-color="#fff")
+    - section.news_items.each do |ni|
+      - url = click_proxy_url(ni, host: Setting.host, protocol: 'https', sid: @mailing.subscription.id)
+      mj-column width="75%" 
+        mj-text
+          h4(style="margin: 0; padding: 0")
+            a(href="#{url}" style="color: #333")
+              = ni.title
+          p = ni.teaser
+      mj-column width="25%"
+        - if ni.image.present?
+          mj-image(width="100px" src="#{image_url("#{Setting.key}/logo-large.png")}" href="#{url}")
+        - else
+          mj-button(href="#{url}") 
+            | Zum Artikel
 
-br
-br
-- if profile_url
-  table.row: tr: td.wrapper.last
-    p Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.
-p = raw @mailing.outro
+mj-section(background-color="#f0f0f0")
+  mj-column
+    - if @mailing.new_categories.any?
+      = render 'news_categories', categories: @mailing.new_categories
+    - if profile_url
+      mj-text
+        p(style="text-align: center") Die Newsletter-Einstellungen können <a href='#{profile_url}'>hier</a> vorgenommen werden.

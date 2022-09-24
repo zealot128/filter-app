@@ -1,26 +1,17 @@
-class NewsletterMailer < ActionMailer::Base
-  layout 'newsletter'
-  default from: Setting.get('from')
-
+class NewsletterMailer < ApplicationMailer
   def newsletter(mailing, tracking_token)
     @mailing = mailing
     @title = 'Newsletter'
 
     @tracking_token = tracking_token
     @categories = mailing.categories
-    names = @categories.map(&:name)
-    names = if names.count > 5
-              "aus #{names.count} Themen"
-            else
-              "zum Thema " + names.to_sentence
-            end
+    @preview = @mailing.intro
     headers['X-Auto-Response-Suppress'] = "OOF"
-    mail to: mailing.full_email, subject: mailing.subject
-  end
+    profile_url = edit_mail_subscription_url(@mailing.subscription)
+    headers['List-Unsubscribe'] = "<#{profile_url}>"
 
-  def initial_mail(subscription)
-    @subscription = subscription
-    headers['X-Auto-Response-Suppress'] = "OOF"
-    mail to: subscription.full_email, subject: "Mit dem neuen Empfehlungsbund-Newsletter alle HR-News auf einen Blick"
+    mail(to: mailing.full_email, subject: mailing.subject) do |format|
+      format.html
+    end
   end
 end

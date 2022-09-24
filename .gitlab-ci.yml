@@ -1,5 +1,5 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v17
+image: registry.pludoni.com/administrators/docker-images/rails-base:v18
 stages: [checks, test, deploy]
 
 variables:
@@ -9,3 +9,10 @@ variables:
 include:
   - project: 'administrators/gitlab-ci-yml'
     file: '/rails_default.yml'
+
+bundle_audit:
+  script: |
+    gem install --force bundler -v 2.3.13 -N
+    gem install --force bundler-audit -N
+    bundle-audit update
+    bundle-audit check --ignore $IGNORE_CVE

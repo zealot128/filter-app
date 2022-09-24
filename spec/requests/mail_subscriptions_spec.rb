@@ -56,7 +56,7 @@ describe 'MailSubscriptionsController' do
       Category.create!(name: 'Gehalt', keywords: '')
     }
     specify 'tracks send status so no duplicate send' do
-      VCR.use_cassette 'events' do
+      VCR.use_cassette 'events', record: :new_episodes do
         subscription.confirm!
 
         # Keine Mail, wenn nichts neues
@@ -70,7 +70,7 @@ describe 'MailSubscriptionsController' do
         expect(MailSubscription::History.count).to be == 1
         expect(ActionMailer::Base.deliveries.first.html_part.decoded).to include MailSubscription::History.first.open_token
 
-        tracking_url = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.first.html_part.decoded).search('img').last['src']
+        tracking_url = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.first.html_part.decoded).search('img').first['src']
         get tracking_url
         expect(response).to be_successful
         expect(response.media_type).to be == 'image/png'
@@ -91,7 +91,7 @@ describe 'MailSubscriptionsController' do
 
         # Klick = auch geoeffnet
         tracking_link = Nokogiri.parse(ActionMailer::Base.deliveries.last.html_part.body.decoded).search('a').map { |i| i['href'] }.grep(%r{/ni/}).first
-        get tracking_link.remove(%r{http://[^/]+})
+        get tracking_link.remove(%r{(http|https)://[^/]+})
 
         expect(MailSubscription::History.opened.count).to be == 2
         expect(MailSubscription::History.last.click_count).to be == 1
