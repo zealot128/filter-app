@@ -47,6 +47,9 @@ html lang=(locale) class=(browser.to_s)
     - if @news_item.embeddable?
       iframe(src='#{@news_item.url}' onload='')
     - else
-      h5 Hello World
+      .text-center
+        h2 Die Seite kann leider nicht geladen werden. Klicken Sie auf den Link oben um die Seite zu öffnen.
+        a.btn.btn-lg.d-block.btn-primary(href='#{@news_item.url}' target='_blank' rel='noopener') Zum Artikel
+
 
 = javascript_packs_with_chunks_tag 'application'
