@@ -70,4 +70,18 @@ class Resources::NewsItems < Grape::API
       Source.visible.find(params[:id])
     end
   end
+
+  namespace :eb_youtube do
+    get '/' do
+      source = YoutubeSource.find_by(name: "Empfehlungsbund")
+      if source.present?
+        nis = source.news_items.current 
+        nis = source.news_items.recent if nis.blank?
+      end
+      return error!({ status: "not_found" }, 404) if nis.blank?
+
+      nis = nis.map { |ni| ni.attributes.slice('title', 'url') }
+      { news_items: nis, status: 'ok' }
+    end
+  end
 end
