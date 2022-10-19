@@ -5,16 +5,16 @@
 #  id                          :integer          not null, primary key
 #  title                       :string
 #  teaser                      :text
-#  url                         :string
+#  url                         :string(2048)
 #  source_id                   :integer
 #  published_at                :datetime
 #  value                       :integer
 #  fb_likes                    :integer
 #  retweets                    :integer
-#  guid                        :string
+#  guid                        :string(255)
 #  xing                        :integer
-#  created_at                  :datetime
-#  updated_at                  :datetime
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
 #  full_text                   :text
 #  word_length                 :integer
 #  plaintext                   :text
@@ -38,6 +38,7 @@
 #  paywall                     :boolean          default(FALSE)
 #  media_url                   :string
 #  embeddable                  :boolean          default(FALSE)
+#  like                        :integer          default(0)
 #
 # Indexes
 #
@@ -154,6 +155,14 @@ class NewsItem < ApplicationRecord
   belongs_to :dupe_of, class_name: "NewsItem", optional: true, inverse_of: :dupes
   has_many :dupes, class_name: "NewsItem", inverse_of: :dupe_of
 
+  before_save do
+    if title && title.length > 255
+      self.title = title[0..255]
+    end
+    if url && url.length > 2048
+      self.url = url[0..2048]
+    end
+  end
   # before_save :categorize
   # before_save :filter_plaintext
   # before_save :blacklist
