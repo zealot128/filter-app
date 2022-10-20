@@ -42,7 +42,7 @@ class NewsItem::LinkageCalculator
 
   def make_url_absolute(l)
     URI.join(@news_item.url, l).to_s
-  rescue URI::InvalidURIError
+  rescue URI::InvalidURIError, URI::InvalidComponentError
     nil
   end
 end
