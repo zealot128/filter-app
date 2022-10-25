@@ -2,7 +2,7 @@ de:
   simple_form:
     hints:
       submit_source:
-        comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden?'
+        comment: 'Was ist das besondere an der Quelle? Warum sollte die aufgenommen werden...?'
       source:
         deactivated: Import deaktiviert, nicht in Newsletter anzeigen. Quelle und vorhandene News bleiben aufrufbar und durchsuchbar
         default_category: News aus dieser Quelle kriegen immer mindestens dieses Thema
