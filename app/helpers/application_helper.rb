@@ -58,7 +58,7 @@ module ApplicationHelper
     string.gsub(/#(\w*[0-9a-zA-Z\p{L}]+\w*[0-9a-zA-Z\p{L}])/, '<mark class="hashtag">#\1</mark>')
   end
 
-  # rubocop:disable LineLength
+  # rubocop:disable Layout/LineLength
   def placeholder(setting)
     case setting
     when 'mail_intro'
@@ -76,5 +76,5 @@ module ApplicationHelper
       }
     end
   end
-  # rubocop:enable LineLength
+  # rubocop:enable Layout/LineLength
 end

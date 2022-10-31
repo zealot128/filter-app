@@ -104,13 +104,13 @@ end
 
 group :development, :test do
   gem 'puma'
+  gem 'pludoni-rubocop', git: 'https://github.com/pludoni/pludoni-rubocop.git', require: false, ref: 'main'
 end
 gem "pry-rails"
 gem 'rack-attack'
 
 group :capistrano do
   gem "whenever"
-  gem "rubocop"
 end
 
 gem "meta-tags", "~> 2.13"
