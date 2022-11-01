@@ -62,5 +62,7 @@ class NewsItem::LikeFetcher
 
   def twitter_search(str)
     TwitterSource.client.search(str)
+  rescue FrozenError
+    []
   end
 end
