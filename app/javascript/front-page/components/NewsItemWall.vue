@@ -202,11 +202,6 @@ export default {
   margin-top: 10px;
   min-height: 400px;
 }
-.news-items--wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
 .news-items--wrapper >>> .news-item-panel {
   width: 100%;
 }
