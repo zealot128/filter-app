@@ -73,7 +73,7 @@ gem "migration_data"
 gem 'grape'
 gem 'active_model_serializers', '~> 0.10'
 
-gem "twitter", "~> 6.2.0"
+gem "twitter", "~> 7.0.0"
 gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem "premailer-rails"

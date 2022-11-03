@@ -19,11 +19,14 @@ class TwitterPosting
   end
 
   def tweet
-    url = "https://www.#{Rails.application.secrets.domain_name}/ni/#{@news_item.id}?utm_source=twitter&utm_medium=main"
-    meta_data = "#{maybe_mention}#{maybe_hashtags}"
-    length = 280 - 24 - 1 - meta_data.length
-    title = @news_item.title.strip.truncate(length)
-    "#{title} #{url}#{meta_data}"
+    @tweet ||=
+      begin
+        url = "https://www.#{Rails.application.secrets.domain_name}/ni/#{@news_item.id}?utm_source=twitter&utm_medium=main"
+        meta_data = "#{maybe_mention}#{maybe_hashtags}"
+        length = 280 - 24 - 1 - meta_data.length
+        title = @news_item.title.strip.truncate(length)
+        "#{title} #{url}#{meta_data}"
+      end
   end
 
   def maybe_hashtags
