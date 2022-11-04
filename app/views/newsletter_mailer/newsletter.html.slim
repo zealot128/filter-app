@@ -35,7 +35,7 @@ mj-section(background-color="#fff")
           p = ni.teaser
       mj-column width="25%"
         - if ni.image.present?
-          mj-image(width="100px" src="#{image_url("#{Setting.key}/logo-large.png")}" href="#{url}")
+          mj-image(width="100px" src="#{ni.image.url}" href="#{url}")
         - else
           mj-button(href="#{url}") 
             | Zum Artikel
