@@ -117,7 +117,7 @@ class TwitterProcessor < BaseProcessor
     end
   rescue SocketError
     nil
-  rescue HTTParty::RedirectionTooDeep, Net::OpenTimeout
+  rescue HTTParty::RedirectionTooDeep, Net::OpenTimeout, Errno::ECONNREFUSED
     url
   rescue StandardError => e
     NOTIFY_EXCEPTION(e)
