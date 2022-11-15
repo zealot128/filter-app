@@ -19,6 +19,10 @@ class NewsFilter
     if (id = Setting.get('promoted_feed_id')).present?
       @news_items = @news_items.where.not(source_id: id)
     end
+    if (ids = Setting.get('hide_feed_id_from_homepage'))
+      @news_items = @news_items.where.not(source_id: ids)
+    end
+
     apply_filter!
     apply_order!
     @news_items
