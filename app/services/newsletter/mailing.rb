@@ -49,7 +49,7 @@ module Newsletter
       end
       title = subjects.map { |i| %{"#{i}"} }.to_sentence
 
-      "#{title} - HRfilter KW #{kw}"
+      "#{title} - #{Setting.site_name} KW #{kw}"
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
