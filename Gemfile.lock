@@ -411,7 +411,7 @@ GEM
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
     nio4r (2.5.8)
-    nokogiri (1.13.9)
+    nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth (0.5.6)
@@ -772,4 +772,4 @@ DEPENDENCIES
   zurb-ink!
 
 BUNDLED WITH
-   2.3.13
+   2.3.17
