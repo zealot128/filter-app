@@ -32,7 +32,6 @@ class Setting < ActiveRecord::Base
       :mail_intro,
       :mail_impressum,
       :from,
-      :reconfirm_from,
       :inactive_months,
     ],
     seo: [
