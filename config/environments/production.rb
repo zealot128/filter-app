@@ -113,13 +113,14 @@ Rails.application.configure do
   ######
   config.assets.js_compressor = Uglifier.new(harmony: true)
   config.action_mailer.delivery_method = :smtp
-  if File.exists?('config/email.yml')
+  if File.exist?('config/email.yml')
     ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
   else
     warn "no config/email.yml configuration found, e-mail delivery will not work!"
   end
-  config.action_mailer.default_url_options = { host: h = Rails.application.secrets.domain_name }
-  config.action_mailer.asset_host = "http://#{h}"
+  config.action_mailer.default_url_options = { host: h = Rails.application.secrets.domain_name, protocol: 'https' }
+  ActionMailer::Base.config.default_url_options = { host: h, protocol: 'https' }
+  config.action_mailer.asset_host = "https://#{h}"
   config.lograge.enabled = true
   config.log_level = :info
 end

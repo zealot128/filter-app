@@ -11,23 +11,23 @@ mj-section(background-color="#fff")
       mj-divider border-width="1px" border-color="#E0E0E0"
       mj-text
         h2(style="color: #30a2bf; text-align: center")
-          | Kommende Veranstaltungen 
+          | Kommende Veranstaltungen
       - events = AdLogic.promoted_events
-      mj-carousel  
+      mj-carousel
         - events.each do |event|
           mj-carousel-image src="#{event.image}" href="#{event.url}"
 
 - @mailing.sections.each do |section|
   mj-section(background-color="#fff")
     mj-column
-      mj-divider border-width="1px" border-color="#E0E0E0"         
+      mj-divider border-width="1px" border-color="#E0E0E0"
       mj-text
-        h3(style="font-weight: bold; color: #3498BD; text-align: center") 
+        h3(style="font-weight: bold; color: #3498BD; text-align: center")
           = raw section.toc_title
   mj-section(background-color="#fff")
     - section.news_items.each do |ni|
       - url = click_proxy_url(ni, host: Setting.host, protocol: 'https', sid: @mailing.subscription.id)
-      mj-column width="75%" 
+      mj-column width="75%"
         mj-text
           h4(style="margin: 0; padding: 0")
             a(href="#{url}" style="color: #333")
@@ -35,9 +35,9 @@ mj-section(background-color="#fff")
           p = ni.teaser
       mj-column width="25%"
         - if ni.image.present?
-          mj-image(width="100px" src="#{ni.image.url}" href="#{url}")
+          mj-image(width="100px" src="#{image_url(ni.image.url)}" href="#{url}")
         - else
-          mj-button(href="#{url}") 
+          mj-button(href="#{url}")
             | Zum Artikel
 
 mj-section(background-color="#f0f0f0")

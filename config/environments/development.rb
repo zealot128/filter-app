@@ -63,5 +63,8 @@ Rails.application.configure do
   ###########
   host = "hrfilter.#{ENV["USER"]}.pludoni.com"
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  ActionMailer::Base.config.default_url_options = { host: host, protocol: 'https' }
+  config.action_mailer.asset_host = "https://#{host}"
+
   config.cache_store = :memory_store, { size: 64.megabytes }
 end
