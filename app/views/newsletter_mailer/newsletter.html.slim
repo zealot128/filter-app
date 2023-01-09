@@ -24,8 +24,8 @@ mj-section(background-color="#fff")
       mj-text
         h3(style="font-weight: bold; color: #3498BD; text-align: center")
           = raw section.toc_title
-  mj-section(background-color="#fff")
-    - section.news_items.each do |ni|
+  - section.news_items.each do |ni|
+    mj-section(background-color="#fff")
       - url = click_proxy_url(ni, host: Setting.host, protocol: 'https', sid: @mailing.subscription.id)
       mj-column width="75%"
         mj-text
