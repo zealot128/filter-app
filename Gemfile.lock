@@ -309,7 +309,7 @@ GEM
     habtm_generator (0.5)
       activerecord
     hashdiff (1.0.1)
-    hashie (3.5.7)
+    hashie (5.0.0)
     headless (2.3.1)
     highcharts-rails (6.0.3)
       railties (>= 3.1)
@@ -415,12 +415,13 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth (0.5.6)
-    omniauth (1.8.1)
-      hashie (>= 3.4.6, < 3.6.0)
-      rack (>= 1.6.2, < 3)
-    omniauth-oauth (1.1.0)
+    omniauth (2.1.1)
+      hashie (>= 3.4.6)
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-oauth (1.2.0)
       oauth
-      omniauth (~> 1.0)
+      omniauth (>= 1.0, < 3)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
