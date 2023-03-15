@@ -174,9 +174,8 @@ class LinkExtractor
   end
 
   def download_url(url)
-    url = URI.escape(url)
-    url.gsub!(" ", "%20")
-    io = Kernel.open(url)
+    url = URI::DEFAULT_PARSER.escape(url).gsub(" ", "%20")
+    io = URI.open(url)
     logo_path = url.split("/").last
     if logo_path.length > 50
       logo_path = "preview.#{logo_path[/(jpg|png)/i, 1] || 'jpg'}"

@@ -60,13 +60,13 @@ class NewsItemsController < ApplicationController
     url = CGI.escape(news_item.url)
     title = CGI.escape(news_item.title)
     case params[:channel]
-    when 'facebook' 
+    when 'facebook'
       redirect_to "https://www.facebook.com/sharer/sharer.php?u=#{url}&title=#{title}"
-    when 'twitter' 
+    when 'twitter'
       redirect_to "https://twitter.com/intent/tweet?url=#{url}"
-    when 'linkedin' 
+    when 'linkedin'
       redirect_to "https://www.linkedin.com/shareArticle?url=#{url}"
-    when 'xing' 
+    when 'xing'
       redirect_to "https://www.xing.com/social/share/spi?op=share&url=#{url}&title=#{title}"
     end
   end
@@ -90,7 +90,7 @@ class NewsItemsController < ApplicationController
       @news_items = @news_items.reorder('absolute_score desc')
     end
     render json: {
-      html: render_to_string('homepage.html', layout: false),
+      html: render_to_string('homepage', layout: false, formats: [:html]),
       pagination: {
         total_pages: @news_items.total_pages,
         total_entries: @news_items.total_entries

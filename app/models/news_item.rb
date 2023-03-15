@@ -147,8 +147,8 @@ class NewsItem < ApplicationRecord
 
   belongs_to :source
   has_and_belongs_to_many :categories
-  has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id"
-  has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", source: :from
+  has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id", inverse_of: :to
+  has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", inverse_of: :from
   has_many :referenced_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
   has_many :referencing_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
   has_many :trend_usages, class_name: "Trends::Usage", dependent: :destroy
@@ -175,7 +175,7 @@ class NewsItem < ApplicationRecord
       original: ["700x400>", :jpg],
       newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg]
     },
-    processors: [:thumbnail, :paperclip_optimizer],
+    processors: [:thumbnail],
     convert_options: {
       newsletter: "-flatten -colorspace RGB -size #{NEWSLETTER_SIZE.join('x')} xc:white +swap -gravity center -composite"
     }

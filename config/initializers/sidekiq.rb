@@ -19,12 +19,22 @@ redis_config = if ENV['REDIS_URL']
 
 Redis::Namespace::COMMANDS['lock'] = [:all]
 Redis::Namespace::COMMANDS['unlock'] = [:all]
+
+require "sidekiq-unique-jobs"
 Sidekiq.configure_client do |config|
   config.redis = redis_config
+  config.client_middleware do |chain|
+    chain.add SidekiqUniqueJobs::Middleware::Client
+  end
   # ActiveRecord::Base.establish_connection
 end
 Sidekiq.configure_server do |config|
   config.redis = redis_config
+  config.server_middleware do |chain|
+    chain.add SidekiqUniqueJobs::Middleware::Server
+  end
+
+  SidekiqUniqueJobs::Server.configure(config)
 end
 if Rails.env.production?
   Sidekiq::Logging.logger = Rails.logger

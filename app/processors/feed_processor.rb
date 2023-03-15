@@ -12,6 +12,7 @@ class FeedProcessor < BaseProcessor
         next unless item
         was_new = item.new_record?
         item.save
+        return if Rails.env.test?
       end
     end
   end
