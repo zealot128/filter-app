@@ -1,6 +1,14 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 6.0.0"
+gem "rails", "~> 6.1.0"
+
+# TODO: Ruby 2.7: Warnings
+# https://github.com/ruby/net-protocol/issues/10
+# https://stackoverflow.com/questions/70443856/ruby-2-7-4-net-constant-warnings
+# after upgrading to Ruby 3+ URI must be fixed in paperclip, grape etc.
+gem 'uri', '0.10.0' # force the default version for ruby 2.7
+gem 'net-http'
+
 gem 'babel-transpiler'
 gem "pg"
 gem "mail_form"
@@ -86,9 +94,10 @@ gem "owlcarousel-rails", git: 'https://github.com/pludoni/owlcarousel-rails.git'
 gem 'semantic_range'
 
 group :test do
+  gem "fuubar"
   gem 'rails-controller-testing'
   gem "timecop"
-  gem 'pludoni_rspec', git: 'https://github.com/pludoni/pludoni_rspec.git'
+  gem 'pludoni_rspec'
   gem "rspec-rails", ">= 4.0.0.beta2"
   gem "vcr"
   gem "webmock"

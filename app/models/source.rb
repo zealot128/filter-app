@@ -114,7 +114,7 @@ class Source < ApplicationRecord
   end
 
   def download_thumb
-    doc = Nokogiri.parse(open(host, redirect: true, allow_redirections: :all))
+    doc = Nokogiri.parse(URI.open(host, redirect: true, allow_redirections: :all))
     path = if (rel = doc.at("link[rel=icon]")) || (rel = doc.at("link[rel='shortcut icon']")) || (rel = doc.at("link[rel='Shortcut icon']"))
              URI.join(url, rel["href"]).to_s
            else

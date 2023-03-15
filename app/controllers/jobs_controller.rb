@@ -9,9 +9,8 @@ class JobsController < ApplicationController
   end
 
   def events
-    events = AdLogic.promoted_events.map { |event| 
+    events = AdLogic.promoted_events.map { |event|
       {
-        from: event.from,
         url: event.url,
         image: event.image,
         title: event.title,
