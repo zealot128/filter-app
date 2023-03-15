@@ -3,7 +3,7 @@ end
 
 module AhoyPatch
   def visit_anonymity_set
-    @visit_anonymity_set ||= Digest::UUID.uuid_v5(Ahoy::Tracker::UUID_NAMESPACE, ["visit", Ahoy.mask_ip(request.remote_ip), request.user_agent, ENV['USER']].join("/"))
+    @visit_anonymity_set ||= Digest::UUID.uuid_v5(Ahoy::Tracker::UUID_NAMESPACE, ["visit", Ahoy.mask_ip(request.remote_ip), request.user_agent, Date.today.to_s, ENV['USER']].join("/"))
   end
 end
 Ahoy::Tracker.prepend(AhoyPatch)
