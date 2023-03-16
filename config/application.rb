@@ -30,6 +30,7 @@ module Baseapp
     config.active_job.queue_adapter = :sidekiq
     # Disable host whitelisting... braucht man nicht da wir das immer selbst machen
     config.hosts.clear
+    config.active_storage.variant_processor = :mini_magick
 
     config.generators do |g|
       g.template_engine :haml
