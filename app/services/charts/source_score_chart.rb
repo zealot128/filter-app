@@ -9,12 +9,12 @@ module Charts
           NewsItem.where('published_at > ?', max).where('absolute_score > 0').
             group_by_month(:published_at).
             pluck(
-              "(DATE_TRUNC('month', (\"news_items\".\"published_at\"::timestamptz) AT TIME ZONE 'Etc/UTC'))::date AT TIME ZONE 'Etc/UTC' as month",
-              "PERCENTILE_CONT(0.25) WITHIN GROUP(ORDER BY absolute_score) as q1",
-              "PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY absolute_score) as median",
-              "PERCENTILE_CONT(0.75) WITHIN GROUP(ORDER BY absolute_score) as q3",
-              "PERCENTILE_CONT(0.90) WITHIN GROUP(ORDER BY absolute_score) as q9",
-              "max(absolute_score) as max"
+              Arel.sql("(DATE_TRUNC('month', (\"news_items\".\"published_at\"::timestamptz) AT TIME ZONE 'Etc/UTC'))::date AT TIME ZONE 'Etc/UTC' as month"),
+              Arel.sql("PERCENTILE_CONT(0.25) WITHIN GROUP(ORDER BY absolute_score) as q1"),
+              Arel.sql("PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY absolute_score) as median"),
+              Arel.sql("PERCENTILE_CONT(0.75) WITHIN GROUP(ORDER BY absolute_score) as q3"),
+              Arel.sql("PERCENTILE_CONT(0.90) WITHIN GROUP(ORDER BY absolute_score) as q9"),
+              Arel.sql("max(absolute_score) as max")
             )
         end
     end
