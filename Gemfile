@@ -6,7 +6,7 @@ gem "rails", "~> 6.1.0"
 # https://github.com/ruby/net-protocol/issues/10
 # https://stackoverflow.com/questions/70443856/ruby-2-7-4-net-constant-warnings
 # after upgrading to Ruby 3+ URI must be fixed in paperclip, grape etc.
-gem 'uri', '0.10.0' # force the default version for ruby 2.7
+gem 'uri', '0.10.0.2' # force the default version for ruby 2.7
 gem 'net-http'
 
 gem 'babel-transpiler'
