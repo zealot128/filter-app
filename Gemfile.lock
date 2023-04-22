@@ -273,6 +273,7 @@ GEM
       googleauth (~> 0.6.2)
       grpc (>= 1.7.2, < 2.0)
       rly (~> 0.2.3)
+    google-protobuf (3.21.8-x86_64-darwin)
     google-protobuf (3.21.8-x86_64-linux)
     googleapis-common-protos (1.3.7)
       google-protobuf (~> 3.0)
@@ -296,6 +297,9 @@ GEM
       rack-accept
     groupdate (6.1.0)
       activesupport (>= 5.2)
+    grpc (1.48.0-x86_64-darwin)
+      google-protobuf (~> 3.19)
+      googleapis-common-protos-types (~> 1.0)
     grpc (1.48.0-x86_64-linux)
       google-protobuf (~> 3.19)
       googleapis-common-protos-types (~> 1.0)
@@ -329,9 +333,15 @@ GEM
       image_size (>= 1.5, < 3)
       in_threads (~> 1.3)
       progress (~> 3.0, >= 3.0.1)
+    image_optim_pack (0.5.1-x86_64-darwin)
+      fspath (>= 2.1, < 4)
+      image_optim (~> 0.19)
     image_optim_pack (0.5.1-x86_64-linux)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     image_size (2.0.0)
     in_threads (1.5.0)
     invisible_captcha (2.0.0)
@@ -417,6 +427,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
+    nokogiri (1.14.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.6)
@@ -580,6 +592,8 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.13.0)
     ruby-stemmer (0.9.6)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
     safe_yaml (1.0.5)
@@ -705,6 +719,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -739,6 +754,7 @@ DEPENDENCIES
   highcharts-rails
   httparty
   image_optim_pack
+  image_processing
   invisible_captcha
   ipcat
   jquery-rails
@@ -800,4 +816,4 @@ DEPENDENCIES
   zurb-ink!
 
 BUNDLED WITH
-   2.4.8
+   2.4.6

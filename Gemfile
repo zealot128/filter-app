@@ -47,6 +47,7 @@ gem "sentry-raven", require: false
 gem "paperclip"
 gem "paperclip-optimizer"
 gem 'image_optim_pack'
+gem 'image_processing'
 gem 'mini_magick'
 gem 'datagrid'
 
