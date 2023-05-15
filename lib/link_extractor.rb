@@ -67,7 +67,7 @@ class LinkExtractor
         result
       end
     end
-  rescue Mechanize::ResponseCodeError
+  rescue Mechanize::ResponseCodeError, Mechanize::RedirectLimitReachedError
     return false
   ensure
     shutdown! if close_connection
