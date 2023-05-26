@@ -10,6 +10,8 @@ class TwitterProcessor < BaseProcessor
   end
 
   def process(count: @source.created_at > 1.day.ago ? 200 : 20)
+    return if Setting.get('twitter_access_token').blank?
+
     timeline = @source.class.client.user_timeline(@source.user_name, count: count, tweet_mode: "extended")
     timeline.each_with_index do |tweet, i|
       process_tweet(tweet, follow_redirect: i <= 20)
