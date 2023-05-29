@@ -12,10 +12,13 @@ mj-section(background-color="#fff")
       mj-text
         h2(style="color: #30a2bf; text-align: center")
           | Kommende Veranstaltungen
+
       - events = AdLogic.promoted_events
-      mj-carousel
-        - events.each do |event|
-          mj-carousel-image src="#{event.image}" href="#{event.url}"
+      - events.each do |event|
+        mj-image(src="#{event.image}" href="#{event.url}")
+        mj-text
+          p = event.body
+        mj-divider border-width="1px" border-color="#E0E0E0"
 
 - @mailing.sections.each do |section|
   mj-section(background-color="#fff")
