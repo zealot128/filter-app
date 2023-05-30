@@ -6,10 +6,13 @@ RSpec.describe TwitterSource do
   # Rails.application.secrets.twitter_consumer_secret = "xxxx"
   # Setting.set('twitter_access_token', "xxxx")
   # Setting.set('twitter_access_secret', "xxxx")
+  before(:each) do
+    Setting.set('twitter_access_token', Rails.application.secrets.twitter_access_token.presence || "aaa")
+    Setting.set('twitter_access_secret', Rails.application.secrets.twitter_access_secret.presence || "bbb")
+  end
   specify 'twitter personalwirtschaft' do
 
     allow_any_instance_of(LinkExtractor).to receive(:image_blob).and_return(nil)
-
     VCR.use_cassette 'personalwirtschaft' do
       source = TwitterSource.new(url: 'personaler_de', name: 'Personalwirtschaft', url_rules: 'personalwirtschaft.de')
       source.save
