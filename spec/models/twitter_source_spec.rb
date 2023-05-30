@@ -28,8 +28,6 @@ RSpec.describe TwitterSource do
 
   specify 'karrierespiegel -> recursive follow' do
     VCR.use_cassette 'karrierespiegel', record: :new_episodes do
-      Setting.set('twitter_access_token', Rails.application.secrets.twitter_access_token)
-      Setting.set('twitter_access_secret', Rails.application.secrets.twitter_access_secret)
       source = TwitterSource.new(url: 'KarriereSPIEGEL', name: 'KarriereSPIEGEL', url_rules: "spon.de\nspiegel.de/karriere")
       source.save
       TwitterProcessor.new(source).process(count: 20)
@@ -46,8 +44,6 @@ RSpec.describe TwitterSource do
     Rails.application.secrets.twitter_consumer_key = "lrcdzswhEHYM4CgnutP9eRWtI"
     Rails.application.secrets.twitter_consumer_secret = "u59zEwzLnKQ68a7RMD73QVZEcmNW2TpH1hZxrBNQLrN3BgDamY"
     VCR.use_cassette 'paywall/handelsblatt_twitter', record: :new_episodes do
-      Setting.set('twitter_access_token', Rails.application.secrets.twitter_access_token)
-      Setting.set('twitter_access_secret', Rails.application.secrets.twitter_access_secret)
       source = TwitterSource.new(url: 'handelsblatt', name: 'handelsblatt')
       source.save
       TwitterProcessor.new(source).process(count: 5)
