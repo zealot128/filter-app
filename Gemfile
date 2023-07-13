@@ -57,6 +57,7 @@ gem 'sidekiq-unique-jobs'
 gem 'redis-namespace', '~> 1.5'
 
 gem 'google-cloud-firestore', require: false
+gem 'google-cloud-firestore-v1', ">= 0.10", require: false
 gem 'fcm', require: false
 gem 'mjml-rails'
 
