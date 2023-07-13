@@ -37,10 +37,10 @@ class FeedProcessor < BaseProcessor
       log "Feed Download fehlgeschlagen: #{feed_url}, kein Inhalt (Timeout?)"
       return
     end
-    Feedjira::Feed.parse(xml)
+    Feedjira.parse(xml)
   rescue Feedjira::NoParserAvailable
     log "Feed Download fehlgeschlagen: Kein Feed Format: #{feed_url}"
-  rescue Feedjira::FetchFailure
+  rescue SystemCallError, Faraday::TimeoutError, Faraday::ClientError, URI::InvalidURIError
     log "Download fehlgeschlagen: #{feed_url} -> #{response.status}"
   end
 

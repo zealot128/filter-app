@@ -23,6 +23,7 @@ gem "bcrypt-ruby"
 gem "sitemap_generator"
 gem "httparty"
 gem "feedjira"
+gem 'faraday_middleware'
 gem "excon"
 gem 'typhoeus'
 gem "mechanize"
