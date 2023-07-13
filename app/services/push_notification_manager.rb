@@ -1,7 +1,7 @@
-require "google/cloud/firestore"
-
 class PushNotificationManager
   def self.run
+    require 'fcm'
+    require 'google/cloud/firestore'
     return unless File.exist?('config/firebase.json')
 
     firestore = Google::Cloud::Firestore.new(

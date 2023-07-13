@@ -44,9 +44,9 @@ gem 'cancancan'
 
 gem "sentry-raven", require: false
 
-gem "paperclip"
-gem "paperclip-optimizer"
-gem 'image_optim_pack'
+gem 'kt-paperclip'
+gem "kt-paperclip-optimizer"
+
 gem 'image_processing'
 gem 'mini_magick'
 gem 'datagrid'
@@ -99,7 +99,7 @@ group :test do
   gem 'rails-controller-testing'
   gem "timecop"
   gem 'pludoni_rspec'
-  gem "rspec-rails", ">= 4.0.0.beta2"
+  gem "rspec-rails"
   gem "vcr"
   gem "webmock"
   gem "fabrication"
