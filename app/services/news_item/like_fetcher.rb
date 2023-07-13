@@ -8,7 +8,6 @@ class NewsItem::LikeFetcher
   def self.fetch_for_news_item(news_item)
     fetcher = new(news_item.url)
 
-    fetcher.maybe_update_tweets(news_item)
     f = fetcher.facebook
     if f
       news_item.fb_likes = f
@@ -17,30 +16,6 @@ class NewsItem::LikeFetcher
     end
     news_item.xing = fetcher.xing || 0
     news_item.reddit ||= 3
-  end
-
-  def maybe_update_tweets(news_item)
-    tweet_count = news_item.retweets ||= 0
-    # search api returns bull anyway for old results
-    return if news_item.created_at && news_item.created_at < 7.days.ago
-
-    # last time it was 0 tweets, so only 50% chance of performing search again
-    if news_item.retweets and news_item.retweets_was == 0
-      return if rand < 0.5
-    end
-
-    # only update tweet count if it grows
-    new_tweets = twitter_search(url).count
-    if new_tweets > tweet_count
-      news_item.retweets = new_tweets
-    end
-  rescue Twitter::Error::TooManyRequests
-    nil
-  rescue Twitter::Error::BadRequest => e
-    return nil if Rails.env.development? || Rails.env.test?
-    raise e
-  rescue Twitter::Error::Forbidden => e
-    NOTIFY_EXCEPTION(e)
   end
 
   def facebook
@@ -56,13 +31,5 @@ class NewsItem::LikeFetcher
     doc = Nokogiri.parse(response.body)
     element = doc.at(".xing-count")
     element.text.to_i if element
-  end
-
-  private
-
-  def twitter_search(str)
-    TwitterSource.client.search(str)
-  rescue FrozenError
-    []
   end
 end

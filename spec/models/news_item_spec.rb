@@ -2,13 +2,6 @@ describe NewsItem do
   describe "Like-Fetcher" do
     let(:like_fetcher) { NewsItem::LikeFetcher.new("http://stefanwienert.net/blog/2013/02/08/faster-rails-tests-with-spring-faster-than-spork-und-easier-to-setup/") }
 
-    specify "Twitter" do
-      ni = NewsItem.new(retweets: nil)
-      allow(like_fetcher).to receive_messages twitter_search: OpenStruct.new(count: 1)
-      like_fetcher.maybe_update_tweets(ni)
-      expect(ni.retweets).to eq(1)
-    end
-
     specify 'All' do
       VCR.use_cassette 'like_fetcher/one', record: :new_episodes do
         ni = Fabricate(:news_item, url: 'http://www.itsax.de/news/portal/1807/aufgepasst-diese-5-stellenangebote-unserer-partner-muessen-sie-gesehen-haben')
