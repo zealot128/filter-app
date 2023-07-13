@@ -1,8 +1,12 @@
+require "google/cloud/firestore"
+
 class PushNotificationManager
   def self.run
     return unless File.exist?('config/firebase.json')
 
-    firestore = Google::Cloud::Firestore.new
+    firestore = Google::Cloud::Firestore.new(
+      credentials: "config/firebase.json"
+    )
     users = firestore.col "users"
     datas = users.where('subscribed_sourced', '>', []).get.map(&:data)
     datas.each do |data|
