@@ -20,6 +20,9 @@ class TwitterProcessor < BaseProcessor
   rescue Twitter::Error::NotFound
     @source.update_column :error, true
     @source.update_column :error_message, "Twitter user not found"
+  rescue Twitter::Error::Forbidden
+    @source.update_column :error, true
+    @source.update_column :error_message, "Twitter access 'forbidden'"
   rescue StandardError => e
     if Rails.env.test?
       raise e
