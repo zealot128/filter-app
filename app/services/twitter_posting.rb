@@ -16,6 +16,12 @@ class TwitterPosting
     Rails.logger.info "[TwitterPosting]: #{tweet}"
     response = TwitterGateway.new.api.update(tweet)
     @news_item.update(tweet_id: response.id.to_s)
+  rescue Twitter::Error::Forbidden => e
+    if e.to_s['You currently have access to a subset']
+      # nothing to do here.
+      return
+    end
+    raise e
   end
 
   def tweet
