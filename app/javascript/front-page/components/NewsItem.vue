@@ -1,78 +1,79 @@
 <template lang="pug">
   .panel.panel-default.news-item-panel
-    .panel-body
-      .content-container
-        .row(v-if="$store.getters.wideLayout && hasImage")
-          .col-xs-9
-            h4.panel-title
-              a(:href="url" target="_blank" rel="noopener noreferrer" :title="newsItem.title")
-                | {{ newsItem.title | truncate(100)}}
-            div.mt-1(v-if="!lsr")
-              i.fa.fa-angle-double-right
-              em &nbsp;
-                template(v-if="newsItem.teaser.length > 0") {{ newsItem.teaser | truncate(200) }}
-                template(v-else) Für diesen Artikel gibt es leider keinen Teaser.
-
-          .col-xs-3
-            img.cover(:src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
-
-        div(v-else)
-          img.cover(v-if="hasImage" :src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
+    .content-container
+      .container-fluid(v-if="$store.getters.wideLayout && hasImage"): .row
+        .col-xs-9(style="padding-left: 0")
           h4.panel-title
-            a(:href="url"
-              :title="newsItem.title"
-              target="_blank" 
-              rel="noopener noreferrer" 
-            )
+            a(:href="url" target="_blank" rel="noopener noreferrer" :title="newsItem.title")
               | {{ newsItem.title | truncate(100)}}
-          div.mt-1(v-if="!lsr")
-              i.fa.fa-angle-double-right
-              em &nbsp;
-                template(v-if="newsItem.teaser.length > 0") {{ newsItem.teaser | truncate(200) }}
-                template(v-else) Für diesen Artikel gibt es leider keinen Teaser.
+          .mt-1(v-if="!lsr")
+            i.fa.fa-angle-double-right
+            em(v-if="newsItem.teaser.length > 0")
+              | &nbsp;{{ newsItem.teaser | truncate(200) }}
+            em(v-else)
+              | &nbsp;Für diesen Artikel gibt es leider keinen Teaser.
+        .col-xs-3(style="padding-right: 0")
+          img.cover(:src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
 
-        div.block(v-show="!showPlayer && mediaUrlHostname")
-          span.text-muted.pull-right.hidden-xs.hidden-sm(style="min-width: 65%; text-align: right")
-            | Ich möchte&nbsp;
-            template(v-if="!isVideo") den Podcast von&nbsp;
-            template(v-else) das Video von&nbsp;
-            em(data-toggle="tooltip" data-placement="top" :title="newsItem.source.name") {{ mediaUrlHostname }}
-            | &nbsp;einbinden und hier abspielen.
-          span.text-muted.pull-right.visible-xs.visible-sm
-            | Ich möchte&nbsp;
-            template(v-if="!isVideo") den Podcast von&nbsp;
-            template(v-else) das Video von&nbsp;
-            em(data-toggle="tooltip" data-placement="top" :title="newsItem.source.name") {{ mediaUrlHostname }}
-            | &nbsp;einbinden und hier abspielen.
-          button.btn-play.pull-right(@click="chooseMedia()") 
-            i.fa.fa-play.fa-fw
-            |
-            |Zustimmen und Abspielen
+      div(v-else style="display: flex; flex-direction: column; gap: 1rem")
+        img.cover(v-if="hasImage" :src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
+        h4.panel-title
+          a(:href="url"
+            :title="newsItem.title"
+            target="_blank"
+            rel="noopener noreferrer"
+          )
+            | {{ newsItem.title | truncate(100)}}
+        .mt-1(v-if="!lsr")
+          i.fa.fa-angle-double-right
+          em(v-if="newsItem.teaser.length > 0")
+            | &nbsp;{{ newsItem.teaser | truncate(200) }}
+          em(v-else)
+            | &nbsp;Für diesen Artikel gibt es leider keinen Teaser.
 
-        Media.mt-1(v-if="showPlayer" :url="newsItem.media_url" :isVideo="isVideo")
+      .block(v-show="!showPlayer && mediaUrlHostname")
+        span.text-muted.pull-right.hidden-xs.hidden-sm(style="min-width: 65%; text-align: right")
+          | Ich möchte&nbsp;
+          template(v-if="!isVideo") den Podcast von&nbsp;
+          template(v-else) das Video von&nbsp;
+          em(data-toggle="tooltip" data-placement="top" :title="newsItem.source.name") {{ mediaUrlHostname }}
+          | &nbsp;einbinden und hier abspielen.
+        span.text-muted.pull-right.visible-xs.visible-sm
+          | Ich möchte&nbsp;
+          template(v-if="!isVideo") den Podcast von&nbsp;
+          template(v-else) das Video von&nbsp;
+          em(data-toggle="tooltip" data-placement="top" :title="newsItem.source.name") {{ mediaUrlHostname }}
+          | &nbsp;einbinden und hier abspielen.
+        button.btn-play.pull-right(@click="chooseMedia()")
+          i.fa.fa-play.fa-fw
+          |
+          |Zustimmen und Abspielen
 
-        .source.mt-1(style="display:flex; align-items:baseline; justify-content:space-between;")
-          span
-            img(v-if='newsItem.source.logo' :src='newsItem.source.logo' loading="lazy" width='16' height='16')
-            a(title='newsItem.source.name' :href='newsItem.source.url')
-              | &nbsp;{{ newsItem.source.name | truncate(30) }}
-            | &nbsp;{{ date }}
-            span(v-if='newsItem.paywall' class='label label-warning' style="margin-left:1rem")
-              i.fa.fa-euro.fa-fw(title='Paywall')
-          button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
+      .mt-1(v-if="showPlayer")
+        Media(:url="newsItem.media_url" :isVideo="isVideo")
+
+      .source
+        div
+          img(v-if='newsItem.source.logo' :src='newsItem.source.logo' loading="lazy" width='16' height='16')
+          a(title='newsItem.source.name' :href='newsItem.source.url')
+            | &nbsp;{{ newsItem.source.name | truncate(30) }}
+          | &nbsp;{{ date }}
+          span(v-if='newsItem.paywall' class='label label-warning' style="margin-left:1rem")
+            i.fa.fa-euro.fa-fw(title='Paywall')
+        button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
+          i.fa.fa-share-alt(aria-hidden="true")
+        .dropdown(v-else)
+          button(data-toggle="dropdown")
             i.fa.fa-share-alt(aria-hidden="true")
-          .dropdown(v-else)
-            button(data-toggle="dropdown")
-              i.fa.fa-share-alt(aria-hidden="true")
-            ul.dropdown-menu.dropdown-menu-right(role="menu" aria-labelledby="dLabel")
-              li
-                div(v-for="network in networks" :key="network")
-                  ShareButton(
-                    :id="newsItem.id"
-                    :network="network"
-                    :title="newsItem.title"
-                    :url="newsItem.original_url"
-                  )
+          ul.dropdown-menu.dropdown-menu-right(role="menu" aria-labelledby="dLabel")
+            li
+              div(v-for="network in networks" :key="network")
+                ShareButton(
+                  :id="newsItem.id"
+                  :network="network"
+                  :title="newsItem.title"
+                  :url="newsItem.original_url"
+                )
 </template>
 
 <script>
@@ -174,15 +175,15 @@ export default {
   font-size: 3rem;
 }
 .content-container {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
-
 .block {
   margin-top: 1rem;
   display: block;
 }
-
 .btn-play {
   margin-top: 0.5rem;
   border: 1px solid #2780E3;
@@ -195,11 +196,6 @@ export default {
   width: 45%;
   color: #2780E3;
 }
-
-.panel-body {
-  overflow: visible !important;
-}
-
 .dropdown-menu {
   padding: 0;
   border: none;
@@ -208,13 +204,21 @@ export default {
 .panel-title {
   font-size: 23px;
 }
-
 .cover {
   border-radius: 5px;
   height: 100%;
   width: 100%;
   max-height: 200px;
   object-fit: cover;
+}
+.ml-1 {
+  margin-left: 1rem;
+}
+.source {
+  margin-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 </style>
