@@ -53,8 +53,8 @@ gem 'mini_magick'
 gem 'datagrid'
 
 gem 'rack', '~> 2.0'
-gem 'sidekiq', '~> 5.2.10'
-gem 'sidekiq-unique-jobs'
+gem 'sidekiq', '~> 6.5.10'
+gem 'sidekiq-unique-jobs', '~> 7.1.33'
 gem 'redis-namespace', '~> 1.5'
 
 gem 'google-cloud-firestore', require: false

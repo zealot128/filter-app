@@ -1,11 +1,14 @@
 #!/bin/bash
 source /usr/local/rvm/scripts/rvm
-set -o xtrace
 
 export RAILS_ENV=test
 
+rvm install `cat .ruby-version`
+
+set -e
 rvm use `cat .ruby-version`
-gem install bundler --no-ri --no-rdoc
+
+gem install bundler -N
 
 yarn config set cache-folder .yarn
 bundle --jobs $(nproc) --path=/cache/bundler --without production
