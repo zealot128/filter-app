@@ -15,7 +15,7 @@
         .col-xs-3(style="padding-right: 0")
           img.cover(:src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
 
-      .mobile-layout
+      .mobile-layout(v-else)
         img.cover(v-if="hasImage" :src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
         h4.panel-title
           a(:href="url"
