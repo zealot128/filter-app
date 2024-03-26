@@ -37,7 +37,7 @@ Sidekiq.configure_server do |config|
   SidekiqUniqueJobs::Server.configure(config)
 end
 if Rails.env.production?
-  Sidekiq::Logging.logger = Rails.logger
+  Sidekiq.logger = Rails.logger
 end
 Sidekiq.default_worker_options = { retry: 1 }
 
