@@ -15,7 +15,7 @@
         .col-xs-3(style="padding-right: 0")
           img.cover(:src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
 
-      div(v-else style="display: flex; flex-direction: column; gap: 1rem")
+      .mobile-layout
         img.cover(v-if="hasImage" :src="newsItem.image.full_url" loading="lazy" style="margin-bottom:1rem")
         h4.panel-title
           a(:href="url"
@@ -220,5 +220,9 @@ export default {
   align-items: baseline;
   justify-content: space-between;
 }
-
+.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 </style>
