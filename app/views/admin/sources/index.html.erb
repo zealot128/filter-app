@@ -3,11 +3,9 @@
 <%= datagrid_form_for @grid, method: :get, url: request.path %>
 
 <div class='text-center'>
-<%=# will_paginate(@grid.assets, renderer: BootstrapPagination::Rails ) %>
 </div>
 <%= datagrid_table @grid, html: { class: 'table' } %>
 <div class='text-center'>
-<%=# will_paginate(@grid.assets, renderer: BootstrapPagination::Rails ) %>
 </div>
 
 <style>
