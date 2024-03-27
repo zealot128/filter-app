@@ -10,6 +10,7 @@ html lang=(locale) class=(browser.to_s)
     = stylesheet_link_tag "web"
     = javascript_include_tag "web"
     = yield :head
+    link(rel='canonical' href="#{@news_item.url}")
     javascript:
       function chkFrame(fr) {
         if (!fr.contentDocument.location) { 
