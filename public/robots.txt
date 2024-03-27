@@ -2,5 +2,6 @@
 
 User-Agent: *
 Disallow: /admin
+Disallow: /system/news_items/images/
 
 Sitemap: /system/sitemap.xml.gz
