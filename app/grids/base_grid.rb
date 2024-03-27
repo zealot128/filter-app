@@ -12,10 +12,17 @@ class BaseGrid
   # self.forbidden_attributes_protection = true
 
   def self.date_column(name, *args)
-    column(name, *args) do |model|
+    block = lambda do |model|
       format(block_given? ? yield : model.send(name)) do |date|
         date&.strftime("%d.%m.%Y")
       end
+    end
+    if args.is_a?(Array) && args.length == 2
+      column(name, args.first, **args.last, &block)
+    elsif args.length == 0
+      column(name, &block)
+    else
+      raise ArgumentError, "Invalid arguments"
     end
   end
 end
