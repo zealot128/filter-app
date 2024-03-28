@@ -1,4 +1,4 @@
-lass NewsItemsController < ApplicationController
+class NewsItemsController < ApplicationController
   before_action :stop_bad_crawler!, only: [:index, :homepage]
 
   def index

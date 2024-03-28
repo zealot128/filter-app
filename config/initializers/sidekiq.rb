@@ -39,7 +39,6 @@ end
 if Rails.env.production?
   Sidekiq.logger = Rails.logger
 end
-Sidekiq.default_worker_options = { retry: 1 }
+Sidekiq.default_job_options = { retry: 1 }
 
 require 'sidekiq/web'
-Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
