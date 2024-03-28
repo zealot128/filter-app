@@ -1,4 +1,4 @@
-class NewsItemsController < ApplicationController
+lass NewsItemsController < ApplicationController
   before_action :stop_bad_crawler!, only: [:index, :homepage]
 
   def index
@@ -44,12 +44,7 @@ class NewsItemsController < ApplicationController
     unless bot?
       ahoy.track 'news_item', id: @news_item.id, source_id: @news_item.source_id, mail_subscription_id: @current_user&.id
     end
-    if !@news_item.embeddable? || @news_item.source.lsr_active?
-      redirect_to @news_item.url, allow_other_host: true
-      return
-    end
-
-    render layout: false
+    redirect_to @news_item.url, allow_other_host: true
   end
 
   def share

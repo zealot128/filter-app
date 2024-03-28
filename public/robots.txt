@@ -3,5 +3,6 @@
 User-Agent: *
 Disallow: /admin
 Disallow: /system/news_items/images/
+Disallow: /ni/
 
 Sitemap: /system/sitemap.xml.gz
