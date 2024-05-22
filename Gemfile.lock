@@ -455,9 +455,9 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.1)
-    nokogiri (1.16.3-x86_64-darwin)
+    nokogiri (1.16.5-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.3-x86_64-linux)
+    nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.6)
     omniauth (1.9.2)
@@ -565,7 +565,8 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.5)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rinku (2.0.4)
     rollups (0.2.0)
       activesupport (>= 5.2)
@@ -676,6 +677,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     stringex (2.8.5)
+    strscan (3.1.0)
     temple (0.8.1)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
@@ -831,4 +833,4 @@ DEPENDENCIES
   zurb-ink!
 
 BUNDLED WITH
-   2.4.7
+   2.5.7
