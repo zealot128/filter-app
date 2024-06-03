@@ -10,6 +10,13 @@ class NewsletterMailer < ApplicationMailer
     profile_url = edit_mail_subscription_url(@mailing.subscription)
     headers['List-Unsubscribe'] = "<#{profile_url}>"
 
+
+    show_ad = AdLogic.enabled? && AdLogic.promoted_events.any?
+    if show_ad
+      all_events = AdLogic.promoted_events
+      @events = all_events.select { |event| event.from > Time.now }
+    end
+
     mail(to: mailing.full_email, subject: mailing.subject) do |format|
       format.html
     end

@@ -5,17 +5,22 @@ mj-section(background-color="#fff")
     mj-text = @mailing.salutation + ','
     mj-text = raw @mailing.intro
 
-- if AdLogic.enabled? && AdLogic.promoted_events.any?
+- if @events && @events.any?
   mj-section background-color="#fff"
     mj-column
       mj-divider border-width="1px" border-color="#E0E0E0"
       mj-text
         h2(style="color: #30a2bf; text-align: center")
           | Kommende Veranstaltungen
-
-      - events = AdLogic.promoted_events
-      - events.each do |event|
+      - @events.each do |event|
         mj-image(src="#{event.image}" href="#{event.url}")
+        mj-text
+          h3(style="color: #3498BD; text-align: center")
+            | #{event.title}
+          div(style="text-align: center")
+            | Von #{I18n.l(event.from, format: :short)} bis #{I18n.l(event.to, format: :short)}
+        mj-button(href="#{event.url}" background-color="#3498BD" color="#fff")
+          | Zur Veranstaltung/Anmeldung
         mj-text
           p = event.body
         mj-divider border-width="1px" border-color="#E0E0E0"
