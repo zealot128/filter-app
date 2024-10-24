@@ -1,4 +1,5 @@
 {
+  "private": true,
   "dependencies": {
     "@babel/preset-typescript": "^7.16.5",
     "@rails/webpacker": "5.4.0",

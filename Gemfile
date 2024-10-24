@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 7.0.0"
 
 # # TODO: Ruby 2.7: Warnings
 # # https://github.com/ruby/net-protocol/issues/10
@@ -92,7 +92,7 @@ gem "premailer-rails"
 gem "zurb-ink", git: 'https://github.com/pludoni/zurb-ink.git'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
-gem "voight_kampff"
+gem "voight_kampff", require: "voight_kampff/rails"
 gem "owlcarousel-rails", git: 'https://github.com/pludoni/owlcarousel-rails.git'
 gem 'semantic_range'
 

@@ -1,4 +1,4 @@
-module BaseApi
+module BaseAPI
   extend ActiveSupport::Concern
 
   included do

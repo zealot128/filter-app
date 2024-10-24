@@ -1,5 +1,5 @@
 class Resources::NewsItems < Grape::API
-  include BaseApi
+  include BaseAPI
   namespace :news_items do
     params do
       optional :from, Date
@@ -75,7 +75,7 @@ class Resources::NewsItems < Grape::API
     get '/' do
       source = YoutubeSource.find_by(name: "Empfehlungsbund")
       if source.present?
-        nis = source.news_items.current 
+        nis = source.news_items.current
         nis = source.news_items.recent if nis.blank?
       end
       return error!({ status: "not_found" }, 404) if nis.blank?

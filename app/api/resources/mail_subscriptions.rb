@@ -1,5 +1,5 @@
 class Resources::MailSubscriptions < Grape::API
-  include BaseApi
+  include BaseAPI
   helpers do
     def authenticate!
       if params[:signed_request]
