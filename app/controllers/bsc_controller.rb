@@ -1,6 +1,6 @@
 class BscController < ApplicationController
   def show
-    if params[:api_key] != Rails.application.secrets.statistic_api_key
+    if params[:api_key] != Rails.configuration.secrets.statistic_api_key
       render plain: '401 - access denied', status: 401
       return
     end

@@ -3,8 +3,8 @@ class TwitterGateway
 
   def initialize
     @api ||= ::Twitter::REST::Client.new do |config|
-      config.consumer_key =      Rails.application.secrets.twitter_consumer_key
-      config.consumer_secret =   Rails.application.secrets.twitter_consumer_secret
+      config.consumer_key =      Rails.configuration.secrets.twitter_consumer_key
+      config.consumer_secret =   Rails.configuration.secrets.twitter_consumer_secret
       config.access_token =        Setting.get('twitter_access_token')
       config.access_token_secret = Setting.get('twitter_access_secret')
     end

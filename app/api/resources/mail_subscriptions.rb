@@ -3,7 +3,7 @@ class Resources::MailSubscriptions < Grape::API
   helpers do
     def authenticate!
       if params[:signed_request]
-        crypt = ActiveSupport::MessageEncryptor.new(Rails.application.secrets.api_cors_key)
+        crypt = ActiveSupport::MessageEncryptor.new(Rails.configuration.secrets.api_cors_key)
         crypt.rotate cipher: "aes-256-cbc"
         r = crypt.decrypt_and_verify(params[:signed_request])
         unless r
@@ -13,7 +13,7 @@ class Resources::MailSubscriptions < Grape::API
         new_params = JSON.parse(r)
         params.merge!(new_params)
         params.delete(:signed_request)
-      elsif params[:api_key] != Rails.application.secrets.secret_api_key
+      elsif params[:api_key] != Rails.configuration.secrets.secret_api_key
         error!({ message: 'missing/wrong api key' }, 403)
       end
     end

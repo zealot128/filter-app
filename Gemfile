@@ -1,14 +1,7 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.0.0"
+gem "rails", "~> 7.1.0"
 
-# # TODO: Ruby 2.7: Warnings
-# # https://github.com/ruby/net-protocol/issues/10
-# # https://stackoverflow.com/questions/70443856/ruby-2-7-4-net-constant-warnings
-# # after upgrading to Ruby 3+ URI must be fixed in paperclip, grape etc.
-# gem 'uri', '0.10.0.2' # force the default version for ruby 2.7
-# gem 'net-http'
-#
 gem 'babel-transpiler'
 gem "pg"
 gem "mail_form"
@@ -34,7 +27,6 @@ gem "auto_strip_attributes", "~> 2.5"
 gem "email_verifier", git: "https://github.com/pludoni/email_verifier.git"
 gem "lograge"
 gem "open_uri_redirections"
-gem "angularjs-rails", "1.2.18"
 gem 'parallel'
 
 gem "ahoy_matey", "~> 2.1"
@@ -43,7 +35,10 @@ gem 'devise'
 gem 'cancancan'
 # gem 'devise-i18n'
 
-gem "sentry-raven", require: false
+gem "sentry-ruby"
+gem "sentry-rails"
+gem "sentry-sidekiq"
+
 
 gem 'kt-paperclip'
 gem "kt-paperclip-optimizer"
@@ -119,6 +114,8 @@ group :development, :test do
   gem 'puma'
   gem 'pludoni-rubocop', git: 'https://github.com/pludoni/pludoni-rubocop.git', require: false, ref: 'main'
 end
+# TODO: https://github.com/pry/pry/issues/2328
+gem 'pry'
 gem "pry-rails"
 gem 'rack-attack'
 

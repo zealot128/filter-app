@@ -73,7 +73,7 @@ class Setting < ActiveRecord::Base
     ]
   }.freeze
 
-  serialize :value, JSON
+  serialize :value, code: JSON
 
   class << self
     def get(name, force: false)

@@ -34,6 +34,8 @@ module Baseapp
     # Disable host whitelisting... braucht man nicht da wir das immer selbst machen
     config.hosts.clear
     config.active_storage.variant_processor = :mini_magick
+    config.active_support.cache_format_version = 7.0
+    config.secrets = config_for(:secrets)
 
     config.generators do |g|
       g.template_engine :haml
