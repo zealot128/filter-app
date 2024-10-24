@@ -8,7 +8,6 @@ html lang=(locale) class=(browser.to_s)
     meta name="google-site-verification" content=(Setting.google_site_verification)
     = csrf_meta_tags
     = stylesheet_link_tag "web"
-    = javascript_include_tag "web"
     = yield :head
     link(rel='canonical' href="#{@news_item.url}")
     javascript:
@@ -53,4 +52,3 @@ html lang=(locale) class=(browser.to_s)
         a.btn.btn-lg.d-block.btn-primary(href='#{@news_item.url}' target='_blank' rel='noopener') Zum Artikel
 
 
-= javascript_packs_with_chunks_tag 'application'

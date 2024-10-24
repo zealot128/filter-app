@@ -8,7 +8,7 @@ html lang=(locale) class=(browser.to_s)
     meta name="google-site-verification" content=(Setting.google_site_verification)
     = csrf_meta_tags
     = stylesheet_link_tag "web"
-    = javascript_include_tag "web"
+    = vite_javascript_tag 'application'
     = yield :head
   body: .page-wrapper(style='position:relative;')
     = render "layouts/navbar"

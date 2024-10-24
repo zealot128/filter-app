@@ -1,6 +1,5 @@
 # :nocov:
-# Legacy API
-class ApiController < ApplicationController
+class APIController < ApplicationController
   def news_items
     category = params["category"] || 0
     order = params["order"] || "recent"

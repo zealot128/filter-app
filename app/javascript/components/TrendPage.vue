@@ -10,8 +10,8 @@
 
 <script>
 import 'utils/highcharts'
-import NewsItemWall from '../front-page/components/NewsItemWall'
-import SearchBar from '../front-page/components/SearchBar'
+import NewsItemWall from '../front-page/components/NewsItemWall.vue'
+import SearchBar from '../front-page/components/SearchBar.vue'
 
 export default{
   components: {

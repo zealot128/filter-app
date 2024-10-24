@@ -1,54 +1,46 @@
 <template lang="pug">
-.panel.panel-default  
+.panel.panel-default
   .img-wrapper
-    img.bg-img(width="100%" :src='require("../../../assets/images/img.jpg")')
+    img.bg-img(width="100%", :src="bgImage")
     .centered
       div(style="font-size: 1.7vw") Auf dem Laufenden bleiben
       div(style="font-size: 1.3vw") Per E-Mail die wichtigsten Beiträge monatlich/wöchentlich erhalten?
       div(style="font-size: 1.3vw") Dann tragen Sie sich hier ein. Das Abo ist kostenfrei und jederzeit mit einem Klick kündbar.
-  .panel-body
+  form.panel-body(@submit.prevent="subscribe()")
     .mail-wrapper
-      input.mail(
-        type="email"
-        required="required"
-        placeholder="E-Mail Adresse" 
-        autocomplete="off"
-        v-model="email"
-      )
-      p(v-if="error" style="margin:0") Bitte geben Sie eine gültige E-Mail Adresse an.
+      input.mail(type="email" required placeholder="E-Mail Adresse" v-model="email" autocomplete="email" inputmode="email" @keyup.enter="subscribe()")
+      p(v-if="error" style="margin: 0") Bitte geben Sie eine gültige E-Mail Adresse an.
   .panel-footer
-    a.btn.btn-default(@click="subscribe()" style="width: 100%")
+    button.btn.btn-default(@click="subscribe()" style="width: 100%" type="submit")
       i.fa.fa-fw.fa-envelope-o
       | Newsletter abonnieren
-
 </template>
 
-<script>
-const qs = require("qs");
+<script lang="ts" setup>
+import qs from "qs"
 
-export default {
-  methods: {
-    subscribe() {
-      if (this.validEmail(this.email) && this.email) {
-        const params = {
-          mail_subscription: { email: this.email },
-        };
-        window.location = `/newsletter?${qs.stringify(params)}`;
-      } else this.error = true;
-    },
-    validEmail(email) {
-      var re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-  },
-  data() {
-    return {
-      email: "",
-      error: false,
-    };
-  },
-};
+import bgImage from "../../../assets/images/img.jpg"
+
+function validEmail(email: string) {
+  var re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(email)
+}
+import { ref } from "vue"
+const email = ref("")
+const error = ref(false)
+
+function subscribe() {
+  const emailValue = email.value
+  if (validEmail(emailValue) && emailValue) {
+    const params = {
+      mail_subscription: { email: emailValue },
+    }
+    window.location = `/newsletter?${qs.stringify(params)}`
+  } else {
+    error.value = true
+  }
+}
 </script>
 
 <style scoped>

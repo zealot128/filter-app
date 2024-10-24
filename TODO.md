@@ -1,5 +1,6 @@
 # Modernising
 
+- Rails 7.1 deployen. Dann Cache Format fixen
 - Rails 7.2 + Ruby 3.3.5
 - SolidQueue
 - Solid?

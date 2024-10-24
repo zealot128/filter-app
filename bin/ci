@@ -22,7 +22,7 @@ bundle exec rake db:schema:load RAILS_ENV=test
 
 yarn
 
-# NODE_ENV=test RAILS_ENV=test bundle exec rails webpacker:compile
+NODE_ENV=test RAILS_ENV=test bundle exec rails assets:precompile
 
 #bundle exec rspec --color --tty --failure-exit-code 0
 #bundle exec rspec --color --tty --only-failures

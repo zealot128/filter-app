@@ -57,7 +57,9 @@ gem 'google-cloud-firestore-v1', ">= 0.10", require: false
 gem 'fcm', require: false
 gem 'mjml-rails'
 
-gem 'webpacker', '~> 5.x'
+gem "vite_ruby", '~> 3.3.2'
+gem "vite_rails", ">= 3.0.13"
+
 
 gem 'rack-cors', require: 'rack/cors'
 
@@ -88,7 +90,6 @@ gem "zurb-ink", git: 'https://github.com/pludoni/zurb-ink.git'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff", require: "voight_kampff/rails"
-gem "owlcarousel-rails", git: 'https://github.com/pludoni/owlcarousel-rails.git'
 gem 'semantic_range'
 
 group :test do
