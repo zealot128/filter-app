@@ -96,7 +96,6 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   ######
-  config.assets.js_compressor = Uglifier.new(harmony: true)
   config.action_mailer.delivery_method = :smtp
   if File.exist?('config/email.yml')
     ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')

@@ -65,17 +65,11 @@ gem 'rack-cors', require: 'rack/cors'
 
 # TODO: > 5.0.7
 gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
-gem "coffee-rails"
 gem "bootstrap-sass", "~> 3.1"
 gem "bootswatch-rails"
 gem "font-awesome-rails", "~> 4.0"
-# gem "therubyracer", :platforms => :ruby
-
-gem "uglifier", ">= 1.0.3"
-gem "jquery-rails"
 gem "sass"
 gem "slim-rails"
-gem "highcharts-rails"
 gem "migration_data"
 
 gem 'grape'
