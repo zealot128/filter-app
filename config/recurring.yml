@@ -8,3 +8,43 @@
 #     command: "SoftDeletedRecord.due.delete_all"
 #     priority: 2
 #     schedule: at 5am every day
+production:
+  news_item_cronjob:
+    schedule: 'every hour'
+    command: 'NewsItem.cronjob'
+  source_cronjob:
+    schedule: 'every hour'
+    command: 'Source.cronjob'
+  push_notification_manager:
+    schedule: 'every 0 9-17 * * *'
+    command: 'PushNotificationManager.run'
+  news_item_linkage_calculator:
+    schedule: 'every day at 03:15'
+    command: 'NewsItem::LinkageCalculator.run()'
+  news_item_cleanup:
+    schedule: 'every day at 03:25'
+    command: 'NewsItem.cleanup'
+  news_item_duplicate_finder:
+    schedule: 'every day at 03:25'
+    command: 'DuplicateFinder.run'
+  ahoy_visit_cronjob:
+    schedule: 'every week'
+    command: 'Ahoy::Visit.cronjob'
+  newsletter_mailing:
+    schedule: 'every monday at 9am'
+    command: 'Newsletter::Mailing.cronjob'
+  trends_cleanup:
+    schedule: 'every sunday at 11pm'
+    command: 'Trends::Cleanup.run'
+  trends_processor:
+    schedule: 'every monday at 7am'
+    command: 'Trends::Processor.cronjob'
+  newsletter_inactivity:
+    schedule: 'every day at 9am'
+    command: 'Newsletter::Inactivity.cronjob'
+  click_synchronization:
+    schedule: 'every day at 4:12'
+    command: 'ClicksSynchronization.run'
+  sitemap_refresh:
+    schedule: 'every day at 5am'
+    command: 'SitemapGenerator::Interpreter.run'
