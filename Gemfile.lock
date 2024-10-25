@@ -708,6 +708,10 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 5.0)
+    solid_cache (1.0.6)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     sorbet-runtime (0.5.11615)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -716,6 +720,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.1.1-x86_64-darwin)
+    sqlite3 (2.1.1-x86_64-linux-gnu)
     stringex (2.8.5)
     stringio (3.1.1)
     temple (0.8.1)
@@ -857,6 +863,8 @@ DEPENDENCIES
   simple_form
   sitemap_generator
   slim-rails
+  solid_cache (~> 1.0)
+  sqlite3
   stringex
   timecop
   twitter (~> 7.0.0)

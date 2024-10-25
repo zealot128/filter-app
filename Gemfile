@@ -1,9 +1,11 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 7.2.0"
+gem "solid_cache", "~> 1.0"
 
 gem 'babel-transpiler'
 gem "pg"
+gem 'sqlite3'
 gem "mail_form"
 gem "simple_form"
 gem "simple-navigation"
@@ -120,3 +122,4 @@ group :capistrano do
 end
 
 gem "meta-tags", "~> 2.13"
+
