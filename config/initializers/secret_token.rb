@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Baseapp::Application.config.secret_key_base = Rails.application.secrets.secret_key_base
+Baseapp::Application.config.secret_key_base = Rails.configuration.secrets.secret_key_base

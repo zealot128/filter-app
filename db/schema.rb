@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_15_164511) do
-
+ActiveRecord::Schema[7.0].define(version: 2024_10_24_071939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -22,7 +21,7 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,8 +32,8 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -49,7 +48,7 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.bigint "visit_id"
     t.string "name"
     t.jsonb "properties"
-    t.datetime "time"
+    t.datetime "time", precision: nil
     t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
     t.index ["properties"], name: "index_ahoy_events_on_properties_jsonb_path_ops", opclass: :jsonb_path_ops, using: :gin
     t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
@@ -75,17 +74,17 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "utm_term"
     t.string "utm_content"
     t.string "utm_campaign"
-    t.datetime "started_at"
+    t.datetime "started_at", precision: nil
     t.string "coworkr_code"
     t.boolean "synced", default: false
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 255
     t.text "keywords"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "hash_tag"
     t.string "slug"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
@@ -117,8 +116,8 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "session_hash"
     t.text "message"
     t.text "referrer"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.text "params"
     t.index ["controller_name", "action_name", "ip_address"], name: "controlleraction_ip_index"
     t.index ["controller_name", "action_name", "request_hash"], name: "controlleraction_request_index"
@@ -134,8 +133,8 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
   create_table "linkages", id: :serial, force: :cascade do |t|
     t.integer "from_id"
     t.integer "to_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "different", default: false
     t.index ["from_id"], name: "index_linkages_on_from_id"
     t.index ["to_id"], name: "index_linkages_on_to_id"
@@ -144,11 +143,11 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
   create_table "mail_subscription_histories", id: :serial, force: :cascade do |t|
     t.integer "mail_subscription_id"
     t.integer "news_items_in_mail"
-    t.datetime "opened_at"
+    t.datetime "opened_at", precision: nil
     t.string "open_token"
     t.integer "click_count", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["mail_subscription_id"], name: "index_mail_subscription_histories_on_mail_subscription_id"
   end
 
@@ -156,9 +155,9 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.text "email"
     t.json "preferences"
     t.string "token"
-    t.datetime "last_send_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "last_send_date", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "limit"
     t.integer "gender"
     t.string "first_name"
@@ -166,9 +165,9 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "academic_title"
     t.string "company"
     t.string "position"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.integer "status", default: 0
-    t.datetime "remembered_at"
+    t.datetime "remembered_at", precision: nil
     t.date "last_reminder_sent_at"
     t.integer "number_of_reminder_sent", default: 0
     t.index ["token"], name: "index_mail_subscriptions_on_token", unique: true
@@ -179,14 +178,14 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.text "teaser"
     t.string "url", limit: 2048
     t.integer "source_id"
-    t.datetime "published_at"
+    t.datetime "published_at", precision: nil
     t.integer "value"
     t.integer "fb_likes"
     t.integer "retweets"
-    t.string "guid"
+    t.string "guid", limit: 255
     t.integer "xing"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "full_text"
     t.integer "word_length"
     t.text "plaintext"
@@ -198,7 +197,7 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
-    t.datetime "image_updated_at"
+    t.datetime "image_updated_at", precision: nil
     t.integer "impression_count", default: 0
     t.string "tweet_id"
     t.integer "absolute_score_per_halflife"
@@ -225,8 +224,8 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.integer "response", default: 0
     t.text "error_response"
     t.json "push_payload"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "os"
     t.string "app_version"
   end
@@ -234,7 +233,7 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
   create_table "rollups", force: :cascade do |t|
     t.string "name", null: false
     t.string "interval", null: false
-    t.datetime "time", null: false
+    t.datetime "time", precision: nil, null: false
     t.jsonb "dimensions", default: {}, null: false
     t.float "value"
     t.index ["name", "interval", "time", "dimensions"], name: "index_rollups_on_name_and_interval_and_time_and_dimensions", unique: true
@@ -247,17 +246,17 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
-    t.string "type"
-    t.string "url"
-    t.string "name"
+    t.string "type", limit: 255
+    t.string "url", limit: 255
+    t.string "name", limit: 255
     t.integer "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "logo_file_name"
-    t.string "logo_content_type"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "logo_file_name", limit: 255
+    t.string "logo_content_type", limit: 255
     t.integer "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.string "full_text_selector"
+    t.datetime "logo_updated_at", precision: nil
+    t.string "full_text_selector", limit: 255
     t.boolean "error"
     t.float "multiplicator", default: 1.0
     t.boolean "lsr_active", default: false
@@ -266,7 +265,7 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "lsr_confirmation_file_name"
     t.string "lsr_confirmation_content_type"
     t.integer "lsr_confirmation_file_size"
-    t.datetime "lsr_confirmation_updated_at"
+    t.datetime "lsr_confirmation_updated_at", precision: nil
     t.string "twitter_account"
     t.string "language"
     t.text "comment"
@@ -280,8 +279,8 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
 
   create_table "trends_trends", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "slug"
     t.index ["slug"], name: "index_trends_trends_on_slug", unique: true
   end
@@ -318,19 +317,19 @@ ActiveRecord::Schema.define(version: 2023_03_15_164511) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.integer "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true

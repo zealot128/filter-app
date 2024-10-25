@@ -91,7 +91,7 @@ class PushNotificationManager
   end
 
   def send_notification!(payload)
-    fcm = FCM.new(Rails.application.secrets.firebase_server_key)
+    fcm = FCM.new(Rails.configuration.secrets.firebase_server_key)
     fcm.send([@user_snapshot[:fcm_token]], payload)
   end
 

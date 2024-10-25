@@ -1,75 +1,54 @@
 <template lang="pug">
-  div(:class='wideLayout ? "search-bar" : "bottom-bar"' :style="cssVar")
-    span.icon(v-show="wideLayout")
-      i.fa.fa-search.fa-lg
-    input#search(
-      :style='customWidth'
-      autocomplete="off"
-      type="text"
-      class="form-control"
-      placeholder="Was suchen Sie?"
-      v-model="query"
-      @keyup.enter="buildPayload()")
-    template(v-if="!wideLayout")
-      button(:class='expand ? "btn btn-cat disabled" : "btn btn-cat"' data-toggle="modal" data-target="#opModal")
-        i.fa.fa-bars.fa-lg(aria-hidden="true")
+div(:class="wideLayout ? 'search-bar' : 'bottom-bar'", :style="{ bottom: bottom }")
+  span.icon(v-show="wideLayout")
+    i.fa.fa-search.fa-lg
+  input#search.form-control(
+    :style="customWidth"
+    autocomplete="off"
+    type="text"
+    placeholder="Was suchen Sie?"
+    v-model="localQuery"
+    @keyup.enter="buildPayload()"
+    @blur="buildPayload()")
+  template(v-if="!wideLayout")
+    button(:class="expand ? 'btn btn-cat disabled' : 'btn btn-cat'" data-toggle="modal" data-target="#opModal")
+      i.fa.fa-bars.fa-lg(aria-hidden="true")
 </template>
 
-<script>
-import { mapMutations, mapGetters, mapState } from 'vuex';
-export default {
-  props: {
-    bottom: { type: String, default: "0" },
-    expand: {type: Boolean, default: false},
-  },
-  data() {
-    return {
-      width: "250px",
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'wideLayout',
-    ]),
-    ...mapState({
-      storeQuery: 'query',
-    }),
-    query: {
-      get() {
-        return this.storeQuery;
-      },
-      set(value) {
-        this.set_query(value);
-      }
-    },
-    cssVar() {
-      return {
-        'bottom': this.bottom
-      }
-    },
-    customWidth(){
-      if(!this.wideLayout) return '';
-      return {
-        'width': this.width
-      }
-    }
-  },
-  methods: {
-    ...mapMutations(['set_query']),
-    buildPayload() {
-      (this.expand) ? (this.$store.commit("expand_params_based_on_data", {query: this.storeQuery})) : (this.$store.dispatch("build_params"));
-    },
-    calWidth() {
-      let sb = document.getElementById('sidebar');
-      if (sb != null) {
-        this.width = `${sb.clientWidth-30}px`;
-      }
-    }
-  },
-  mounted() {
-    this.calWidth();
+<script setup lang="ts">
+import { wideLayout } from "utils/device"
+
+defineProps({
+  bottom: { type: String, default: "0" },
+  expand: { type: Boolean, default: false },
+})
+import { ref, computed, onMounted, watch } from "vue"
+import { query } from "@/front-page/filter"
+
+const localQuery = ref(query.value)
+watch(query, (val) => {
+  localQuery.value = val
+})
+
+const width = ref("250px")
+const customWidth = computed(() => {
+  if (!wideLayout.value) return ""
+  return {
+    width: width.value,
+  }
+})
+function buildPayload() {
+  query.value = localQuery.value
+}
+function calWidth() {
+  let sb = document.getElementById("sidebar")
+  if (sb != null) {
+    width.value = `${sb.clientWidth - 30}px`
   }
 }
+onMounted(() => {
+  calWidth()
+})
 </script>
 
 <style scoped>
@@ -117,7 +96,7 @@ input {
   z-index: 1000;
 }
 
-.search-bar input#search{
+.search-bar input#search {
   height: 50px;
   float: left;
   padding-left: 35px;
@@ -132,11 +111,13 @@ input {
   color: #65737e;
 }
 
-.search-bar input#search:-moz-placeholder { /* Firefox 18- */
+.search-bar input#search:-moz-placeholder {
+  /* Firefox 18- */
   color: #65737e;
 }
 
-.search-bar input#search::-moz-placeholder {  /* Firefox 19+ */
+.search-bar input#search::-moz-placeholder {
+  /* Firefox 19+ */
   color: #65737e;
 }
 
@@ -144,7 +125,7 @@ input {
   color: #65737e;
 }
 
-.search-bar .icon{
+.search-bar .icon {
   position: absolute;
   top: 13px;
   left: 15px;
@@ -152,8 +133,9 @@ input {
   color: grey;
 }
 
-.search-bar input#search:focus, .search-bar input#search:active{
-  outline:none;
+.search-bar input#search:focus,
+.search-bar input#search:active {
+  outline: none;
 }
 
 .disabled {
@@ -161,5 +143,4 @@ input {
   color: grey !important;
   opacity: 0.3 !important;
 }
-
 </style>

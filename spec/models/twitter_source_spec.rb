@@ -2,13 +2,13 @@ require 'link_extractor'
 RSpec.describe TwitterSource do
   # NOTE:
   # To rerun without cassette set valid twitter creds and anonymize afterwards in spec/fixtures/vcr_cassettes/*.yml
-  # Rails.application.secrets.twitter_consumer_key = "xxxx"
-  # Rails.application.secrets.twitter_consumer_secret = "xxxx"
+  # Rails.configuration.secrets.twitter_consumer_key = "xxxx"
+  # Rails.configuration.secrets.twitter_consumer_secret = "xxxx"
   # Setting.set('twitter_access_token', "xxxx")
   # Setting.set('twitter_access_secret', "xxxx")
   before(:each) do
-    Setting.set('twitter_access_token', Rails.application.secrets.twitter_access_token.presence || "aaa")
-    Setting.set('twitter_access_secret', Rails.application.secrets.twitter_access_secret.presence || "bbb")
+    Setting.set('twitter_access_token', Rails.configuration.secrets.twitter_access_token.presence || "aaa")
+    Setting.set('twitter_access_secret', Rails.configuration.secrets.twitter_access_secret.presence || "bbb")
   end
   specify 'twitter personalwirtschaft' do
 
@@ -41,8 +41,8 @@ RSpec.describe TwitterSource do
   end
 
   specify 'Handelsblatt - paywall' do
-    Rails.application.secrets.twitter_consumer_key = "lrcdzswhEHYM4CgnutP9eRWtI"
-    Rails.application.secrets.twitter_consumer_secret = "u59zEwzLnKQ68a7RMD73QVZEcmNW2TpH1hZxrBNQLrN3BgDamY"
+    Rails.configuration.secrets.twitter_consumer_key = "lrcdzswhEHYM4CgnutP9eRWtI"
+    Rails.configuration.secrets.twitter_consumer_secret = "u59zEwzLnKQ68a7RMD73QVZEcmNW2TpH1hZxrBNQLrN3BgDamY"
     VCR.use_cassette 'paywall/handelsblatt_twitter', record: :new_episodes do
       source = TwitterSource.new(url: 'handelsblatt', name: 'handelsblatt')
       source.save

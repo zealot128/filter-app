@@ -10,25 +10,23 @@ br
 
   br
 
-  .owl-carousel.owl-theme.app-carousel
-    .item
-      .thumbnail
-        = image_tag("app/1.jpg")
-    .item
-      .thumbnail
-        = image_tag("app/2.jpg")
-    .item
-      .thumbnail
-        = image_tag("app/3.jpg")
-    .item
-      .thumbnail
-        = image_tag("app/4.jpg")
-    .item
-      .thumbnail
-        = image_tag("app/5.jpg")
-    .item
-      .thumbnail
-        = image_tag("app/6.jpg")
+  .app-carousel
+    = image_tag("app/1.jpg")
+    = image_tag("app/2.jpg")
+    = image_tag("app/3.jpg")
+    = image_tag("app/4.jpg")
+    = image_tag("app/5.jpg")
+    = image_tag("app/6.jpg")
+  css:
+    .app-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: scroll;
+      padding: 15px 0;
+    }
+    .app-carousel img {
+      max-height: 400px;
+    }
 
   br
   br

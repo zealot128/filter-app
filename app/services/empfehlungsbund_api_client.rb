@@ -1,4 +1,4 @@
-class EmpfehlungsbundApiClient
+class EmpfehlungsbundAPIClient
   include HTTParty
   base_uri 'api.empfehlungsbund.de/api/v2'
 

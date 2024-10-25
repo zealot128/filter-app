@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   props: {
     url: {
@@ -32,9 +30,7 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapGetters(['play']),
-  },
+  inject: ['play'],
   watch: {
     play: {
       handler() {

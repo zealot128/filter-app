@@ -1,199 +1,90 @@
 <template lang="pug">
 .news-items--wall
   ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
-    li(v-for="mt in mediaTypes" :key='mt' :class='isChosenMediaType(mt) ? "active" : ""')
-        a(role="button" @click="setMediaType(mt)")
-          span(style="display: inline-flex")
-            | {{ typeTitle(mt) }}
-            svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
-              path(:d="iconForType(mt)")
+    li(v-for="mt in mediaTypes", :key="mt", :class="{'active': mt == chosenMediaType }")
+      a(role="button" @click="selectMediaType(mt)")
+        span(style="display: inline-flex")
+          | {{ typeTitle(mt) }}
+          svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
+            path(:d="iconForType(mt)")
 
   .news-items--wrapper
     template(v-if="loading")
-      NewsItem(
-        v-for="ni in newsItemsLoading"
-        :key="ni.id"
-        :news-item="ni"
-      )
-      Skeleton(v-for="i in 15" :key="i")
+      NewsItem(v-for="ni in newsItemsLoading", :key="ni.id", :news-item="ni")
+      Skeleton(v-for="i in 15", :key="i")
     template(v-else)
-      div(
-        v-for="(ni, idx) in newsItems"
-        :key="ni.id"
-      )
-        NewsItem(
-          :news-item="ni"
-        )
-        div(v-if='idx == 1 && heldenUrl')
+      div(v-for="(ni, idx) in newsItems", :key="ni.id")
+        NewsItem(:news-item="ni")
+        div(v-if="idx == 1 && heldenUrl")
           helden-ad(:helden-url="heldenUrl")
       template(v-if="newsItems.length === 0")
-        div(style="font-size:5rem")
+        div(style="font-size: 5rem")
           i.fa.fa-exclamation-triangle
         h4 Leider gibt es keinen Artikel für ihre ausgewählte Suchmuster, bitte versuchen Sie nochmal mit einem neuen Muster.
-
 
   .text-center
     a.btn.btn-default(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
       | Mehr
-
 </template>
 
-<script>
-import NewsItem from "./NewsItem.vue";
+<script lang="ts" setup>
+import NewsItem from "./NewsItem.vue"
 import Skeleton from "./Skeleton.vue"
-import HeldenAd from "front-page/HeldenAd.vue"
-import { mapState, mapGetters } from 'vuex';
+import HeldenAd from "@/front-page/HeldenAd.vue"
 import json from "../icons.json"
 
-const qs = require("qs");
+import { mediaTypes } from "@/front-page/data"
+import { chosenMediaType, setParamsBasedOnData } from "@/front-page/filter"
 
-export default {
-  components: {
-    NewsItem,
-    HeldenAd,
-    Skeleton
-  },
-  props: {
-    defaultOrder: { type: String, default: () => "all_best" },
-    perPage: { type: Number, default: 30 },
-    sortOptions: { type: String, default: "few" },
-    fullLayout: { type: Boolean, default: true },
-    heldenUrl: { type: String, default: null },
-  },
-  data() {
-    return {
-      loading: true,
-      newsItems: [],
-      newsItemsLoading: [],
-      order: this.defaultOrder,
-      page: 0,
-      meta: {},
-      firstLoad: true,
-    };
-  },
-  computed: {
-    ...mapState([
-      'params',
-      'mediaTypes'
-    ]),
-    ...mapGetters([
-      'isChosenMediaType',
-      'typeTitle'
-    ]),
-    hasNextPage() {
-      return this.meta && this.meta.current_page < this.meta.pages;
-    },
-    searchParams() {
-      const params = {
-        ...this.params,
-        order: this.order,
-        limit: this.perPage
-      };
-      return params;
-    },
-  },
-  watch: {
-    params: {
-      handler() {
-        if(this.firstLoad){
-          this.loadPages(history.state?.page || 1);
-          this.firstLoad = false;
-        }
-        else {
-          this.refresh();
-        }
-      },
-      deep: true,
-    },
-    order() {
-      this.refresh();
-    }
-  },
-  methods: {
-    setScrollPosition(position) {
-      window.scrollTo(0, position);
-    },
-    deleteHistory() {
-      delete history.state.params;
-      delete history.state.lastScrollPosition;
-      delete history.state.page;
-      history.replaceState({}, '', location.href);
-    },
-    scrollToLastPosition() {
-      if (typeof history.state?.lastScrollPosition !== 'number') return
-      this.setScrollPosition(history.state.lastScrollPosition);
-      this.deleteHistory();
-    },
-    async loadPages(pages) {
-      if (pages < 1) {
-        this.scrollToLastPosition();
-        return;
-      }
-      await this.loadNextPage();
-      await this.loadPages(pages - 1);
-    },
-    refresh() {
-      this.page = 1
-      return this.loadNextPage(true)
-    },
-    loadNextPage(clearNewsItem=false) {
-      this.loading = true;
-      let page = 1;
-      if(!clearNewsItem) {
-        page = this.page+ 1;
-        this.newsItemsLoading = this.newsItems;
-      }
-      const params = {
-        ...this.searchParams,
-        page,
-      };
-      return fetch(`/api/v1/news_items.json?${qs.stringify(params)}`)
-          .then(stream => stream.json())
-          .then(data => {
-            (clearNewsItem) ? this.newsItems = data.news_items : this.newsItems.push(...data.news_items);
-            this.meta = data.meta;
-            this.newsItemsLoading = [];
-            this.loading = false;
-            this.page = page
-            return true
-          })
-          .catch(error => console.error(error));
-    },
-    handleHistory: function() {
-      const newState = {
-        ...history.state,
-        params: this.searchParams,
-        lastScrollPosition: window.scrollY,
-        page: this.page
-      }
-      history.pushState(newState, '', location.href);
-    },
-    autoload() {
-      if(this.loading == false && this.hasNextPage) this.loadNextPage();
-    },
-    iconForType(type) {
-      return json[type];
-    },
-    setMediaType(type) {
-      this.$store.commit('set_chosen_type', type);
-      this.$store.dispatch("build_params");
-    }
-  },
-  mounted() {
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.addEventListener('beforeunload', this.handleHistory);
-    try {
-      this.$store.commit('set_params_based_on_data', history.state.params);
-      this.order = history.state.params.order;
-    }
-    catch(error){
-      this.$store.dispatch('trigger_watch_params');
-    }
-  },
-  beforeDestroy() {
-    window.removeEventListener('beforeunload', this.handleHistory);
+import { loadDataForParams, loadNextPage, handleHistory, order, refresh, newsItems, newsItemsLoading, loading, hasNextPage } from "@/front-page/newsItemPaginator"
+
+defineProps({
+  defaultOrder: { type: String, default: () => "all_best" },
+  perPage: { type: Number, default: 30 },
+  sortOptions: { type: String, default: "few" },
+  fullLayout: { type: Boolean, default: true },
+  heldenUrl: { type: String, default: null },
+})
+import { onBeforeUnmount, onMounted } from "vue"
+
+function typeTitle(type: string) {
+  if (type === "FeedSource") return "Artikel"
+  if (type === "") return "Alle"
+  return type.replace("Source", "")
+}
+function iconForType(type: string) {
+  return json[type] || ""
+}
+
+onMounted(() => {
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual"
   }
-};
+  window.addEventListener("beforeunload", handleHistory)
+  try {
+    if (history.state && history.state.params) {
+      setParamsBasedOnData(history.state.params)
+      order.value = history.state.params.order
+      if (!loading.value) {
+        loadDataForParams()
+      }
+    } else {
+      refresh()
+    }
+  } catch (error) {
+    refresh()
+  }
+})
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeunload", handleHistory)
+})
+function selectMediaType(mt: string) {
+  if (chosenMediaType.value === mt) {
+    chosenMediaType.value = ""
+  } else {
+    chosenMediaType.value = mt
+  }
+}
 </script>
 
 <style scoped>
@@ -215,5 +106,4 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-
 </style>

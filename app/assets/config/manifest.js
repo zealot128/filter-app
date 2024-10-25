@@ -1,9 +1,5 @@
 //= link_tree ../images
 //= link_tree ../fonts
 //= link web.css
-//= link web.js
-//= link IE9.js
 //= link admin.js
-//= link app.js
 //= link mailer.css
-// link font-awesome-ie7.min.css

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": false,
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "target": "es6",
     "lib": ["es2020", "dom"],
@@ -17,7 +18,7 @@
       "~/*": [
         "app/javascript/*"
       ],
-        "*": ["node_modules/*"]
+        "*": ["node_modules/*", "app/javascript/*"]
     },
     "strict": true,
     "jsx": "preserve",
@@ -27,6 +28,7 @@
   "include": [
     "app/javascript/types/**/*.ts",
     "app/javascript/**/*.ts",
+    "app/javascript/**/*.vue",
     "app/javascript/**/*.tsx"
   ],
   "exclude": [
@@ -35,5 +37,13 @@
     "vendor",
     "public"
   ],
+  "vueCompilerOptions": {
+    "COMMENT": "\"target\": 2, // For Vue version <= 2.6.14",
+    "experimentalCompatMode": 2,
+    "experimentalTemplateCompilerOptions": {
+      "compatConfig": { "Mode": 2 }
+    },
+    "plugins": ["@vue/language-plugin-pug"]
+  },
   "compileOnSave": false
 }

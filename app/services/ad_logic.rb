@@ -5,11 +5,11 @@ class AdLogic
     end
 
     def events
-      EmpfehlungsbundApiClient.partner_events.sort_by(&:from).take(6)
+      EmpfehlungsbundAPIClient.partner_events.sort_by(&:from).take(6)
     end
 
     def promoted_events
-      EmpfehlungsbundApiClient.community_events
+      EmpfehlungsbundAPIClient.community_events
     end
 
     def third_party_news

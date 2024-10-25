@@ -1,20 +1,16 @@
 <template lang="pug">
-  div
-    NewsItemWall(default-order="newest" sort-options="all" :fullLayout="false")
+div
+  NewsItemWall(default-order="newest" sort-options="all", :fullLayout="false")
 </template>
 
-<script>
-import NewsItemWall from '../front-page/components/NewsItemWall'
-export default {
-  components: {
-    NewsItemWall,
-  },
-  props: {
-    params: { type: Object, required: true },
-  },
-  created() {
-    this.$store.commit("expand_params_based_on_data", this.params);
-    this.$store.commit("set_size", document.body.clientWidth);
-  }
-}
+<script lang="ts" setup>
+import NewsItemWall from "@/front-page/components/NewsItemWall.vue"
+import { setParamsBasedOnData } from "@/front-page/filter"
+const props = defineProps({
+  params: { type: Object, required: true },
+})
+import { onMounted } from "vue"
+onMounted(() => {
+  setParamsBasedOnData(props.params)
+})
 </script>

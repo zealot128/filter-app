@@ -5,18 +5,20 @@ if ENV['SENTRY_DSN']
                    else
                      ""
                    end
-  require 'sentry-raven'
-  Raven.configure do |config|
+  Sentry.init do |config|
     # config.dsn = ENV['SENTRY_DSN']
     config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-    config.environments = %w[production]
+    config.enabled_environments = %w[production]
     config.release = SENTRY_RELEASE
     if ENV['SENTRY_DSN'].include?('sentry.pludoni')
-      config.processors -= [Raven::Processor::PostData] # Do this to send POST data
-      config.processors -= [Raven::Processor::Cookies] # Do this to send cookies by default
+      config.send_default_pii = true
+    end
+    filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
+    config.before_send = ->(event, _hint) do
+      filter.filter(event.to_hash)
     end
     config.excluded_exceptions =
-      Raven::Configuration::IGNORE_DEFAULT + [
+      Sentry::Configuration::IGNORE_DEFAULT  + [
         'ActiveRecord::RecordNotFound',
         'ActionController::RoutingError',
         'ActionController::InvalidAuthenticityToken',
@@ -27,7 +29,7 @@ if ENV['SENTRY_DSN']
       ].freeze
   end
   def NOTIFY_EXCEPTION(*args)
-    Raven.capture_exception(*args)
+    Sentry.capture_exception(*args)
   end
 
 else
