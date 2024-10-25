@@ -31,5 +31,5 @@ class Trends::Usage < ActiveRecord::Base
   belongs_to :word, class_name: "Trends::Word"
   belongs_to :news_item
   belongs_to :source
-  enum usage_type: [:title, :plaintext]
+  enum :usage_type, { title: 0, plaintext: 1 }
 end

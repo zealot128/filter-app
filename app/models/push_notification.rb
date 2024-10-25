@@ -14,5 +14,5 @@
 #
 
 class PushNotification < ApplicationRecord
-  enum response: [:success, :unavailable, :device_unregistered, :unknown]
+  enum :response, { success: 0, unavailable: 1, device_unregistered: 2, unknown: 3 }
 end

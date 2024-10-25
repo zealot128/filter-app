@@ -24,8 +24,8 @@ class Trends::Word < ActiveRecord::Base
                           association_foreign_key: 'category_id'
   belongs_to :trend, class_name: "Trends::Trend"
 
-  enum word_type: [:single, :bigram, :trigram, :quadrogram]
-  has_many :usages, class_name: "Trends::Usage", foreign_key: "word_id", dependent: :destroy
+  enum :word_type, { single: 0, bigram: 1, trigram: 2, quadrogram: 3 }
+  has_many :usages, class_name: "Trends::Usage", dependent: :destroy
   scope :visible, -> { where.not(ignore: true) }
 
   before_save do

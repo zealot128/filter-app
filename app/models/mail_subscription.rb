@@ -31,26 +31,25 @@ class MailSubscription < ApplicationRecord
   has_many :histories, class_name: "MailSubscription::History", dependent: :destroy
   store_accessor :preferences, :categories
   store_accessor :preferences, :interval
-  enum gender: [:female, :male]
+  enum :gender, { female: 0, male: 1 }
 
   validates :interval, presence: true, inclusion: { in: %w(weekly monthly biweekly) }
   validates :categories, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :limit, presence: true
-  validates :first_name, :last_name, format: { with: /\A[\p{L} \.-]+\z/i } 
+  validates :first_name, :last_name, format: { with: /\A[\p{L} \.-]+\z/i }
   validates :first_name, :last_name, format: { without: /https|http/i }
-  # validates :academic_title, :company, :position, format: {with: /\p{Word}/}
 
   before_create do
     self.token = SecureRandom.hex(32)
   end
-  scope :deleted, -> { where 'deleted_at is not null' }
-  scope :inactive_for, -> { where('last_send_date > ?', (Setting.inactive_months.to_i).months) }
+  scope :deleted, -> { where.not(deleted_at: nil) }
+  scope :inactive_for, -> { where('last_send_date > ?', Setting.inactive_months.to_i.months) }
   scope :undeleted, -> { where deleted_at: nil }
 
   validates :privacy, acceptance: true
 
-  enum status: [:unconfirmed, :confirmed, :unsubscribed]
+  enum :status, { unconfirmed: 0, confirmed: 1, unsubscribed: 2 }
 
   def confirm!
     update_column :status, MailSubscription.statuses[:confirmed]
