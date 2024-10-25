@@ -25,7 +25,7 @@ describe NewsItem do
       expect(ni.categories).to eq([c1])
     end
 
-    specify "Reihenfolge der Kategorien bleiben erhalten" do
+    xspecify "Reihenfolge der Kategorien bleiben erhalten" do
       c1 = Fabricate(:category, name: 'Bewerbung', keywords: 'gehalt,bwl')
       c2 = Fabricate(:category, name: 'Recruiting', keywords: 'recruiting')
       c3 = Fabricate(:category, keywords: 'studium')

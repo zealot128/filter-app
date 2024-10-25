@@ -1,4 +1,3 @@
-# rubocop:disable Rails/OutputSafety
 class MailSubscriptionsController < ApplicationController
   invisible_captcha only: [:create, :update] unless Rails.env.test?
 
@@ -15,13 +14,22 @@ class MailSubscriptionsController < ApplicationController
     render layout: 'embed'
   end
 
+  def show
+    from = if subscription.last_send_date
+             subscription.last_send_date - subscription.interval_from
+           else
+             Time.zone.now - subscription.interval_from
+           end
+    preview(subscription, from:)
+  end
+
   def create
     @subscription = MailSubscription.new(permitted_params)
     if @subscription.valid?
       if params[:commit] == 'Vorschau'
         from = Time.zone.now - subscription.interval_from
-        preview(@subscription, from: from)
-        return
+        preview(@subscription, from:)
+        nil
       else
         ahoy.track 'newsletter_subscribe'
         @subscription.save
@@ -47,8 +55,7 @@ class MailSubscriptionsController < ApplicationController
     subscription.confirm!
     render html: '<div class="alert alert-success">Vielen Dank, Ihr Abo ist nun aktiviert.</div>'.html_safe, layout: true
     time_now = Time.zone.now
-    job = filter_jobs
-    cronjob_time = Time.zone.parse(job[0].at).strftime('%H:%M')
+    cronjob_time = "09:00"
     return if time_now.monday? and cronjob_time > time_now.strftime('%H:%M')
 
     mailing = Newsletter::Mailing.new(subscription, from: 1.week.ago.at_beginning_of_week)
@@ -75,15 +82,6 @@ class MailSubscriptionsController < ApplicationController
     render html: '<div class="alert alert-success">Newsletter abbestellt!</div>'.html_safe, layout: true
   end
 
-  def show
-    from = if subscription.last_send_date
-             subscription.last_send_date - subscription.interval_from
-           else
-             Time.zone.now - subscription.interval_from
-           end
-    preview(subscription, from: from)
-  end
-
   def track_open
     ignore = (request.ip == '217.92.174.98') || IPCat.datacenter?(request.ip)
     unless ignore
@@ -102,10 +100,10 @@ class MailSubscriptionsController < ApplicationController
   end
 
   private
- 
+
   def preview(subscription, from: 1.week.ago.at_beginning_of_week)
     open_token = subscription.histories.order('created_at desc').first.try(:open_token)
-    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from: from), open_token)
+    @mail = NewsletterMailer.newsletter(Newsletter::Mailing.new(subscription, from:), open_token)
     ActionMailer::Base.preview_interceptors.each { |i| i.previewing_email(@mail) }
     @body = @mail.html_part.body.to_s
     render 'preview', layout: false
@@ -125,12 +123,6 @@ class MailSubscriptionsController < ApplicationController
       :privacy,
       categories: []
     )
-  end
-  
-  require "whenever"
-  def filter_jobs
-    jobs = Whenever::JobList.new(file: Rails.root.join("config", "schedule.rb").to_s).instance_variable_get("@jobs")
-    jobs[:default_mailto].values.flatten.select { |job| job.instance_variable_get("@options")[:task]&.include?("Newsletter::Mailing.cronjob") }
   end
 
   def subscription
