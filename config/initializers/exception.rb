@@ -7,7 +7,6 @@ if ENV['SENTRY_DSN']
                    end
   Sentry.init do |config|
     # config.dsn = ENV['SENTRY_DSN']
-    config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
     config.enabled_environments = %w[production]
     config.release = SENTRY_RELEASE
     if ENV['SENTRY_DSN'].include?('sentry.pludoni')
