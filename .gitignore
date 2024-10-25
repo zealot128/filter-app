@@ -13,8 +13,6 @@
 # Ignore IDE
 .idea/
 
-# Ignore binary files
-bin/
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
