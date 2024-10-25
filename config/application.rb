@@ -37,7 +37,7 @@ module Baseapp
     config.mission_control.jobs.base_controller_class = "SolidQueueBaseController"
     config.mission_control.jobs.adapters = [:solid_queue]
     if Rails.env.production?
-      config.solid_queue.connects_to = { database: { writing: :queue } }
+      config.solid_queue.connects_to = { database: { writing: :zqueue } }
 
       config.solid_queue.clear_finished_jobs_after = 30.days
       # after boot:
