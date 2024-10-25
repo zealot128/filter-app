@@ -32,7 +32,7 @@ FeedSource.create(url: "https://hrtrendinstitute.com/feed/", name: "HR Trend Ins
 FeedSource.create(url: "https://www.generation-silberhaar.de/feed/", name: "Demographie-Blog", value: 3, full_text_selector: ".post-content")
 
 Source.find_each do |s|
-  Source::FindLogosWorker.perform_in(1.minute, s.id)
+  Source::FindLogosJob.set(wait: 1.minute).perform_later(s.id)
 end
 
 # to regenerate

@@ -1,6 +1,4 @@
-class NewsletterWorker
-  include Sidekiq::Worker
-
+class NewsletterJob < ApplicationJob
   def perform(mail_subscription_id)
     mail_subscription = MailSubscription.confirmed.find(mail_subscription_id)
     ms = Newsletter::Mailing.new(mail_subscription)

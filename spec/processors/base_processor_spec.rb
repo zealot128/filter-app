@@ -7,9 +7,7 @@ describe BaseProcessor, type: :model do
       feed_source.url = 'http://www.online-recruiting.net/feed/'
       feed_source.full_text_selector = '.entry-content'
       feed_source.save
-      Sidekiq::Testing.inline! do
-        BaseProcessor.process(feed_source)
-      end
+      BaseProcessor.process(feed_source)
       NewsItem.first.tap do |i|
         expect(i).to be_present
         expect(i.url).to eq("http://www.online-recruiting.net/hr-tech-startup-investments-im-mai/")
@@ -31,9 +29,7 @@ describe BaseProcessor, type: :model do
 
       allow_any_instance_of(NewsItem).to receive(:refresh)
 
-      Sidekiq::Testing.inline! do
-        BaseProcessor.process(feed_source)
-      end
+      BaseProcessor.process(feed_source)
       expect(NewsItem.first.full_text.length).to be > 200
     end
   end

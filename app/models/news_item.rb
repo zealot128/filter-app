@@ -53,7 +53,6 @@
 #
 
 require "fetcher"
-# rubocop:disable Style/GuardClause
 class NewsItem < ApplicationRecord
   auto_strip_attributes :url, :title, squish: true, convert_non_breaking_spaces: true
   # half life of items is 12.5 hours; all items within the same batch get the same base time score
@@ -64,28 +63,28 @@ class NewsItem < ApplicationRecord
   end
 
   scope :visible, -> {
-    where('blacklisted != ?', true).
+    where.not(blacklisted: true).
       where('news_items.absolute_score is not null and news_items.absolute_score > 0').
-      where('absolute_score_per_halflife is not null').
+      where.not(absolute_score_per_halflife: nil).
       where(source_id: Source.visible.select('id'))
   }
   scope :show_page, -> {
-    where('blacklisted != ?', true).
+    where.not(blacklisted: true).
       order('published_at desc').
       where('absolute_score is not null and absolute_score > 0')
   }
-  scope :newspaper, -> { where('blacklisted != ?', true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
+  scope :newspaper, -> { where.not(blacklisted: true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
   scope :old, -> { where("published_at < ?", (max_age + 1.day).ago) }
-  scope :home_page, -> { where('news_items.value > 0').visible.order("news_items.value desc").where("news_items.value is not null").current }
+  scope :home_page, -> { where('news_items.value > 0').visible.order("news_items.value desc").where.not(news_items: { value: nil }).current }
   scope :sorted, -> { visible.order("news_items.absolute_score desc") }
   scope :recent, -> { where("published_at > ?", max_age.ago) }
   scope :after, ->(max_months) { where("published_at > ?", max_months) }
   scope :top_of_day, ->(date) { newspaper.where('date(published_at) = ?', date.to_date) }
 
   scope :top_percent_per_day, ->(min_date, percentile, min_news_per_day) {
-    where(
-      %{ news_items.id in (
+    where(<<~SQL.squish)
+       news_items.id in (
           SELECT id from (
             SELECT count(*) over(PARTITION BY published_at::date ) AS total_count,
             ROW_NUMBER() OVER (PARTITION BY published_at::date ORDER BY absolute_score DESC) as rank,
@@ -97,13 +96,12 @@ class NewsItem < ApplicationRecord
           WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
           ORDER BY date DESC, rank DESC
       )
-      }
-    )
+    SQL
   }
 
   scope :top_percent_per_week, ->(min_date, percentile, min_news_per_day) {
-    where(
-      %{ news_items.id in (
+    where(<<~SQL.squish)
+       news_items.id in (
           SELECT id from (
             SELECT count(*) over(PARTITION BY to_char(published_at, 'IW/IYYY') ) AS total_count,
             ROW_NUMBER() OVER (PARTITION BY to_char(published_at, 'IW/IYYY') ORDER BY absolute_score DESC) as rank,
@@ -115,8 +113,7 @@ class NewsItem < ApplicationRecord
           WHERE rank < GREATEST(total_count * #{percentile.to_f}, #{min_news_per_day.to_i})
           ORDER BY date DESC, rank DESC
       )
-      }
-    )
+    SQL
   }
   scope :top_percent_per_month, ->(min_date, percentile, min_news_per_day) {
     where(
@@ -194,34 +191,19 @@ class NewsItem < ApplicationRecord
       }
     }
 
-  def categories=(other)
-    self.category_order = other.map(&:id)
-    save if persisted?
-    super
-  end
-
   def preferred_teaser_image
     if image.present?
-      return image.url
+      image.url
     else
       c = categories.first
       if c.logo.attached?
-        return c.logo.variant(resize: '130x130')
+        c.logo.variant(resize: '130x130')
       end
     end
   end
 
   after_commit do
-    NewsItem::AnalyseTrendWorker.perform_async(id) unless trend_analyzed
-  end
-
-  def categories
-    c = super
-    if category_order?
-      c.sort_by { |i| category_order.index(i.id) || 1000 }
-    else
-      c
-    end
+    NewsItem::AnalyseTrendJob.perform_later(id) unless trend_analyzed
   end
 
   def self.cronjob
@@ -229,19 +211,20 @@ class NewsItem < ApplicationRecord
     # delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
     NewsItem.where.not(source_id: Source.select('id')).delete_all
 
-    return if Sidekiq::Queue.new('low').count > 200
+    # TODO: Solid Queue?
+    # return if Sidekiq::Queue.new('low').count > 200
 
     max = 150
     priority = NewsItem.recent.where(value: nil).limit(100).to_a
     priority.each_with_index do |news_item, i|
-      NewsItem::RefreshLikesWorker.perform_in((i * 2).seconds, news_item.id)
+      NewsItem::RefreshLikesJob.set(wait: (i * 2).seconds).perform_later(news_item.id)
       max -= 1
     end
     NewsItem.recent.order('random()').limit(max).each_with_index do |ni, i|
       next if priority.include?(ni)
 
       wait = 15.minutes + (i * 2).seconds
-      NewsItem::RefreshLikesWorker.perform_in(wait, ni.id)
+      NewsItem::RefreshLikesJob.set(wait:).perform_later(ni.id)
     end
     Rails.logger.info "Finished NewsItem refresh cronjob"
   end
@@ -253,18 +236,18 @@ class NewsItem < ApplicationRecord
       twitter: retweets,
       gplus: 0,
       linkedin: 0,
-      xing: xing,
-      youtube_views: youtube_views,
-      youtube_likes: youtube_likes,
+      xing:,
+      youtube_views:,
+      youtube_likes:,
       reddit: reddit || 0,
       freshness: (published_at.to_i - self.class.max_age.ago.to_i) / 10_000,
       bias: source.value,
-      impression_count: impression_count,
+      impression_count:,
       multiplicator: source.multiplicator,
-      word_length: word_length,
+      word_length:,
       title_length: title.to_s.length,
       categories: category_ids,
-      paywall: paywall,
+      paywall:,
       # parallel_news_count: source.news_items.where('published_at between ? and ?', 1.week.ago, 1.week.from_now).count,
       published_at: published_at.to_i,
       incoming_link_count: incoming_link_count || 0

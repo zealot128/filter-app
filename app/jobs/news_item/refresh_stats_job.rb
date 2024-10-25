@@ -1,6 +1,4 @@
-class NewsItem::RefreshStatsWorker
-  include Sidekiq::Worker
-
+class NewsItem::RefreshStatsJob < ApplicationJob
   def perform(news_item_id)
     news_item = NewsItem.find(news_item_id)
     news_item.get_full_text

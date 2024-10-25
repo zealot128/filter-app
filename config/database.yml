@@ -13,3 +13,21 @@ test:
   template: template0
   pool: 5
 
+production:
+  primary:
+    adapter: postgresql
+    database: 'hrfilter_production'
+    encoding: UTF8
+    pool: 30
+  zqueue:
+    database: storage/production_queue.sqlite3
+    migrations_paths: db/queue_migrate
+    adapter: sqlite3
+    pool: 5
+    timeout: 5000
+  zcache:
+    database: storage/production_cache.sqlite3
+    migrations_paths: db/cache_migrate
+    adapter: sqlite3
+    pool: 5
+    timeout: 5000

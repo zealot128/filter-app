@@ -1,11 +1,14 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 7.2.0"
+
 gem "solid_cache", "~> 1.0"
+gem "solid_queue", "~> 1.0"
+gem "mission_control-jobs"
+gem 'sqlite3'
 
 gem 'babel-transpiler'
 gem "pg"
-gem 'sqlite3'
 gem "mail_form"
 gem "simple_form"
 gem "simple-navigation"
@@ -39,8 +42,6 @@ gem 'cancancan'
 
 gem "sentry-ruby"
 gem "sentry-rails"
-gem "sentry-sidekiq"
-
 
 gem 'kt-paperclip'
 gem "kt-paperclip-optimizer"
@@ -50,9 +51,6 @@ gem 'mini_magick'
 gem 'datagrid'
 
 gem 'rack', '~> 2.0'
-gem 'sidekiq', '~> 6.5.10'
-gem 'sidekiq-unique-jobs', '~> 7.1.33'
-gem 'redis-namespace', '~> 1.5'
 
 gem 'google-cloud-firestore', require: false
 gem 'google-cloud-firestore-v1', ">= 0.10", require: false

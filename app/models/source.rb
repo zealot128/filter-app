@@ -52,7 +52,7 @@ class Source < ApplicationRecord
 
   belongs_to :default_category, class_name: 'Category'
   after_create_commit if: -> { !Rails.env.test? and !logo.present? } do
-    Source::DownloadThumbWorker.perform_async(id)
+    Source::DownloadThumbJob.perform_later(id)
   end
   scope :visible, -> { where(deactivated: false) }
   scope :lsr_allowed, -> { where(lsr_active: false) }
@@ -138,7 +138,7 @@ class Source < ApplicationRecord
 
   def self.cronjob
     Source.visible.find_each do |s|
-      Source::FetchWorker.perform_async(s.id)
+      Source::FetchJob.perform_later(s.id)
     end
   end
 

@@ -73,9 +73,9 @@ class Admin::SourcesController < AdminController
     type = params[:source].delete :type
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
-      Source::FetchWorker.perform_async(@source.id)
+      Source::FetchJob.perform_later(@source.id)
       unless @source.logo.present?
-        Source::FindLogosWorker.perform_in(1.minute, @source.id)
+        Source::FindLogosJob.set(wait: 1.minute).perform_later(@source.id)
       end
 
       redirect_to [:admin, :sources], notice: 'Quelle angelegt'
@@ -92,9 +92,9 @@ class Admin::SourcesController < AdminController
   def update
     @source = Source.find(params[:id])
     if @source.update(params[:source].permit!)
-      Source::FetchWorker.perform_async(@source.id)
+      Source::FetchJob.perform_later(@source.id)
       if @source.previous_changes.slice('value', 'multiplicator').present?
-        Source::RescoreAllWorker.perform_async(@source.id)
+        Source::RescoreAllJob.perform_later(@source.id)
       end
       redirect_to [:admin, :sources], notice: 'Done'
     else
@@ -105,11 +105,11 @@ class Admin::SourcesController < AdminController
   def refresh
     @source = Source.find(params[:id])
     if params[:type] == 'source'
-      Source::FetchWorker.perform_async(@source.id)
+      Source::FetchJob.perform_later(@source.id)
     end
     if params[:type] == 'news_items'
       @source.news_items.order('published_at desc').limit(10).each do |ni|
-        NewsItem::RefreshLikesWorker.perform_async(ni.id)
+        NewsItem::RefreshLikesJob.perform_later(ni.id)
       end
     end
   end

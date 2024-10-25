@@ -30,12 +30,21 @@ module Baseapp
 
     config.middleware.use Rack::Attack
     config.active_record.belongs_to_required_by_default = false
-    config.active_job.queue_adapter = :sidekiq
-    # Disable host whitelisting... braucht man nicht da wir das immer selbst machen
     config.hosts.clear
     config.active_storage.variant_processor = :mini_magick
-    config.active_support.cache_format_version = 7.0
+    config.active_support.cache_format_version = 7.1
     config.secrets = config_for(:secrets)
+    config.mission_control.jobs.base_controller_class = "SolidQueueBaseController"
+    config.mission_control.jobs.adapters = [:solid_queue]
+    if Rails.env.production?
+      config.solid_queue.connects_to = { database: { writing: :queue } }
+
+      config.solid_queue.clear_finished_jobs_after = 30.days
+      # after boot:
+      config.after_initialize do
+        SolidQueue::RecurringJob.queue_adapter = :solid_queue
+      end
+    end
 
     config.generators do |g|
       g.template_engine :haml

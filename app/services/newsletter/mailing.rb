@@ -8,8 +8,8 @@ module Newsletter
         ms = new(s)
         next unless ms.sendable?
 
-        secs = rand(5..360)
-        NewsletterWorker.perform_in(secs, s.id)
+        wait = rand(5..360)
+        NewsletterJob.set(wait:).perform_later(s.id)
       end
     end
 

@@ -1,7 +1,5 @@
 describe 'MailSubscriptionsController' do
-  before(:each) do
-    Sidekiq::Testing.inline!
-  end
+  include ActiveJob::TestHelper
 
   specify 'Embed' do
     get '/newsletter/embed'
@@ -13,7 +11,7 @@ describe 'MailSubscriptionsController' do
       get '/newsletter'
       assert(response.successful?)
       c = Category.create!(name: 'Recruiting', keywords: 'Headhunter')
-      
+
       post '/newsletter', params: {
         mail_subscription: {
           first_name: 'Stefan',
@@ -25,7 +23,7 @@ describe 'MailSubscriptionsController' do
           privacy: 1
         }
       }
-      
+
       expect(response.redirect?).to be == true
       expect(ActionMailer::Base.deliveries.count).to be == 1
       body = ActionMailer::Base.deliveries.first.html_part.body.to_s
@@ -52,9 +50,8 @@ describe 'MailSubscriptionsController' do
         interval: 'weekly'
       )
     }
-    let(:category) {
-      Category.create!(name: 'Gehalt', keywords: '')
-    }
+    let(:category) { Category.create!(name: 'Gehalt', keywords: '') }
+
     specify 'tracks send status so no duplicate send' do
       VCR.use_cassette 'events', record: :new_episodes do
         subscription.confirm!
@@ -64,8 +61,13 @@ describe 'MailSubscriptionsController' do
         expect(ActionMailer::Base.deliveries.count).to eq(0)
 
         import_stuff!
+        expect(NewsItem.first.categories).to include category
         # 1 news da, mail geht raus
         Newsletter::Mailing.cronjob
+
+        perform_enqueued_jobs
+        expect(NewsItem.first.categories).to include category
+
         expect(ActionMailer::Base.deliveries.count).to eq(1)
         expect(MailSubscription::History.count).to be == 1
         expect(ActionMailer::Base.deliveries.first.html_part.decoded).to include MailSubscription::History.first.open_token
@@ -78,15 +80,20 @@ describe 'MailSubscriptionsController' do
 
         # nochmal ausgefuehrt -> geht nicht, da Datum gesetzt
         Newsletter::Mailing.cronjob
+        perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries.count).to eq(1)
 
         Timecop.travel 7.days.from_now
         Newsletter::Mailing.cronjob
         # Keine neuen News
         expect(ActionMailer::Base.deliveries.count).to eq(1)
+        perform_enqueued_jobs
 
-        @ni.update_columns published_at: 2.days.ago
+        @ni.update!(published_at: 2.days.ago, categories: [category])
+        expect(NewsItem.first.categories).to include category
         Newsletter::Mailing.cronjob
+
+        perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries.count).to eq(2)
 
         # Klick = auch geoeffnet
@@ -107,6 +114,7 @@ describe 'MailSubscriptionsController' do
         Category.create!(name: 'NewCategoryOk', keywords: '')
         Category.create!(name: 'NewCategoryTooOld', keywords: '', created_at: 14.days.ago)
         Newsletter::Mailing.cronjob
+        perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries.count).to eq(1)
 
         body = ActionMailer::Base.deliveries.first.html_part.body.to_s
@@ -123,7 +131,7 @@ describe 'MailSubscriptionsController' do
         expect(source.news_items.count).to be > 0
         @ni = source.news_items.first
         @ni.categories << category
-        @ni.update_columns absolute_score: 100, published_at: 2.days.ago
+        @ni.update! absolute_score: 100, published_at: 2.days.ago
       end
     end
   end

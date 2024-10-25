@@ -1,3 +1,3 @@
-web: bundle exec rails server -p $PORT
-sidekiq: bundle exec sidekiq -q low -q default -q mailers -q important --verbose -c 1
+web: bin/rails server -p $PORT
+jobs: bin/jobs
 vite: bin/vite dev

@@ -1,16 +1,14 @@
-class Source::FindLogosWorker
-  include Sidekiq::Worker
-
+class Source::FindLogosJob < ApplicationJob
   def self.find_bad_or_missing
     Source.visible.find_each do |source|
       if source.logo.blank? or !source.logo.exists?
-        perform_async(source.id)
+        perform_later(source.id)
         next
       end
 
       dimension = Paperclip::Geometry.from_file(source.logo).width
       if dimension < 60
-        perform_async(source.id)
+        perform_later(source.id)
       end
     end
   end

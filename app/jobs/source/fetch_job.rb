@@ -1,6 +1,4 @@
-class Source::FetchWorker
-  include Sidekiq::Worker
-
+class Source::FetchJob < ApplicationJob
   def perform(source_id)
     source = Source.find(source_id)
     source.wrapped_refresh!
