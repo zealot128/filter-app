@@ -38,7 +38,7 @@ import { chosenMediaType, setParamsBasedOnData } from "@/front-page/filter"
 
 import { loadDataForParams, loadNextPage, handleHistory, order, refresh, newsItems, newsItemsLoading, loading, hasNextPage } from "@/front-page/newsItemPaginator"
 
-defineProps({
+const props = defineProps({
   defaultOrder: { type: String, default: () => "all_best" },
   perPage: { type: Number, default: 30 },
   sortOptions: { type: String, default: "few" },
@@ -60,6 +60,7 @@ onMounted(() => {
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual"
   }
+  order.value = props.defaultOrder
   window.addEventListener("beforeunload", handleHistory)
   try {
     if (history.state && history.state.params) {
