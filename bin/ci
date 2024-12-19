@@ -11,7 +11,11 @@ rvm use `cat .ruby-version`
 gem install bundler -N
 
 yarn config set cache-folder .yarn
-bundle --jobs $(nproc) --path=/cache/bundler --without production
+export BUNDLE_PATH=/cache/bundler
+export BUNDLE_JOBS=$(nproc)
+export BUNDLE_RETRY=3
+export BUNDLE_WITHOUT=production
+bundle install
 
 cp config/application.hrfilter.yml config/application.yml
 cp config/secrets.yml.example config/secrets.yml
