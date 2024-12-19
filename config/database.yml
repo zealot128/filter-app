@@ -25,9 +25,14 @@ production:
     adapter: sqlite3
     pool: 5
     timeout: 5000
+    retries: 100
+    default_transaction_mode: IMMEDIATE
+
   zcache:
     database: storage/production_cache.sqlite3
     migrations_paths: db/cache_migrate
     adapter: sqlite3
     pool: 5
     timeout: 5000
+    retries: 100
+    default_transaction_mode: IMMEDIATE
