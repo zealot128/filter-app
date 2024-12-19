@@ -8,7 +8,7 @@ rvm install `cat .ruby-version`
 set -e
 rvm use `cat .ruby-version`
 
-gem install bundler -N
+gem install bundler:2.5.7 -N
 
 yarn config set cache-folder .yarn
 export BUNDLE_PATH=/cache/bundler
