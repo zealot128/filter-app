@@ -150,9 +150,11 @@ GEM
     bcrypt (3.1.20)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
+    bcrypt_pbkdf (1.1.1)
+    bcrypt_pbkdf (1.1.1-x86_64-darwin)
     benchmark (0.4.0)
     bigdecimal (3.1.8)
-    bootsnap (1.10.2)
+    bootsnap (1.18.4)
       msgpack (~> 1.2)
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
@@ -160,7 +162,6 @@ GEM
     bootswatch-rails (3.3.5)
       railties (>= 3.1)
     browser (2.7.1)
-    buftok (0.2.0)
     builder (3.3.0)
     cancancan (3.0.1)
     capybara (3.40.0)
@@ -203,6 +204,7 @@ GEM
       simpleidn (~> 0.2.1)
     docile (1.4.1)
     domain_name (0.6.20240107)
+    dotenv (3.1.7)
     drb (2.2.1)
     dry-cli (1.2.0)
     dry-core (1.0.0)
@@ -219,7 +221,7 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
-    equalizer (0.0.11)
+    ed25519 (1.3.0)
     errbase (0.2.2)
     erubi (1.13.0)
     et-orbi (1.2.11)
@@ -265,10 +267,9 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
-    ffi (1.15.5)
-    ffi-compiler (1.0.1)
-      ffi (>= 1.0.0)
-      rake
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-x86_64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
     foreman (0.87.1)
@@ -308,6 +309,7 @@ GEM
     google-cloud-location (0.5.1)
       gapic-common (>= 0.19.1, < 2.a)
       google-cloud-errors (~> 1.0)
+    google-protobuf (3.25.5-aarch64-linux)
     google-protobuf (3.25.5-x86_64-darwin)
     google-protobuf (3.25.5-x86_64-linux)
     googleapis-common-protos (1.4.0)
@@ -332,10 +334,13 @@ GEM
       rack-accept
     groupdate (6.1.0)
       activesupport (>= 5.2)
-    grpc (1.67.0-x86_64-darwin)
+    grpc (1.68.1-aarch64-linux)
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
-    grpc (1.67.0-x86_64-linux)
+    grpc (1.68.1-x86_64-darwin)
+      google-protobuf (>= 3.25, < 5.0)
+      googleapis-common-protos-types (~> 1.0)
+    grpc (1.68.1-x86_64-linux)
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
     habtm_generator (0.5)
@@ -344,17 +349,8 @@ GEM
     hashie (5.0.0)
     headless (2.3.1)
     htmlentities (4.3.4)
-    http (4.4.1)
-      addressable (~> 2.3)
-      http-cookie (~> 1.0)
-      http-form_data (~> 2.2)
-      http-parser (~> 1.2.0)
     http-cookie (1.0.7)
       domain_name (~> 0.5)
-    http-form_data (2.3.0)
-    http-parser (1.2.3)
-      ffi-compiler (>= 1.0, < 2.0)
-    http_parser.rb (0.6.0)
     httparty (0.22.0)
       csv
       mini_mime (>= 1.0.0)
@@ -386,6 +382,17 @@ GEM
     json (2.7.2)
     jsonapi-renderer (0.2.2)
     jwt (2.7.1)
+    kamal (2.4.0)
+      activesupport (>= 7.0)
+      base64 (~> 0.2)
+      bcrypt_pbkdf (~> 1.0)
+      concurrent-ruby (~> 1.2)
+      dotenv (~> 3.1)
+      ed25519 (~> 1.2)
+      net-ssh (~> 7.3)
+      sshkit (>= 1.23.0, < 2.0)
+      thor (~> 1.3)
+      zeitwerk (>= 2.6.18, < 3.0)
     kt-paperclip (7.2.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -432,8 +439,6 @@ GEM
       webrick (~> 1.7)
       webrobots (~> 0.1.2)
     memoist (0.16.2)
-    memoizable (0.4.2)
-      thread_safe (~> 0.3, >= 0.3.1)
     meta-tags (2.22.1)
       actionpack (>= 6.0.0, < 8.1)
     method_source (1.1.0)
@@ -452,7 +457,7 @@ GEM
       stimulus-rails
       turbo-rails
     mjml-rails (4.7.2)
-    msgpack (1.4.4)
+    msgpack (1.7.5)
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
@@ -461,7 +466,6 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mustermann-grape (1.0.2)
       mustermann (>= 1.0.0)
-    naught (1.1.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.4)
       connection_pool (~> 2.2)
@@ -472,27 +476,25 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
+    net-scp (4.0.0)
+      net-ssh (>= 2.6.5, < 8.0.0)
+    net-sftp (4.0.0)
+      net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.0)
       net-protocol
+    net-ssh (7.3.0)
     nio4r (2.7.4)
     nkf (0.2.0)
-    nokogiri (1.17.2-x86_64-darwin)
+    nokogiri (1.18.0-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.17.2-x86_64-linux)
+    nokogiri (1.18.0-x86_64-darwin)
       racc (~> 1.4)
-    oauth (0.5.6)
-    omniauth (1.9.2)
-      hashie (>= 3.4.6)
-      rack (>= 1.6.2, < 3)
-    omniauth-oauth (1.1.0)
-      oauth
-      omniauth (~> 1.0)
-    omniauth-twitter (1.4.0)
-      omniauth-oauth (~> 1.1)
-      rack
+    nokogiri (1.18.0-x86_64-linux-gnu)
+      racc (~> 1.4)
     open_uri_redirections (0.2.1)
     orm_adapter (0.5.0)
     os (1.1.4)
+    ostruct (0.6.1)
     parallel (1.26.3)
     parser (3.3.5.0)
       ast (~> 2.4.1)
@@ -666,9 +668,8 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sassc (2.0.1)
+    sassc (2.4.0)
       ffi (~> 1.9)
-      rake
     sax-machine (1.3.2)
     securerandom (0.4.1)
     semantic_range (3.0.0)
@@ -688,7 +689,6 @@ GEM
     simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
-    simple_oauth (0.3.1)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -727,8 +727,15 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (2.1.1-x86_64-darwin)
-    sqlite3 (2.1.1-x86_64-linux-gnu)
+    sqlite3 (2.5.0-aarch64-linux-gnu)
+    sqlite3 (2.5.0-x86_64-darwin)
+    sqlite3 (2.5.0-x86_64-linux-gnu)
+    sshkit (1.23.2)
+      base64
+      net-scp (>= 1.1.2)
+      net-sftp (>= 2.1.2)
+      net-ssh (>= 2.8.0)
+      ostruct
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringex (2.8.5)
@@ -737,24 +744,15 @@ GEM
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
     thor (1.3.2)
-    thread_safe (0.3.6)
+    thruster (0.1.9-aarch64-linux)
+    thruster (0.1.9-x86_64-darwin)
+    thruster (0.1.9-x86_64-linux)
     tilt (2.0.9)
     timecop (0.9.1)
     timeout (0.4.3)
     turbo-rails (2.0.11)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
-    twitter (7.0.0)
-      addressable (~> 2.3)
-      buftok (~> 0.2.0)
-      equalizer (~> 0.0.11)
-      http (~> 4.0)
-      http-form_data (~> 2.0)
-      http_parser.rb (~> 0.6.0)
-      memoizable (~> 0.4.0)
-      multipart-post (~> 2.0)
-      naught (~> 1.0)
-      simple_oauth (~> 0.3.0)
     typhoeus (1.3.1)
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
@@ -794,7 +792,8 @@ GEM
     zeitwerk (2.7.1)
 
 PLATFORMS
-  x86_64-darwin-21
+  aarch64-linux
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
@@ -826,10 +825,12 @@ DEPENDENCIES
   grape
   groupdate
   habtm_generator
+  hashie
   httparty
   image_processing
   invisible_captcha
   ipcat
+  kamal
   kt-paperclip
   kt-paperclip-optimizer
   listen
@@ -841,7 +842,6 @@ DEPENDENCIES
   mini_magick
   mission_control-jobs
   mjml-rails
-  omniauth-twitter
   open_uri_redirections
   parallel
   pg
@@ -876,8 +876,8 @@ DEPENDENCIES
   solid_queue (~> 1.0)
   sqlite3
   stringex
+  thruster
   timecop
-  twitter (~> 7.0.0)
   typhoeus
   vcr
   vite_rails (>= 3.0.13)

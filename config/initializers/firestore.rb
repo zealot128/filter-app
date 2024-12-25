@@ -5,7 +5,7 @@
 #   require "google-cloud-firestore"
 #   require "google/cloud/firestore"
 #   Google::Cloud::Firestore.configure do |config|
-#     config.project_id  = Rails.configuration.secrets.firebase_project_id
+#     config.project_id  = Rails.application.credentials.firebase_project_id
 #     config.credentials = "./config/firebase.json"
 #   end
 # end

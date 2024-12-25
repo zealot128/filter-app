@@ -47,8 +47,6 @@ Rails.application.routes.draw do
     end
     resources :settings
     resources :users
-    get 'twitter' => 'twitter#index'
-    post 'twitter/follow' => 'twitter#follow'
   end
   get 'admin' => redirect('/admin/sources')
 
@@ -93,7 +91,6 @@ Rails.application.routes.draw do
 
   resources :categories, path: "kategorien", only: [:index, :show]
 
-  get '/auth/:provider/callback', to: 'admin/twitter#create'
   get '_bsc' => 'bsc#show'
   mount API => '/api/v1'
   mount Ahoy::Engine => "/stellenanzeigen"

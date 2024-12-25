@@ -1,0 +1,48 @@
+---
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+
+variables:
+  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--label service=filter"
+  DEPENDENCY_SCANNING_DISABLED: "true"
+  DAST_DISABLED: "true"
+  CODE_QUALITY_DISABLED: "true"
+  SAST_DISABLED: "true"
+  SECRET_DETECTION_DISABLED: "true"
+  CONTAINER_SCANNING_DISABLED: "true"
+
+test:
+  image: "timbru31/ruby-node:3.3-slim-20"
+  services:
+    - name: 'postgres:16'
+      alias: postgres
+  cache:
+  - key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  - key:
+      files:
+        - yarn.lock
+    paths:
+      - .yarn-cache/
+  variables:
+    DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
+    DEBIAN_FRONTEND: "noninteractive"
+  before_script:
+    - |
+      if [ -z ${KUBERNETES_PORT+x} ]; then
+        DB_HOST=postgres
+      else
+        DB_HOST=localhost
+      fi
+    - export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
+    - apt update -y && apt install git-core build-essential libpq-dev libyaml-dev libssl-dev libreadline-dev zlib1g-dev libncurses5-dev libvips wget -y
+    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt-get install -y ./google-chrome-stable_current_amd64.deb
+    - bundle config set --local path 'vendor/ruby'
+    - bundle install > /dev/null
+    - yarn install --cache-folder .yarn-cache
+    - ./bin/rails assets:precompile > /dev/null
+  script:
+    - bundle exec rspec

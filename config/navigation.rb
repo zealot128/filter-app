@@ -22,10 +22,6 @@ SimpleNavigation::Configuration.run do |navigation|
         if can?(:manage, Source)
           sub_nav.item :key_2_1, 'Quellen', admin_sources_path
         end
-        if can?(:manage, :twitter)
-          divider.call(sub_nav)
-          sub_nav.item :key_2_1, 'Twitter', admin_twitter_path
-        end
         if can?(:manage, Setting)
           sub_nav.item :key_2_1, 'Settings', admin_settings_path
         end

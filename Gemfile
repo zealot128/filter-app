@@ -75,8 +75,6 @@ gem "migration_data"
 gem 'grape'
 gem 'active_model_serializers', '~> 0.10'
 
-gem "twitter", "~> 7.0.0"
-gem "omniauth-twitter"
 gem "ruby-stemmer"
 gem "premailer-rails"
 # TODO: https://github.com/johnkoht/zurb-ink/pull/1
@@ -85,6 +83,8 @@ gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff", require: "voight_kampff/rails"
 gem 'semantic_range'
+
+gem 'thruster', require: false
 
 group :test do
   gem "fuubar"
@@ -104,6 +104,7 @@ group :development do
   gem "listen"
   gem "foreman"
   gem 'ruby-lsp', require: false
+  gem 'kamal', require: false
 end
 
 group :development, :test do
@@ -120,4 +121,5 @@ group :capistrano do
 end
 
 gem "meta-tags", "~> 2.13"
+gem 'hashie'
 

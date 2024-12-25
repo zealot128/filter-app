@@ -18,7 +18,6 @@ export BUNDLE_WITHOUT=production
 bundle install
 
 cp config/application.hrfilter.yml config/application.yml
-cp config/secrets.yml.example config/secrets.yml
 cp config/database.yml.gitlab config/database.yml
 
 bundle exec rake db:create RAILS_ENV=test

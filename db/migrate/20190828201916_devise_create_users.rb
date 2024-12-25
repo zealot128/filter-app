@@ -45,8 +45,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
   def data
     user = User.new
-    user.password = Rails.application.secrets.http_password
-    user.password_confirmation = Rails.application.secrets.http_password
+    user.password = Rails.application.credentials.http_password
+    user.password_confirmation = Rails.application.credentials.http_password
     user.email = Setting.email
     user.role = 'admin'
     user.save validate: false

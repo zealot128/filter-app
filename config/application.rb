@@ -31,9 +31,8 @@ module Baseapp
     config.middleware.use Rack::Attack
     config.active_record.belongs_to_required_by_default = false
     config.hosts.clear
-    config.active_storage.variant_processor = :mini_magick
+    config.active_storage.variant_processor = ENV["VARIANT_PROCESSOR"] ? ENV['VARIANT_PROCESSOR'].to_sym : :mini_magick
     config.active_support.cache_format_version = 7.1
-    config.secrets = config_for(:secrets)
     config.mission_control.jobs.base_controller_class = "SolidQueueBaseController"
     config.mission_control.jobs.adapters = [:solid_queue]
     if Rails.env.production?

@@ -109,7 +109,7 @@ Rails.application.configure do
   else
     warn "no config/email.yml configuration found, e-mail delivery will not work!"
   end
-  config.action_mailer.default_url_options = { host: h = Rails.configuration.secrets.domain_name, protocol: 'https' }
+  config.action_mailer.default_url_options = { host: h = Rails.application.credentials.domain_name, protocol: 'https' }
   ActionMailer::Base.config.default_url_options = { host: h, protocol: 'https' }
   config.action_mailer.asset_host = "https://#{h}"
   config.lograge.enabled = true
