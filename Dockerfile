@@ -4,6 +4,8 @@
 ARG RUBY_VERSION=3.3.3
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
+ARG APP_NAME=fahrradfilter
+
 # Rails app lives here
 WORKDIR /rails
 
@@ -43,6 +45,9 @@ RUN yarn install --frozen-lockfile
 
 # Copy application code
 COPY . .
+
+COPY config/application.$APP_NAME.yml config/application.yml
+COPY config/credentials/$APP_NAME.yml.enc config/credentials/production.yml.enc
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/

@@ -22,7 +22,7 @@ accessories:
     hosts:
       - 5.75.182.70
     env: {}
-    port: "172.17.0.1:5432:5432"
+    # port: "172.17.0.1:5432:5432"
     directories:
       - data:/var/lib/postgresql/data
     env:
@@ -31,7 +31,7 @@ accessories:
     image: "redis:7.0"
     hosts:
       - 5.75.182.70
-    port: "172.17.0.1:6379:6379"
+    # port: "172.17.0.1:6379:6379"
     directories:
       - "redis-data:/data"
 
@@ -42,7 +42,7 @@ accessories:
 proxy:
   ssl: true
   ssl: false
-  host:
+  hosts:
     - fahrrad-filter.de
     - www.fahrrad-filter.de
   app_port: 80
@@ -64,6 +64,7 @@ builder:
   args:
     type: registry
     RUBY_VERSION: 3.3.5
+    APP_NAME: fahrradfilter
     UID: 1000
     GID: 1000
     RAILS_ENV: production

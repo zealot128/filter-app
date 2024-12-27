@@ -3,7 +3,7 @@ include:
   - template: Auto-DevOps.gitlab-ci.yml
 
 variables:
-  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--label service=filter"
+  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--label service=fahrradfilter"
   DEPENDENCY_SCANNING_DISABLED: "true"
   DAST_DISABLED: "true"
   CODE_QUALITY_DISABLED: "true"
