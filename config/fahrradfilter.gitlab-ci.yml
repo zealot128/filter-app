@@ -38,7 +38,7 @@ test:
         DB_HOST=localhost
       fi
     - export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
-    - apt update -y && apt install git-core build-essential libpq-dev libyaml-dev libssl-dev libreadline-dev zlib1g-dev libncurses5-dev libvips wget -y
+    - apt update -y && apt install git-core build-essential libpq-dev libyaml-dev libssl-dev libreadline-dev zlib1g-dev libncurses5-dev libvips wget imagemagick -y
     - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt-get install -y ./google-chrome-stable_current_amd64.deb
     - bundle config set --local path 'vendor/ruby'
     - bundle install > /dev/null
