@@ -1,4 +1,5 @@
 Mjml.setup do |config|
+  config.use_mrml = true
   # Use :haml as a template language
   config.template_language = :slim
 
@@ -6,11 +7,11 @@ Mjml.setup do |config|
   config.raise_render_exception = !Rails.env.production?
 
   # Optimize the size of your emails
-  config.beautify = false
-  config.minify = true
+  # config.beautify = false
+  # config.minify = true
 
   # Render MJML templates with errors
-  config.validation_level = "soft"
+  # config.validation_level = "soft"
 
   # Use custom MJML binary with custom version
   # config.mjml_binary = "/path/to/custom/mjml"

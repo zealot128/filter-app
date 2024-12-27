@@ -68,8 +68,8 @@ Rails.application.configure do
   #####
   InvisibleCaptcha.timestamp_enabled = false
 
-  host = "hrfilter.#{ENV["USER"]}.pludoni.com"
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  host = "hrfilter.#{ENV.fetch('USER', nil)}.pludoni.com"
+  config.action_mailer.default_url_options = { host:, protocol: 'https' }
   config.active_job.queue_adapter = :test
   config.eager_load = ENV['CI'].present?
 end

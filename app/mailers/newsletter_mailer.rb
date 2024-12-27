@@ -5,11 +5,11 @@ class NewsletterMailer < ApplicationMailer
 
     @tracking_token = tracking_token
     @categories = mailing.categories
-    @preview = @mailing.intro
+    # mrjml does not support html in mjml-preview yet
+    @preview = @mailing.intro.remove(/<[^\]]+>/)
     headers['X-Auto-Response-Suppress'] = "OOF"
     profile_url = edit_mail_subscription_url(@mailing.subscription)
     headers['List-Unsubscribe'] = "<#{profile_url}>"
-
 
     show_ad = AdLogic.enabled? && AdLogic.promoted_events.any?
     if show_ad

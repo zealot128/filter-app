@@ -11,6 +11,8 @@ table.row: tr
     td.expander
   td.wrapper.last: table.six.columns: tr
     td
-      p style='font-size: 12px; color: #888' = Setting.site_name
-      p style='font-size: 12px; color: #888' = raw Setting.get('mail_impressum')
+      p style='font-size: 12px; color: #888' 
+        = Setting.site_name
+      p style='font-size: 12px; color: #888'
+        = raw Setting.get('mail_impressum')
     td.expander

@@ -56,6 +56,7 @@ gem 'google-cloud-firestore', require: false
 gem 'google-cloud-firestore-v1', ">= 0.10", require: false
 gem 'fcm', require: false
 gem 'mjml-rails'
+gem 'mrml'
 
 gem "vite_ruby", '~> 3.3.2'
 gem "vite_rails", ">= 3.0.13"
