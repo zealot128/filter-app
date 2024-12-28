@@ -97,5 +97,6 @@ Rails.application.routes.draw do
   if Rails.env.production?
     mount MissionControl::Jobs::Engine, at: "/rails/jobs"
   end
+  get 'up' => 'up#index'
   root to: "days#index"
 end
