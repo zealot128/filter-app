@@ -22,9 +22,6 @@ mjml
         mj-social
           mj-social-element(href="#{root_url}" background-color="#bbb" src="#{image_url("#{Setting.key}/favicon.png")}")
             = Setting.site_name 
-          - if Setting.get('twitter_account').present?
-            mj-social-element(href="https://twitter.com/#{Setting.get('twitter_account')}" src="#{image_url("twitter-white.png")}" background-color="#55acee")
-              = Setting.get('twitter_account') 
           mj-social-element(href="https://play.google.com/store/apps/details?id=com.pludoni.filterapp" src="#{image_url("google-play.png")}" background-color="#aac1d5")
             |Android
           mj-social-element(href="https://itunes.apple.com/us/app/hrfilter-news/id1435577499" src="#{image_url("app-store.png")}" background-color="#aac1d5")

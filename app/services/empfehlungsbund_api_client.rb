@@ -35,13 +35,13 @@ class EmpfehlungsbundAPIClient
     end
 
     def from
-      Time.zone.parse(@from)
+      Time.zone.parse(@from).in_time_zone('Europe/Berlin')
     end
   end
 
   class CommunityEvent < PartnerEvent
     def from
-      Time.zone.parse(@start)
+      Time.zone.parse(@start).in_time_zone('Europe/Berlin')
     end
 
     def url
@@ -49,7 +49,7 @@ class EmpfehlungsbundAPIClient
     end
 
     def to
-      Time.zone.parse(@finish)
+      Time.zone.parse(@finish).in_time_zone('Europe/Berlin')
     end
 
     def link
