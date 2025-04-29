@@ -37,16 +37,7 @@ class TwitterSource < Source
   DOC
 
   def refresh
-    TwitterProcessor.process(self)
-    update_column :error, false
-  rescue StandardError => e
-    if Rails.env.test?
-      raise e
-    else
-      NOTIFY_EXCEPTION(e)
-      update_column :error, true
-      update_column :error_message, e.inspect
-    end
+    return
   end
 
   def to_param
@@ -71,11 +62,5 @@ class TwitterSource < Source
   end
 
   def self.client
-    @client ||= ::Twitter::REST::Client.new do |config|
-      config.consumer_key =      Rails.application.credentials.twitter_consumer_key
-      config.consumer_secret =   Rails.application.credentials.twitter_consumer_secret
-      config.access_token =        Setting.get('twitter_access_token') || Rails.application.credentials.twitter_access_token
-      config.access_token_secret = Setting.get('twitter_access_secret') || Rails.application.credentials.twitter_access_token_secret
-    end
   end
 end
