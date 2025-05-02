@@ -40,7 +40,7 @@ html lang=(locale) class=(browser.to_s)
           li= link_to "Newsletter", '/newsletter'
           - if Setting.get('twitter_account')
             li = link_to "https://twitter.com/#{Setting.get('twitter_account')}" do
-              i.fa.fa-fw.fa-twitter>
+              i.custom-x>
 
     - if Rails.env.production?
       = render "layouts/piwik"
