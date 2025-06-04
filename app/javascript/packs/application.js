@@ -2,6 +2,9 @@ import Automount from 'utils/automount'
 // import store from "../front-page/store";
 import App from "front-page/components/FrontPage.vue";
 
+// Import Stimulus controllers
+import "controllers"
+
 document.addEventListener('DOMContentLoaded', () => {
   Automount('trend-page', () => import("components/TrendPage.vue"))
   Automount('trend-flame-graph', () => import("components/TrendFlameGraph.vue"))

@@ -5,11 +5,11 @@ class StaticPagesController < ApplicationController
   end
 
   def impressum
-    @impressum = Setting.get('impressum')
+    @impressum = helpers.obfuscate_emails_in_html(Setting.get('impressum'))
   end
 
   def datenschutz
-    @datenschutz = Setting.get('datenschutz')
+    @datenschutz = helpers.obfuscate_emails_in_html(Setting.get('datenschutz'))
   end
 
   def faq
