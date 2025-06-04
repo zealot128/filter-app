@@ -2,7 +2,7 @@ describe NewsItem do
   describe "Categorizer" do
     specify "Default assigns keywords" do
       c1 = Fabricate(:category, keywords: 'gehalt,bwl')
-      c2 = Fabricate(:category, name: 'Bildung' ,keywords: 'foobar')
+      c2 = Fabricate(:category, name: 'Bildung', keywords: 'foobar')
 
       ni = Fabricate.build(:news_item, title: 'Gehalt bla')
       ni.source.default_category = c2

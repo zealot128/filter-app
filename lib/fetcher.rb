@@ -2,13 +2,12 @@ require "httparty"
 module Fetcher
   module_function
 
-  class FetcherResponse < Struct.new(:code, :body, :content_type, :location)
-  end
+    FetcherResponse = Struct.new(:code, :body, :content_type, :location)
 
   HTTP_OPTIONS = {
     headers: {
-      "User-Agent"=>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:64.0) Gecko/20100101 Firefox/64.0",
-      "Accept"=>"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:64.0) Gecko/20100101 Firefox/64.0",
+      "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       "Accept-Language" => "de-de,de,en-us,en",
       # "Accept" => "text/html,application/xhtml+xml,application/xml"
     },
@@ -26,8 +25,8 @@ module Fetcher
     retries.each do |seconds|
       response = HTTParty.get url, options
       if response.code != 200
-        puts "Error with #{url}"
-        puts response.code
+        Rails.logger.debug { "Error with #{url}" }
+        Rails.logger.debug response.code
       end
       break if response.code < 400 or response.code == 404
       break if check_link
@@ -38,7 +37,7 @@ module Fetcher
                end
     FetcherResponse.new response.code, response.body, response.content_type, location
   rescue Errno::ETIMEDOUT, Timeout::Error => e
-    return FetcherResponse.new 408, e.to_s, "", ""
+    FetcherResponse.new 408, e.to_s, "", ""
   rescue SocketError => e
     if e.to_s["getaddrinfo"]
       "Die Webadresse konnte nicht gefunden werden (DNS-Problem)"

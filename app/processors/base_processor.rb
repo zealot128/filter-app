@@ -48,8 +48,8 @@ class BaseProcessor
     ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
   end
 
-  def sanitize(*args)
-    ActionController::Base.helpers.sanitize(*args)
+  def sanitize(*)
+    ActionController::Base.helpers.sanitize(*)
   end
 
   def clear(text)

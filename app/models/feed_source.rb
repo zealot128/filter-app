@@ -37,7 +37,7 @@ class FeedSource < Source
     verwendet, um aus den Anrisstexten die vollständige Beschreibung
     runterzuladen. Wichtig für korrekte Kategorisierung/Suche
   DOC
-  validates_uniqueness_of :url
+  validates :url, uniqueness: true
   validates :twitter_account, format: { with: /\A\w+\z/ }, if: :twitter_account?
 
   def should_fetch_stats?(ni)

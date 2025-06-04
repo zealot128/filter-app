@@ -75,7 +75,7 @@ class NewsItem < ApplicationRecord
   }
   scope :newspaper, -> { where.not(blacklisted: true).where('absolute_score is not null and absolute_score >= 0').order('absolute_score desc') }
   scope :current, -> { visible.recent }
-  scope :old, -> { where("published_at < ?", (max_age + 1.day).ago) }
+  scope :old, -> { where(published_at: ...(max_age + 1.day).ago) }
   scope :home_page, -> { where('news_items.value > 0').visible.order("news_items.value desc").where.not(news_items: { value: nil }).current }
   scope :sorted, -> { visible.order("news_items.absolute_score desc") }
   scope :recent, -> { where("published_at > ?", max_age.ago) }
@@ -135,7 +135,7 @@ class NewsItem < ApplicationRecord
 
   scope :uncategorized, -> {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
-      where('news_item_id is null').
+      where(news_item_id: nil).
       group('news_items.id')
   }
   scope :without_dupes, -> {
@@ -146,8 +146,8 @@ class NewsItem < ApplicationRecord
   has_and_belongs_to_many :categories
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id", inverse_of: :to
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", inverse_of: :from
-  has_many :referenced_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
-  has_many :referencing_news, -> { where('different = ?', true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
+  has_many :referenced_news, -> { where(different: true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
+  has_many :referencing_news, -> { where(different: true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
   has_many :trend_usages, class_name: "Trends::Usage", dependent: :destroy
   belongs_to :dupe_of, class_name: "NewsItem", optional: true, inverse_of: :dupes
   has_many :dupes, class_name: "NewsItem", inverse_of: :dupe_of
@@ -170,7 +170,7 @@ class NewsItem < ApplicationRecord
   has_attached_file :image,
     styles: {
       original: ["700x400>", :jpg],
-      newsletter: [NEWSLETTER_SIZE.join('x') + "^", :jpg]
+      newsletter: ["#{NEWSLETTER_SIZE.join('x')}^", :jpg]
     },
     processors: [:thumbnail],
     convert_options: {
@@ -317,7 +317,7 @@ class NewsItem < ApplicationRecord
   end
 
   def self.cleanup
-    NewsItem.where('published_at < ?', 6.months.ago).where.not(image_file_name: nil).find_each { |i|
+    NewsItem.where(published_at: ...6.months.ago).where.not(image_file_name: nil).find_each { |i|
       i.image = nil
       i.save validate: false
     }

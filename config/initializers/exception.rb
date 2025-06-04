@@ -17,7 +17,7 @@ if ENV['SENTRY_DSN']
       filter.filter(event.to_hash)
     end
     config.excluded_exceptions =
-      Sentry::Configuration::IGNORE_DEFAULT  + [
+      Sentry::Configuration::IGNORE_DEFAULT + [
         'ActiveRecord::RecordNotFound',
         'ActionController::RoutingError',
         'ActionController::InvalidAuthenticityToken',
@@ -27,8 +27,8 @@ if ENV['SENTRY_DSN']
         'Mongoid::Errors::DocumentNotFound'
       ].freeze
   end
-  def NOTIFY_EXCEPTION(*args)
-    Sentry.capture_exception(*args)
+  def NOTIFY_EXCEPTION(*)
+    Sentry.capture_exception(*)
   end
 
 else
@@ -37,7 +37,7 @@ else
 
 end
 
-def CATCH_ALL(&block)
+def CATCH_ALL(&)
   yield
 rescue StandardError => e
   NOTIFY_EXCEPTION(e)

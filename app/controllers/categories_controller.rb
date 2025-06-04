@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   def index
     @title = "Alle Kategorien auf #{Setting.site_name}"
 
-    @categories = Category.all.order('name')
+    @categories = Category.order('name')
 
     count = (Setting.get('trend_min_sources_count') || 4).to_i
     @trends = Trends::Trend.top_of_n_days(60.days.ago, count)
@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
       joins(:source).
       where(sources: { type: 'FeedSource' }).
       includes(:source).
-      paginate(page: page, per_page: 12)
+      paginate(page:, per_page: 12)
 
     @news_items = case params[:sort]
                   when 'recent'

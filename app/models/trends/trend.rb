@@ -18,7 +18,7 @@ class Trends::Trend < ApplicationRecord
 
   scope :top_of_n_days, ->(time, min_mentions) {
     joins(words: :usages).
-      where('date >= ?', time).
+      where(date: time..).
       group('trends_trends.id').
       order('count desc').
       having('count(distinct source_id) >= ?', min_mentions).
@@ -31,8 +31,8 @@ class Trends::Trend < ApplicationRecord
   before_save if: :extra_words do
     extra_words.split(',').map(&:strip).map(&:downcase).each do |w|
       word = Trends::Word.find_by(word: w)
-      if word && !words.include?(word)
-        self.words << word # rubocop:disable Style/RedundantSelf
+      if word && words.exclude?(word)
+        self.words << word
       end
     end
   end

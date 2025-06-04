@@ -1,4 +1,4 @@
-class TrendMailer < ActionMailer::Base
+class TrendMailer < ApplicationMailer
   layout 'newsletter'
   default from: Setting.get('from')
 

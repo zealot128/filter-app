@@ -2,25 +2,25 @@ class DaysController < ApplicationController
   def index
     @paths = {
       "Suche/Feeds": search_path,
-      "Impressum": impressum_path,
-      "Datenschutz": datenschutz_path,
-      "FAQ": faq_path,
-      "Quellen": '/quellen',
+      Impressum: impressum_path,
+      Datenschutz: datenschutz_path,
+      FAQ: faq_path,
+      Quellen: '/quellen',
       "Quelle einreichen": new_submit_source_path,
       "Als App": app_path,
-      "Newsletter": '/newsletter'
+      Newsletter: '/newsletter'
     }
-    @twitter = "#{Setting.get('twitter_account')}" || ""
+    @twitter = Setting.get('twitter_account').to_s || ""
   end
 
   def show
     @day = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    if @day > Date.today
+    if @day > Time.zone.today
       raise ArgumentError
     end
     @news = NewsItem.includes(:source).top_of_day(@day)
     @tomorrow = @day + 1
-    if @tomorrow > Date.today
+    if @tomorrow > Time.zone.today
       @tomorrow = nil
     end
     @yesterday = @day - 1

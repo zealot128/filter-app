@@ -5,7 +5,7 @@ class Admin::Trends::WordsController < AdminController
     @week = (params[:week] || 0).to_i.weeks.ago.strftime("%G%W")
     @title = "Trendfinder #{@week}"
     words! Trends::Word.
-      where('trends_usages.calendar_week = ?', @week)
+      where(trends_usages: { calendar_week: @week })
     @trends = Trends::Trend.includes(:words).order('name')
   end
 

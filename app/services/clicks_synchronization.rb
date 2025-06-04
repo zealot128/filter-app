@@ -4,7 +4,7 @@ class ClicksSynchronization
 
     Ahoy::Visit.
       where(synced: false).
-      where('started_at < ?', 4.hours.ago).
+      where(started_at: ...4.hours.ago).
       joins(:events).
       group(:id).find_each do |visit|
       sync_visit(visit)
@@ -22,10 +22,10 @@ class ClicksSynchronization
   end
 
   def self.cleanup
-    no_events_at_all = Ahoy::Visit.where('started_at < ?', 7.days.ago).left_joins(:events).where('ahoy_events.id is null').pluck('ahoy_visits.id')
+    no_events_at_all = Ahoy::Visit.where(started_at: ...7.days.ago).left_joins(:events).where(ahoy_events: { id: nil }).pluck('ahoy_visits.id')
     if no_events_at_all.present?
       Ahoy::Visit.where(id: no_events_at_all).destroy_all
     end
-    Ahoy::Visit.where('started_at < ?', 6.months.ago).destroy_all
+    Ahoy::Visit.where(started_at: ...6.months.ago).destroy_all
   end
 end

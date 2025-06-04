@@ -3,7 +3,7 @@ require 'fcm'
 RSpec.describe PushNotificationManager, type: :service do
   specify 'pushes new notification' do
     source = Fabricate(:source)
-    news_item = Fabricate(:news_item, source: source)
+    news_item = Fabricate(:news_item, source:)
     manager = PushNotificationManager.new(
       fcm_token: '123',
       subscribed_sourced: [source.id]
@@ -18,7 +18,7 @@ RSpec.describe PushNotificationManager, type: :service do
 
   specify 'reposting' do
     source = Fabricate(:source)
-    _news_item = Fabricate(:news_item, source: source)
+    _news_item = Fabricate(:news_item, source:)
     manager = PushNotificationManager.new(
       fcm_token: '123',
       subscribed_sourced: [source.id]
@@ -32,8 +32,8 @@ RSpec.describe PushNotificationManager, type: :service do
 
   specify 'throttling' do
     source = Fabricate(:source)
-    Fabricate(:news_item, source: source)
-    Fabricate(:news_item, source: source, guid: '123')
+    Fabricate(:news_item, source:)
+    Fabricate(:news_item, source:, guid: '123')
 
     manager = PushNotificationManager.new(
       fcm_token: '123',
@@ -53,7 +53,7 @@ RSpec.describe PushNotificationManager, type: :service do
 
   specify 'not post again if NotRegistered' do
     source = Fabricate(:source)
-    Fabricate(:news_item, source: source)
+    Fabricate(:news_item, source:)
     manager = PushNotificationManager.new(
       fcm_token: '123',
       subscribed_sourced: [source.id]
@@ -68,7 +68,7 @@ RSpec.describe PushNotificationManager, type: :service do
 
     expect(PushNotification.device_unregistered.count).to be == 1
 
-    Fabricate(:news_item, source: source, guid: '123')
+    Fabricate(:news_item, source:, guid: '123')
     Timecop.travel 6.hours.from_now do
       manager.run
       expect(PushNotification.count).to be == 1

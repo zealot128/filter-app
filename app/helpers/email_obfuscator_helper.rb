@@ -31,20 +31,6 @@ module EmailObfuscatorHelper
     end
   end
 
-  def obfuscated_email_with_icon(email, options = {})
-    return "" if email.blank?
-
-    icon = options.delete(:icon) || tag.i(class: 'far fa-envelope')
-
-    content_tag :span, class: 'd-inline-flex align-items-center' do
-      safe_join([
-                  icon,
-                  ' ',
-                  obfuscated_email_tag(email, options)
-                ])
-    end
-  end
-
   def obfuscate_emails_in_html(html)
     return html if html.blank?
 

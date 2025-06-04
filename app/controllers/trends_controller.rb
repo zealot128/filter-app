@@ -8,7 +8,7 @@ class TrendsController < ApplicationController
     render json: {
       'week' => days7.map { |i| i.as_json.except("updated_at", "created_at") },
       'month' => days30.map { |i| i.as_json.except("updated_at", "created_at") },
-    #  Testen
+      #  Testen
       'all' => Trends::Trend.all.map { |i| i.as_json.except("updated_at", "created_at") },
     }
   end

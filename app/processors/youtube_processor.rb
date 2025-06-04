@@ -33,7 +33,7 @@ class YoutubeProcessor < FeedProcessor
     if defined?(entry.media_thumbnail_url) and entry.media_thumbnail_url.present? and item.image.blank?
       begin
         image = download_url(entry.media_thumbnail_url)
-        item.update image: image
+        item.update image:
       rescue SocketError, StandardError => e
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end

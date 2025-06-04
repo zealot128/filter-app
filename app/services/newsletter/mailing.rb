@@ -27,7 +27,7 @@ module Newsletter
     end
 
     def subject
-      kw = Date.today.strftime("%W").to_i
+      kw = Time.zone.today.strftime("%W").to_i
       top_news_items = sections.
         flat_map { |i| i.respond_to?(:news_items) ? i.news_items : [] }.
         sort_by { |i|
@@ -52,10 +52,9 @@ module Newsletter
       "#{title} - #{Setting.site_name} KW #{kw}"
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def intro
+        def intro
       Setting.mail_intro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
-        case $1.strip
+        case ::Regexp.last_match(1).strip
         when 'top' then count.to_s
         when 'total_count' then total_count.to_s
         when 'from_interval', 'interval_from'
@@ -68,7 +67,7 @@ module Newsletter
         else "missing_token #{pattern}"
         end
       end
-    end
+        end
 
     def outro
       Setting.mail_outro.gsub(/\{\{([^\}]+)\}\}/) do |pattern|
@@ -113,9 +112,8 @@ module Newsletter
     def sections
       @sections ||=
         begin
-          s = []
-          categories.each do |cat|
-            s << CategorySection.new(cat, self)
+          s = categories.map do |cat|
+            CategorySection.new(cat, self)
           end
 
           all_news_items = s.flat_map(&:news_items).sort_by { |i| -(i.absolute_score || 0) }.uniq(&:title)
@@ -147,23 +145,21 @@ module Newsletter
 
     def categories
       @categories ||= begin
-                        category_ids = @subscription.categories.reject(&:blank?)
+                        category_ids = @subscription.categories.compact_blank
                         base = Category.where(id: category_ids).to_a
                         if has_uncatorized?
                           base + [Uncategorized.new]
                         else
                           base
                         end
-                      end
+      end
     end
 
     def count
-      sections.map { |i| i.respond_to?(:news_items) ? i.news_items.count : 0 }.sum
+      sections.sum { |i| i.respond_to?(:news_items) ? i.news_items.count : 0 }
     end
 
-    def total_count
-      @total_count
-    end
+    attr_reader :total_count
 
     def has_uncatorized?
       @subscription.categories.include? 0

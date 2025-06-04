@@ -23,7 +23,7 @@ class PushNotificationManager
   end
 
   def previous_pushes_query
-    PushNotification.where(device_hash: device_hash)
+    PushNotification.where(device_hash:)
   end
 
   def new_entries
@@ -120,7 +120,7 @@ class PushNotificationManager
 
   def status!(state, payload = {})
     PushNotification.create(
-      device_hash: device_hash,
+      device_hash:,
       response: state,
       push_payload: payload,
       os: @user_snapshot[:os],

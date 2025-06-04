@@ -28,8 +28,7 @@ class NewsFilter
     @news_items
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  def apply_order!
+    def apply_order!
     case order
     when 'all_best'
       @news_items = @news_items.reorder!(Arel.sql('absolute_score desc, published_at desc, news_items.id'))
@@ -54,7 +53,7 @@ class NewsFilter
       @news_items = @news_items.visible.select("news_items.*, #{ranking} as current_score")
       @news_items = @news_items.reorder!('current_score desc, id desc')
     end
-  end
+    end
 
   def apply_filter!
     if @blacklisted.present?
@@ -64,7 +63,7 @@ class NewsFilter
       @news_items = @news_items.where(source_id: Source.lsr_allowed)
     end
     if image_exists.present?
-      @news_items = @news_items.where("image_file_name IS NOT NULL")
+      @news_items = @news_items.where.not(image_file_name: nil)
     end
     if @categories.present?
       @news_items = @news_items.where(%{news_items.id in (

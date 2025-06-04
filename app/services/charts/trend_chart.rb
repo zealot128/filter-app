@@ -12,8 +12,8 @@ module Charts
 
     def to_highcharts
       p = @source_trend.map { |date, _count| date }
-      min = p.min || Date.today
-      max = p.max || Date.today
+      min = p.min || Time.zone.today
+      max = p.max || Time.zone.today
       year_df = max.year - min.year
       {
         chart: {
@@ -35,7 +35,7 @@ module Charts
           pointFormat: '<b>{point.y} {series.name} </b>'
         },
         xAxis: {
-          plotLines: year_df.times.map { |i| max.year - i }.map { |year|
+          plotLines: Array.new(year_df) { |i| max.year - i }.map { |year|
             {
               value: Date.new(year, 1, 1).to_datetime.to_i * 1000,
               label: { text: year.to_s, fontSize: '8px' },

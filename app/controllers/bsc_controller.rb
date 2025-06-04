@@ -8,8 +8,8 @@ class BscController < ApplicationController
     our_sources = Source.where('url like ? or url like ? ', '%pludoni%', '%empfehlungsbund%')
 
     year = (params[:year].presence || 3.days.ago.year).to_i
-    from = Date.new(year, 1, 1)
-    to = Date.new(year, 12, 31)
+    Date.new(year, 1, 1)
+    Date.new(year, 12, 31)
     subscriptions = MailSubscription.order('created_at desc')
     render json: {
       metrics: {
@@ -49,8 +49,8 @@ class BscController < ApplicationController
             title: "Anzahl aktive Abonnennten je Monat",
             determinable_for_past: true,
             value: MailSubscription::History.
-              where('mail_subscription_histories.opened_at is not null').
-              where('extract(year from mail_subscription_histories.created_at) = :year', year: year).
+              where.not(mail_subscription_histories: { opened_at: nil }).
+              where('extract(year from mail_subscription_histories.created_at) = :year', year:).
               group_by_month('mail_subscription_histories.created_at').
               count('distinct(mail_subscription_id)')
           }
@@ -62,7 +62,7 @@ class BscController < ApplicationController
           },
           sources_no_error: {
             title: "Quellen ohne Fehler",
-            value: Source.visible.where.not("error = ?", true).count,
+            value: Source.visible.where.not(error: true).count,
             percentage_of: :sources_total
           },
           sources_new: {

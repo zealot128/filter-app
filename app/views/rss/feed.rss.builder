@@ -13,7 +13,8 @@ xml.rss(version: "2.0",
         xml.pubDate ni.published_at.rfc822
         xml.guid ni.guid
         if ni.image.present?
-          xml.tag!("media:content", "xmlns:media" => "http://search.yahoo.com/mrss/", url: root_url + ni.image.url, medium: "image", type: "image/jpeg")
+          xml.tag!("media:content", "xmlns:media" => "http://search.yahoo.com/mrss/", url: root_url + ni.image.url, medium: "image",
+type: "image/jpeg")
         end
         xml.description do
           xml.cdata!(description(ni))

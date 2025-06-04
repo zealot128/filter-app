@@ -26,6 +26,6 @@ RSpec.describe JobsController, type: :controller do
 
     get :events, format: 'json'
     expect(response).to be_successful
-    expect(JSON.parse(response.body).count).to be == 0
+    expect(response.parsed_body.count).to be == 0
   end
 end

@@ -21,7 +21,7 @@ class APIController < ApplicationController
 
   def categories
     if params[:id]
-      if category = grouped_categories.select { |cat| cat["id"] == params[:id].to_i }.first
+      if (category = grouped_categories.find { |cat| cat["id"] == params[:id].to_i })
         render json: category.to_json, status: :ok
       else
         render json: { status: :error, message: 'Not found' }, status: :not_found
@@ -35,10 +35,9 @@ class APIController < ApplicationController
 
   def grouped_categories
     grouped_categories ||= Category.joins(:categories_news_items).group("categories_news_items.category_id").count
-    grouped_categories = grouped_categories.map do |id, count|
+    grouped_categories.map do |id, count|
       category = Category.find(id)
       category.attributes.merge("news_items_count" => count)
     end
-    grouped_categories
   end
 end

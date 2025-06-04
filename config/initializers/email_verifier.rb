@@ -2,7 +2,7 @@
 #   config.test_mode = !Rails.env.production?
 #   begin
 #     config.verifier_email = Setting.get('from')
-#   rescue StandardError # rubocop:disable Lint/HandleExceptions
+#   rescue StandardError
 #     # Settings noch nicht verfügbar
 #   end
 

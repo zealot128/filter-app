@@ -10,9 +10,6 @@ class Admin::UsersController < AdminController
     @user = User.new
   end
 
-  def edit
-  end
-
   def create
     @user = User.new(permitted_params)
     @user.skip_password_validation = true
@@ -23,6 +20,9 @@ class Admin::UsersController < AdminController
     else
       render :new
     end
+  end
+
+  def edit
   end
 
   def update

@@ -3,9 +3,9 @@ Rack::Attack.blocklist('fail2ban pentesters') do |req|
     qs = CGI.unescape(req.query_string)
     qs.include?("'A=0") || qs =~ %r{/etc/passwd|/proc/self|/etc/hosts}
       req.path.include?('/etc/passwd') ||
-      req.path.include?('wp-admin') ||
-      req.path.include?('wp-login') ||
-      req.path.include?('.php')
+        req.path.include?('wp-admin') ||
+        req.path.include?('wp-login') ||
+        req.path.include?('.php')
   end
 end
 
@@ -27,12 +27,11 @@ Rack::Attack.blocklist("Newsletter Subscriber mit fragwürdigen E-Mail Domains b
   end
 end
 
-
-Rack::Attack.enabled = !Rails.env.test? 
+Rack::Attack.enabled = !Rails.env.test?
 
 Rack::Attack.blocklist_ip("176.49.9.157")
 
-Rack::Attack.throttled_response = lambda do |request|
+Rack::Attack.throttled_response = ->(_request) do
   # NB: you have access to the name and other data about the matched throttle
   #  request.env['rack.attack.matched'],
   #  request.env['rack.attack.match_type'],
@@ -41,5 +40,5 @@ Rack::Attack.throttled_response = lambda do |request|
 
   # Using 503 because it may make attacker think that they have successfully
   # DOSed the site. Rack::Attack returns 429 for throttling by default
-  [ 503, { 'Content-Type' => 'text/html; encoding=utf-8'}, [File.read('public/503.html')]]
+  [503, { 'Content-Type' => 'text/html; encoding=utf-8' }, [File.read('public/503.html')]]
 end

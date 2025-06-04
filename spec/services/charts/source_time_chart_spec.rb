@@ -5,7 +5,7 @@ module Charts
       chart = SourceTimeChart.new(ni.source)
       expect(chart.show?).to be == true
       expect(chart.to_highcharts).to be_kind_of Hash
-      expect(chart.data.map(&:second).sum).to be == 1
+      expect(chart.data.sum(&:second)).to be == 1
     end
   end
 end

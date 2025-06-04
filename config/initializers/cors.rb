@@ -16,10 +16,10 @@
 # end
 
 Rails.application.configure do
-  config.middleware.insert_before 0, Rack::Cors, debug: true, logger: ::Logger.new(STDOUT) do
+  config.middleware.insert_before 0, Rack::Cors, debug: true, logger: Logger.new($stdout) do
     allow do
       if Rails.env.development?
-        origins "pludoni.#{ENV['LOGNAME']}.pludoni.com"
+        origins "pludoni.#{ENV.fetch('LOGNAME', nil)}.pludoni.com"
       else
         origins 'www.pludoni.de'
       end

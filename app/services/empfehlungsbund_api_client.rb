@@ -26,7 +26,7 @@ class EmpfehlungsbundAPIClient
     attr_accessor :id, :title, :body, :link, :from, :to, :address, :event_type, :image
     def initialize(args)
       args.each do |k, v|
-        instance_variable_set("@#{k}", v)
+        instance_variable_set(:"@#{k}", v)
       end
     end
 

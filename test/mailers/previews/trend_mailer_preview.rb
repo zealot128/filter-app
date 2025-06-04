@@ -1,7 +1,7 @@
 class TrendMailerPreview < ActionMailer::Preview
   def week
     all = Trends::Word.
-      where('trends_usages.calendar_week = ?', 7.day.ago.strftime("%G%W")).
+      where(trends_usages: { calendar_week: 7.days.ago.strftime("%G%W") }).
       where(ignore: false).
       joins(:usages).
       group(:id).

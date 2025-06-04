@@ -61,7 +61,6 @@ gem 'mjml-rails'
 gem "vite_ruby", '~> 3.3.2'
 gem "vite_rails", ">= 3.0.13"
 
-
 gem 'rack-cors', require: 'rack/cors'
 
 # TODO: > 5.0.7
@@ -123,4 +122,3 @@ end
 
 gem "meta-tags", "~> 2.13"
 gem 'hashie'
-

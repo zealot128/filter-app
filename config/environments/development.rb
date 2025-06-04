@@ -80,9 +80,9 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   ###########
-  host = "hrfilter.#{ENV["USER"]}.pludoni.com"
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-  ActionMailer::Base.config.default_url_options = { host: host, protocol: 'https' }
+  host = "hrfilter.#{ENV.fetch('USER', nil)}.pludoni.com"
+  config.action_mailer.default_url_options = { host:, protocol: 'https' }
+  ActionMailer::Base.config.default_url_options = { host:, protocol: 'https' }
   config.action_mailer.asset_host = "https://#{host}"
 
   config.cache_store = :memory_store, { size: 64.megabytes }

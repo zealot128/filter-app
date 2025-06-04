@@ -8,18 +8,18 @@ class NewsletterPreview < ActionMailer::Preview
   end
 
   def reconfirm
-    inactivity = Newsletter::Inactivity.new(mail_subscription)
+    Newsletter::Inactivity.new(mail_subscription)
     next_mail = Newsletter::Inactivity.reminders[1]
 
     SubscriptionMailer.reconfirm_mail(mail_subscription, subject: next_mail[:subject], body: next_mail[:body])
   end
 
   def unsubscribe_mail
-    inactivity = Newsletter::Inactivity.new(mail_subscription)
+    Newsletter::Inactivity.new(mail_subscription)
     subject = Setting.get('reminder_unsubscribe_notice_subject')
     body = Setting.get('reminder_unsubscribe_notice_body')
 
-    SubscriptionMailer.unsubscribe_mail(mail_subscription, subject: subject, body: body)
+    SubscriptionMailer.unsubscribe_mail(mail_subscription, subject:, body:)
   end
 
   private

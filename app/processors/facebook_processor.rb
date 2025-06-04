@@ -2,10 +2,8 @@ class FacebookProcessor < BaseProcessor
   def run_all(source)
     get source.remote_url
     @m.page.search('._52c6').each do |item|
-      begin
         process_dom_item(item.ancestors('[data-gt]').first, source)
-      rescue Mechanize::ResponseCodeError
-      end
+    rescue Mechanize::ResponseCodeError
     end
   ensure
     @m.shutdown
@@ -28,7 +26,7 @@ class FacebookProcessor < BaseProcessor
     end
 
     text = parent.at('.userContent').text
-    filtered_text = text.gsub(/[^\p{Word} #\b\.\,\/:]/, '').gsub(/ +/, ' ')
+    filtered_text = text.gsub(%r{[^\p{Word} #\b\.\,/:]}, '').squeeze(' ')
     news_item.teaser = filtered_text
     news_item.published_at = Time.zone.at parent.at('.timestampContent').parent['data-utime'].to_i
     news_item.rescore!

@@ -34,7 +34,7 @@ class LinkExtractor
   def self.run(url, close_connection: true)
     rf = new(site_name: Setting.site_name)
 
-    if rf.run(url, close_connection: close_connection)
+    if rf.run(url, close_connection:)
       rf
     end
   end
@@ -62,24 +62,24 @@ class LinkExtractor
     end
     if successful?
       if block_given?
-        block.call(result)
+        yield(result)
       else
         result
       end
     end
   rescue Mechanize::ResponseCodeError, Mechanize::RedirectLimitReachedError
-    return false
+    false
   ensure
     shutdown! if close_connection
   end
 
   def result
     {
-      title: title,
-      teaser: teaser,
-      image_url: image_url,
-      full_text: full_text,
-      clean_url: clean_url,
+      title:,
+      teaser:,
+      image_url:,
+      full_text:,
+      clean_url:,
       has_paywall: paywall?
     }
   end
@@ -103,7 +103,7 @@ class LinkExtractor
                      image = @m.page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first
                      image ||= @m.page.parser.xpath('//link[@rel="image_src"]').first
                      image['content'] || image['href'] if image
-                   end
+    end
   end
 
   def paywall?
@@ -169,8 +169,8 @@ class LinkExtractor
     sanitize s, attributes: %w(href src), tags: %w[li ul strong b i em ol br p a img]
   end
 
-  def sanitize(*args)
-    ActionController::Base.helpers.sanitize(*args)
+  def sanitize(*)
+    ActionController::Base.helpers.sanitize(*)
   end
 
   def download_url(url)

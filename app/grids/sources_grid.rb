@@ -37,7 +37,8 @@ class SourcesGrid < BaseGrid
   column(:recent_top, Arel.sql('statistics->\'current_top_score\''), header: "Top Score", order: '(statistics->>\'current_top_score\')::int')
   column(:total, Arel.sql('statistics->\'total_news_count\''), header: "News Ingesamt", order: '(statistics->>\'total_news_count\')::int')
   date_column(:last_posting, Arel.sql("(statistics->>'last_posting')::date"), order: "(statistics->>'last_posting')")
-  column(:word_length, Arel.sql('statistics->\'average_word_length\''), header: "Wortlänge (Letzte 5 Beiträge)", order: '(statistics->>\'average_word_length\')::int')
+  column(:word_length, Arel.sql('statistics->\'average_word_length\''), header: "Wortlänge (Letzte 5 Beiträge)",
+order: '(statistics->>\'average_word_length\')::int')
   date_column(:created_at)
   column(:chart, html: true, order: '(statistics->>\'current_top_score\')::int', header: "3-Monats-Platzierung") do |source|
     content_tag(:div, nil, class: "js-recent-chart", data: { id: source.id }, style: 'height: 100px; width: 200px')
@@ -57,8 +58,10 @@ class SourcesGrid < BaseGrid
           content_tag(:small, "Refresh: "),
           content_tag(:div, class: 'btn-group') {
             safe_join [
-              link_to("Quelle", refresh_admin_source_path(source, type: 'source'), data: { method: :post, remote: true, disable_with: '...' }, class: 'btn btn-xs btn-primary', title: "Quelle jetzt abrufen"),
-              link_to("letzte 10 News", refresh_admin_source_path(source, type: 'news_items'), data: { method: :post, remote: true, disable_with: '...' }, class: 'btn btn-xs btn-primary', title: "Letzte bereits angelegte NewsItems auf Scoring prüfen (Twitter shares, etc.)")
+              link_to("Quelle", refresh_admin_source_path(source, type: 'source'), data: { method: :post, remote: true, disable_with: '...' },
+class: 'btn btn-xs btn-primary', title: "Quelle jetzt abrufen"),
+              link_to("letzte 10 News", refresh_admin_source_path(source, type: 'news_items'),
+data: { method: :post, remote: true, disable_with: '...' }, class: 'btn btn-xs btn-primary', title: "Letzte bereits angelegte NewsItems auf Scoring prüfen (Twitter shares, etc.)")
             ]
           }
         ]

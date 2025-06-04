@@ -2,7 +2,7 @@ class Admin::Trends::TrendsController < AdminController
   load_and_authorize_resource class: "Trends::Trend"
 
   def index
-    @trends = Trends::Trend.includes(:words).all.order('name')
+    @trends = Trends::Trend.includes(:words).order('name')
   end
 
   def new

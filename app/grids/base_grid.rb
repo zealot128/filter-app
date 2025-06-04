@@ -1,5 +1,4 @@
 class BaseGrid
-
   include Datagrid
 
   self.default_column_options = {
@@ -12,7 +11,7 @@ class BaseGrid
   # self.forbidden_attributes_protection = true
 
   def self.date_column(name, *args)
-    block = lambda do |model|
+    block = ->(model) do
       format(block_given? ? yield : model.send(name)) do |date|
         date&.strftime("%d.%m.%Y")
       end

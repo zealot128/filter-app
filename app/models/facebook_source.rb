@@ -51,12 +51,12 @@ class FacebookSource < Source
       update logo: tf
     end
   rescue StandardError => e
-    p e
+    Rails.logger.debug e
     nil
   end
 
   def remote_url
-    "https://www.facebook.com/#{url}/" #personalwirtschaft.de/?fref=nf
+    "https://www.facebook.com/#{url}/" # personalwirtschaft.de/?fref=nf
   end
 
   def agent

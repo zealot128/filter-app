@@ -4,7 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return if not user
+    return if !user
 
     can [:edit, :update], User, id: user.id
 

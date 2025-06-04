@@ -20,4 +20,3 @@ end
 ActiveSupport.on_load :active_record_sqlite3adapter do
   prepend(SQLite3Configuration)
 end
-

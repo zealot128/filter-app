@@ -4,12 +4,12 @@ class SubmitSource < MailForm::Base
   attribute :comment
 
   BLOCKLIST = Regexp.union([
-    /graph\.org/,
-    /\.(ru|ua|by|kz|in)$/,
-    /testing-your-form.info/,
-    /wikidoc/,
-    /example.com/
-  ])
+                             /graph\.org/,
+                             /\.(ru|ua|by|kz|in)$/,
+                             /testing-your-form.info/,
+                             /wikidoc/,
+                             /example.com/
+                           ])
 
   def deliver
     return false unless valid?

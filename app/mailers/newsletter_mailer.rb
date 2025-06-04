@@ -14,7 +14,7 @@ class NewsletterMailer < ApplicationMailer
     show_ad = AdLogic.enabled? && AdLogic.promoted_events.any?
     if show_ad
       all_events = AdLogic.promoted_events
-      @events = all_events.select { |event| event.from > Time.now }
+      @events = all_events.select { |event| event.from > Time.zone.now }
     end
 
     mail(to: mailing.full_email, subject: mailing.subject) do |format|

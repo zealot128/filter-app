@@ -7,7 +7,7 @@ class SourcesController < ApplicationController
   end
 
   def index
-    @sources = Source.order(Arel.sql 'lower(name)')
+    @sources = Source.order(Arel.sql('lower(name)'))
   end
 
   def show

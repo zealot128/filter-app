@@ -1,13 +1,13 @@
 module ApplicationHelper
   def page_title
-    [@title, Setting.site_name].reject(&:blank?).join(' | ')
+    [@title, Setting.site_name].compact_blank.join(' | ')
   end
 
   def default_meta_tags
     img = image_url("#{Setting.key}/logo-large.png")
     unless @news_item.nil?
       og_img = if @news_item.image.exists?
-                 @news_item.image_url_full 
+                 @news_item.image_url_full
                else
                  img
                end
@@ -31,18 +31,21 @@ module ApplicationHelper
         image: og_img,
         description: :description
       },
-      twitter: { 
+      twitter: {
         card: "summary_large_image",
         title: title || :title,
         image: og_img,
         description: description || :description,
-        creator: creator || :site 
+        creator: creator || :site
       }
     }
   end
 
   def homepage(url)
-    URI.parse(url).tap { |o| o.path = '/'; o.query = nil }.to_s
+    URI.parse(url).tap { |o|
+      o.path = '/'
+                             o.query = nil
+    }.to_s
   end
 
   def day_path(day)

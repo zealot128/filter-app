@@ -10,7 +10,7 @@ module Newsletter
     end
 
     def load_feed_items
-      # TODO since last sent
+      # TODO: since last sent
       @items = AdLogic.third_party_news.
         # where('published_at > ?', 3.months.ago)
         where('published_at > ? and published_at <= ?', *@mailing.interval)

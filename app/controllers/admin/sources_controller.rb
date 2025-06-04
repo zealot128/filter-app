@@ -74,7 +74,7 @@ class Admin::SourcesController < AdminController
     @source = type.constantize.new(params[:source].permit!)
     if @source.save
       Source::FetchJob.perform_later(@source.id)
-      unless @source.logo.present?
+      if @source.logo.blank?
         Source::FindLogosJob.set(wait: 1.minute).perform_later(@source.id)
       end
 

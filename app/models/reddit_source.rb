@@ -52,11 +52,11 @@ class RedditSource < Source
     img = doc.at('#header-img')
     return if img.blank? or img['src'].blank?
 
-    logo_url = 'https:' + img['src']
+    logo_url = "https:#{img['src']}"
     update logo: download_url(logo_url)
   end
 
   def should_fetch_stats?(ni)
-    !ni.url.include?("www.reddit.com/r/#{name}")
+    ni.url.exclude?("www.reddit.com/r/#{name}")
   end
 end

@@ -9,8 +9,6 @@ class SourcePreviewSerializer < ApplicationSerializer
   def logo
     if object.logo.present?
       "https://#{Setting.host}" + object.logo.url(:small)
-    else
-      nil
     end
   end
 end

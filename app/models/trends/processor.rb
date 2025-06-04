@@ -1,5 +1,5 @@
 class Trends::Processor
-  REGEX = /[^\p{word}-]/.freeze
+  REGEX = /[^\p{word}-]/
 
   STOPWORDS = %w[
     die der und das für den auf eine von mit ist ein sie sich zum auch dem als
@@ -31,7 +31,7 @@ class Trends::Processor
     Trends::Usage.where(news_item_id: NewsItem.where.not(dupe_of_id: nil).select('id'), usage_type: 'plaintext').delete_all
 
     all = Trends::Word.
-      where('trends_usages.calendar_week = ?', 1.day.ago.strftime("%G%W")).
+      where(trends_usages: { calendar_week: 1.day.ago.strftime("%G%W") }).
       where(ignore: false).
       joins(:usages).
       group(:id).
@@ -63,7 +63,7 @@ class Trends::Processor
   end
 
   def run
-    print '-' if ENV['USER'] && !Rails.env.test? # not in cron
+    Rails.logger.debug '-' if ENV['USER'] && !Rails.env.test? # not in cron
     return unless @calendar_week
     # return if @news_item.source.language == 'english'
 
@@ -98,7 +98,7 @@ class Trends::Processor
       all_words.delete(tw.word)
       next if tw.ignore?
       insert_statements << {
-        usage_type: usage_type,
+        usage_type:,
         dupe: @news_item.dupe_of_id.present?,
         news_item_id: @news_item.id,
         source_id: @news_item.source_id,
@@ -108,10 +108,9 @@ class Trends::Processor
       }
     end
     all_words.each do |word|
-      begin
-        tw = Trends::Word.create(word: word, ignore: false)
+        tw = Trends::Word.create(word:, ignore: false)
         insert_statements << {
-          usage_type: usage_type,
+          usage_type:,
           dupe: @news_item.dupe_of_id.present?,
           news_item_id: @news_item.id,
           source_id: @news_item.source_id,
@@ -119,10 +118,10 @@ class Trends::Processor
           calendar_week: @calendar_week,
           date: @news_item.published_at
         }
-      rescue ActiveRecord::RecordNotUnique
-        tw = Trends::Word.where(word: word).first!
+    rescue ActiveRecord::RecordNotUnique
+        tw = Trends::Word.where(word:).first!
         insert_statements << {
-          usage_type: usage_type,
+          usage_type:,
           dupe: @news_item.dupe_of_id.present?,
           news_item_id: @news_item.id,
           source_id: @news_item.source_id,
@@ -130,7 +129,6 @@ class Trends::Processor
           calendar_week: @calendar_week,
           date: @news_item.published_at
         }
-      end
     end
     Trends::Usage.insert_all(insert_statements) if insert_statements.any?
   end

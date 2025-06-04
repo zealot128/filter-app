@@ -55,19 +55,21 @@ module Charts
         },
         series: [
           {
-            data: @benchmark.flat_map { |d, q1, median, q3, q9, max| [[d.to_i * 1000, q9.round], [(d.at_end_of_month).to_i * 1000, q9.round]]},
+            data: @benchmark.flat_map { |d, _q1, _median, _q3, q9, _max| [[d.to_i * 1000, q9.round], [d.at_end_of_month.to_i * 1000, q9.round]] },
             name: "Q90%",
             color: '#cc999977',
             type: 'area'
           },
           {
-            data: @benchmark.flat_map { |d, q1, median, q3, q9, max| [[d.to_i * 1000, q3.round], [(d.at_end_of_month).to_i * 1000, q3.round]]},
+            data: @benchmark.flat_map { |d, _q1, _median, q3, _q9, _max| [[d.to_i * 1000, q3.round], [d.at_end_of_month.to_i * 1000, q3.round]] },
             name: "Q3",
             color: '#aa999955',
             type: 'area'
           },
           {
-            data: @benchmark.flat_map { |d, q1, median, q3, q9, max| [[d.to_i * 1000, median.round], [(d.at_end_of_month).to_i * 1000, median.round]]},
+            data: @benchmark.flat_map { |d, _q1, median, _q3, _q9, _max|
+                    [[d.to_i * 1000, median.round], [d.at_end_of_month.to_i * 1000, median.round]]
+                  },
             name: "Median",
             color: '#99999955',
             type: 'area'

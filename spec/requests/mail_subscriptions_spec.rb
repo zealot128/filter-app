@@ -97,7 +97,7 @@ describe 'MailSubscriptionsController' do
         expect(ActionMailer::Base.deliveries.count).to eq(2)
 
         # Klick = auch geoeffnet
-        tracking_link = Nokogiri.parse(ActionMailer::Base.deliveries.last.html_part.body.decoded).search('a').map { |i| i['href'] }.grep(%r{/ni/}).first
+        tracking_link = Nokogiri.parse(ActionMailer::Base.deliveries.last.html_part.body.decoded).search('a').pluck('href').grep(%r{/ni/}).first
         get tracking_link.remove(%r{(http|https)://[^/]+})
 
         expect(MailSubscription::History.opened.count).to be == 2

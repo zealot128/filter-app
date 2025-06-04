@@ -12,7 +12,7 @@ class KeywordAnalyzer
     all_words.sort_by { |_a, b| -b }
   end
 
-  def strip_tags(*args)
-    ActionController::Base.helpers.strip_tags *args
+  def strip_tags(*)
+    ActionController::Base.helpers.strip_tags((*))
   end
 end

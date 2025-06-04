@@ -70,7 +70,7 @@ class MailSubscription < ApplicationRecord
 
   def salutation
     if gender.present? and last_name?
-      [male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].reject(&:blank?).join(' ')
+      [male? ? "Sehr geehrter Herr" : "Sehr geehrte Frau", academic_title, last_name].compact_blank.join(' ')
     else
       'Hallo'
     end
@@ -79,7 +79,7 @@ class MailSubscription < ApplicationRecord
   def full_email
     if gender? and last_name?
       address = Mail::Address.new email
-      address.display_name = [first_name, last_name].reject(&:blank?).join(' ')
+      address.display_name = [first_name, last_name].compact_blank.join(' ')
       address.format
     else
       email
@@ -106,6 +106,6 @@ class MailSubscription < ApplicationRecord
   end
 
   def categories=(vals)
-    super(vals.reject(&:blank?).map(&:to_i))
+    super(vals.compact_blank.map(&:to_i))
   end
 end

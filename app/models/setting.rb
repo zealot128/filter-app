@@ -79,7 +79,7 @@ class Setting < ActiveRecord::Base
     def get(name, force: false)
       keys = [name]
       if I18n.locale == :en
-        keys.prepend(name.to_s + '_en')
+        keys.prepend("#{name}_en")
       end
       keys.each do |key|
         value = if force
@@ -118,7 +118,7 @@ class Setting < ActiveRecord::Base
       pairs = all.map do |setting|
         [setting.key, setting.value]
       end
-      Hash[pairs]
+      pairs.to_h
     rescue PG::ConnectionBad
       warn 'could not load settings from database, using default from application.yml'
       YAML.load_file('config/application.yml')
@@ -130,16 +130,16 @@ class Setting < ActiveRecord::Base
       to_h[name.to_s]
     end
 
-    def method_missing(m, *args, &block)
+    def method_missing(m, *args, &)
       (m != :find_by_key && get(m)) || super
     end
 
     def read_yaml
       configuration = begin
                         Rails.application.config_for(:application)
-                      rescue RuntimeError
+      rescue RuntimeError
                         Rails.application.config_for('application.hrfilter')
-                      end
+      end
       configuration.each do |k, v|
         set k, v
       end

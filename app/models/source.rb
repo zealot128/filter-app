@@ -51,7 +51,7 @@ class Source < ApplicationRecord
   SOURCE_TYPES = ['FeedSource', 'TwitterSource', 'PodcastSource', 'RedditSource', 'FacebookSource', 'YoutubeSource'].freeze
 
   belongs_to :default_category, class_name: 'Category'
-  after_create_commit if: -> { !Rails.env.test? and !logo.present? } do
+  after_create_commit if: -> { !Rails.env.test? and logo.blank? } do
     Source::DownloadThumbJob.perform_later(id)
   end
   scope :visible, -> { where(deactivated: false) }
@@ -75,7 +75,7 @@ class Source < ApplicationRecord
   # do_not_validate_attachment_file_type :logo
 
   def self.[](search)
-    find_by('url ilike ?', '%' + search + '%')
+    find_by('url ilike ?', "%#{search}%")
   end
 
   def to_param
@@ -171,11 +171,11 @@ class Source < ApplicationRecord
         group('categories.name').
         order('count_all desc').limit(3).count.map { |k, c| { name: k, count: c } },
       total_news_count: news_items.count,
-      average_word_length: average_word_length,
+      average_word_length:,
       current_news_count: news_items.current.count,
       current_top_score: (news_items.current.maximum(:absolute_score) || 0).round,
       last_posting: news_items.maximum(:published_at),
-      current_impression_count:  news_items.current.sum(:impression_count)
+      current_impression_count: news_items.current.sum(:impression_count)
     }
   end
 end

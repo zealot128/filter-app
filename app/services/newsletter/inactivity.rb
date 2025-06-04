@@ -92,7 +92,7 @@ module Newsletter
       body = replace_tokens(next_mail[:body])
       subject = replace_tokens(next_mail[:subject])
 
-      SubscriptionMailer.reconfirm_mail(@mail_subscription, subject: subject, body: body).deliver_now
+      SubscriptionMailer.reconfirm_mail(@mail_subscription, subject:, body:).deliver_now
     end
 
     def number_of_reminder
@@ -105,7 +105,7 @@ module Newsletter
       end
     end
 
-    def token(match) # rubocop:disable Metrics/CyclomaticComplexity
+    def token(match)
       case match.downcase.strip
       when 'anmeldedatum'
         I18n.l(@mail_subscription.created_at.to_date)

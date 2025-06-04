@@ -13,9 +13,9 @@ class NewsItem::CheckFilterList
       signifier = r[0]
       case signifier
       when '+'
-        @pos_rules << Regexp.new(r[1..-1], true)
+        @pos_rules << Regexp.new(r[1..], true)
       when '-'
-        @neg_rules << Regexp.new(r[1..-1], true)
+        @neg_rules << Regexp.new(r[1..], true)
       else
         raise ArgumentError, "Falsch Formierterte Filter-Regeln: #{r}|"
       end

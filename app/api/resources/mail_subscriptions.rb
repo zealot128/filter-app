@@ -40,7 +40,8 @@ class Resources::MailSubscriptions < Grape::API
       requires :email, type: String
     end
     post '/' do
-      ms = MailSubscription.new(params.slice('first_name', 'email', 'last_name', 'gender', 'academic_title', 'company', 'position', 'interval', 'limit'))
+      ms = MailSubscription.new(params.slice('first_name', 'email', 'last_name', 'gender', 'academic_title', 'company', 'position', 'interval',
+'limit'))
       if params[:categories]
         ms.categories = Category.where('name ilike any (array[:s]) or slug ilike any (array[:s])', s: params[:categories]).pluck(:id)
       end

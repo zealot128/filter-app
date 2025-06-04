@@ -3,19 +3,19 @@ class SubscriptionMailer < ApplicationMailer
     @subscription = subscription
     mail to: subscription.full_email,
          subject: "[#{Setting.site_name}] Bestätigung des E-Mail-Abos",
-         from: from
+         from:
   end
 
   def reconfirm_mail(subscription, subject:, body:, from: alternate_from)
     @subscription = subscription
     @body = body
-    mail to: subscription.full_email, subject: subject, from: alternate_from, bcc: bccs
+    mail to: subscription.full_email, subject:, from: alternate_from, bcc: bccs
   end
 
   def unsubscribe_mail(subscription, subject:, body:, from: alternate_from)
     @subscription = subscription
     @body = body
-    mail to: subscription.full_email, subject: subject, from: from, bcc: bccs
+    mail to: subscription.full_email, subject:, from:, bcc: bccs
   end
 
   private

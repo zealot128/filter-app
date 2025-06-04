@@ -19,5 +19,5 @@ PREMAILER_SETTINGS = {
   include_style_tags: true,
   input_encoding: 'ASCII-8BIT',
   replace_html_entities: false,
-}
+}.freeze
 Premailer::Rails.config.merge!(PREMAILER_SETTINGS)

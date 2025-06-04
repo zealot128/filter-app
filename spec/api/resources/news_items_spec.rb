@@ -88,7 +88,7 @@ describe Resources::NewsItems, type: :request do
   end
 
   def json
-    j = JSON.load(response.body)
+    j = JSON.parse(response.body)
     if j.is_a?(Hash)
       Hashie::Mash.new(j)
     else

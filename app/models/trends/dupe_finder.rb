@@ -36,7 +36,7 @@ class Trends::DupeFinder
     dupes = sql.keys
     return if dupes.count == 0
 
-    best_first = NewsItem.find(dupes + [news_item.id]).sort_by { |i| [-(i.absolute_score.to_i), i.published_at] }
+    best_first = NewsItem.find(dupes + [news_item.id]).sort_by { |i| [-i.absolute_score.to_i, i.published_at] }
     primary = best_first.shift
     best_first.each do |other|
       Rails.logger.info "DUPE: #{primary.title} (#{primary.id}) -> #{other.title} (#{other.id})"

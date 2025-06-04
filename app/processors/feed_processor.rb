@@ -3,17 +3,17 @@ class FeedProcessor < BaseProcessor
     @source = source
     feed = parse_feed(source.url)
 
-    if !feed.respond_to?(:entries)
-      source.update_column :error, true
-    else
+    if feed.respond_to?(:entries)
       source.update_column :error, false
       feed.entries.each do |entry|
         item = process_entry(entry)
         next unless item
-        was_new = item.new_record?
+        item.new_record?
         item.save
         return if Rails.env.test?
       end
+    else
+      source.update_column :error, true
     end
   end
 
@@ -47,11 +47,11 @@ class FeedProcessor < BaseProcessor
   def find_news_item(guid, url, title)
     title = title[0...255]
     guid = guid[0..230]
-    old = @source.news_items.where(guid: guid).first
-    old || @source.news_items.where(url: url).first ||
-      @source.news_items.where("regexp_replace(news_items.url, '^https?:', '') = regexp_replace(:url, '^https?:', '')", url: url).first ||
-      (title && @source.news_items.where('created_at > ?', 3.months.ago).where(title: title).first) ||
-      @source.news_items.build(guid: guid, url: url)
+    old = @source.news_items.where(guid:).first
+    old || @source.news_items.where(url:).first ||
+      @source.news_items.where("regexp_replace(news_items.url, '^https?:', '') = regexp_replace(:url, '^https?:', '')", url:).first ||
+      (title && @source.news_items.where('created_at > ?', 3.months.ago).where(title:).first) ||
+      @source.news_items.build(guid:, url:)
   end
 
   def process_entry(entry)
@@ -61,7 +61,7 @@ class FeedProcessor < BaseProcessor
     url = entry.url&.strip
     text = entry.content || entry.summary
     published = entry.published
-    guid = (entry.entry_id || entry.url)
+    guid = entry.entry_id || entry.url
 
     if !url and entry.entry_id and entry.entry_id.starts_with?('http')
       url = entry.entry_id
@@ -69,7 +69,7 @@ class FeedProcessor < BaseProcessor
 
     if defined? entry.enclosure_url
       media_url = entry.enclosure_url
-      url = entry.enclosure_url unless url
+      url ||= entry.enclosure_url
     end
 
     return unless url
@@ -102,7 +102,7 @@ class FeedProcessor < BaseProcessor
     if defined?(@entry.image) and @entry.image.present? and @item.image.blank? and !@entry.image[/(mp3|aac|ogg|mp4|m4a|mov)$/i]
       begin
         image = download_url(@entry.image)
-        @item.update image: image
+        @item.update image:
       rescue SocketError, StandardError => e
         Rails.logger.error "image download fehlgeschlagen #{url} #{e.inspect}"
       end

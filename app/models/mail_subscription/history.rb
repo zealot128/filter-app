@@ -40,7 +40,7 @@ class MailSubscription::History < ApplicationRecord
         year: year.to_i,
         week: week.to_i,
         sent: count,
-        open: open,
+        open:,
         open_ratio: (open / count.to_f * 100).round(1)
       }
     }

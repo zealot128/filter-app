@@ -6,7 +6,7 @@ describe NewsItem::CheckFilterList do
   end
 
   specify 'falls + gegeben, dann filter nur diese die min eine Regel matchen' do
-    source.filter_rules = <<-DOC.strip_heredoc
+    source.filter_rules = <<~DOC
       +Bitcoin
     DOC
     expect(service.skip_import?("bitcoin")).to be == false
@@ -14,7 +14,7 @@ describe NewsItem::CheckFilterList do
   end
 
   specify 'Falls - gegeben ist, dann ist das Blacklist' do
-    source.filter_rules = <<-DOC.strip_heredoc
+    source.filter_rules = <<~DOC
       -weekly
       +Bitcoin
     DOC

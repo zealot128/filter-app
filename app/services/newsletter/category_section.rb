@@ -12,11 +12,11 @@ module Newsletter
       "newsletter_mailer/category_section"
     end
 
-    def title; category.name; end
+    def title = category.name
 
-    def toc_title; "#{title} <small>(#{@news_items.count} Beiträge)</small>"; end
+    def toc_title = "#{title} <small>(#{@news_items.count} Beiträge)</small>"
 
-    def anchor; "category-#{category.id}"; end
+    def anchor = "category-#{category.id}"
 
     protected
 

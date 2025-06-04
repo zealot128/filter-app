@@ -13,7 +13,8 @@ class RssController < ApplicationController
   end
 
   def weekly_top_50
-    @news_items = news_items.top_percent_per_week(4.weeks.ago, 0.2, 50).order(Arel.sql("to_char(published_at, 'YYYY/IW') desc, absolute_score desc")).limit(200)
+    @news_items = news_items.top_percent_per_week(4.weeks.ago, 0.2,
+50).order(Arel.sql("to_char(published_at, 'YYYY/IW') desc, absolute_score desc")).limit(200)
     render 'feed', formats: [:rss]
   end
 
@@ -36,7 +37,7 @@ class RssController < ApplicationController
       if news_item.image.present?
         s += "<br><img src='#{root_url + news_item.image.url}'/>"
       end
-      s + "<br><br>" + news_item.teaser.to_s
+      "#{s}<br><br>#{news_item.teaser}"
     end
   end
   helper_method :description

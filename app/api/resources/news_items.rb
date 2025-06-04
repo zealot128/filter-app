@@ -14,7 +14,8 @@ class Resources::NewsItems < Grape::API
       optional :categories, String
       optional :trend, String
       optional :topic, String, desc: "DEPRECATED, use trend"
-      optional :order, String, desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
+      optional :order, String,
+desc: "Order by, default hot_score, other option: best - best 33% news per day (same as filter homepage), week_best, month_best, newest"
       optional :query, String, desc: "Search term"
       optional :media_type, String
     end
@@ -64,7 +65,7 @@ class Resources::NewsItems < Grape::API
     end
     get '/media-types' do
       ignore = %w(TwitterSource RedditSource FacebookSource)
-      Source::SOURCE_TYPES.select{|el| !ignore.include?(el)}.as_json
+      Source::SOURCE_TYPES.reject { |el| ignore.include?(el) }.as_json
     end
     get '/:id' do
       Source.visible.find(params[:id])

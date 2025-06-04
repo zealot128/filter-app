@@ -37,7 +37,7 @@ class TwitterSource < Source
   DOC
 
   def refresh
-    return
+    nil
   end
 
   def to_param

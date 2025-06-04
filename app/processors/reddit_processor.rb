@@ -15,8 +15,8 @@ class RedditProcessor < BaseProcessor
   end
 
   def process
-    url = @source.url + '/.json'
-    json = JSON.load Fetcher.fetch_url(url).body
+    url = "#{@source.url}/.json"
+    json = JSON.parse Fetcher.fetch_url(url).body
     json['data']['children'].each do |child|
       process_item(child['data'])
     end
@@ -31,7 +31,7 @@ class RedditProcessor < BaseProcessor
     end
 
     # Check if item with same url already exists
-    if url.present? and @source.news_items.where(url: url).where('guid != ?', id).any?
+    if url.present? and @source.news_items.where(url:).where.not(guid: id).any?
       raise InvalidItemDelete
     end
 
@@ -58,10 +58,8 @@ class RedditProcessor < BaseProcessor
     if NewsItem::CheckFilterList.new(@source).skip_import?(ni.title, ni.teaser)
       raise InvalidItemDelete
     end
-    if data['preview'] and ni.image.blank?
-      if (i = data['preview']['images']) and (image = i.first['source']['url'])
+    if data['preview'] and ni.image.blank? && ((i = data['preview']['images']) and (image = i.first['source']['url']))
         ni.image = download_url(image)
-      end
     end
     ni.save
 
