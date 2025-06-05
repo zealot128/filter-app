@@ -309,7 +309,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
     t.integer "trend_id"
     t.index ["ignore"], name: "index_trends_words_on_ignore"
     t.index ["trend_id"], name: "index_trends_words_on_trend_id"
-    t.index ["word"], name: "index_trends_words_on_word", unique: true
     t.index ["word_type"], name: "index_trends_words_on_word_type"
   end
 

@@ -13,6 +13,6 @@ class KeywordAnalyzer
   end
 
   def strip_tags(*)
-    ActionController::Base.helpers.strip_tags((*))
+    ActionController::Base.helpers.strip_tags(*)
   end
 end

@@ -18,7 +18,7 @@ class Trends::Trend < ApplicationRecord
 
   scope :top_of_n_days, ->(time, min_mentions) {
     joins(words: :usages).
-      where(date: time..).
+      where(trends_usages: { date: time.. }).
       group('trends_trends.id').
       order('count desc').
       having('count(distinct source_id) >= ?', min_mentions).

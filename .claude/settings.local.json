@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(true)",
+      "Bash(git checkout:*)",
+      "Bash(bundle exec ruby:*)",
+      "Bash(git add:*)",
+      "Bash(glab issue view:*)",
+      "Bash(glab mr diff:*)",
+      "Bash(bundle exec rails console:*)",
+      "Bash(bundle exec rails runner:*)",
+      "Bash(bundle exec rubocop:*)",
+      "Bash(bundle exec rspec:*)",
+      "Bash(bin/rubocop:*)"
+    ],
+    "deny": []
+  }
+}

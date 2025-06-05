@@ -146,8 +146,8 @@ class NewsItem < ApplicationRecord
   has_and_belongs_to_many :categories
   has_many :incoming_links, class_name: "Linkage", foreign_key: "to_id", inverse_of: :to
   has_many :outgoing_links, class_name: "Linkage", foreign_key: "from_id", inverse_of: :from
-  has_many :referenced_news, -> { where(different: true) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
-  has_many :referencing_news, -> { where(different: true) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
+  has_many :referenced_news, -> { where(linkages: { different: true }) }, class_name: "NewsItem", through: :incoming_links, source: 'from'
+  has_many :referencing_news, -> { where(linkages: { different: true }) }, class_name: "NewsItem", through: :outgoing_links, source: 'to'
   has_many :trend_usages, class_name: "Trends::Usage", dependent: :destroy
   belongs_to :dupe_of, class_name: "NewsItem", optional: true, inverse_of: :dupes
   has_many :dupes, class_name: "NewsItem", inverse_of: :dupe_of
