@@ -135,7 +135,7 @@ class NewsItem < ApplicationRecord
 
   scope :uncategorized, -> {
     joins('LEFT JOIN "categories_news_items" ON "categories_news_items"."news_item_id" = "news_items"."id"').
-      where(news_item_id: nil).
+      where(categories_news_items: { news_item_id: nil }).
       group('news_items.id')
   }
   scope :without_dupes, -> {
