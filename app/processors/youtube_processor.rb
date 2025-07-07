@@ -1,6 +1,6 @@
 class YoutubeProcessor < FeedProcessor
   def parse_feed(url)
-    doc = Nokogiri.parse(open(url))
+    doc = Nokogiri.parse(URI.open(url))
     url = doc.at('link[rel=canonical]')['href']
     channel_id = url.split('/').last
     feed_url = "https://www.youtube.com/feeds/videos.xml?channel_id=#{channel_id}"

@@ -48,7 +48,7 @@ class RedditSource < Source
   def download_thumb
     return if Rails.env.test?
 
-    doc = Nokogiri.parse(open(host, redirect: true, allow_redirections: :all))
+    doc = Nokogiri.parse(URI.open(host, redirect: true, allow_redirections: :all))
     img = doc.at('#header-img')
     return if img.blank? or img['src'].blank?
 

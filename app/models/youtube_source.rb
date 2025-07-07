@@ -38,7 +38,7 @@ class YoutubeSource < Source
   validates :url, presence: true, format: { with: %r{\Ahttps://www.youtube.com/} }
 
   def download_thumb
-    doc = Nokogiri.parse(open(url))
+    doc = Nokogiri.parse(URI.open(url))
     img = doc.search('meta[property="og:image"]').first["content"]
     return if img.blank?
     update logo: download_url(img)
