@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_08_082650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -94,14 +94,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
     t.integer "category_id"
     t.integer "news_item_id"
     t.index ["category_id", "news_item_id"], name: "categories_news_items_index", unique: true
-  end
-
-  create_table "categories_trends_words", id: false, force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "trends_word_id"
-    t.index ["category_id", "trends_word_id"], name: "categories_trends_words_index", unique: true
-    t.index ["category_id"], name: "index_categories_trends_words_on_category_id"
-    t.index ["trends_word_id"], name: "index_categories_trends_words_on_trends_word_id"
   end
 
   create_table "impressions", id: :serial, force: :cascade do |t|
@@ -205,7 +197,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
     t.integer "youtube_views", default: 0
     t.integer "category_order", array: true
     t.integer "dupe_of_id"
-    t.boolean "trend_analyzed", default: false
     t.boolean "paywall", default: false
     t.string "media_url"
     t.boolean "embeddable", default: false
@@ -277,41 +268,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
     t.index ["type"], name: "index_sources_on_type"
   end
 
-  create_table "trends_trends", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.index ["slug"], name: "index_trends_trends_on_slug", unique: true
-  end
-
-  create_table "trends_usages", force: :cascade do |t|
-    t.integer "word_id"
-    t.bigint "news_item_id"
-    t.bigint "source_id"
-    t.string "calendar_week"
-    t.date "date"
-    t.integer "usage_type", default: 0
-    t.boolean "dupe", default: false
-    t.index ["calendar_week"], name: "index_trends_usages_on_calendar_week"
-    t.index ["date"], name: "index_trends_usages_on_date"
-    t.index ["dupe"], name: "index_trends_usages_on_dupe"
-    t.index ["news_item_id"], name: "index_trends_usages_on_news_item_id"
-    t.index ["source_id"], name: "index_trends_usages_on_source_id"
-    t.index ["usage_type"], name: "index_trends_usages_on_usage_type"
-    t.index ["word_id"], name: "index_trends_usages_on_word_id"
-  end
-
-  create_table "trends_words", force: :cascade do |t|
-    t.string "word"
-    t.boolean "ignore"
-    t.integer "word_type", default: 0
-    t.integer "trend_id"
-    t.index ["ignore"], name: "index_trends_words_on_ignore"
-    t.index ["trend_id"], name: "index_trends_words_on_trend_id"
-    t.index ["word_type"], name: "index_trends_words_on_word_type"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -337,6 +293,4 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_071939) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "mail_subscription_histories", "mail_subscriptions"
-  add_foreign_key "trends_usages", "news_items"
-  add_foreign_key "trends_usages", "sources"
 end

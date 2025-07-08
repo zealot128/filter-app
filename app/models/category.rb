@@ -16,8 +16,6 @@
 #
 
 class Category < ActiveRecord::Base
-  has_and_belongs_to_many :trends_words, join_table: 'categories_trends_words', class_name: 'Trends::Word',
-association_foreign_key: 'trends_word_id'
   has_and_belongs_to_many :news_items
   has_many :sources, through: :news_items
   has_one_attached :logo

@@ -33,12 +33,6 @@ production:
   newsletter_mailing:
     schedule: 'every monday at 9am'
     command: 'Newsletter::Mailing.cronjob'
-  trends_cleanup:
-    schedule: 'every sunday at 11pm'
-    command: 'Trends::Cleanup.run'
-  trends_processor:
-    schedule: 'every monday at 7am'
-    command: 'Trends::Processor.cronjob'
   newsletter_inactivity:
     schedule: 'every day at 9am'
     command: 'Newsletter::Inactivity.cronjob'

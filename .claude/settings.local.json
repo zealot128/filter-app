@@ -30,7 +30,9 @@
       "Bash(rm:*)",
       "Bash(bundle install:*)",
       "mcp__puppeteer__puppeteer_authenticate",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(bin/rails generate:*)",
+      "Bash(bin/rspec --format documentation)"
     ],
     "deny": []
   }

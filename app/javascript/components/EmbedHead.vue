@@ -135,7 +135,6 @@ type NewsItem = {
   youtube_views: number
   category_order: null
   dupe_of_id: null
-  trend_analyzed: boolean
   paywall: boolean
   media_url: string
   embeddable: boolean

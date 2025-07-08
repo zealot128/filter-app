@@ -11,7 +11,6 @@ class NewsFilter
   attr_accessor :order
   attr_accessor :from
   attr_accessor :to
-  attr_accessor :trend
   attr_accessor :media_type
 
   def news_items
@@ -71,10 +70,6 @@ class NewsFilter
                                       where news_item_id = news_items.id and
                                             category_id in (#{escape(@categories).join(',')})
                                       )})
-    end
-    if @trend.present?
-      trends = Trends::Trend.where(slug: @trend.split(','))
-      @news_items = @news_items.where(id: Trends::Word.where(trend_id: trends).joins(:usages).select('news_item_id'))
     end
     if @from.present?
       from = Time.zone.parse(@from).to_date

@@ -4,8 +4,6 @@ class CategoriesController < ApplicationController
 
     @categories = Category.order('name')
 
-    count = (Setting.get('trend_min_sources_count') || 4).to_i
-    @trends = Trends::Trend.top_of_n_days(60.days.ago, count)
   end
 
   def show

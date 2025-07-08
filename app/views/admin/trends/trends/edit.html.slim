@@ -1,5 +1,0 @@
-= simple_form_for [:admin, @trend] do |f|
-  = f.input :name
-  = f.association :words, collection: @trend.words, label_method: :word, as: :check_boxes
-  = f.input :extra_words
-  = f.submit

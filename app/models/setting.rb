@@ -45,9 +45,6 @@ class Setting < ActiveRecord::Base
       :intro,
       :explanation
     ],
-    trends: [
-      :trend_min_sources_count,
-    ],
     newsletter_erinnerung: [
       :inactive_months,
       :reminder_mail_14_days_subject,

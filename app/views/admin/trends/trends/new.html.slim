@@ -1,8 +1,0 @@
-h1 Trend anlegen
-= simple_form_for [:admin, @trend] do |f|
-  = hidden_field_tag "back", @referer
-  = f.input :name, label: "Anzeige-Name"
-  = f.association :words, collection: ([@word] + @other_words).compact, as: :check_boxes, label_method: ->(r) { r.word + (r.respond_to?(:count_all) ? " (#{r.count_all})" : "") }
-  = f.input :extra_words, label: "Keywords zu diesem Thema (kommagetrennt)", as: :string, hint: "Nur Worte, die verwendet werden, werden mit übernommen"
-  = f.submit "Speichern", class: 'btn btn-primary'
-

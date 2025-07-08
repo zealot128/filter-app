@@ -16,8 +16,6 @@ if (!window._rails_loaded) {
 import "controllers"
 
 document.addEventListener('DOMContentLoaded', () => {
-  Automount('trend-page', () => import("components/TrendPage.vue"))
-  Automount('trend-flame-graph', () => import("components/TrendFlameGraph.vue"))
   Automount('sources', () => import("components/Sources.vue"))
   Automount('embed-head', () => import("components/EmbedHead.vue"))
   Automount('front-page-app', App);

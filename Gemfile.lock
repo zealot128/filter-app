@@ -16,13 +16,6 @@ GIT
       rubocop-rails (~> 2.26.0)
 
 GIT
-  remote: https://github.com/pludoni/zurb-ink.git
-  revision: 22a301e6d89edf468f722c90af84251001daff67
-  specs:
-    zurb-ink (1.0.5)
-      sass-rails (>= 5.0.0)
-
-GIT
   remote: https://github.com/rails/sass-rails.git
   revision: ac38f1e6c9c9d6cf8853d9415bccf7c289943d7c
   specs:
@@ -853,7 +846,6 @@ DEPENDENCIES
   webmock
   whenever
   will_paginate-bootstrap
-  zurb-ink!
 
 BUNDLED WITH
    2.5.7

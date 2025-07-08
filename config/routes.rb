@@ -11,24 +11,10 @@ Rails.application.routes.draw do
   get "rss/weekly-top-50", to: 'rss#weekly_top_50', as: :weekly_top_50_rss
   get "rss/newest", to: 'rss#newest', as: :newest_rss
 
-  get '/js/trends' => 'trends#index'
-  get '/trends/:slug' => 'trends#show', as: :trend
 
   get "/app", to: "app#index"
 
   namespace :admin do
-    get 'trends' => 'trends/trends#index'
-    get 'trends/months' => 'trends/words#months'
-    get 'trends/weeks' => 'trends/words#weeks'
-    namespace :trends do
-      resources :trends
-      resources :words do
-        member do
-          patch :ignore
-          patch :merge
-        end
-      end
-    end
 
     get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do

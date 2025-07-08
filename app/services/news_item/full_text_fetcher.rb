@@ -39,7 +39,6 @@ class NewsItem::FullTextFetcher
     end
     @news_item.paywall = ::LinkExtractor.paywall?(@page)
     NewsItem::ImageFetcher.new(@news_item, page).run if @news_item.persisted?
-    NewsItem::AnalyseTrendJob.perform_later(@news_item.id) if @news_item.persisted?
   rescue Mechanize::ResponseCodeError, Timeout::Error, SocketError, Mechanize::RedirectLimitReachedError, Nokogiri::CSS::SyntaxError => e
     Rails.logger.error "Error fetching #{@news_item.url} (#{@news_item.id}): #{e.inspect}"
   ensure

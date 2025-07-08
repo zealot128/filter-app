@@ -73,8 +73,6 @@ gem 'active_model_serializers', '~> 0.10'
 
 gem "ruby-stemmer"
 gem "premailer-rails"
-# TODO: https://github.com/johnkoht/zurb-ink/pull/1
-gem "zurb-ink", git: 'https://github.com/pludoni/zurb-ink.git'
 gem "rinku", require: "rails_rinku"
 gem "ipcat"
 gem "voight_kampff", require: "voight_kampff/rails"

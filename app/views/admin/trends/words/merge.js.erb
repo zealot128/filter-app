@@ -1,4 +1,0 @@
-var e = $('[data-id=<%= @word.id %>]')
-e.find('.dropdown').closest('td').html(<%= @trend.name.to_json.html_safe %>)
-e.addClass('success')
-setTimeout(() => { e.removeClass('success') }, 1000)

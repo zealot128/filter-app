@@ -3,7 +3,6 @@ const categories = ref([])
 
 const mediaTypes = ref([])
 
-const trends = ref([])
 
 const loaded = ref(false)
 
@@ -23,12 +22,6 @@ const loadAll = async () => {
         mediaTypes.value = data
       })
       .catch((error) => console.error(error)),
-    fetch(`/js/trends.json`)
-      .then((stream) => stream.json())
-      .then((data) => {
-        trends.value = data.all
-      })
-      .catch((error) => console.error(error))
   ]
 
   await Promise.all(promises)
@@ -39,7 +32,6 @@ const loadAll = async () => {
 export {
   categories,
   mediaTypes,
-  trends,
   loaded,
   loadAll
 }
