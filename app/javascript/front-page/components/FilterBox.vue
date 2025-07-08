@@ -1,5 +1,5 @@
 <template lang="pug">
-.trend-box.mt-1.mb-2
+.filter-box.mt-1.mb-2
   .header
     | {{ title }}
     button.btn.btn-sm.btn-link(
@@ -10,8 +10,8 @@
       i.fa.fa-trash.fa-lg
 
   hr.mt-1.mb-1.p-0
-  .trend-wrapper
-    div.btn.btn-sm.btn-trend(
+  .filter-wrapper
+    div.btn.btn-sm.btn-filter(
       v-for="item in items"
       @click="toggle(item)"
       :class="{'selected' : isSelected(item.id)}"
@@ -53,19 +53,19 @@ export default {
 </script>
 
 <style scoped>
-.trend-box {
+.filter-box {
   background: #f8f9fa;
   padding: 5px 10px;
 }
-.trend-box .header {
+.filter-box .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.trend-box .btn:not(.disabled) {
+.filter-box .btn:not(.disabled) {
   color: #555;
 }
-.trend-wrapper {
+.filter-wrapper {
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
@@ -84,7 +84,7 @@ export default {
   color: #2780e3;
 }
 
-.btn-trend {
+.btn-filter {
   color: #5f6368;
   margin: 0.3rem;
   border: 1px solid #dadce0;
@@ -94,12 +94,12 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.btn-trend:hover {
+.btn-filter:hover {
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
   color: #3c4043;
   border-color: #b2b3b5;
 }
-.btn-trend.selected {
+.btn-filter.selected {
   border: 1px solid black;
 }
 </style>

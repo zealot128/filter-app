@@ -9,8 +9,6 @@ import { setParamsBasedOnData } from "@/front-page/filter"
 const props = defineProps({
   params: { type: Object, required: true },
 })
-import { onMounted } from "vue"
-onMounted(() => {
-  setParamsBasedOnData(props.params)
-})
+//import { onMounted } from "vue"
+setParamsBasedOnData(props.params)
 </script>

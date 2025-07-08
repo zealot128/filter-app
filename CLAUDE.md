@@ -92,3 +92,7 @@ RAILS_ENV=production bundle exec rails assets:precompile  # Build for production
 - **Docker**: Multi-stage Dockerfile with Thruster web server
 - **Process management**: Uses Procfile for development, Thruster for production
 - **Asset pipeline**: Vite handles JavaScript/CSS, Rails asset pipeline for images/fonts
+
+## Code Guidelines
+- **Rubocop**: 
+  - No full `rubocop -A` EVER, only fix files you created/modified in a session

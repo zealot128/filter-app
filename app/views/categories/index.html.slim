@@ -6,19 +6,12 @@
         h2 = @title
 
 .row
-  .col-lg-6
+  .col-lg-12
     h2.text-center.mb-2 Kategorien
     - @categories.each do |category|
       .col-md-4.col-sm-6.col-12
         = render "category", category: category
 
-  .col-lg-6
-    - if @trends.any?
-      h2.text-center Trends / Aktuelles
-      .row
-        - @trends.each do |trend|
-          .col-md-4.col-sm-6.col-12
-            = render 'trend', trend: trend
 
 
 javascript:

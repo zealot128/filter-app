@@ -32,7 +32,9 @@
       "mcp__puppeteer__puppeteer_authenticate",
       "Bash(rg:*)",
       "Bash(bin/rails generate:*)",
-      "Bash(bin/rspec --format documentation)"
+      "Bash(bin/rspec --format documentation)",
+      "Bash(RAILS_ENV=production bundle exec rails assets:precompile)",
+      "Bash(bundle exec rails assets:clobber:*)"
     ],
     "deny": []
   }

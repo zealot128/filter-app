@@ -61,10 +61,8 @@ gem "vite_rails", ">= 3.0.13"
 
 gem 'rack-cors', require: 'rack/cors'
 
-# TODO: > 5.0.7
-gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
+gem "propshaft"
 gem "font-awesome-rails", "~> 4.0"
-gem "sass"
 gem "slim-rails"
 gem "migration_data"
 

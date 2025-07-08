@@ -14,7 +14,7 @@ br
 .row
   .col-sm-8
     = simple_form_for @subscription, target: '_top' do |f|
-      .card.bg-primary
+      .card
         .card-body
           = f.input :email, as: :string, input_html: {value: @email || ''}
           = render "form", f: f

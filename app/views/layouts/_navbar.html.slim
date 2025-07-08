@@ -32,9 +32,6 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.top-fixed.top-fixed--f0
               - if can?(:manage, Category)
                 li
                   a.dropdown-item href=admin_categories_path Kategorien
-              - if can?(:manage, Trends::Trend)
-                li
-                  a.dropdown-item href="/admin/trends" Trends
               - if can?(:manage, MailSubscription)
                 li
                   hr.dropdown-divider
