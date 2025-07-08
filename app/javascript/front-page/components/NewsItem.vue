@@ -1,9 +1,9 @@
 <template lang="pug">
-.panel.panel-default.news-item-panel
+.card.news-item-panel
   .content-container
     .container-fluid(v-if="wideLayout && hasImage"): .row
-      .col-xs-9(style="padding-left: 0")
-        h4.panel-title
+      .col-9(style="padding-left: 0")
+        h4.card-title
           a(:href="url" target="_blank" rel="noopener noreferrer", :title="newsItem.title")
             | {{ newsItem.title | truncate(100) }}
         .mt-1(v-if="!lsr")
@@ -12,12 +12,12 @@
             | &nbsp;{{ newsItem.teaser | truncate(200) }}
           em(v-else)
             | &nbsp;Für diesen Artikel gibt es leider keinen Teaser.
-      .col-xs-3(style="padding-right: 0")
+      .col-3(style="padding-right: 0")
         img.cover(:src="newsItem.image.full_url" loading="lazy" style="margin-bottom: 1rem")
 
     .mobile-layout(v-else)
       img.cover(v-if="hasImage", :src="newsItem.image.full_url" loading="lazy" style="margin-bottom: 1rem")
-      h4.panel-title
+      h4.card-title
         a(:href="url", :title="newsItem.title" target="_blank" rel="noopener noreferrer")
           | {{ newsItem.title | truncate(100) }}
       .mt-1(v-if="!lsr")
@@ -28,19 +28,19 @@
           | &nbsp;Für diesen Artikel gibt es leider keinen Teaser.
 
     .block(v-show="!showPlayer && mediaUrlHostname")
-      span.text-muted.pull-right.hidden-xs.hidden-sm(style="min-width: 65%; text-align: right")
+      span.text-muted.float-end.d-none.d-lg-block(style="min-width: 65%; text-align: right")
         | Ich möchte&nbsp;
         template(v-if="!isVideo") den Podcast von&nbsp;
         template(v-else) das Video von&nbsp;
-        em(data-toggle="tooltip" data-placement="top", :title="newsItem.source.name") {{ mediaUrlHostname }}
+        em(data-bs-toggle="tooltip" data-bs-placement="top", :title="newsItem.source.name") {{ mediaUrlHostname }}
         | &nbsp;einbinden und hier abspielen.
-      span.text-muted.pull-right.visible-xs.visible-sm
+      span.text-muted.float-end.d-block.d-lg-none
         | Ich möchte&nbsp;
         template(v-if="!isVideo") den Podcast von&nbsp;
         template(v-else) das Video von&nbsp;
-        em(data-toggle="tooltip" data-placement="top", :title="newsItem.source.name") {{ mediaUrlHostname }}
+        em(data-bs-toggle="tooltip" data-bs-placement="top", :title="newsItem.source.name") {{ mediaUrlHostname }}
         | &nbsp;einbinden und hier abspielen.
-      button.btn-play.pull-right(@click="chooseMedia()")
+      button.btn-play.float-end(@click="chooseMedia()")
         i.fa.fa-play.fa-fw
         |
         | Zustimmen und Abspielen
@@ -54,14 +54,14 @@
         a(title="newsItem.source.name", :href="newsItem.source.url")
           | &nbsp;{{ newsItem.source.name | truncate(30) }}
         | &nbsp;{{ date }}
-        span.label.label-warning(v-if="newsItem.paywall" style="margin-left: 1rem")
+        span.badge.bg-warning(v-if="newsItem.paywall" style="margin-left: 1rem")
           i.fa.fa-euro.fa-fw(title="Paywall")
       button(v-if="isMobile && webShareApiSupported" @click="shareViaWebShare()")
         i.fa.fa-share-alt(aria-hidden="true")
       .dropdown(v-else)
-        button(data-toggle="dropdown")
+        button(data-bs-toggle="dropdown")
           i.fa.fa-share-alt(aria-hidden="true")
-        ul.dropdown-menu.dropdown-menu-right(role="menu" aria-labelledby="dLabel")
+        ul.dropdown-menu.dropdown-menu-end(role="menu" aria-labelledby="dLabel")
           li
             div(v-for="network in networks", :key="network")
               ShareButton(:id="newsItem.id", :network="network", :title="newsItem.title", :url="newsItem.original_url")
@@ -151,11 +151,11 @@ export default {
   box-shadow: 0 5px 6px #ccc;
 }
 
-.panel-footer {
+.card-footer {
   padding: 2px;
 }
 
-.label-warning {
+.bg-warning {
   display: inline-block;
   height: 15px;
   border-radius: 5px;
@@ -205,7 +205,7 @@ export default {
   background: none;
 }
 
-.panel-title {
+.card-title {
   font-size: 23px;
 }
 

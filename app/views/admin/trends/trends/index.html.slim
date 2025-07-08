@@ -16,7 +16,7 @@ table.table
         .btn-group-vertical
           = link_to trend_path(trend.slug), class: 'btn btn-primary btn-sm' do
             |Trend-Seite
-          = link_to [:edit, :admin, trend], class: 'btn btn-default btn-sm' do
+          = link_to [:edit, :admin, trend], class: 'btn btn-secondary btn-sm' do
             |Bearbeiten
       td
         - chart = Charts::TrendChart.new(trend)

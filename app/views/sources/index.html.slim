@@ -4,18 +4,18 @@
 .row
   - @sources.each_with_index do |source,i|
     - if i % 4 == 0
-      .clearfix.visible-lg
+      .clearfix.d-block.d-xl-none
     - if i % 2 == 0
-      .clearfix.visible-sm
+      .clearfix.d-block.d-md-none
 
     .col-lg-3.col-sm-6
-      .panel.panel-default
-        .panel-heading
+      .card
+        .card-header
           - if source.logo.exists?
             = image_tag source.logo.url(:thumb)
             = ' '
           = link_to source.name, source_path(source)
-        .panel-body
+        .card-body
           small
             | #{source.news_items.count} Beiträge insgesamt
             - if source.news_items.current.any?
@@ -27,6 +27,6 @@
                 = truncate(ni.title, length: 60)
 
 css:
-  .panel-body ul {
+  .card-body ul {
     padding-left: 15px;
   }

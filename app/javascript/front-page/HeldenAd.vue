@@ -1,7 +1,7 @@
 <template lang="pug">
 div
-  .panel.panel-primary
-    .panel-heading
+  .card
+    .card-header
       div(style='display: flex; justify-content: space-between')
         span
           |Fahrrad/E-Bike Vollkasko Versicherung von helden.de
@@ -50,7 +50,7 @@ img {
   width: 100%;
   aspect-ratio: 31 / 6;
 }
-.panel {
+.card {
   border-radius: 15px;
   overflow: hidden;
 }

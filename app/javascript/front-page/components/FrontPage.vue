@@ -16,18 +16,19 @@ div
             :heldenUrl='heldenUrl'
           )
           div(ref='intersectionObsEl')
-        .col-lg-3.visible-lg
-          Subscribe
-          Jobs(v-if="showJobs")
-          Events
-          .panel.panel-default.mt-2(style="position: sticky; top: 85px")
-            .panel-body
+        .col-lg-3.d-none.d-lg-block
+          .sidebar-cards(style="display: flex; flex-direction: column; gap: 1rem;")
+            Subscribe
+            Jobs(v-if="showJobs")
+            Events
+            .card(style="position: sticky; top: 85px")
+            .card-body
               .row
-                .col-xs-6(v-for="[key, path] in Object.entries(paths)")
+                .col-6(v-for="[key, path] in Object.entries(paths)")
                   .footer-item
                     a(:href="path" target= "_blank")
                       | {{ key }}
-                .col-xs-6
+                .col-6
                   .footer-item
                     a(href="/" style="color: #555")
                       | HRfilter.de&nbsp;
@@ -106,6 +107,8 @@ onMounted(() => {
   border: none;
   z-index: 100;
   opacity: 0.7;
+  bottom: 15px;
+  width: 40px;
 }
 
 .footer-item {

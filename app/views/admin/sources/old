@@ -53,16 +53,16 @@ table.table.table-striped.table-bordered.js-table
 
         td = source.twitter_account
         td
-          = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs' do
+          = link_to [:edit, :admin, source.becomes(Source)], class: 'btn btn-secondary btn-sm' do
             |bearbeiten
           = ' '
-          = link_to [:admin, source.becomes(Source)], class: 'btn btn-default btn-xs', data: { method: :delete, confirm: 'really?'} do
+          = link_to [:admin, source.becomes(Source)], class: 'btn btn-secondary btn-sm', data: { method: :delete, confirm: 'really?'} do
             |löschen
           = ' '
-          = link_to source.url, class: 'btn btn-xs' do
+          = link_to source.url, class: 'btn btn-sm' do
             |feed-url
           = ' '
-          = link_to [:refresh, :admin, source.becomes(Source)], data: { method: :post}, class: 'btn btn-xs btn-primary' do
+          = link_to [:refresh, :admin, source.becomes(Source)], data: { method: :post}, class: 'btn btn-sm btn-primary' do
             |refresh
 
 link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"

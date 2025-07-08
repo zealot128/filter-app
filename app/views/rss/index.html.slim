@@ -1,5 +1,5 @@
 - content_for :content_header do
-  .content-header.hidden-xs(style='margin-top: 69px')
+  .content-header.d-none.d-sm-block(style='margin-top: 69px')
     .container
       - @title = "RSS-Feeds"
 
@@ -7,40 +7,40 @@
       p Abonnieren Sie die am höchsten gerankten News von #{Setting.site_name} per RSS-Feed.
 
 .feeds
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title Top 10 jedes Tags
-    .panel-body
+  .card
+    .card-header
+      h3.card-title Top 10 jedes Tags
+    .card-body
       p In diesem Feed erscheinen die Top 10 News eines jeden Tages.
-    .panel-footer
-      = link_to daily_top_10_rss_path(format: 'rss'), class: 'btn btn-default' do
+    .card-footer
+      = link_to daily_top_10_rss_path(format: 'rss'), class: 'btn btn-secondary' do
         |RSS-Feed
 
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title Top 50% jedes Tags
-    .panel-body
+  .card
+    .card-header
+      h3.card-title Top 50% jedes Tags
+    .card-body
       p In diesem Feed erscheinen die ersten 50% News eines jeden Tages.
-    .panel-footer
-      = link_to daily_top_50_rss_path(format: 'rss'), class: 'btn btn-default' do
+    .card-footer
+      = link_to daily_top_50_rss_path(format: 'rss'), class: 'btn btn-secondary' do
         |RSS-Feed
 
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title Weekly Top 50
-    .panel-body
+  .card
+    .card-header
+      h3.card-title Weekly Top 50
+    .card-body
       p In diesem Feed erscheinen die Top 50 News einer jeden Woche.
-    .panel-footer
-      = link_to weekly_top_50_rss_path(format: 'rss'), class: 'btn btn-default' do
+    .card-footer
+      = link_to weekly_top_50_rss_path(format: 'rss'), class: 'btn btn-secondary' do
         |RSS-Feed
 
-  .panel.panel-default
-    .panel-heading
-      h3.panel-title ALLE News
-    .panel-body
+  .card
+    .card-header
+      h3.card-title ALLE News
+    .card-body
       p Alle News, die min. Startseitenrelevanz haben
-    .panel-footer
-      = link_to newest_rss_path(format: 'rss'), class: 'btn btn-default' do
+    .card-footer
+      = link_to newest_rss_path(format: 'rss'), class: 'btn btn-secondary' do
         |RSS-Feed
 
 
@@ -50,7 +50,7 @@ css:
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  .feeds .panel {
+  .feeds .card {
     width: 250px;
     margin-right: 5px;
   }

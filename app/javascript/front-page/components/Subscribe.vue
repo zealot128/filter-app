@@ -1,18 +1,18 @@
 <template lang="pug">
-.panel.panel-default
+.card
   .img-wrapper
     img.bg-img(width="100%", :src="bgImage")
     .centered
       div(style="font-size: 1.7vw") Auf dem Laufenden bleiben
       div(style="font-size: 1.3vw") Per E-Mail die wichtigsten Beiträge monatlich/wöchentlich erhalten?
       div(style="font-size: 1.3vw") Dann tragen Sie sich hier ein. Das Abo ist kostenfrei und jederzeit mit einem Klick kündbar.
-  form.panel-body(@submit.prevent="subscribe()")
+  form.card-body(@submit.prevent="subscribe()")
     .mail-wrapper
       input.mail(type="email" required placeholder="E-Mail Adresse" v-model="email" autocomplete="email" inputmode="email" @keyup.enter="subscribe()")
       p(v-if="error" style="margin: 0") Bitte geben Sie eine gültige E-Mail Adresse an.
-  .panel-footer
-    button.btn.btn-default(@click="subscribe()" style="width: 100%" type="submit")
-      i.fa.fa-fw.fa-envelope-o
+  .card-footer
+    button.btn.btn-secondary(@click="subscribe()" style="width: 100%" type="submit")
+      i.fa.fa-fw.fa-envelope
       | Newsletter abonnieren
 </template>
 
@@ -44,9 +44,6 @@ function subscribe() {
 </script>
 
 <style scoped>
-.panel {
-  margin-top: 1rem;
-}
 
 .img-wrapper {
   position: relative;

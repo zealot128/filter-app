@@ -33,7 +33,7 @@ table.table.table-bordered.js-tablesorter
         td = s.histories.maximum('opened_at')&.to_date
         td
           - if s.unconfirmed?
-            = link_to [:confirm, :admin, s], data: {method: :post}, class: 'btn btn-default btn-sm' do
+            = link_to [:confirm, :admin, s], data: {method: :post}, class: 'btn btn-secondary btn-sm' do
               | Confirm-Mail erneut senden
             - if s.created_at < 1.days.ago
               = link_to [:admin, s], data: {method: :delete}, class: 'btn btn-danger btn-sm' do

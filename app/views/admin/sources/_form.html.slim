@@ -1,16 +1,16 @@
 = simple_form_for [:admin, @source.becomes(Source)] do |f|
   - if @source.new_record?
     = f.input :type, as: :hidden
-  .panel.panel-default
-    .panel-heading: h3.panel-title Abruf
-    .panel-body
+  .card
+    .card-header: h3.card-title Abruf
+    .card-body
       - unless @source.is_a?(RedditSource)
         .row
           .col-sm-6
             = f.input :url
           .col-sm-6
             - if @source.is_a?(FeedSource)
-              .pull-right
+              .float-end
                 a.js-auto-fetch.btn.btn-primary
                   |Auto-Fetch Name/Settings
       = f.input :name
@@ -22,9 +22,9 @@
       - if @source.is_a?(TwitterSource)
         = f.input :url_rules, label: "URL-Whitelist", hint: "Zeilengetrennt hostnamen/URL bestandteile. Falls eine davon matcht, wird ein Link in einem Tweet verarbeitet"
 
-  .panel.panel-default
-    .panel-heading: h3.panel-title Bias
-    .panel-body
+  .card
+    .card-header: h3.card-title Bias
+    .card-body
       - scores = NewsItem.where('created_at > ?', 1.year.ago).where('absolute_score > 0').pluck(:absolute_score).sort
       p Damit eine News erscheint muss sie mindestens Score von 0 haben. Negativen Bias verwenden um Noisy Quellen zu bremsen und nur "das Beste" durchzulassen
       p Folgende Bias-Werte sind aktuell in Benutzung:
@@ -59,9 +59,9 @@
       = f.input :multiplicator, label: "Multiplikator für Likes etc. - Wachstumsrate"
 
 
-  .panel.panel-default
-    .panel-heading: h3.panel-title Darstellung
-    .panel-body
+  .card
+    .card-header: h3.card-title Darstellung
+    .card-body
       - if @source.new_record? || @source.is_a?(FeedSource)
         = f.input :twitter_account, hint: "Falls ein Twitter Account hinterlegt wird, wird die Quelle beim Tweeten gementioned"
       = f.input :logo, hint: "Falls leer, wird versucht das Favicon zu ziehen. Das sieht aber normalerweise klein und scheiße aus, deshalb bitte hier ein hochauflösenderes Logo der Quelle."
@@ -70,9 +70,9 @@
       = f.input :lsr_active, hint: "Falls es eine journalistische Quelle ist, dann hier immer erst anhakten, nicht dass die uns verklagen. Das deaktiviert Teaser + Bild."
       = f.input :lsr_confirmation, hint: "Leistungsschutzrecht Beweis, z.B. ausgedruckte PDF E-Mail der Einwilligung"
 
-  .panel.panel-default
-    .panel-heading: h3.panel-title Kategorisierung
-    .panel-body
+  .card
+    .card-header: h3.card-title Kategorisierung
+    .card-body
       = f.input :comment, label: "Interner Kommentar"
       = f.input :language, as: :select, collection: ['german', 'english', 'other'], hint: "Hauptsprache der News in dieser Quelle, nur deutsche News werden im Twitterkanal veröffentlicht."
       = f.input :default_category_id, as: :select, collection: Category.sorted.all, label: 'Standard-Thema', hint: "Alle News aus der Quelle IMMER auch diesem Thema zuordnen"

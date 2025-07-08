@@ -1,9 +1,9 @@
 <template>
-  <div class="navbar navbar-default">
+  <div class="navbar navbar-light">
     <div class="container-fluid">
 
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+        <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#navbar-collapse">
           <div class="sr-only">Toggle navigation</div>
           <i class="fa fa-lg fa-bars" aria-hidden="true"></i>
         </button>
@@ -11,7 +11,7 @@
           Share
           <i class="fa fa-lg fa-share-alt-square" style="color: #696969" aria-hidden="true"></i>
         </a>
-        <a v-else class="navbar-toggle" href="#collapseOne" data-toggle="collapse">
+        <a v-else class="navbar-toggle" href="#collapseOne" data-bs-toggle="collapse">
           Share
           <i class="fa fa-lg fa-share-alt-square" style="color: #696969" aria-hidden="true"></i>
         </a>
@@ -45,7 +45,7 @@
                 Share
                 <i class="fa fa-lg fa-share-alt-square" style="color: #696969" aria-hidden="true"></i>
               </a>
-              <a v-else class="share-button s-2" href="#collapseOne" data-toggle="collapse">
+              <a v-else class="share-button s-2" href="#collapseOne" data-bs-toggle="collapse">
                 Share
                 <i class="fa fa-lg fa-share-alt-square" style="color: #696969" aria-hidden="true"></i>
               </a>

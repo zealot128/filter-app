@@ -3,10 +3,10 @@
   .content-header(style='margin-top: 69px')
     .container
       - if can?(:edit, @source)
-        .panel.panel-danger.pull-right(style='width: 200px')
-          .panel-heading
-            h3.panel-title Admin
-          .panel-body
+        .card.bg-danger.float-end(style='width: 200px')
+          .card-header
+            h3.card-title Admin
+          .card-body
             = link_to edit_admin_source_path(@source), class: 'btn btn-primary' do
               |Bearbeiten
       h1
@@ -14,8 +14,8 @@
         br
         = ' '
         = @source.name
-.container: .panel.panel-default(style='margin-top: 30px')
-  .panel-body style='height: auto;'
+.container: .card(style='margin-top: 30px')
+  .card-body style='height: auto;'
     .row
       .col-sm-6
         dl

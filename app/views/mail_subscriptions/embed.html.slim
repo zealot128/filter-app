@@ -14,14 +14,14 @@ br
 .row
   .col-sm-8
     = simple_form_for @subscription, target: '_top' do |f|
-      .panel.panel-primary
-        .panel-body
+      .card.bg-primary
+        .card-body
           = f.input :email, as: :string, input_html: {value: @email || ''}
           = render "form", f: f
           - if f.object.new_record?
             = f.input :privacy, as: :boolean, label: I18n.t('simple_form.labels.mail_subscription.privacy', site_name: Setting.site_name, email: Setting.email).html_safe
           = invisible_captcha
-          = f.submit 'Vorschau', class: 'btn btn-default'
+          = f.submit 'Vorschau', class: 'btn btn-secondary'
           = ' '
           = f.submit 'Abonnieren', class: 'btn btn-primary'
 

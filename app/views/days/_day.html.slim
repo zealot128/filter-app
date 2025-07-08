@@ -11,6 +11,6 @@
     - if news.any?
       .news-item-grid(data-day='#{day.to_s}')
         = render news
-      .pull-right
-        = link_to day_path(day), class: 'btn btn-default', data: { remote: true, disable_with: "...wird geladen" } do
+      .float-end
+        = link_to day_path(day), class: 'btn btn-secondary', data: { remote: true, disable_with: "...wird geladen" } do
           |Alle News dieses Tages anzeigen (#{total_count})

@@ -1,9 +1,9 @@
 - @container_class = 'container-fluid'
 .row
   .col-md-6
-    .panel.panel-default
-      .panel-heading
-        .panel-title Quellen mit Fehlern
+    .card
+      .card-header
+        .card-title Quellen mit Fehlern
       table.table
         - Source.with_error.each do |source|
           tr
@@ -14,13 +14,13 @@
             td = link_to source.url do
               = source.host
     - if false
-      .panel.panel-default
-        .panel-heading
-          .pull-right
+      .card
+        .card-header
+          .float-end
             span.badge
               = MailSubscription.confirmed.count
             small<> insg
-          .panel-title
+          .card-title
             = link_to '/admin/mail_subscriptions'
               |Neuste Abonnenten
         table.table
@@ -30,9 +30,9 @@
               td = ms.email
               td = l ms.created_at.to_date
     - if can?(:destroy, MailSubscription)
-      .panel.panel-default
-        .panel-heading
-          .panel-title
+      .card
+        .card-header
+          .card-title
             = link_to '/admin/mail_subscriptions'
               |Öffnungsraten
         table.table
@@ -48,9 +48,9 @@
                 |#{week[:sent]} / #{week[:open]}
               td = number_to_percentage week[:open_ratio]
   .col-md-6
-    .panel.panel-default
-      .panel-heading
-        h3.panel-title Logo improvements
+    .card
+      .card-header
+        h3.card-title Logo improvements
       .list-group
         - Source.where('image_candidates is not null').limit(20).each do |s|
           .list-group-item(id='#{dom_id(s, "images")}')
@@ -63,8 +63,8 @@
                   = image_tag s.logo.url, height: 50
             small Kandidaten für besseres Logo von der Website:
             div
-              .pull-right
-                a.btn.btn-default.btn-sm(href='#{download_image_admin_source_path(s, url: nil)}' data-method='patch' data-remote='true') Ignore
+              .float-end
+                a.btn.btn-secondary.btn-sm(href='#{download_image_admin_source_path(s, url: nil)}' data-method='patch' data-remote='true') Ignore
             br
             - s.image_candidates.each do |img|
               = link_to download_image_admin_source_path(s, url: img), data: { method: :patch, remote: true } do
@@ -75,9 +75,9 @@
                 transform: scale(1.05)
               }
 
-    .panel.panel-default
-      .panel-heading
-        .panel-title Quellen ohne NewsItems seit 6 Monaten
+    .card
+      .card-header
+        .card-title Quellen ohne NewsItems seit 6 Monaten
       table.table
         - Source.antiquated.each do |source|
           tr

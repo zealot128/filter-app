@@ -1,14 +1,16 @@
 <template lang="pug">
-.event-wrapper(v-if="loaded")
-  h5.section-title Kommende Veranstaltungen
-  .panel.panel-default(v-for="event in events")
-    a(:href="event.url" rel="noopener" target="_blank")
-      img(width="100%" :src="event.image" loading="lazy" alt="Upcoming event")
-    .panel-body
-      h5
-        a(:href="event.url" rel="noopener" target="_blank")
-          | {{ event.title }}
-      p  {{ event.from }}
+.card(v-if="loaded")
+  .card-header
+    strong Kommende Veranstaltungen
+  .card-body
+    .event-item(v-for="event in events")
+      a(:href="event.url" rel="noopener" target="_blank")
+        img.event-image(width="100%" :src="event.image" loading="lazy" alt="Upcoming event")
+      .event-content
+        h6
+          a(:href="event.url" rel="noopener" target="_blank")
+            | {{ event.title }}
+        p.text-muted.small {{ event.from }}
 </template>
 
 <script lang='ts'>
@@ -36,22 +38,32 @@ export default {
 </script>
 
 <style scoped>
-.event-wrapper {
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  /* text-align: center; */
-  padding: 5px 10px;
+.event-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
 }
 
-.panel {
-  margin: 10px 0px;
+.event-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
-.panel-body {
+.event-image {
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-content {
   text-align: center;
 }
 
-.section-title {
-  font-size: 17px;
+.event-content h6 {
+  margin-bottom: 0.25rem;
+}
+
+.event-content p {
+  margin-bottom: 0;
 }
 </style>

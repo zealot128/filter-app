@@ -18,10 +18,10 @@ div ng-app='frontpage'
       li ng-class='{ active: state.currentCategory == 0 }'
         a ng-href='#/{{state.sort}}/Category/0' Unkategorisiert
 
-      li.pull-right
+      li.float-end
         a href='/days' Top-News des Tages
       /* li.pull-right.dropdown */
-        a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+        a class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
           i.fa.fa-sort-amount-desc
           span.caret<
         ul class="dropdown-menu"
@@ -40,7 +40,7 @@ div ng-app='frontpage'
         .col-lg-3.col-sm-6.js-grid-item
           = render item
   .text-center style='margin-bottom: 15px' ng-controller='PageCtrl'
-    a ng-click='nextPage()' ng-if='hasNextPage()' class='btn btn-default btn-lg'
+    a ng-click='nextPage()' ng-if='hasNextPage()' class='btn btn-secondary btn-lg'
       |Mehr
 
 - content_for :content_footer do

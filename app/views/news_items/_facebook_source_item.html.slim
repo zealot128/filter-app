@@ -1,13 +1,13 @@
 - length ||= 60
 - background = facebook_source_item.image
-.panel.panel-default.news-item-panel
-  .panel-heading
-    h3.panel-title
-      .pull-right
-        i.fa.fa-facebook.fa-lg
+.card.news-item-panel
+  .card-header
+    h3.card-title
+      .float-end
+        i.fab.fa-facebook.fa-lg
       = link_to facebook_source_item.url, target: '_blank', title: facebook_source_item.title, data: { proxy: click_proxy_path(facebook_source_item) } do
         = truncate(facebook_source_item.title, length: length)
-  .panel-body(class=(background.present? ? 'with-background' : ''))
+  .card-body(class=(background.present? ? 'with-background' : ''))
     - if background.present?
       .background-frame
         img.background(src=(background.url))
@@ -22,5 +22,5 @@
         = facebook_source_item.teaser
     .fog-fade
 
-  .panel-footer
+  .card-footer
     = render 'news_items/share', item: facebook_source_item

@@ -1,11 +1,51 @@
-nav.navbar.navbar-default.top-fixed.top-fixed--f0: .container-fluid
-  .navbar-header
-    button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"
-      .sr-only
-        | Toggle navigation
-      i.fa.fa-fw.fa-bars.fa-2x
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.top-fixed.top-fixed--f0
+  .container-fluid
     a.navbar-brand href='/'
       = image_tag "#{Setting.key}/logo-large.png", alt: "Logo", title: Setting.site_name, style: 'height: 35px'
-  #navbar-collapse.collapse.navbar-collapse
-    = render_navigation expand_all: true, renderer: :bootstrap
-
+    button.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"
+      span.navbar-toggler-icon
+    #navbar-collapse.collapse.navbar-collapse
+      ul.navbar-nav.ms-auto
+        li.nav-item class=("active" if current_page?(root_path))
+          a.nav-link href="/" class=("active" if current_page?(root_path)) aria-current=("page" if current_page?(root_path)) News
+        li.nav-item class=("active" if request.path == '/newsletter')
+          a.nav-link href="/newsletter" class=("active" if request.path == '/newsletter') aria-current=("page" if request.path == '/newsletter') Newsletter
+        li.nav-item class=("active" if request.path == '/rss')
+          a.nav-link href="/rss" class=("active" if request.path == '/rss') aria-current=("page" if request.path == '/rss') Feeds
+        li.nav-item class=("active" if request.path == '/app')
+          a.nav-link href="/app" class=("active" if request.path == '/app') aria-current=("page" if request.path == '/app') Als App
+        - if current_user
+          li.nav-item.dropdown
+            a#navbarDropdown.nav-link.dropdown-toggle href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              | Admin
+            ul.dropdown-menu.dropdown-menu-end aria-labelledby="navbarDropdown"
+              li
+                a.dropdown-item href=admin_dashboard_path Dashboard
+              li
+                hr.dropdown-divider
+              - if can?(:manage, Source)
+                li
+                  a.dropdown-item href=admin_sources_path Quellen
+              - if can?(:manage, Setting)
+                li
+                  a.dropdown-item href=admin_settings_path Settings
+              - if can?(:manage, Category)
+                li
+                  a.dropdown-item href=admin_categories_path Kategorien
+              - if can?(:manage, Trends::Trend)
+                li
+                  a.dropdown-item href="/admin/trends" Trends
+              - if can?(:manage, MailSubscription)
+                li
+                  hr.dropdown-divider
+                li
+                  a.dropdown-item href=admin_mail_subscriptions_path Abonnenten
+              li
+                hr.dropdown-divider
+              - if can?(:manage, User)
+                li
+                  a.dropdown-item href=admin_users_path Admins
+              li
+                a.dropdown-item href=edit_admin_user_path(current_user.id) Login anpassen
+              li
+                a.dropdown-item href=destroy_user_session_path data-method="delete" rel="nofollow" Logout

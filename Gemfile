@@ -11,8 +11,6 @@ gem 'babel-transpiler'
 gem "pg"
 gem "mail_form"
 gem "simple_form"
-gem "simple-navigation"
-gem "simple-navigation-bootstrap", git: "https://github.com/pzgz/simple-navigation-bootstrap.git"
 gem 'bootsnap'
 gem 'invisible_captcha'
 gem "groupdate"
@@ -65,8 +63,6 @@ gem 'rack-cors', require: 'rack/cors'
 
 # TODO: > 5.0.7
 gem "sass-rails", git: 'https://github.com/rails/sass-rails.git'
-gem "bootstrap-sass", "~> 3.1"
-gem "bootswatch-rails"
 gem "font-awesome-rails", "~> 4.0"
 gem "sass"
 gem "slim-rails"

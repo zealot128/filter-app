@@ -14,7 +14,23 @@
       "Bash(bundle exec rails runner:*)",
       "Bash(bundle exec rubocop:*)",
       "Bash(bundle exec rspec:*)",
-      "Bash(bin/rubocop:*)"
+      "Bash(bin/rubocop:*)",
+      "Bash(yarn remove:*)",
+      "Bash(yarn add:*)",
+      "mcp__puppeteer__puppeteer_navigate",
+      "mcp__puppeteer__puppeteer_screenshot",
+      "Bash(bin/vite:*)",
+      "Bash(bundle show:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "mcp__puppeteer__puppeteer_evaluate",
+      "mcp__puppeteer__puppeteer_click",
+      "Bash(gem search:*)",
+      "Bash(touch:*)",
+      "Bash(rm:*)",
+      "Bash(bundle install:*)",
+      "mcp__puppeteer__puppeteer_authenticate",
+      "Bash(rg:*)"
     ],
     "deny": []
   }

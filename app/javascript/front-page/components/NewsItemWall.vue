@@ -1,36 +1,32 @@
 <template lang="pug">
 .news-items--wall
   ul.nav.nav-tabs.nav-justified.mb-2(v-if="fullLayout")
-    li(v-for="mt in mediaTypes", :key="mt", :class="{'active': mt == chosenMediaType }")
-      a(role="button" @click="selectMediaType(mt)")
+    li.nav-item(v-for="mt in mediaTypes", :key="mt")
+      a.nav-link(role="button" @click="selectMediaType(mt)" :class="{'active': mt == chosenMediaType }")
         span(style="display: inline-flex")
           | {{ typeTitle(mt) }}
           svg(fill="currentColor" style="margin-left: 5px" height="20px" width="20px" viewBox="0 0 24 24")
             path(:d="iconForType(mt)")
 
-  .news-items--wrapper
+  .news-items--wrapper(class='d-flex flex-column gap-2')
     template(v-if="loading")
       NewsItem(v-for="ni in newsItemsLoading", :key="ni.id", :news-item="ni")
       Skeleton(v-for="i in 15", :key="i")
     template(v-else)
-      div(v-for="(ni, idx) in newsItems", :key="ni.id")
-        NewsItem(:news-item="ni")
-        div(v-if="idx == 1 && heldenUrl")
-          helden-ad(:helden-url="heldenUrl")
+      NewsItem(v-for="(ni, idx) in newsItems", :key="ni.id" :news-item="ni")
       template(v-if="newsItems.length === 0")
         div(style="font-size: 5rem")
           i.fa.fa-exclamation-triangle
         h4 Leider gibt es keinen Artikel für ihre ausgewählte Suchmuster, bitte versuchen Sie nochmal mit einem neuen Muster.
 
   .text-center
-    a.btn.btn-default(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
+    a.btn.btn-secondary(v-if="hasNextPage && !fullLayout" @click="loadNextPage()" style="margin-bottom: 30px")
       | Mehr
 </template>
 
 <script lang="ts" setup>
 import NewsItem from "./NewsItem.vue"
 import Skeleton from "./Skeleton.vue"
-import HeldenAd from "@/front-page/HeldenAd.vue"
 import json from "../icons.json"
 
 import { mediaTypes } from "@/front-page/data"
@@ -43,7 +39,6 @@ const props = defineProps({
   perPage: { type: Number, default: 30 },
   sortOptions: { type: String, default: "few" },
   fullLayout: { type: Boolean, default: true },
-  heldenUrl: { type: String, default: null },
 })
 import { onBeforeUnmount, onMounted } from "vue"
 

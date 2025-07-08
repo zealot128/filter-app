@@ -13,8 +13,8 @@ table.table
           = category.name
         td = category.hash_tag
         td = category.keywords.gsub(',', ', ')
-        td = link_to edit_admin_category_path(category.id), class: 'btn btn-default btn-xs' do
+        td = link_to edit_admin_category_path(category.id), class: 'btn btn-secondary btn-sm' do
           | edit
 
-p = link_to [:new, :admin, :category], class: 'btn btn-default' do
+p = link_to [:new, :admin, :category], class: 'btn btn-secondary' do
   | Neu

@@ -1,13 +1,13 @@
 h2 Einstellungen
 
 - Setting::GROUPS.each do |group, keys|
-  .panel.panel-default
-    .panel-heading: h3.panel-title = group
+  .card
+    .card-header: h3.card-title = group
     .list-group
       - Setting.where(key: keys).each do |setting|
         .list-group-item
-          .pull-right
-            = link_to [:edit, :admin, setting], class: 'btn btn-default btn-xs' do
+          .float-end
+            = link_to [:edit, :admin, setting], class: 'btn btn-secondary btn-sm' do
               |bearbeiten
           small.text-muted = setting.key
           br

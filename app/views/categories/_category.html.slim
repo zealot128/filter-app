@@ -1,11 +1,11 @@
-.panel.panel-default.category-panel
-  .panel-heading
+.card.category-panel
+  .card-header
     = link_to category_path(category), class: 'category-panel-heading' do
       h3.category-name
         = category.name
       - if category.logo.attached?
-        = image_tag category.logo.variant(resize: '50x50>'), class: "img-responsive"
-  .panel-body.category-panel-body
+        = image_tag category.logo.variant(resize: '50x50>'), class: "img-fluid"
+  .card-body.category-panel-body
     strong
       = t('categories.category.sources', count: category.sources.distinct.count, news_count: category.news_items.after(6.months.ago).count)
     br
@@ -15,6 +15,6 @@
     div
       - category.news_items.show_page.first(3).each do |news_item|
         ul.category-list
-          li.category-top-news(title=news_item.title data-toggle='tooltip' data-container='body')
+          li.category-top-news(title=news_item.title data-bs-toggle='tooltip' data-container='body')
             i.fa.fa-fw.fa-arrow-right.category-arrow
             = news_item.title

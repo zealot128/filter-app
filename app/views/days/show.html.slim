@@ -12,7 +12,7 @@ h3.day-title = l @day, format: '%A, %d. %b %Y'
         = render @news
 
 .day-title.clearfix
-  .pull-left
+  .float-start
     - if @yesterday
       = link_to day_path(@yesterday) do
         i.fa.fa-fw.fa-angle-left>
@@ -21,7 +21,7 @@ h3.day-title = l @day, format: '%A, %d. %b %Y'
         small älter
 
 
-  .pull-right
+  .float-end
     - if @tomorrow
       = link_to day_path(@tomorrow) do
         = l(@tomorrow, format: '%A, %d. %b')

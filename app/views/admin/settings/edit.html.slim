@@ -3,13 +3,13 @@
   |Setting: #{@setting.key}
   = f.input :value
   - if @setting.key =~ /^(mail_outro|mail_intro|intro|credits)$/
-	a.btn.btn-info.pull-right data={ toggle:"modal", target:"#placeholder"}
+	a.btn.btn-info.float-end data={ toggle:"modal", target:"#placeholder"}
 		span.glyphicon.glyphicon-info-sign>
 		| Verfügbare Platzhalter
 	.clearfix
 	= render "placeholder", setting: @setting
 	h4 Vorschau:
-	div.well
+	div.card.card-body
 		samp#preview
 	javascript:
 		$(document).ready(function(){

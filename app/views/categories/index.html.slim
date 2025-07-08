@@ -1,6 +1,6 @@
 - @container_class = 'container-fluid'
 - content_for :content_header do
-  .content-header.hidden-xs
+  .content-header.d-none.d-sm-block
     .container
       .text-center
         h2 = @title
@@ -9,7 +9,7 @@
   .col-lg-6
     h2.text-center.mb-2 Kategorien
     - @categories.each do |category|
-      .col-md-4.col-sm-6.col-xs-12
+      .col-md-4.col-sm-6.col-12
         = render "category", category: category
 
   .col-lg-6
@@ -17,13 +17,13 @@
       h2.text-center Trends / Aktuelles
       .row
         - @trends.each do |trend|
-          .col-md-4.col-sm-6.col-xs-12
+          .col-md-4.col-sm-6.col-12
             = render 'trend', trend: trend
 
 
 javascript:
   $(document).ready(function() {
-    $('[data-toggle=tooltip]').tooltip()
+    $('[data-bs-toggle=tooltip]').tooltip()
   });
 css:
   h2 {

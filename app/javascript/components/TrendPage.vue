@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='panel panel-default chart-panel'>
+    <div class='card chart-panel'>
       <Highcharts :options='chartOptions' style='height: 200px'/>
     </div>
     <NewsItemWall default-order='hot_score' sort-options='all'/>

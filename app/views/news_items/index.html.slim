@@ -7,7 +7,7 @@ h2 Alle indizierten News durchsuchen
     .container
       = form_tag '/search', class: 'form-inline', method: :get do
         .form-group
-          label.control-label>(for='q')
+          label.form-label>(for='q')
             | Suchbegriff
           br
         = ' '
@@ -18,19 +18,19 @@ h2 Alle indizierten News durchsuchen
 
 - if params[:q]
   br
-  .pull-right
+  .float-end
     a.btn.btn-warning href='#{@feed_url}' title='RSS-Feed abonnieren'
       i.fa.fa-rss.fa-lg.fa-fw
   ul.nav.nav-tabs
-    li.disabled: a.text-link: small Sortierung
-    li class='#{params[:sort].blank? ? 'active' : ''}'
-      a href='#{search_path(q: params[:q])}'
+    li.nav-item: a.nav-link.disabled: small Sortierung
+    li.nav-item
+      a.nav-link class='#{params[:sort].blank? ? 'active' : ''}' href='#{search_path(q: params[:q])}'
         |Keyword-Relevanz
-    li class='#{params[:sort] == 'freshness' ? 'active' : ''}'
-      a href='#{search_path(q: params[:q], sort: 'freshness')}'
+    li.nav-item
+      a.nav-link class='#{params[:sort] == 'freshness' ? 'active' : ''}' href='#{search_path(q: params[:q], sort: 'freshness')}'
         |Aktualität
-    li class='#{params[:sort] == 'score' ? 'active' : ''}'
-      a href='#{search_path(q: params[:q], sort: 'score')}'
+    li.nav-item
+      a.nav-link class='#{params[:sort] == 'score' ? 'active' : ''}' href='#{search_path(q: params[:q], sort: 'score')}'
         |Beliebtheit
   br
   - if @news_items.present?

@@ -5,8 +5,8 @@ br
 
 .container
   .row.app-row
-    .col-xs-6.text-left: .js-owl-prev.disabled
-    .col-xs-6.text-right: .js-owl-next
+    .col-6.text-start: .js-owl-prev.disabled
+    .col-6.text-end: .js-owl-next
 
   br
 
@@ -94,11 +94,11 @@ br
   .row.download-row
     .col-sm-2
       button.btn.btn-primary.download-button type="button"
-        i.fa.fa-android<>
+        i.fab.fa-android<>
         a href="https://play.google.com/store/apps/details?id=com.pludoni.filterapp" Android
     .col-sm-2
       button.btn.btn-primary.download-button type="button"
-        i.fa.fa-apple<>
+        i.fab.fa-apple<>
         a href="https://itunes.apple.com/us/app/hrfilter-news/id1435577499" iPhone
 
   br
@@ -137,7 +137,7 @@ javascript:
       }
 
     })
-    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-o-left'></i> Android </a>").find('a').click(function(e){
+    $('.js-owl-prev').html("<a href='#'> <i class='fa fa-fw fa-arrow-circle-left'></i> Android </a>").find('a').click(function(e){
       e.preventDefault()
       var dots = Array.from(document.getElementsByClassName('owl-dot'))
       click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) - 1
@@ -145,7 +145,7 @@ javascript:
         $(dots[click_that]).trigger('click')
       }
     })
-    $('.js-owl-next').html("<a class='test' href='#'> iOS <i class='fa fa-fw fa-arrow-circle-o-right'></i></a>").find('a').click(function(e){
+    $('.js-owl-next').html("<a class='test' href='#'> iOS <i class='fa fa-fw fa-arrow-circle-right'></i></a>").find('a').click(function(e){
       e.preventDefault()
       var dots = Array.from(document.getElementsByClassName('owl-dot'))
       click_that = dots.findIndex(function(el) { return el.className.indexOf('active') !== -1 }) + 1

@@ -1,9 +1,9 @@
-.content-header-secondary.text-center(style='margin-top: 30px; padding: 30px; font-size: 2rem;')
+.content-header-secondary.text-center(style='margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); width: 100vw; margin-top: 30px; padding: 30px; font-size: 2rem;')
   p Nutzen Sie die HRfilter-App direkt auf Ihrem Smartphone:
 
   - if browser.platform.ios? || !browser.device.mobile?
     a.btn.btn-primary(href='https://itunes.apple.com/us/app/hrfilter-news/id1435577499?ls=1&mt=8')
-      i.fa.fa-fw.fa-apple.fa-2x
+      i.fab.fa-fw.fa-apple.fa-2x
   - if browser.platform.android? || !browser.device.mobile?
     a.btn.btn-primary(href='https://play.google.com/store/apps/details?id=com.pludoni.filterapp')
-      i.fa.fa-fw.fa-android.fa-2x
+      i.fab.fa-fw.fa-android.fa-2x

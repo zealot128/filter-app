@@ -4,12 +4,12 @@
 h2 Top Trends Monat #{@month.strftime("%m / %Y")}
 
 ul.nav.nav-tabs
-  li
-    = link_to url_for(controller: controller_name, action: action_name, month: (params[:month] || 0).to_i + 1, usage_type: params[:uage_type])
+  li.nav-item
+    = link_to url_for(controller: controller_name, action: action_name, month: (params[:month] || 0).to_i + 1, usage_type: params[:uage_type]), class: 'nav-link'
       |Vorheriger Monat
   - if params[:month] && params[:month].to_i > 0
-    li
-      = link_to url_for(controller: controller_name, action: action_name, month: (params[:month].to_i - 1), usage_type: params[:uage_type])
+    li.nav-item
+      = link_to url_for(controller: controller_name, action: action_name, month: (params[:month].to_i - 1), usage_type: params[:uage_type]), class: 'nav-link'
         |Nächster Monat
 
 .row

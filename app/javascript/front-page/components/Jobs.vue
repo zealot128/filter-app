@@ -1,19 +1,19 @@
 <template lang="pug">
-.panel.panel-default(v-if="loaded")
-  .panel-heading
-    h3.panel-title
+.card(v-if="loaded")
+  .card-header
+    strong
       | HR-Stellenanzeigen
-  .panel-body
+  .card-body
     .job(v-for="job in jobs", :key="job.id")
       a(:href="job.url" rel="noopener" target="_blank")
         | {{ job.title }}
         |
         i.text-muted
           | {{ job.company_name }}
-  .panel-footer
+  .card-footer
     h5(style="margin: 0; margin-bottom: 1rem; text-align: center") Alle Stellen finden Sie aktuell auf
     a(href="https://www.empfehlungsbund.de/jobs/search?utf8=%E2%9C%93&q=HR+Personal&position=" target="_blank")
-      img.img-responsive.center-block(:src="empfehlungsbundLogo")
+      img.img-fluid.mx-auto.d-block(:src="empfehlungsbundLogo")
 </template>
 
 <script lang="ts" setup>
@@ -45,26 +45,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.panel-header {
-  padding-right: 5px;
-  padding-left: 5px;
-  min-height: 90px;
-  background-color: #f8f9fa;
-}
-
-.panel-footer {
-  background-color: #f8f9fa;
-}
-
-.label {
-  font-size: 12px;
-}
-
 .job {
   margin-bottom: 10px;
-}
-
-.panel {
-  margin-top: 10px;
 }
 </style>

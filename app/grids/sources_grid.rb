@@ -47,10 +47,10 @@ order: '(statistics->>\'average_word_length\')::int')
     safe_join [
       content_tag(:div, class: 'btn-group') {
         safe_join [
-          link_to('bearbeiten', [:edit, :admin, source.becomes(Source)], class: 'btn btn-default btn-xs'),
-          link_to("löschen", [:admin, source.becomes(Source)], class: 'btn btn-default btn-xs', data: { method: :delete, confirm: 'really?' }),
-          link_to("source-page", source_path(source), class: 'btn btn-xs btn-default'),
-          link_to("feed-url", source.url, class: 'btn btn-xs btn-primary'),
+          link_to('bearbeiten', [:edit, :admin, source.becomes(Source)], class: 'btn btn-secondary btn-sm'),
+          link_to("löschen", [:admin, source.becomes(Source)], class: 'btn btn-secondary btn-sm', data: { method: :delete, confirm: 'really?' }),
+          link_to("source-page", source_path(source), class: 'btn btn-sm btn-secondary'),
+          link_to("feed-url", source.url, class: 'btn btn-sm btn-primary'),
         ]
       },
       content_tag(:div) {
@@ -59,9 +59,9 @@ order: '(statistics->>\'average_word_length\')::int')
           content_tag(:div, class: 'btn-group') {
             safe_join [
               link_to("Quelle", refresh_admin_source_path(source, type: 'source'), data: { method: :post, remote: true, disable_with: '...' },
-class: 'btn btn-xs btn-primary', title: "Quelle jetzt abrufen"),
+class: 'btn btn-sm btn-primary', title: "Quelle jetzt abrufen"),
               link_to("letzte 10 News", refresh_admin_source_path(source, type: 'news_items'),
-data: { method: :post, remote: true, disable_with: '...' }, class: 'btn btn-xs btn-primary', title: "Letzte bereits angelegte NewsItems auf Scoring prüfen (Twitter shares, etc.)")
+data: { method: :post, remote: true, disable_with: '...' }, class: 'btn btn-sm btn-primary', title: "Letzte bereits angelegte NewsItems auf Scoring prüfen (Twitter shares, etc.)")
             ]
           }
         ]

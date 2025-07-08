@@ -1,20 +1,18 @@
 //= require font-awesome
-@import bootstrap-sprockets
-@import bootswatch/cosmo/variables
 @import datagrid
 
 $brand-color: #aa4400
 $feature-color: #3C4692
 $lila: #43227C
 
-$navbar-default-bg: white
-$navbar-default-color: $feature-color
-$navbar-default-link-color: $feature-color
-$navbar-default-link-hover-color: darken($feature-color, 20%)
-$navbar-default-link-hover-bg: #f2f2f2
+// Bootstrap 5 CSS custom properties
+:root
+  --bs-primary: #{$feature-color}
+  --bs-navbar-color: #{$feature-color}
+  --bs-navbar-hover-color: #{darken($feature-color, 20%)}
+  --bs-navbar-brand-color: #{$feature-color}
 
-@import bootstrap
-@import bootswatch/cosmo/bootswatch
+// Bootstrap 5 is now loaded via Vite, remove this line for now
 
 // tablesorter
 // @import theme.bootstrap.min.css
@@ -22,7 +20,7 @@ $navbar-default-link-hover-bg: #f2f2f2
 @import web/post_module
 //@import "jquery.tablesorter/css/theme.default.scss"
 
-.navbar-default .navbar-brand
+.navbar-brand
   img
     height: 50px
 
@@ -46,11 +44,11 @@ footer
 
 $panel-body-height: fit-content
 
-.panel-default.news-item-panel
-  .panel-body
+.card.news-item-panel
+  .card-body
     height: $panel-body-height
     overflow: hidden
-  .panel-heading
+  .card-header
     height: 73px
     overflow: hidden
   .fog-fade
@@ -65,8 +63,8 @@ $panel-body-height: fit-content
     background-position: bottom
 
 $twitter-panel-offset: 30px
-.panel-twitter
-  .panel-heading
+.card-twitter
+  .card-header
     height:  73px - $twitter-panel-offset
     .source a
       display: inline-block
@@ -76,7 +74,7 @@ $twitter-panel-offset: 30px
       vertical-align: top
       margin-top: -5px
 
-  .panel-body
+  .card-body
     height: $panel-body-height + $twitter-panel-offset
   .fog-fade
     top: $panel-body-height + $twitter-panel-offset - 43px - 30px
@@ -105,14 +103,14 @@ $category-background: lighten(#666, 10%)
     display: flex
     position: relative
     flex-direction: column
-    .panel-body
+    .card-body
       flex-grow: 2
 
 
 .news-item-panel
-  .panel-footer
+  .card-footer
     padding: 0
-  .panel-footer .categories
+  .card-footer .categories
     display: block
     text-overflow: ellipsis
     height: 1.5em
@@ -121,7 +119,7 @@ $category-background: lighten(#666, 10%)
     white-space: nowrap
     background: $category-background
     text-align: center
-    .label
+    .badge
       padding-right: 0
       padding-left: 5px
       background: $category-background
@@ -130,13 +128,13 @@ $category-background: lighten(#666, 10%)
         font-size: 10px
         color: #bbb
       color: #eee
-    .label-paywall
+    .badge-paywall
       border: 2px solid #caaf1b
       padding: 2px
       margin: 2px
       display: inline-block
 
-.panel-title, p, .panel-body
+.card-title, p, .card-body
   hyphens: auto
   -moz-hyphens: auto
   -webkit-hyphens: auto
@@ -166,13 +164,13 @@ blockquote
   font-size: 110%
   margin-bottom: 5px
 
-.panel-body
+.card-body
   p.source
     margin-bottom: 5px
     font-size: 12px
     color: #999
 
-.panel-body
+.card-body
   position: relative
   line-height: 1.3
   font-size: 14px
@@ -257,13 +255,13 @@ blockquote
 
 .job-panel
   margin: 10px
-  .panel-heading
+  .card-header
     height: 85px
   .text-center
     overflow: hidden
     font-weight: bold
     height: 37px
-  .panel-body
+  .card-body
     height: 85px
     h4
       font-weight: bold
@@ -275,9 +273,9 @@ blockquote
 
 .last-job-panel
   margin: 10px
-  .panel-heading
+  .card-header
     height: 85px
-  .panel-body
+  .card-body
     height: 265px
     padding-top: 62px
 
@@ -330,11 +328,11 @@ blockquote
   a
     color: white
 
-.category-panel-heading
+.category-card-header
   display: flex
   justify-content: space-between
 
-.category-panel-body
+.category-card-body
   height: 180px !important
   margin-bottom: 5px
 
@@ -344,7 +342,7 @@ blockquote
     width: 23%
   .col-sm-3
     width: 23%
-  .col-xs-3
+  .col-3
     width: 23%
 
 .category-panel:hover

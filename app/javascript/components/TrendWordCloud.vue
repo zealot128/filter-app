@@ -1,5 +1,5 @@
 <template>
-  <div v-show='trends.length > 0' class='panel panel-default'>
+  <div v-show='trends.length > 0' class='card'>
     <h3 class='text-center mt-0'>{{ title }}</h3>
     <div ref='canvas' class='word-cloud--html-canvas' :style='{height: height + "px"}'></div>
   </div>
@@ -79,7 +79,7 @@ export default {
   opacity: 1.0;
   text-decoration: none;
 }
-.panel {
+.card {
   padding: 20px;
 }
 h3 {

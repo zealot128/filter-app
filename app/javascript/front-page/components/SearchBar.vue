@@ -11,7 +11,7 @@ div(:class="wideLayout ? 'search-bar' : 'bottom-bar'", :style="{ bottom: bottom 
     @keyup.enter="buildPayload()"
     @blur="buildPayload()")
   template(v-if="!wideLayout")
-    button(:class="expand ? 'btn btn-cat disabled' : 'btn btn-cat'" data-toggle="modal" data-target="#opModal")
+    button(:class="expand ? 'btn btn-cat disabled' : 'btn btn-cat'" data-bs-toggle="modal" data-bs-target="#opModal")
       i.fa.fa-bars.fa-lg(aria-hidden="true")
 </template>
 
@@ -91,6 +91,7 @@ input {
   vertical-align: middle;
   white-space: nowrap;
   position: fixed;
+  max-width: 200px;
   top: 95px !important;
   left: 15px;
   z-index: 1000;

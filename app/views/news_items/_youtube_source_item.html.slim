@@ -1,15 +1,15 @@
 - feed_source_item = youtube_source_item
 - background = feed_source_item.image
-.panel.panel-default.youtube-item.news-item-panel
+.card.youtube-item.news-item-panel
   = link_to feed_source_item.url, target: '_blank', title: feed_source_item.title, data: { proxy: click_proxy_path(feed_source_item)} do
-    .panel-body(class=(background.present? ? 'with-background' : ''))
+    .card-body(class=(background.present? ? 'with-background' : ''))
       - if background.present?
         .background-frame
           img.background(src=(background.url))
       .background-text
         p.source
-          .pull-right
-            i.fa.fa-fw.fa-youtube.fa-2x<>
+          .float-end
+            i.fab.fa-fw.fa-youtube.fa-2x<>
           = render "news_items/source", source: feed_source_item.source, size: '16x16'
           br
           span.date(data-time="#{feed_source_item.published_at.to_i}" title="#{l feed_source_item.published_at}")
@@ -22,5 +22,5 @@
               br
               = feed_source_item.teaser
       .fog-fade
-  .panel-footer
+  .card-footer
     = render "news_items/share", item: feed_source_item
