@@ -43,7 +43,7 @@ Rails.application.configure do
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
-  # config.assume_ssl = true
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
@@ -103,6 +103,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   if File.exist?('config/email.yml')
     ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
+  elsif Rails.application.credentials.smtp.present?
+    ActionMailer::Base.smtp_settings = Rails.application.credentials.dig(:smtp).symbolize_keys
   else
     warn "no config/email.yml configuration found, e-mail delivery will not work!"
   end

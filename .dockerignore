@@ -52,6 +52,4 @@ config/deploy.rb
 Dockerfile
 /coverage
 /*.md
-
-
-
+.kamal

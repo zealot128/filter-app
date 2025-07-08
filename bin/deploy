@@ -1,0 +1,24 @@
+#!/bin/bash
+
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+cp $DEPLOY_SSH_KEY ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+# ignore host key
+echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+
+# MRSK_REGISTRY_PASSWORD=WiCKWk1FSYiiFiTZHooq
+#MRSK_REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+# check if CI_REGISTRY_PASSWORD is set - if yes, write it into .kamal/secrets
+if [ -n "$CI_REGISTRY_PASSWORD" ]; then
+  echo "CI_REGISTRY_PASSWORD is set, writing it into .kamal/secrets-common"
+  mkdir -p .kamal
+  echo "KAMAL_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD" > .kamal/secrets-common
+  echo "RAILS_MASTER_KEY=$RAILS_MASTER_KEY" >> .kamal/secrets-common
+fi
+
+cat .kamal/secrets-common
+cp .kamal/secrets-common .kamal/secrets
+cp .kamal/secrets .kamal/secrets-hrfilter
+
+echo "Deploying $CI_COMMIT_SHORT_SHA"
+kamal deploy --skip-push --version $CI_COMMIT_SHORT_SHA -d hrfilter

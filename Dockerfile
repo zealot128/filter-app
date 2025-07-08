@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.3.3
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim
 
 ARG APP_NAME=fahrradfilter
 
@@ -15,12 +15,14 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-
-
-# Install packages needed to build gems
+# Install packages needed to build gems and run the application
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config curl node-gyp python-is-python3 imagemagick sqlite3
+    apt-get install --no-install-recommends -y \
+    build-essential git libpq-dev libvips pkg-config curl node-gyp python-is-python3 \
+    imagemagick sqlite3 postgresql-client pngquant jpegoptim libjemalloc2 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install Node.js and Yarn
 ARG NODE_VERSION=20.8.1
 ARG YARN_VERSION=1.7.0
 ENV PATH=/usr/local/node/bin:$PATH
@@ -28,10 +30,6 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
-
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -46,28 +44,14 @@ RUN yarn install --frozen-lockfile
 # Copy application code
 COPY . .
 
-COPY config/application.$APP_NAME.yml config/application.yml
-COPY config/credentials/$APP_NAME.yml.enc config/credentials/production.yml.enc
+COPY config/application.${APP_NAME}.yml config/application.yml
+COPY config/credentials/${APP_NAME}.yml.enc config/credentials/production.yml.enc
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-RUN rm -rf node_modules
-
-
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client sqlite3 imagemagick pngquant jpegoptim && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \

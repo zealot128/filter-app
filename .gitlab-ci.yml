@@ -1,17 +1,60 @@
 ---
-image: registry.pludoni.com/administrators/docker-images/rails-base:v202409
-stages: [checks, test, deploy]
+image: registry.pludoni.com/administrators/docker-images/rails-base:v202503
+stages: [checks, build, test, deploy]
 
 variables:
-  deploy_host: 'product03'
-  deploy_name: 'hrfilter'
+  DOCKER_BUILDKIT: "1"
+  IMAGE_TAG: $CI_REGISTRY_IMAGE/app:$CI_COMMIT_SHORT_SHA
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/app:latest
+  DOCKER_DRIVER: overlay2
+  APP_NAME: 'hrfilter'
 
+# variables:
+#   deploy_host: 'product03'
+#   deploy_name: 'hrfilter'
+#
 include:
   - project: 'administrators/gitlab-ci-yml'
     file: '/rails_default.yml'
 
-# bundle_audit:
-#   script: |
-#     gem install --force bundler-audit -N
-#     bundle-audit update
-#     bundle-audit check --ignore $IGNORE_CVE
+
+container:build_image:
+  image: docker:20.10.16-git
+  stage: test
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker info
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1736#note_107983504
+    - git checkout-index --all --prefix umask-fix-checkout/
+    - cd umask-fix-checkout
+
+  script:
+    - docker pull $CONTAINER_RELEASE_IMAGE || true
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE --label service="hrfilter" -t $IMAGE_TAG --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg APP_NAME=$APP_NAME -f Dockerfile .
+    - docker push $IMAGE_TAG
+    - docker tag $IMAGE_TAG $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+
+
+deploy:kamal:
+  image:
+    name: ghcr.io/basecamp/kamal:latest
+    entrypoint: [""]
+  environment: production
+  needs: ["container:build_image", "rspec"]
+  stage: deploy
+  variables:
+    KAMAL_REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  script:
+    - echo "Deploying $CI_COMMIT_SHORT_SHA"
+    - cd /builds/developers/hrfilter
+    - apk add bash
+    - bash ./bin/deploy
+  only:
+    - master
+    - staging

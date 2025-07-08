@@ -1,15 +1,16 @@
 # rubocop:disable Naming/MethodName
-if ENV['SENTRY_DSN']
+dsn = Rails.application.credentials.dig(:sentry_dsn) || ENV['SENTRY_DSN']
+if dsn
   SENTRY_RELEASE = if File.exist?("GIT_REVISION")
                      File.read("GIT_REVISION")
                    else
                      ""
                    end
   Sentry.init do |config|
-    # config.dsn = ENV['SENTRY_DSN']
+    config.dsn = dsn
     config.enabled_environments = %w[production]
     config.release = SENTRY_RELEASE
-    if ENV['SENTRY_DSN'].include?('sentry.pludoni')
+    if dsn.include?('sentry.pludoni')
       config.send_default_pii = true
     end
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)

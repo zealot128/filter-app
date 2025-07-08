@@ -46,4 +46,6 @@ node_modules
 /config/credentials/production.key
 
 /config/credentials/development.key
-.kamal/secrets
+.kamal/*
+
+/config/credentials/hrfilter.key
