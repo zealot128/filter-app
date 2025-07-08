@@ -1,0 +1,51 @@
+---
+
+aliases:
+  console: app exec -r console -i "./bin/rails console"
+  bash: app exec -r -i "bash"
+  db: app exec -r -i "./bin/rails dbconsole -p"
+  logs: app logs -f
+
+
+require_destination: true
+servers:
+  job:
+    cmd: ./bin/jobs
+
+accessories:
+  db:
+    env: {}
+    # port: "172.17.0.1:5432:5432"
+    directories:
+      - hrfilter_pg_data:/var/lib/postgresql/data
+    env:
+      POSTGRES_HOST_AUTH_METHOD: trust
+  redis:
+    image: "redis:7.0"
+    directories:
+      - "redis-data:/data"
+
+proxy:
+  app_port: 80
+  forward_headers: false
+
+builder:
+  arch:
+    - amd64
+  args:
+    type: registry
+    RUBY_VERSION: 3.3.5
+    APP_NAME: hrfilter
+    UID: 1000
+    GID: 1000
+    RAILS_ENV: production
+
+env:
+  clear:
+    RAILS_SERVE_STATIC_FILES: "true"
+    RAILS_LOG_TO_STDOUT: "true"
+    RAILS_ENV: production
+    DB_BACKUP_DIR: /backup
+    DB_BACKUP_KEEP: 7
+  secret:
+    - RAILS_MASTER_KEY

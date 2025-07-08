@@ -10,17 +10,17 @@ aliases:
 # Deploy to these servers.
 servers:
   web:
-    - 5.75.182.70
+    - 91.99.93.255
   job:
     hosts:
-      - 5.75.182.70
+      - 91.99.93.255
     cmd: ./bin/jobs
 
 accessories:
   db:
     image: "postgres:16"
     hosts:
-      - 5.75.182.70
+      - 91.99.93.255
     env: {}
     # port: "172.17.0.1:5432:5432"
     directories:

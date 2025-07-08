@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
     prepend_view_path Rails.root.join('app', 'views', Setting.key)
   end
 
-  before_action do
+  before_action :check_hostname_redirect
+
+  private
+
+  def check_hostname_redirect
     if request.host == Setting.host.remove('www.', '') and Rails.env.production?
       url = "https://#{Setting.host}" + request.env['REQUEST_URI']
       redirect_to url, status: :moved_permanently

@@ -1,0 +1,67 @@
+service: hrfilter
+
+image: developers/hrfilter/app
+# Deploy to these servers.
+servers:
+  web:
+    - 91.99.93.255
+  job:
+    hosts:
+      - 91.99.93.255
+
+accessories:
+  db:
+    image: "postgres:16"
+    hosts:
+      - 91.99.93.255
+    directories:
+      - hrfilter_pg_data:/var/lib/postgresql/data
+  redis:
+    image: "redis:7.0"
+    hosts:
+      - 91.99.93.255
+    # port: "172.17.0.1:6379:6379"
+    directories:
+      - "hrfilter_redis:/data"
+
+# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
+# Remove this section when using multiple web servers and ensure you terminate SSL at your load balancer.
+#
+# Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
+proxy:
+  ssl: true
+  hosts:
+    - hrfilter.de
+    - www.hrfilter.de
+  # healthcheck:
+  #   interval: 15
+  #   timeout: 30
+
+registry:
+  server: registry.pludoni.com
+  username: <%= ENV['CI_REGISTRY_USER'] || 'zealot128' %>
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+
+builder:
+  args:
+    RUBY_VERSION: 3.3.5
+    APP_NAME: hrfilter
+    RAILS_ENV: production
+
+env:
+  clear:
+    DATABASE_URL: "postgres://postgres@hrfilter-db:5432/hrfilter_production"
+    REDIS_URL: "redis://hrfilter-redis:6379/0"
+    # BLAZER_DATABASE_URL: "postgres://blazer@hrfilter-db:5432/hrfilter_production"
+
+volumes:
+  - "hrfilter_storage:/rails/storage"
+  - "hrfilter_system:/rails/public/system"
+  - "/backup:/backup"
+
+ssh:
+  keys_only: true
+  keys:
+    - ~/.ssh/id_rsa
