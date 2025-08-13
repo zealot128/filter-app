@@ -1,6 +1,7 @@
 class API < Grape::API
   mount Resources::NewsItems
   mount Resources::MailSubscriptions
+  mount Resources::WeeklySummaries
   use Sentry::Rack::CaptureExceptions
 
   get 'legal' do

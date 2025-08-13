@@ -34,7 +34,9 @@
       "Bash(bin/rails generate:*)",
       "Bash(bin/rspec --format documentation)",
       "Bash(RAILS_ENV=production bundle exec rails assets:precompile)",
-      "Bash(bundle exec rails assets:clobber:*)"
+      "Bash(bundle exec rails assets:clobber:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs"
     ],
     "deny": []
   }

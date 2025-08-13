@@ -49,3 +49,4 @@ node_modules
 .kamal/*
 
 /config/credentials/hrfilter.key
+CLAUDE.local.md

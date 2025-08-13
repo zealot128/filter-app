@@ -114,3 +114,5 @@ end
 
 gem "meta-tags", "~> 2.13"
 gem 'hashie'
+
+gem "ruby-openai", "~> 8.2"
