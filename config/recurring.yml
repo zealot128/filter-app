@@ -42,3 +42,6 @@ production:
   sitemap_refresh:
     schedule: 'every day at 5am'
     command: 'SitemapGenerator::Interpreter.run'
+  weekly_summary_generation:
+    schedule: 'every sunday at 8pm'
+    command: 'WeeklySummary.generate_for_week'

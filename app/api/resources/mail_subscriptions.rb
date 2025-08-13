@@ -13,7 +13,11 @@ class Resources::MailSubscriptions < Grape::API
         new_params = JSON.parse(r)
         params.merge!(new_params)
         params.delete(:signed_request)
-      elsif params[:api_key] != Rails.application.credentials.secret_api_key
+      elsif !params[:api_key] || !(
+        [
+          Rails.application.credentials.secret_api_key,
+          Rails.application.credentials.api_cors_key
+        ].include?(param[:api_key]))
         error!({ message: 'missing/wrong api key' }, 403)
       end
     end
