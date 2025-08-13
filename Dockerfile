@@ -19,7 +19,7 @@ ENV RAILS_ENV="production" \
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential git libpq-dev libvips pkg-config curl node-gyp python-is-python3 \
-    imagemagick sqlite3 postgresql-client pngquant jpegoptim libjemalloc2 && \
+    imagemagick sqlite3 postgresql-client pngquant jpegoptim libjemalloc2 less && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js and Yarn

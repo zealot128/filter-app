@@ -1,8 +1,8 @@
 ---
 
 aliases:
-  console: app exec -r console -i "./bin/rails console"
-  bash: app exec -r -i "bash"
+  console: app exec -i "./bin/rails console"
+  bash: app exec  -i "bash"
   db: app exec -i "./bin/rails dbconsole -p"
   logs: app logs -f
 
