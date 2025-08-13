@@ -17,7 +17,7 @@ class Resources::MailSubscriptions < Grape::API
         [
           Rails.application.credentials.secret_api_key,
           Rails.application.credentials.api_cors_key
-        ].include?(param[:api_key]))
+        ].compact.include?(params[:api_key]))
         error!({ message: 'missing/wrong api key' }, 403)
       end
     end
