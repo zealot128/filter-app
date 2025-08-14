@@ -56,6 +56,10 @@ class EmpfehlungsbundAPIClient
       url
     end
 
+    def events
+      @events.map { Time.parse(_1['start']) }.select(&:future?).take(3)
+    end
+
     def body
       @teaser_hrfilter || @teaser
     end

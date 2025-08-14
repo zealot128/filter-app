@@ -18,7 +18,8 @@ mj-section(background-color="#fff")
           h3(style="color: #3498BD; text-align: center")
             | #{event.title}
           div(style="text-align: center")
-            | Von #{I18n.l(event.from, format: :short)} bis #{I18n.l(event.to, format: :short)}
+            - event.events.each do |ev|
+              div = I18n.l(ev, format: :short)
         mj-button(href="#{event.url}" background-color="#3498BD" color="#fff")
           | Zur Veranstaltung/Anmeldung
         mj-text
