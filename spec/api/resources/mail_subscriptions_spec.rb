@@ -3,7 +3,6 @@ RSpec.describe Resources::MailSubscriptions, type: :request do
     let(:api_key) { Rails.application.credentials.secret_api_key }
 
     specify 'check if email exists' do
-      p api_key
       get '/api/v1/mail_subscriptions.json', params: {
         api_key:,
         email: "test@test.com"

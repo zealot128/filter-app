@@ -5,11 +5,6 @@ class WeeklySummaryJob < ApplicationJob
     week_start = Date.parse(week_start_str).beginning_of_week
     week_end = week_start.end_of_week
 
-    # Check if summary already exists
-    existing = WeeklySummary.find_by(week_start: week_start)
-    return if existing.present?
-
-    # Generate the summary
     generator = WeeklySummaryGenerator.new(
       start_date: week_start,
       end_date: week_end
@@ -17,9 +12,8 @@ class WeeklySummaryJob < ApplicationJob
 
     result = generator.generate_summary
 
-    # Store in database
-    WeeklySummary.create!(
-      week_start: week_start,
+    summary = WeeklySummary.where(week_start: week_start).first_or_initialize
+    summary.update!(
       summary: result[:summary],
       metadata: {
         generated_at: Time.current,

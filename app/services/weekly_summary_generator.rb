@@ -17,11 +17,11 @@ class WeeklySummaryGenerator
       news_items:
     }
 
-    response = call_openai(news_data)
+    response = call_openai_direct(news_data)
 
     {
       meta: news_data[:meta],
-      summary: parse_ai_response(response),
+      summary: response,
       raw_response: response
     }
   end
@@ -49,7 +49,7 @@ class WeeklySummaryGenerator
   def format_news_item(item)
     {
       title: item.title,
-      url: include_url?(item) ? item.url : nil,
+      url: item.url,
       source: item.source.name,
       trust:
         case item.source.multiplicator
@@ -89,21 +89,23 @@ class WeeklySummaryGenerator
   end
 
   def build_prompt
+    date = 1.day.from_now.to_date
     <<~PROMPT
-      Erstelle aus dem JSON mit HR-bezogenen Artikeln den „HR-Wochenspiegel" als Blogeintrag für KW #{Date.current.cweek}/#{Date.current.year}.
+      Erstelle aus dem JSON mit HR-bezogenen Artikeln den „HR-Wochenspiegel" als Blogeintrag für KW #{date.cweek}/#{date.year}.
 
       Zielgruppe: Employer Branding Manager, Bewerbermanager, Recruiter, Hiring-Manager, Geschäftsführer und ähnliche mit Personalbedarf.
 
       WICHTIG:
-      1. Priorisiere Empfehlungsbund-Inhalte (priority: "critical" oder source enthält "Empfehlungsbund")
+      1. Priorisiere Empfehlungsbund-Inhalte (priority: "critical" oder source enthält "Empfehlungsbund"), falls welche vorhanden sind
       2. Fokussiere auf ungewöhnliche, strategisch relevante und wissenschaftlich fundierte Themen
       3. Filtere Standardthemen, Bewerbertipps und Clickbait heraus
       4. Bevorzuge: Studien, Gerichtsurteile mit Aktenzeichen, Marktanalysen, arbeitsrechtliche Änderungen
       5. Bei Spannend klingenden Headlines, die aber keinen fulltext dabei haben, kannst du vereinzelt versuchen den Inhalt zu recherchieren (URL abrufen).
+      6. Verzichte auf eine Zusammenfassung am Ende des Posts, Keine "Conclusion". Hinweis auf HRfilter.de Newsletter verbleibt.
 
       Erstelle einen Markdown-formatierten Blog mit:
       - H1-Headline: „HRfilter Wochenspiegel: [prägnante Headline]"
-      - Kurze Einleitung (2-3 Sätze) mit KW-Angabe
+      - Kurze Einleitung (1-2 Sätze) mit KW-Angabe
       - 3-5 thematische Cluster, z.B.:
         * "KI & Compliance im HR"
         * "Führung & New Work"
@@ -122,8 +124,7 @@ class WeeklySummaryGenerator
       - Hinweis auf HRfilter.de und Empfehlungsbund
       - Maximal 12 relevante Hashtags
 
-      Schreibe kontrovers, hinterfragend aber zukunftsoptimistisch.
-      Nutze deutsche Sprache, behalte englische Fachbegriffe bei.
+      Schreibe kontrovers, hinterfragend aber zukunftsoptimistisch. Nutze deutsche Sprache, behalte englische Fachbegriffe bei. Persönlicher Ton.
 
       WICHTIG: Antworte im JSON-Format mit folgender Struktur:
       {
@@ -149,6 +150,56 @@ class WeeklySummaryGenerator
         "blog_post": "Der komplette Blogpost als Markdown-Text"
       }
     PROMPT
+
+    <<~PROMPT
+     Ich möchte einen Post über HR-Themen der letzte Woche machen. Dazu habe ich hier eine JSON Datei. Schau nach, ob dir spannende Themen rund um die Bereiche Personalgewinnung, Entwicklung und Wichtige Rechtliche Rahmenbedingungen im Recruiting auffallen. Ignoriere Standard-Tipps und "Click-Bait", und auch so Bewerber-Tipps. Zielgruppe sind Recruiter, hiring-manager.
+     Falls du mehrere Kategorien entdeckts, mache zu jeder Kategorie einen Abschnitt. Highlighte den Quellennamen bei Nennung fettenend.
+      Erstelle aus dem JSON mit HR-bezogenen Artikeln den „HR-Wochenspiegel" als Blogeintrag für KW #{date.cweek}/#{date.year}.
+      Schreibe kontrovers, hinterfragend aber zukunftsoptimistisch. Nutze deutsche Sprache, behalte englische Fachbegriffe bei. Persönlicher Ton. Nenne IMMER die Quellen je Artikel (Hostname der URL! ansonsten Inhalt von 'source'.
+      DO NOT use the file_name from the JSON file as source).
+      DO NOT have a Conclusion at the end.
+
+      Erzeuge Markdown mit Highlights, Zwischenüberschriften und passenden LinkedIn Hashtags am Ende basierend auf den Inhalten.
+      Gebe NUR ein JSON Objekt zurück, das folgende Struktur hat:
+      {
+        "blog_post": "Der komplette Blogpost als Markdown-Text",
+      }
+    PROMPT
+  end
+
+  def call_openai_direct(news_data)
+    response = @client.chat(
+      parameters: {
+        model: 'gpt-5',
+        messages: [
+          {
+            role: 'system',
+            content: 'Du bist ein HR-Experte und Journalist, der wöchentliche Zusammenfassungen in Form von Blog-Post und Linkedin-Post für HR-Professionals erstellt. Antworte immer im angeforderten JSON-Format.'
+          },
+          {
+            role: 'user',
+            content: build_prompt
+          },
+          {
+            role: 'user',
+            content: news_data.to_json
+          }
+        ],
+        response_format: {
+          type: 'json_object'
+        }
+      }
+    )
+    JSON.parse(response.dig('choices', 0, 'message', 'content'))
+  rescue StandardError => e
+    if e.respond_to?(:response) && e.response
+      error = e.response.dig(:body, 'error')
+      Rails.logger.error "OpenAI API Error: #{error['message']}"
+      { error: error['message'] }.to_json
+    else
+      Rails.logger.error "OpenAI API Error: #{e.message}"
+      { error: e.message }.to_json
+    end
   end
 
   def call_openai(news_data)
@@ -169,7 +220,8 @@ class WeeklySummaryGenerator
     # Create assistant with file_search capability
     assistant = @client.assistants.create(
       parameters: {
-        model: 'gpt-4o',
+        model: 'gpt-5',
+        # temperature: 0.7,
         name: 'HR Weekly Summary Generator',
         instructions: 'Du bist ein HR-Experte und Journalist, der wöchentliche Zusammenfassungen für ' \
                       'HR-Professionals erstellt. Antworte immer im angeforderten JSON-Format.',
