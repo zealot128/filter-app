@@ -4,6 +4,7 @@
       .card-header: h3.card-title Einstellungen für <strong>#{subscription.email}</strong> ändern
       .card-body
         = simple_form_for subscription do |f|
+          = invisible_captcha
           = render "form", f: f
           = f.submit 'Speichern', class: 'btn btn-primary'
   .col-sm-4
