@@ -38,8 +38,7 @@
             ul.list-inline
               - @categories.each do |category,count|
                 li
-                  = link_to search_source_path(@source, q: category)
-                    = category
+                  = category
                   small.badge.badge-default< = count
 
 br

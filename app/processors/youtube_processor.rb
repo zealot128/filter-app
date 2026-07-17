@@ -30,7 +30,7 @@ class YoutubeProcessor < FeedProcessor
     item.youtube_views = entry.media_views.to_i
 
     item.save!
-    if defined?(entry.media_thumbnail_url) and entry.media_thumbnail_url.present? and item.image.blank?
+    if defined?(entry.media_thumbnail_url) and entry.media_thumbnail_url.present? and item.image.blank? and !@source.lsr_active?
       begin
         image = download_url(entry.media_thumbnail_url)
         item.update image:

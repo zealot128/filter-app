@@ -11,11 +11,9 @@ Rails.application.routes.draw do
   get "rss/weekly-top-50", to: 'rss#weekly_top_50', as: :weekly_top_50_rss
   get "rss/newest", to: 'rss#newest', as: :newest_rss
 
-
   get "/app", to: "app#index"
 
   namespace :admin do
-
     get '/' => 'sources#dashboard', as: :dashboard
     resources :sources do
       member do
@@ -42,11 +40,8 @@ Rails.application.routes.draw do
   end
 
   get "sources" => redirect('/quellen')
-  resources :sources, path: 'quellen', only: [:index, :show] do
-    member do
-      get :search
-    end
-  end
+  resources :sources, path: 'quellen', only: [:index, :show]
+  get 'quellen/:id/search', to: proc { [410, { 'Content-Type' => 'text/plain' }, ['Gone']] }
 
   get '/quelle_einreichen' => 'submit_source#new', as: :new_submit_source
   post '/quelle_einreichen' => 'submit_source#create'

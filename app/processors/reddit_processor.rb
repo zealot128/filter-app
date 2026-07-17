@@ -58,12 +58,12 @@ class RedditProcessor < BaseProcessor
     if NewsItem::CheckFilterList.new(@source).skip_import?(ni.title, ni.teaser)
       raise InvalidItemDelete
     end
-    if data['preview'] and ni.image.blank? && ((i = data['preview']['images']) and (image = i.first['source']['url']))
+    if data['preview'] and ni.image.blank? && !@source.lsr_active? && ((i = data['preview']['images']) and (image = i.first['source']['url']))
         ni.image = download_url(image)
     end
     ni.save
 
-    if response && ni.image.blank? && (img = response.image_blob)
+    if response && ni.image.blank? && !@source.lsr_active? && (img = response.image_blob)
       ni.update image: img
     end
   rescue InvalidItemDelete

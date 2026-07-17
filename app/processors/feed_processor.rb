@@ -99,7 +99,7 @@ class FeedProcessor < BaseProcessor
       return nil
     end
     @item.rescore!
-    if defined?(@entry.image) and @entry.image.present? and @item.image.blank? and !@entry.image[/(mp3|aac|ogg|mp4|m4a|mov)$/i]
+    if defined?(@entry.image) and @entry.image.present? and @item.image.blank? and !@entry.image[/(mp3|aac|ogg|mp4|m4a|mov)$/i] and !@source.lsr_active?
       begin
         image = download_url(@entry.image)
         @item.update image:
