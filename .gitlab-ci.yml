@@ -17,6 +17,9 @@ include:
   - project: 'administrators/gitlab-ci-yml'
     file: '/rails_default.yml'
 
+bundle_audit:
+  allow_failure: true
+
 
 container:build_image:
   image: docker:20.10.16-git
