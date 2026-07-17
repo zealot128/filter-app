@@ -14,7 +14,7 @@ class EmpfehlungsbundAPIClient
 
   def self.community_events
     response = Rails.cache.fetch('events', expires_in: 1.minute) do
-      events = get('https://crm.pludoni.com/api/community_workshops.json')
+      events = HTTParty.get('https://crm.pludoni.com/api/community_workshops.json')
       events.select { |i| i['visible'] && i['start'] >= Time.zone.now.to_s && i['start'] <= 3.months.from_now.to_s }
     end
     response.map do |hash|
@@ -57,7 +57,7 @@ class EmpfehlungsbundAPIClient
     end
 
     def events
-      @events.map { Time.parse(_1['start']) }.select(&:future?).take(3)
+      @events.map { Time.zone.parse(_1['start']) }.select(&:future?).take(3)
     end
 
     def body

@@ -36,7 +36,8 @@
       "Bash(RAILS_ENV=production bundle exec rails assets:precompile)",
       "Bash(bundle exec rails assets:clobber:*)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__get-library-docs"
+      "mcp__context7__get-library-docs",
+      "Bash(glab ci *)"
     ],
     "deny": []
   }
