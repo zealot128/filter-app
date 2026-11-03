@@ -6,7 +6,6 @@ class DaysController < ApplicationController
       Datenschutz: datenschutz_path,
       FAQ: faq_path,
       Quellen: '/quellen',
-      "Quelle einreichen": new_submit_source_path,
       "Als App": app_path,
       Newsletter: '/newsletter'
     }

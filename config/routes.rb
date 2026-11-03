@@ -43,8 +43,7 @@ Rails.application.routes.draw do
   resources :sources, path: 'quellen', only: [:index, :show]
   get 'quellen/:id/search', to: proc { [410, { 'Content-Type' => 'text/plain' }, ['Gone']] }
 
-  get '/quelle_einreichen' => 'submit_source#new', as: :new_submit_source
-  post '/quelle_einreichen' => 'submit_source#create'
+  match 'quelle_einreichen', to: proc { [410, { 'Content-Type' => 'text/plain' }, ['Gone']] }, via: [:get, :post]
 
   resources :mail_subscriptions, path: 'newsletter' do
     member do
