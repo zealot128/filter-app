@@ -1,5 +1,5 @@
 # rubocop:disable Naming/MethodName
-dsn = Rails.application.credentials.dig(:sentry_dsn) || ENV['SENTRY_DSN']
+dsn = Rails.application.credentials.dig(:sentry_dsn) || ENV.fetch('SENTRY_DSN', nil)
 if dsn
   SENTRY_RELEASE = if File.exist?("GIT_REVISION")
                      File.read("GIT_REVISION")
@@ -14,8 +14,11 @@ if dsn
       config.send_default_pii = true
     end
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
+    # Sentry >= 6 verwirft Events, wenn before_send kein Event zurückgibt -> in-place filtern
     config.before_send = ->(event, _hint) do
-      filter.filter(event.to_hash)
+      event.request.data = filter.filter(event.request.data) if event.request&.data.is_a?(Hash)
+      event.extra = filter.filter(event.extra)
+      event
     end
     config.excluded_exceptions =
       Sentry::Configuration::IGNORE_DEFAULT + [

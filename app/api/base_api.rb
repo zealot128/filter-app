@@ -24,7 +24,8 @@ module BaseAPI
       Rack::Response.new({ message: e.message, backtrace: trace }.to_json, 500, 'Content-type' => 'application/json').finish
     end
     format :json
-    use Grape::Middleware::Globals
+    # AMS-Formatter liest env['grape.request'], das Grape >= 4 nicht mehr setzt (Middleware::Globals entfernt)
+    before { env['grape.request'] = request }
     require 'grape/active_model_serializers'
     include Grape::ActiveModelSerializers
     logger Rails.logger

@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.2.0"
+gem "rails", "~> 7.2.3", ">= 7.2.3.2"
 
 gem "solid_cache", "~> 1.0"
 gem "solid_queue", "~> 1.0"
@@ -9,7 +9,6 @@ gem 'sqlite3'
 
 gem 'babel-transpiler'
 gem "pg"
-gem "mail_form"
 gem "simple_form"
 gem 'bootsnap'
 gem 'invisible_captcha'
@@ -27,7 +26,7 @@ gem "pg_search"
 gem "will_paginate-bootstrap"
 gem "stringex"
 gem "auto_strip_attributes", "~> 2.5"
-gem "email_verifier", git: "https://github.com/pludoni/email_verifier.git"
+gem "email_verifier", git: "https://github.com/pludoni/email_verifier.git", branch: "master"
 gem "lograge"
 gem "open_uri_redirections"
 gem 'parallel'
@@ -46,17 +45,17 @@ gem "kt-paperclip-optimizer"
 
 gem 'image_processing'
 gem 'mini_magick'
-gem 'datagrid'
+gem 'datagrid', '~> 1.8' # 2.x: neue Partial-/Helper-API, app/views/datagrid ist auf 1.x zugeschnitten
 
 gem 'rack', '~> 2.0'
 
 gem 'google-cloud-firestore', require: false
 gem 'google-cloud-firestore-v1', ">= 0.10", require: false
-gem 'fcm', require: false
-gem 'mjml-rails'
+gem 'fcm', '< 2', require: false # 2.x entfernt die Legacy-API (FCM#send)
+gem 'mjml-rails', '~> 4.15' # 5.x braucht MJML 5 (npm), Newsletter-Rendering ungetestet
 # gem 'mrml'
 
-gem "vite_ruby", '~> 3.3.2'
+gem "vite_ruby", '~> 3.11'
 gem "vite_rails", ">= 3.0.13"
 
 gem 'rack-cors', require: 'rack/cors'
@@ -116,3 +115,4 @@ gem "meta-tags", "~> 2.13"
 gem 'hashie'
 
 gem "ruby-openai", "~> 8.2"
+gem "faraday", ">= 1.10.6"

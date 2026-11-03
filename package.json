@@ -30,14 +30,14 @@
   "devDependencies": {
     "@prettier/plugin-pug": "^1.13.2",
     "@types/qs": "^6.9.16",
-    "@vitejs/plugin-vue2": "^2.2.0",
+    "@vitejs/plugin-vue2": "^2.3.3",
     "@vue/language-plugin-pug": "^1.8.22",
     "@vue/language-server": "1.8.27",
     "caniuse-lite": "^1.0.30001669",
     "prettier": "^2.8.8",
-    "vite": "^4.3.0",
+    "vite": "^5.4.0",
     "vite-plugin-full-reload": "^1.2.0",
-    "vite-plugin-ruby": "^3.2.0"
+    "vite-plugin-ruby": "^5.1.1"
   },
   "prettier": {
     "trailingComma": "es5",

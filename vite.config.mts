@@ -3,6 +3,7 @@ import RubyPlugin from "vite-plugin-ruby"
 import FullReload from "vite-plugin-full-reload"
 import path from 'path';
 import fs from 'fs'
+import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue2'
 
 const isProd = process.env.NODE_ENV === "production" || process.env.RAILS_ENV === "production"
@@ -14,7 +15,7 @@ const directories = items.filter(item => fs.lstatSync(path.join("app/javascript"
 
 const aliasesFromJavascriptRoot = {}
 directories.forEach(directory => {
-  aliasesFromJavascriptRoot[directory] = path.resolve(__dirname, "app/javascript", directory)
+  aliasesFromJavascriptRoot[directory] = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "app/javascript", directory)
 })
 
 // https://vitejs.dev/config/
