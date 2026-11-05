@@ -45,3 +45,9 @@ production:
   weekly_summary_generation:
     schedule: 'every sunday at 8pm'
     command: 'WeeklySummary.generate_for_week'
+  clear_solid_queue_finished_jobs:
+    schedule: 'every hour at minute 12'
+    command: 'SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)'
+  clear_solid_queue_failed_jobs:
+    schedule: 'every day at 03:45'
+    command: 'SolidQueue::FailedExecution.where(created_at: ...14.days.ago).discard_all_in_batches'

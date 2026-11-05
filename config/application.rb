@@ -38,7 +38,7 @@ module Baseapp
     if Rails.env.production?
       config.solid_queue.connects_to = { database: { writing: :zqueue } }
 
-      config.solid_queue.clear_finished_jobs_after = 30.days
+      config.solid_queue.clear_finished_jobs_after = 3.days
       # after boot:
       config.after_initialize do
         SolidQueue::RecurringJob.queue_adapter = :solid_queue
