@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.2.3", ">= 7.2.3.2"
+gem "rails", "~> 8.0.5", ">= 8.0.5.2"
 
 gem "solid_cache", "~> 1.0"
 gem "solid_queue", "~> 1.0"
@@ -90,7 +90,7 @@ group :test do
 end
 
 group :development do
-  gem 'annotate'
+  gem 'annotaterb'
   gem "habtm_generator"
   gem "listen"
   gem "foreman"

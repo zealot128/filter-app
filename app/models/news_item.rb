@@ -199,7 +199,6 @@ class NewsItem < ApplicationRecord
     end
   end
 
-
   def self.cronjob
     Rails.logger.info "Starting NewsItem refresh cronjob"
     # delete all news items that are not attached to a source yet, rare race condition when dependent: destroy did not work
@@ -253,7 +252,7 @@ class NewsItem < ApplicationRecord
   end
 
   def filter_plaintext
-    self.plaintext = ActionController::Base.helpers.strip_tags(full_text || teaser || title || "")
+    self.plaintext = ActionView::Base.full_sanitizer.sanitize(full_text || teaser || title || "")
     self.word_length = words.length
     self.incoming_link_count = referenced_news.count
   end

@@ -89,7 +89,7 @@ class LinkExtractor
       @m.page.parser.xpath('//meta[@property="og:description"]').first&.[]('content') ||
       @m.page.parser.xpath('//meta[@name="description"]').first&.[]('content') ||
       begin
-        stripped = ActionController::Base.helpers.strip_tags(full_text)
+        stripped = ActionView::Base.full_sanitizer.sanitize(full_text)
         ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
       end
   end
@@ -100,9 +100,9 @@ class LinkExtractor
 
   def image_url
     @image_url ||= begin
-                     image = @m.page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first
-                     image ||= @m.page.parser.xpath('//link[@rel="image_src"]').first
-                     image['content'] || image['href'] if image
+      image = @m.page.parser.xpath('//meta[@property="og:image" or @name="shareaholic:image"]').first
+      image ||= @m.page.parser.xpath('//link[@rel="image_src"]').first
+      image['content'] || image['href'] if image
     end
   end
 

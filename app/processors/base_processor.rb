@@ -44,7 +44,8 @@ class BaseProcessor
   def teaser(text)
     return "" if text.blank?
 
-    stripped = ActionController::Base.helpers.strip_tags(text).strip
+    # strip_tags escapet seit Rails 8.0.5.2 (für HTML-Ausgabe), hier wird Plaintext gebraucht
+    stripped = ActionView::Base.full_sanitizer.sanitize(text).strip
     ActionController::Base.helpers.truncate(stripped, length: 400, separator: ' ', escape: false)
   end
 
