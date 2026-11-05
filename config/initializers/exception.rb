@@ -10,9 +10,8 @@ if dsn
     config.dsn = dsn
     config.enabled_environments = %w[production]
     config.release = SENTRY_RELEASE
-    if dsn.include?('sentry.pludoni')
-      config.send_default_pii = true
-    end
+    # data_collection-Default (sentry >= 7) sammelt PII; nur fremde DSNs restriktiv wie früher ohne send_default_pii
+    config.data_collection = Sentry::DataCollection.backfill(config) unless dsn.include?('sentry.pludoni')
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
     # Sentry >= 6 verwirft Events, wenn before_send kein Event zurückgibt -> in-place filtern
     config.before_send = ->(event, _hint) do

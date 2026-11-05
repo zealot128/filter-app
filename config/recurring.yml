@@ -16,7 +16,7 @@ production:
     schedule: 'every hour'
     command: 'Source.cronjob'
   push_notification_manager:
-    schedule: 'every 0 9-17 * * *'
+    schedule: '0 9-17 * * *'
     command: 'PushNotificationManager.run'
   news_item_linkage_calculator:
     schedule: 'every day at 03:15'

@@ -1,11 +1,11 @@
 Rack::Attack.blocklist('fail2ban pentesters') do |req|
   Rack::Attack::Fail2Ban.filter("pentesters-#{req.ip}", maxretry: 3, findtime: 10.minutes, bantime: 15.minutes) do
     qs = CGI.unescape(req.query_string)
-    qs.include?("'A=0") || qs =~ %r{/etc/passwd|/proc/self|/etc/hosts}
+    qs.include?("'A=0") || qs =~ %r{/etc/passwd|/proc/self|/etc/hosts} ||
       req.path.include?('/etc/passwd') ||
-        req.path.include?('wp-admin') ||
-        req.path.include?('wp-login') ||
-        req.path.include?('.php')
+      req.path.include?('wp-admin') ||
+      req.path.include?('wp-login') ||
+      req.path.include?('.php')
   end
 end
 
@@ -31,7 +31,7 @@ Rack::Attack.enabled = !Rails.env.test?
 
 Rack::Attack.blocklist_ip("176.49.9.157")
 
-Rack::Attack.throttled_response = ->(_request) do
+Rack::Attack.throttled_responder = ->(_request) do
   # NB: you have access to the name and other data about the matched throttle
   #  request.env['rack.attack.matched'],
   #  request.env['rack.attack.match_type'],
