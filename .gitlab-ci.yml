@@ -38,7 +38,7 @@ container:build_image:
 
   script:
     - docker pull $CONTAINER_RELEASE_IMAGE || true
-    - docker build --cache-from $CONTAINER_RELEASE_IMAGE --label service="hrfilter" -t $IMAGE_TAG --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg APP_NAME=$APP_NAME -f Dockerfile .
+    - docker build --cache-from $CONTAINER_RELEASE_IMAGE --label service="hrfilter" -t $IMAGE_TAG --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg APP_NAME=$APP_NAME --build-arg GIT_REVISION=$CI_COMMIT_SHA -f Dockerfile .
     - docker push $IMAGE_TAG
     - docker tag $IMAGE_TAG $CONTAINER_RELEASE_IMAGE
     - docker push $CONTAINER_RELEASE_IMAGE

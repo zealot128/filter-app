@@ -53,6 +53,10 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
+# Release für Sentry-SDK/GlitchTip (config/initializers/exception.rb), Build-Arg aus .gitlab-ci.yml
+ARG GIT_REVISION=""
+RUN printf '%s' "$GIT_REVISION" > GIT_REVISION
+
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp

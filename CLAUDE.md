@@ -85,7 +85,7 @@ RAILS_ENV=production bundle exec rails assets:precompile  # Build for production
 - **Multi-tenant**: Supports different site configs via `config/application.*.yml`
 - **Email**: MJML templates for responsive newsletters
 - **File uploads**: Paperclip for source logos and confirmation files
-- **Error tracking**: Sentry integration
+- **Error tracking**: GlitchTip (https://errors.pludoni.de, project `hrfilter`, Mattermost #hrfilter) via `sentry-ruby`; DSN only from ENV `SENTRY_DSN` (CI variable → Kamal secret), release = commit SHA (`GIT_REVISION`). CLI: `glitchtip recent hrfilter` / `issue` / `resolve`, skills `exception-killer` / `exception-fix`
 - **Analytics**: Ahoy for tracking user interactions
 
 ## Deployment

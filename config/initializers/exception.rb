@@ -1,5 +1,6 @@
 # rubocop:disable Naming/MethodName
-dsn = Rails.application.credentials.dig(:sentry_dsn) || ENV.fetch('SENTRY_DSN', nil)
+# GlitchTip-DSN nur aus ENV (CI-Variable SENTRY_DSN -> Kamal-Secret), ohne DSN kein Error-Tracking
+dsn = ENV.fetch('SENTRY_DSN', nil).presence
 if dsn
   SENTRY_RELEASE = if File.exist?("GIT_REVISION")
                      File.read("GIT_REVISION")
@@ -11,7 +12,7 @@ if dsn
     config.enabled_environments = %w[production]
     config.release = SENTRY_RELEASE
     # data_collection-Default (sentry >= 7) sammelt PII; nur fremde DSNs restriktiv wie früher ohne send_default_pii
-    config.data_collection = Sentry::DataCollection.backfill(config) unless dsn.include?('sentry.pludoni')
+    config.data_collection = Sentry::DataCollection.backfill(config) unless dsn.include?('errors.pludoni')
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
     # Sentry >= 6 verwirft Events, wenn before_send kein Event zurückgibt -> in-place filtern
     config.before_send = ->(event, _hint) do

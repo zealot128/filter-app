@@ -49,3 +49,5 @@ env:
     DB_BACKUP_KEEP: 7
   secret:
     - RAILS_MASTER_KEY
+    # CI-Variable, Projekt hrfilter in GlitchTip (fahrradfilter überschreibt env.secret)
+    - SENTRY_DSN

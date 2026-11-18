@@ -14,6 +14,7 @@ if [ -n "$CI_REGISTRY_PASSWORD" ]; then
   mkdir -p .kamal
   echo "KAMAL_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD" > .kamal/secrets-common
   echo "RAILS_MASTER_KEY=$RAILS_MASTER_KEY" >> .kamal/secrets-common
+  echo "SENTRY_DSN=$SENTRY_DSN" >> .kamal/secrets-common
 fi
 
 cat .kamal/secrets-common
